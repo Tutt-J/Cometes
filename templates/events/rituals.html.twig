@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rituels | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose huit rituels pour les femmes, suivant le mouvement des astres et des saisons.{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_rituels.jpeg') }}{% endblock %}
+
+{% block Titre %}Rituels{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <section class="row mt-4 mb-3  text-center" >
+            <h2 class="col-12">LES DIMANCHES DE CHAMADE</h2>
+            <h3 class="col-12">Huit rituels pour les femmes, suivant le mouvement des astres et des saisons.</h3>
+        </section>
+        <section class="row mt-5 mb-3 align-items-center">
+            <div class="mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6 col-xl-3 col-lg-5 text-center">
+                <img class="mw-200 w-100" src="{{  asset('build/images/cercle.jpeg') }}" alt="Demi-cercle de fleurs">
+            </div>
+            <div class="col-xl-9 col-lg-7">
+                <h4><strong>Contenu des Rituels :</strong></h4>
+                <ul>
+                    <li>Retour sur les énergies astrologiques du moment,</li>
+                    <li>Retour sur la Roue de l&#39;année celtique et la symbolique de la célébration choisie,</li>
+                    <li>Relaxation sonore,</li>
+                    <li>Méditation guidée et visualisation,</li>
+                    <li>Rituel introspectif et journaling,</li>
+                    <li>Cercle de partage,</li>
+                    <li>Tirage d&#39;Oracle.</li>
+                </ul>
+                <p><em>Les contenus peuvent varier d’une célébration à une autre.</em></p>
+            </div>
+        </section>
+        {% if rituals %}
+        <section class="row mt-5 flex-column-reverse flex-lg-row align-items-center">
+                <div class="col-lg-7 text-justify">
+                    <h4 class="col-12"><strong>Calendrier des rituels en présentiel 2020/2021 :</strong></h4>
+                    <ul>
+                        {% for ritual in rituals %}
+                            <li>
+                                {{ritual.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY') | capitalize}} : {{ ritual.title }}<br/>
+                                <a href="{{ path('ritualEvent', { 'slug': ritual.slug }) }}">En savoir plus</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="mb-3 col-10 col-md-6 col-lg-5 text-center">
+                    <img class="mw-100"  src="{{ asset('build/images/fleurs-plateau.jpeg') }}" alt="Des fleurs dans un plateau">
+                </div>
+        </section>
+        {% endif %}
+        <section class="row my-5 box_infos background-green text-center p-3 mx-2 mx-sm-0">
+            <div class="col-md-4">
+                <h4><strong>Lieu</strong></h4>
+                <address>UPSIDE POLE STUDIO <br/>
+                    113 Route de Taninges<br/>
+                    <span class="text-uppercase">74100 Vetraz-Monthoux</span><br/>
+                    Parking gratuit, spacieux et accessible</address>
+            </div>
+            <div class="col-md-4">
+                <h4><strong>Tarif</strong></h4>
+                <p>35 euros.</p>
+            </div>
+            <div class="col-md-4">
+                <h4><strong>Horaires</strong></h4>
+                <p>De 14h à 16h.</p>
+            </div>
+            <div class="col-12 mt-2">
+                <h4><strong>Inscriptions</strong></h4>
+                <p>Vous pouvez vous inscrire en cliquant sur le lien "En savoir plus" à coté de de chaque rituel.</p>
+                    <p>Pour celles et ceux qui ne peuvent pas se déplacer, les rituels sont également proposés à
+                    l’achat en version en ligne, à la rubrique <a href="{{ path('ritualsOnline') }}">&quot;RITUELS EN LIGNE&quot;</a>.</p>
+            </div>
+        </section>
+    </div>
+    <section class="container-fluid py-5 background-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-3"><strong>Pour en savoir plus :</strong></h4>
+                    <p>Les rituels font partie de ma vie depuis des mois maintenant et ils ont transformé mon
+                        quotidien.</p>
+                    <p>Ils m’ont aidé à m’octroyer des moments de calme, d’introspection, à dresser régulièrement
+                        un bilan de mon existence, de mes valeurs ou encore de mes objectifs.
+                    <p>C’est un excellent outil de développement personnel.</p>
+                    <p>Parmi les multiples sortes de rituels possibles, allant d’une méditation matinale à un rituel
+                        symbolique plus élaboré, j’ai choisi de vous proposer un calendrier de pratique calé sur celui
+                        de la Roue de l’année celtique, issu des anciennes traditions celtes.</p>
+                    <p>Ce calendrier permet d’explorer le cycle des saisons et les énergies qui y sont associées
+                        depuis des siècles et qui sont ancrées dans nos mémoires collectives.</p>
+                    <p>Je vous propose ainsi de faire un voyage autour de cette Roue avec la réalisation de huit
+                        rituels, qui scindent l’année en huit parts égales, dont notamment les équinoxes et les
+                        solstices.</p>
+                    <p>A l’occasion de ceux-ci, nous célébrerons la nature et les changements de saison, afin de
+                        revenir à l’écoute de nos rythmes naturels.</p>
+                    <p>Chaque rituel sera différent et inédit, intégrant divers outils mêlant relaxation, bien-être et
+                        introspection, avec une approche symbolique destinée à vous aider à accéder à la personne
+                        authentique que vous êtes.</p>
+                    <p>Je vous invite à lire l’article <a href="{{ path('blogArticle', { 'slug': 'nature-cyclique-feminin-sacre-et-rituels' }) }}">« Nature cyclique, féminin sacré et rituels »</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% include 'events/_opinions.html.twig' %}
+
+
+{% endblock %}

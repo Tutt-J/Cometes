@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title %}Concept | {{ parent() }}{% endblock %}
+{% block Titre %}Concept{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row align-items-center">
+            <div class="mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6 col-xl-4 col-lg-6 text-center mb-lg-0">
+                <img class="mw-200 w-100" src="{{ asset('build/images/a_propos.jpeg') }}" alt="Salomé assise se tenant les mains">
+            </div>
+            <div class="col-xl-8 col-lg-6 text-justify">
+                <p>Avec CHAMADE, je propose des bulles de bien-être et de retour à soi, ainsi que des outils de
+                    connaissance en matière de développement personnel et de spiritualité, via des
+                    <strong>évènements</strong> et des <strong>contenus virtuels en ligne</strong>.
+                </p>
+                <p>J&#39;entends le terme spiritualité dans une acception laïque, en dehors de tout dogme, religion
+                    ou croyance identifiée. Ma seule conviction étant que chacun dispose en lui l’étincelle de
+                    magie qui peut lui permettre, s’il le décide, de vivre une existence pleine et entière.
+                </p>
+                <p>L&#39;idée c&#39;est de <strong>créer de l&#39;espace en vous et autour de vous</strong>, pour prendre le temps
+                    d&#39;amorcer un processus de guérison intérieure, s&#39;apercevoir qu&#39;il existe des alternatives aux
+                    schémas de pensée actuels, mais surtout pour reconnecter à vos véritables aspirations et à
+                    votre cœur.
+                </p>
+                <p>Loin de promouvoir une vérité, il s’agit au contraire de mettre en lumière les outils pour que
+                    chacun puisse connecter à <strong>sa propre vérité</strong>.
+                </p>
+                <p><a href="{{ path('blogArticle', { 'slug': 'et-si-le-vrai-pouvoir-cetait-detre-reellement-soi' }) }}">Lire mon article "ET SI LE VRAI POUVOIR C’ÉTAIT D’ÊTRE RÉELLEMENT SOI ?"</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

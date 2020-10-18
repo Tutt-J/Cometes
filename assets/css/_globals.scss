@@ -1,0 +1,114 @@
+body{
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: white;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  figure{
+    margin:0;
+  }
+
+  iframe{
+    width:100%;
+  }
+
+  .modal{
+    z-index:9998;
+  }
+
+  .loader {
+    position : fixed;
+    z-index: 9999;
+    background : url('/build/images/loader.gif') 50% 50% no-repeat;
+    top : 0px;
+    left : 0px;
+    height : 100%;
+    width : 100%;
+    cursor : wait;
+    background-color:#f2b6a0;
+  }
+
+  h1, h2,h3,h4,h5,h6{
+    font-family: 'Arima Madurai', cursive;
+    overflow-wrap: break-word;
+  }
+
+  h1{
+    font-size:2rem;
+    hyphens: auto;
+    z-index:-1;
+  }
+
+  hr{
+    &.gradient{
+      background-image: linear-gradient(to right,rgba(0,0,0,0), rgba(0, 0, 0, 0.1),
+              rgba(0,0,0,0));
+      height: 1px;
+      border: 0;
+    }
+  }
+
+  //Table
+  .table td,.table th, .table td > * {
+    vertical-align : middle;
+  }
+
+  //Box with events infos
+  .box_infos{
+    box-shadow: 0 0 10px #D0D0D0;
+  }
+
+  /*.light-link{
+    color:lightgrey;
+    text-transform: uppercase;
+  }*/
+
+  a{
+    color:$rouge;
+    &:hover{
+      color:$orange;
+    }
+  }
+
+  * {
+    overflow-wrap: break-word;
+  }
+
+  //BUTTON STYLE
+  .btn-primary, .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:focus {
+    color: #fff;
+    background-color: $rouge;
+    border-color: $rouge;
+  }
+  .btn-primary:hover {
+    background-color: $orange;
+    border-color:$orange;
+  }
+  .btn-danger, .btn-danger:not(:disabled):not(.disabled):active, .btn-danger:focus {
+    color: #fff;
+    background-color: #d93a32;
+    border-color: #d93a32;
+  }
+  .btn-danger:hover{
+    color: #fff;
+    background-color: #ff6961;
+    border-color: #ff6961;
+  }
+  .light-btn{
+    border: 1px solid gray;
+    background: transparent;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+  }
+
+  //CUSTOM FLASHBAG
+  >.alert {
+    position: fixed;
+    margin-bottom: -50px;
+    width: 100%;
+    text-align: center;
+    &.alert-fade{
+      z-index: 9998;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blessing-way | {{ parent() }}{% endblock %}
+{% block metaDescription %}CHAMADE propose et sur demande des
+    évènements sur mesure, destinés à amener une approche spirituelle et symbolique aux
+    diverses étapes de votre vie{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/fleurs-plateau.jpeg') }}{% endblock %}
+
+{% block Titre %}Blessing-way{% endblock %}
+
+{% block content %}
+    <div class="container text-justify my-5">
+        <section class="row mt-4 mb-3  text-center" >
+            <h2 class="col-12 text-center">Accompagner les évènements fondamentaux de votre existence.</h2>
+        </section>
+        <div class="row mt-5 mb-3 align-items-center">
+            <figure class="mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6 col-xl-3 col-lg-5 text-center">
+                <img class="mw-200 w-100" src="{{ asset('build/images/fleurs-plateau.jpeg') }}" alt="Demi-cercle de fleurs">
+            </figure>
+            <div class="col-xl-9 col-lg-7">
+                <p>En tant que créatrice et facilitatrice de rituels, je propose également et sur demande des
+                    évènements sur mesure, destinés à amener une approche spirituelle et symbolique aux
+                    diverses étapes de votre vie.</p>
+                <p>N’hésitez pas à me contacter via le formulaire de contact ou directement par mail à l’adresse
+                    <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel<!--triugtb65-->lo@cha<!--t5588h^ùm^th-->made.co</a> afin d’imaginer ensemble le rituel symbolique qui vous ressemble.</p>
+            </div>
+        </div>
+
+    </div>
+    {% include 'events/_opinions.html.twig' %}
+
+{% endblock %}

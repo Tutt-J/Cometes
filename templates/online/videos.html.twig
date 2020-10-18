@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ateliers en ligne | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose des Ateliers accessibles en ligne et destinés à vous accompagner dans votre développement personnel et spirituel.{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('/build/images/design_videos.jpeg') }}{% endblock %}
+
+{% block Titre %}Ateliers en ligne{% endblock %}
+{% block content %}
+
+    <div class="container my-5">
+        <section class="row mt-5 mb-3 align-items-center">
+            <div class="col-12 mb-2">
+                <p>Afin de permettre à chacune d'accéder à mes ateliers, j'ai choisi de vous les proposer également en version numérique.<br/>
+                    Une fois inscrite, vous aurez accès à la vidéo à partir du jour de la tenue de l'Atelier via votre compte.<br/>
+                    Pour les Ateliers dont la date est déjà passée, elles seront immédiatement accessibles</p>
+                <h4 class="mt-3"><strong>Durée des ateliers :</strong></h4>
+                <p>Environ 1 heure.</p>
+                <h4><strong>Tarif des ateliers :</strong></h4>
+                <p>10 euros par atelier.<br/>
+                    Tarif préférentiel de 8 euros par atelier au-delà de 3 ateliers commandés.
+                </p>
+            </div>
+        </section>
+        <section class="row list mt-5 mb-3">
+            <h3 class="mb-4 col-12"><strong>Je commande mon atelier !</strong></h3>
+            {% for content in contents %}
+                <article class="item col-12 col-sm-6 col-md-3 mb-3 d-flex flex-column align-items-center text-center ">
+                    <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path('videoOnline', { 'slug': content.slug }) }}">
+                        <figure>
+                            <div class="effect"></div>
+                            <img class="w-100" src="{{ asset('uploads/cover_img/'~content.img.url) }}" alt="{{ content.img.alt }}">
+                        </figure>
+                    </a>
+                    <div class="infos mt-3 w-100 mw-200">
+                        <h2 class="d-initial"><a href="{{ path('videoOnline', { 'slug': content.slug }) }}">{{ content.title | raw }}</a></h2>
+                        {% if date(content.eventDate) > date()  %}
+                            <p class="mt-3">Disponible à partir du <br/> {{ content.eventDate | localizeddate('none', 'none', null, null, 'd MMMM YYYY') }}</p>
+                        {% else %}
+                            <p class="mt-3">Déjà disponible</p>
+                        {% endif %}
+                        <p>
+                            <strong>{{ content.Price }}€</strong>
+                        </p>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    </div>
+{% endblock %}

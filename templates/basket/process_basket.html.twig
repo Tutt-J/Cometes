@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Passer la commande | {{ parent() }}{% endblock %}
+{% block Titre %}Passer la commande{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <p class="mb-4"><a href="{{ path('shopBasket') }}"><< Retourner au panier</a></p>
+        <section class="row mt-4">
+            <h2 class="col-12 mb-3">Adresse de facturation</h2>
+            <address class="col-12 mb-0">
+                <p><strong>{{ app.user.firstName }} {{ app.user.lastName }}</strong></p>
+                <p>{{ app.user.address.street  }}</p>
+                <p>{{ app.user.address.postalCode }} {{ app.user.address.City}}</p>
+                <p>{{ app.user.address.country | upper }}</p>
+                {% if app.user.address.othersInformations is not empty %}
+                    <p>{{ app.user.address.othersInformations }}</p>
+                {% endif %}
+            </address>
+            <a class="col-12" href="{{ path('app_account_edit') }}">Modifier mon adresse</a>
+        </section>
+
+        <h2 class="mt-4 mb-4">Récapitulatif</h2>
+        <div class="wrapper table">
+            <div class="Rtable Rtable--5cols Rtable--collapse">
+                <div class="Rtable-row Rtable-row--head d-none d-md-flex">
+                    <div class="Rtable-cell image-cell column-heading text-center">Image</div>
+                    <div class="Rtable-cell libelle-cell column-heading">Libellé</div>
+                    <div class="Rtable-cell prix-link-cell column-heading">Prix</div>
+                </div>
+
+                {% for content in app.session.get('basket') %}
+                    <div class="Rtable-row align-items-center">
+                        <div class="Rtable-cell image-cell">
+                            <div class="Rtable-cell--content image-content text-center">
+                                <img class="mw-100" src="{{ asset('uploads/cover_img/'~content['imageUrl']) }}" alt="{{ content['imageAlt'] }}"/>
+                            </div>
+                        </div>
+                        <div class="Rtable-cell libelle-cell">
+                            <div class="Rtable-cell--content libelle-content"><a href="{{ path(content.path, { 'slug': content.Entity.slug }) }}">{{content.Entity.Title}}</a>
+                                <br/>
+                                <small>
+                                    <em>{{content.Entity.Ref}}</em>
+                                </small></div>
+                        </div>
+                        <div class="Rtable-cell prix-link-cell">
+                            <div class="Rtable-cell--content prix-link-content">
+                                {% if content.isFidelity %}
+                                    {{ content.Entity.fidelityPrice}}€
+                                    <br/><em>Remise fidélité appliquée</em>
+                                {% else %}
+                                    {{ content.Entity.price}}€
+                                {% endif %}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="column">
+            <p class="text-right col-12 ">
+                <strong>Total : {{ app.session.get('purchaseInfos')['totalAmount']}}€</strong> <br>
+                <small>TVA non applicable - article 293 B du CGI </small>
+            </p>
+            <p class="text-right col-12">
+                <button onclick="location.href='{{ path("paymentBasket") }}'" type="submit" class="btn btn-success" id="processBasket" name="processBasket">
+                    Procéder au paiement
+                </button>
+            </p>
+        </div>
+    </div>
+
+{% endblock %}

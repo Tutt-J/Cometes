@@ -1,0 +1,82 @@
+<footer>
+    {# NEWSLETTER #}
+    <div class="container-fluid social py-5 background-green">
+        <div class="container">
+            <div class="row">
+                <h2 class="cursive text-center col-12">Rejoins la communauté Chamade et reçois ta méditation gratuite! </h2>
+                <p class="cursive text-center col-12">Chaque mois je vous prépare un courriel plein d'amour et de bienveillance avec les actualités de Chamade (en avant-première!) mais aussi une météo énergétique et astrologique.</p>
+                <form action="{{ path('registerNewsletter') }}" method="post" class="form-inline col-md-12 justify-content-center">
+                    <div class="row col-md-6">
+                        <div class="form-group col-md-8">
+                            <label class="d-none" for="email">Adresse e-mail</label>
+                            <input  required="required" class="form-control w-100" type="email" name="email" id="email">
+                        </div>
+                        <div class="form-group col-12 col-md-4 text-center mt-sm-2 mt-lg-0 ">
+                            <button type="submit" name="subscribe" id="subscribe" class="mw-100 btn btn-primary m-auto m-lg-0">M'abonner</button>
+                        </div>
+                    </div>
+                    <div class="form-check col-md-12 mt-3">
+                        <input class="form-check-input" required="required" name="check1" type="checkbox" value="" id="check1">
+                        <label class="form-check-label" for="check1">
+                            Vous acceptez de recevoir nos derniers articles de blog par e-mail.
+                        </label>
+                    </div>
+                    <div class="form-check col-md-12">
+                        <input class="form-check-input" required="required" type="checkbox" name="check2" value="" id="check2">
+                        <label class="form-check-label" for="check2">
+                            Vous acceptez de recevoir nos prochains évènements par e-mail.
+                        </label>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="text-center mt-3">
+                            <small>Vous affirmez avoir pris connaissance de notre
+                                <a href="{{ path('privacyPolicy') }}">politique de confidentialité</a>. Vous pouvez à tout moment vous désinscrire à l'aide des liens de désinscription ou en nous contactant à
+                                <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel
+                                    <!--triugtb65-->lo@cha
+                                    <!--t5588h^ùm^th-->made.co
+                                </a>.
+                            </small>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {# END NEWSLETTER #}
+
+    {# FACEBOOK LOUVES #}
+    <div class="container-fluid">
+        <div class="container py-5 text-center">
+            <a class="row justify-content-center" href="https://bit.ly/2BCWpoi">
+                <img class="col-12 col-md-9 mw-100 scale-down" src="{{ asset('build/images/louves.png')}}" alt="LOUVES ! La communauté de chamade Développement personnel et spirituel Sonorité Pour une vie sereine, équilibrée et harmonieuse"/>
+            </a>
+        </div>
+    </div>
+    {# END FACEBOOK LOUVES #}
+
+    {# INSTAGRAM FEED #}
+    {% if opinions.getLastInstagramPost(5) %}
+    <div class="container-fluid py-5 background-dark-green">
+        <div class="container">
+            <div class="row justify-content-around justify-content-lg-start mx-auto">
+                <h2 class="text-center col-12 mb-3 text-white">Suivez nous sur instagram :</h2>
+                {% for post in opinions.getLastInstagramPost(5) %}
+
+                    <!-- Grid column -->
+                    <div class="mb-3 col-8 col-sm-4 col-lg-2 text-center
+                {% if loop.index == 1 %}
+                    offset-lg-1
+                {% endif %}
+                    ">
+                        <a href="{{ post.permalink }}">
+                            <img class="object-fit-cover instagram" src="{{ post.mediaUrl }}" alt="Photo provenant d'instagram">
+                        </a>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {# END INSTAGRAM FEED #}
+</footer>

@@ -1,0 +1,64 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<h1>Commentaires</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Commentaires</li>
+</ol>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Liste des commentaires
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Contenu</th>
+                    <th>Relatif à</th>
+                    <th>En reponse à</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Contenu</th>
+                    <th>Relatif à</th>
+                    <th>En reponse à</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.pseudo }}</td>
+                        <td>{{ comment.content  | truncate(75, true) | raw}}</td>
+                        <td>{{  comment.article.title }}</td>
+                        <td>
+                            {% if comment.comment %}
+                                {{  comment.comment.content | truncate(75, true) | raw }}
+                            {% endif %}
+                        </td>
+                        <td>{{comment.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>{{comment.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>
+                            {% if comment.online == 0 %}
+                                <a href="" class="text-primary mr-2" title="Valider"><i class="fas fa-check"></i></a>
+                            {% endif %}
+                            <a href="" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

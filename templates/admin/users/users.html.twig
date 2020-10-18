@@ -1,0 +1,102 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<h1>Utilisateurs</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Utilisateurs</li>
+</ol>
+<div class="d-flex mb-3">
+    <button class="btn btn-primary ml-auto" onclick="location.href='{{path('createUserAdmin')}}';">Créer un nouvel utilisateur</button>
+</div>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Liste des utilisateurs
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>E-mail</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Role(s)</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>E-mail</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Role(s)</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>
+                            {% if user.address %}
+                                {{ user.address.street }}<br/>
+                                {{ user.address.postalCode }}<br/>
+                                {{ user.address.city }}<br/>
+                                {{ user.address.country }}<br/>
+                                {{ user.address.othersInformations }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% for role in user.roles %}
+                                {{ role }}<br/>
+                            {% endfor %}
+                        </td>
+                        <td>{{user.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y H:m')}}</td>
+                        <td>{{user.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y H:m')}}</td>
+                        <td>
+                            <a href="{{path('updateUserAdmin', {'id' : user.id})}}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
+                            <a href="{{path('updatePasswordUserAdmin', {'id' : user.id})}}" class="text-warning mr-2" title="Modifier le mot de passe"><i class="fas fa-key"></i></a>
+                            <p data-title="{{ user.firstName~' '~ user.lastName }}" data-id="{{ user.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Etes-vous sûr de vouloir ananonymiser le compte de "<span class="titleValue"></span>" et ainsi supprimer toutes ses données personnelles ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <form action="{{ path('deleteUserAdmin') }}" method="post">
+                            <input type="hidden" class="idValue" name="id" value="">
+                            <input type="submit" class="btn btn-primary" value="Supprimer"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

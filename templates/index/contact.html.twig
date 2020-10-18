@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact | {{ parent() }}{% endblock %}
+{% block Titre %}Contact{% endblock %}
+
+{% block content %}
+        <div class="container my-5">
+            <div class="row mb-4">
+                <!-- Section Titile -->
+                <div class="col-md-12">
+                    <h2 class="section-title text-center">Je suis toujours ravie de pouvoir échanger avec vous, que ce soit pour une question, un
+                        partage ou encore un avis.</h2>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Section Titile -->
+                <div class="col-md-6 mt-4 contact-widget-section2" >
+                    <p>N&#39;hésitez pas à me contacter via le présent formulaire et je vous répondrai dans les meilleurs
+                        délais possibles. En attendant, rejoignez-moi sur les réseaux sociaux !</p>
+                    <p>Pour les collaborations et service client, merci de m&#39;écrire à l&#39;adresse <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel<!--triugtb65-->lo@cha<!--t5588h^ùm^th-->made.co</a>.</p>
+                </div>
+                <!-- contact form -->
+                <div class="col-md-6" >
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+{% endblock %}

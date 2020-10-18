@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription | {{ parent() }}{% endblock %}
+{% block Titre %}Inscription{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h2 class="col-12 px-0">Informations personnelles</h2>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<h1>Commandes</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Commandes</li>
+</ol>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Liste des commandes
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Produits</th>
+                    <th>Montant</th>
+                    <th>Infos</th>
+                    <th>Statut</th>
+                    <th>Identifiant stripe</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Client</th>
+                    <th>Produits</th>
+                    <th>Montant</th>
+                    <th>Infos</th>
+                    <th>Statut</th>
+                    <th>Identifiant stripe</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for purchaseLine in purchases %}
+                    <tr>
+                        <td>{{ purchaseLine.purchase.user.firstName }} {{ purchaseLine.purchase.user.lastName }}</td>
+                        <td>
+                            {% for content in purchaseLine.contents %}
+                                {{ content }} <br/>
+                            {% endfor %}
+                        </td>
+                        <td>{{ purchaseLine.purchase.amount }}</td>
+                        <td>{{ purchaseLine.purchase.content }}</td>
+                        <td>{{ purchaseLine.purchase.status }}</td>
+                        <td>{{ purchaseLine.purchase.stripeId }}</td>
+                        <td>{{purchaseLine.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>{{purchaseLine.purchase.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endblock %}

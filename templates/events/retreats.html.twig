@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Retraites | {{ parent() }}{% endblock %}
+{% block metaDescription %}CHAMADE crée des formats inédits de retraites afin d&#39;allier introspection, bien-être
+    et partage de savoirs holistiques et spirituels{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_retraites.jpeg') }}{% endblock %}
+
+{% block Titre %}Retraites{% endblock %}
+
+{% block content %}
+    {% if retreats %}
+    <div class="container-fluid background-white py-5">
+        <div class="container">
+            <div class="row list text-center justify-content-around">
+                {% for retreat in retreats %}
+                    <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">
+                        <a class="d-flex align-items-center text-center w-100 w-md-75 mw-200" href="{{ path('retreatEvent', { 'slug': retreat.slug }) }}">
+                            <figure>
+                                <div class="effect background-green"></div>
+                                <img class="w-100" src="{{ asset('uploads/cover_img/'~retreat.img.url) }}" alt="{{ retreat.img.alt }}">
+                            </figure>
+                        </a>
+                        <div class="infos mt-3 w-100 w-md-75 mw-200">
+                            <h2 class="d-initial retreat_title"><a href="{{ path('retreatEvent', { 'slug': retreat.slug }) }}">{{ retreat.title | raw }}</a></h2>
+                            <p>{{ retreat.subTitle }}</p>
+                            {% if retreat.startDate | date('dmy') != retreat.endDate | date('dmy') %}
+                                <p><strong>Du {{retreat.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM')}} au {{retreat.endDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY')}}</strong></p>
+                            {% else %}
+                                <p><strong>{{retreat.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY')}}</strong></p>
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    {% endif %}
+    <div class="container my-5">
+        <div class="row mt-4 mb-4 align-items-center" >
+            <div class="mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6  col-lg-6 text-center">
+                <img class="mw-200 w-100" src="{{ asset('build/images/fleur-main.jpeg') }}" alt="Salomé tenant une fleur au dessus d'un plateau">
+            </div>
+            <div class="col-lg-6 text-justify">
+                <p>Que diriez-vous de vous laisser de l’espace ?<br/>
+                De prendre le temps d’une profonde respiration ?<br/>
+                De vous laisser une parenthèse hors du monde et du quotidien pour regarder ce qui compte
+                    vraiment ?</p>
+                <p>Je suis convaincue que chaque personne dispose en elle de toutes les ressources et clés
+                nécessaires à trouver un équilibre de vie. Il suffit simplement de connecter à sa propre
+                    médecine et magie intérieure.</p>
+                <p>Pour cela, il faut s&#39;autoriser une pause.<br/>
+                Il est à chaque fois étonnant de voir comment chacun a la possibilité de transformer
+                    profondément sa vision de la vie en seulement quelques jours.</p>
+                <p>Pour cela, les retraites sont des espaces de croissance personnelle incroyables, où votre
+                    processus intérieur est comme &quot;accéléré&quot;.</p>
+                <p>Avec CHAMADE je créée des formats inédits de retraites afin d&#39;allier introspection, bien-être
+                    et partage de savoirs holistiques et spirituels.</p>
+                <p>Ces retraites sont pour le moment exclusivement destinées aux femmes, afin de permettre
+                    l&#39;expansion de la sororité et le lien de confiance entre femmes.</p>
+                <p>Pour ces retraites je fais le choix de lieux en nature et de prestataires partageant les valeurs
+                    éthiques de CHAMADE.</p>
+            </div>
+        </div>
+    </div>
+   {% include 'events/_opinions.html.twig' %}
+{% endblock %}

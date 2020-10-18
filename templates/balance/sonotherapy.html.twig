@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sonothérapie | {{ parent() }}{% endblock %}
+{% block metaDescription %}Offrez-vous un soin relaxant grâce au pouvoir des sons et des vibrations des bols tibétains.{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_sonotherapie.jpeg') | replace({'/build':'build'}) }}{% endblock %}
+
+{% block Titre %}Sonothérapie{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <section class="row mt-4 mb-3 text-center" >
+            <h2 class="col-12 text-center">Apporter du soin et vous accompagner sur le chemin de votre guérison.</h2>
+        </section>
+        <div class="mt-5 col-12 row align-items-center">
+            <div class="mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6 col-xl-4 col-lg-6 text-center mb-lg-0">
+                <img class="mw-200 w-100" src="{{ asset('build/images/sonotherapie.jpeg') }}" alt="Salomé assise se tenant les mains">
+            </div>
+            <div class="col-xl-8 col-lg-6 text-justify">
+                <p>La vie et ses défis peuvent affecter la circulation énergétique au sein de votre corps et créer
+                    des déséquilibres.</p>
+                <p>Déséquilibres qui impactent vos chakras et la communication entre ceux-ci.</p>
+                <p>Or, ce sont eux qui permettent à votre corps de se mouvoir. Ils sont le pont entre votre corps
+                    et votre esprit. C’est à travers eux que vous êtes à même de recevoir, assimiler et
+                    transmettre l’énergie vitale.</p>
+                <p>Si j’utilise par ailleurs le yoga pour travailler à votre équilibre énergétique, j’ajoute à cette
+                    pratique les bienfaits du son lors de séances de sonothérapie. J&#39;utilise principalement des
+                    bols tibétains vibrant à des fréquences spécifiques et destinés à entrer en résonance avec
+                    celles de chacun de vos chakras.</p>
+                <p>Je vous propose ces soins de manière collective ou individuelle, à votre domicile.</p>
+            </div>
+        </div>
+        <div class="row mt-4 mb-3" >
+            <div class="col-12">
+                <p><strong>Infos pratiques&nbsp;:</strong></p>
+                <p>Le soin sonore se d&eacute;roule &agrave; votre domicile, allong&eacute; dans un espace calme.</p>
+                <p>Nous commencerons par une visualisation guid&eacute;e relaxante.</p>
+                <p>Puis, le soin se poursuivra avec un paysage sonore fait de multiples instruments et enfin le soin en lui-m&ecirc;me avec les bols tib&eacute;tains.</p>
+                <p>Le soin se cl&ocirc;ture avec un temps d&rsquo;&eacute;change sur vos ressentis et mes observations.</p>
+                <p><strong>Durée :</strong> 1h</p>
+                <p><strong>Tarif :</strong> 50 euros + frais de déplacement suivant le lieu de votre domicile.</p>
+                <p>Contactez-moi pour réserver votre séance à <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel<!--triugtb65-->lo@cha<!--t5588h^ùm^th-->made.co</a>.</p>
+            </div>
+
+        </div>
+        <div class="row mt-5 mb-3" >
+            <div class="letter col-8 m-auto">
+                <p><em>&laquo; La musique et le son constituent &agrave; la fois le langage et l&rsquo;architecture sous-jacente du cosmos.&nbsp;&raquo;</em></p>
+                <p><em>&laquo;&nbsp;Dans les traditions v&eacute;diques, de l&rsquo;Inde ancienne, Brahma pronon&ccedil;a le son &laquo; Om &raquo; et les choses prirent vie. Lors du premier mouvement d&rsquo;une particule, lorsqu&rsquo;elle commence &agrave; vibrer, elle cr&eacute;&eacute;e une fr&eacute;quence qui est un son, une vibration. De la plus petite particule aux galaxies en passant par nos corps, tout commence par le son. &raquo;</em>&nbsp;</p>
+                <p>Tom Kenyon, sonoth&eacute;rapeute.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid py-5 background-dark-green text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p>Pour en savoir plus&nbsp;:</p>
+                    <p>La musique a toujours &eacute;t&eacute; une m&eacute;decine personnelle incroyable. Le moyen de me connecter &agrave; mon corps et &agrave; mes &eacute;motions.</p>
+                    <p>Que ce soit en chantant, en jouant d&rsquo;un instrument ou en &eacute;coutant un artiste que j&rsquo;affectionne, la musique est partout autour de moi.</p>
+                    <p>Elle me fait frissonner, bouger, rire et pleurer.</p>
+                    <p>A chaque fois, elle me ram&egrave;ne au c&oelig;ur, &agrave; cette vibration primaire, humaine.</p>
+                    <p>La th&eacute;rapie par le son est venue &agrave; moi alors que je ne m&rsquo;y attendais pas, elle a eu un tel effet lib&eacute;rateur que j&rsquo;ai tr&egrave;s vite su qu&rsquo;elle ferait partie de ma vie et c&rsquo;est ainsi que j&rsquo;ai choisi de suivre une formation d&eacute;di&eacute;e, pour apprendre &agrave; manier les bols tib&eacute;tains, &agrave; offrir des soins et des bains sonores.</p>
+                    <p>Ce qu&rsquo;il y a de plus fascinant, c&rsquo;est de voir comment on peut allier le pouvoir du son &agrave; la r&eacute;harmonisation de nos centres &eacute;nerg&eacute;tiques.</p>
+                    <p>C&rsquo;est par cette approche que je me suis form&eacute;e &agrave; la fois &agrave; manier les sons, mais aussi au fonctionnement de nos corps &eacute;nerg&eacute;tiques et subtils.</p>
+                    <p>Mon attention se porte prioritairement sur les chakras, suivant les pr&eacute;cieux enseignements de Anodea Judith dans son ouvrage &laquo;&nbsp;Les chakras roues de la vie&nbsp;&raquo;.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

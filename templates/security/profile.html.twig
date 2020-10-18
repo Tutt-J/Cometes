@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte | {{ parent() }}{% endblock %}
+
+{% block Titre %}Mon compte{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <h1 class="text-center mb-2">Bonjour {{ app.user.firstName }} !</h1>
+        <h2 class="text-center mb-4">Que souhaitez-vous faire aujourd'hui ?</h2>
+        <div class="row list justify-content-around flex-wrap">
+            <div class="item col-12 col-md-6 col-lg-3 mb-5">
+                <a class="text-center" href="{{ path('app_account_edit') }}">
+                    <figure class="change-ratio">
+                        <img class="mw-100" src="{{ asset('build/images/design_compte.jpg') }}" alt="">
+                    </figure>
+                </a>
+                <div class="infos text-center p-2">
+                    <h2 class="mt-2 d-initial"><a class="mt-2" href="{{ path('app_account_edit') }}">Éditer mes informations personnelles</a></h2>
+                </div>
+            </div>
+            <div class="item col-12 col-md-6 col-lg-3 mb-5">
+                <a class="text-center" href="{{ path('user_purchases') }}">
+                    <figure class="change-ratio">
+                        <img class="mw-100" src="{{ asset('build/images/design_commandes.jpeg') }}" alt="">
+                    </figure>
+                </a>
+                <div class="infos text-center p-2">
+                    <h2 class="mt-2 d-initial"><a class="mt-2" href="{{ path('user_purchases') }}">Voir l'historique de mes commandes</a></h2>
+                </div>
+            </div>
+            <div class="item col-12 col-md-6 col-lg-3 mb-5">
+                <a class="text-center" href="{{ path('app_account_online_content') }}">
+                    <figure class="change-ratio">
+                        <img class="mw-100" src="{{ asset('build/images/design_magie.jpeg') }}" alt="">
+                    </figure>
+                </a>
+                <div class="infos text-center p-2">
+                    <h2 class="mt-2 d-initial"><a class="mt-2" href="{{ path('app_account_online_content') }}">Accéder à ma magie en ligne</a></h2>
+                </div>
+            </div>
+            <div class="item col-12 col-md-6 col-lg-3 mb-5">
+                <a class="text-center" href="{{ path('app_account_events') }}">
+                    <figure class="change-ratio">
+                        <img class="mw-100" src="{{ asset('build/images/design_evenements.jpeg') }}" alt="">
+                    </figure>
+                </a>
+                <div class="infos text-center p-2">
+                    <h2 class="mt-2 d-initial"><a class="mt-2" href="{{ path('app_account_events') }}">Voir mes prochains évènements</a></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

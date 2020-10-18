@@ -1,0 +1,10 @@
+
+#App\Entity\Address:
+#  properties:
+
+#    othersInformations:
+#      - Length:
+#          normalizer: trim
+#          max: 255
+#          maxMessage: 'La rubrique "Autres informations" ne doit pas dépasser {{limit}} caractères'
+#          allowEmptyString: false

@@ -1,0 +1,182 @@
+{# FLOATING MENU ON LEFT #}
+<nav class="floating-menu d-none d-lg-inline-block">
+    <ul class="text-center">
+        <li>
+            <a href="{{ path('app_account') }}" class="ripple">
+                <i class="far fa-user fa-lg"></i>
+            </a>
+        </li>
+        {% if app.user %}
+            <li>
+                <a href="{{ path('app_logout') }}" class="ripple">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="{{ path('shopBasket') }}" class="ripple position-relative icon-basket">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="text-decoration-none">
+         {% if app.session.get('purchaseInfos') == null or app.session.get('purchaseInfos')['totalContent'] == 0 %}
+             0
+         {% else %}
+             {{ app.session.get('purchaseInfos')['totalContent']}}
+         {% endif %}
+         </span>
+            </a>
+        </li>
+    </ul>
+    <div class="menu-bg"></div>
+</nav>
+{# END FLOATING MENU ON LEFT #}
+
+{# DESKTOP MENU #}
+<nav class="d-none d-lg-block main-menu mt-3 py-3 mx-auto desktop">
+    <ul class="p-0">
+        <li class="position-relative">
+            <span class="{% if  'about' in app.request.attributes.get('_route') %}current-item{% endif %}">A propos</span>
+            <ul class="p-0 m-0 position-absolute d-none w-auto">
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutConcept' %}current-item{% endif %}" href="{{ path('aboutConcept') }}">Concept</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Notre histoire</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutOpinion') }}">Témoignages</a></li>
+            </ul>
+        </li>
+        <li class="position-relative">
+            <a href="{{ path('homeEvent') }}"><span class="{% if  'Event' in app.request.attributes.get('_route') %}current-item{% endif %}" >Évènements</span></a>
+            <ul class="p-0 m-0 position-absolute d-none w-auto">
+                <li class="d-block"><a class="{% if 'retreat' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('retreatsEvent') }}">Retraites</a></li>
+                <li class="d-block"><a class="{% if 'rituals' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('ritualsEvent') }}">Rituels</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'circleEvent' %}current-item{% endif %}" href="{{ path('circlesEvent') }}">Cercles de lune</a></li>
+                <li class="d-block"><a class="{% if 'workshop' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('workshopsEvent') }}">Ateliers</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'blessingEvent' %}current-item{% endif %}" href="{{path('blessingEvent')}}">Blessing-way</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'slowBuildingEvent' %}current-item{% endif %}" href="{{path('slowBuildingEvent')}}">Slowbuilding</a></li>
+            </ul>
+        </li>
+        <li class="position-relative">
+            <a href="{{ path('homeOnline') }}"><span class="{% if 'Online' in app.request.attributes.get('_route') %}current-item{% endif %}">Magie en ligne</span></a>
+            <ul class="p-0 m-0 position-absolute d-none w-auto">
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'ritualsOnline' %}current-item{% endif %}" href="{{ path('ritualsOnline') }}">Rituels en ligne</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'videosOnline' %}current-item{% endif %}" href="{{ path('videosOnline') }}">Ateliers en ligne</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'yogasOnline' %}current-item{% endif %}" href="{{ path('yogasOnline') }}">Yoga en ligne</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'programsOnline' %}current-item{% endif %}" href="{{ path('programsOnline') }}">Programmes</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'eBooksOnline' %}current-item{% endif %}" href="{{ path('eBooksOnline') }}">E-books</a></li>
+                {#
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'podcastsOnline' %}current-item{% endif %}" href="{{ path('podcastsOnline') }}">Podcast</a></li>
+                #}
+            </ul>
+        </li>
+        <li class="position-relative">
+            <span class="{% if 'Consult' in app.request.attributes.get('_route') or 'Balance' in app.request.attributes.get('_route') %}current-item{% endif %}" >Équilibre énergétique</span>
+            <ul class="p-0 m-0 position-absolute d-none w-auto">
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'yogaBalance' %}current-item{% endif %}" href="{{ path('yogaBalance') }}">Yoga</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'sonoConsult' %}current-item{% endif %}" href="{{ path('sonoConsult') }}">Sonothérapie</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Astrologie</a></li>
+            </ul>
+        </li>
+        <li><a class="{% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a></li>
+        <li><a class="{% if app.request.attributes.get('_route') == 'indexContact' %}current-item{% endif %}" href="{{ path('indexContact') }}">Contact</a></li>
+    </ul>
+</nav>
+{# END DESKTOP MENU #}
+
+{# MOBILE MENU #}
+<nav class="navbar w-100 justify-content-center mt-3 d-lg-none  navbar-light position-relative">
+    {% set random = random(1000)  %}
+    <button class="navbar-toggler mr-3" type="button" data-toggle="collapse" data-target="{{ '#navbarSupportedContent'~random }}" aria-controls="{{ 'navbarSupportedContent'~random }}" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="basket">
+        <a href="{{ path('shopBasket') }}" class="ripple position-relative icon-basket">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="text-decoration-none">
+      {% if app.session.get('orderInfos') == null or app.session.get('orderInfos')['totalContent'] == 0 %}
+          0
+      {% else %}
+          {{ app.session.get('orderInfos')['totalContent']}}
+      {% endif %}
+      </span>
+        </a>
+    </div>
+    <div class="collapse navbar-collapse background-rose w-100" id="{{ 'navbarSupportedContent'~random }}">
+        <ul class="navbar-nav mr-auto mt-4 text-dark">
+            <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
+                <a class="col-10 nav-link" href="#">
+                    A propos
+                </a>
+                <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </p>
+                <div class="dropdown-menu w-100 text-center background">
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutConcept' %}current-item{% endif %}" href="{{ path('aboutConcept') }}">Concept</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Notre histoire</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutOpinion') }}">Témoignages</a>
+                </div>
+            </li>
+            <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
+                <a class="col-10 nav-link" href="{{ path('homeEvent') }}" >
+                    Évènements
+                </a>
+                <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </p>
+                <div class="dropdown-menu w-100 text-center">
+                    <a class="dropdown-item {% if 'retreat' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('retreatsEvent') }}">Retraites</a>
+                    <a class="dropdown-item {% if 'rituals' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('ritualsEvent') }}">Rituels</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'circleEvent' %}current-item{% endif %}" href="{{ path('circlesEvent') }}">Cercles de lune</a>
+                    <a class="dropdown-item {% if 'workshop' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('workshopsEvent') }}">Ateliers</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'blessingEvent' %}current-item{% endif %}" href="{{path('blessingEvent')}}">Blessing-way</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'slowBuildingEvent' %}current-item{% endif %}" href="{{path('slowBuildingEvent')}}">Slowbuilding</a>
+                </div>
+            </li>
+            <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
+                <a class="col-10 nav-link" href="{{ path('homeOnline') }}">
+                    Magie en ligne
+                </a>
+                <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </p>
+                <div class="dropdown-menu w-100 text-center">
+                    <a class="dropdown-item {% if 'ritualsOnline' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('ritualsOnline') }}">Rituels en ligne</a>
+                    <a class="dropdown-item {% if 'videosOnline' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('videosOnline') }}">Ateliers en ligne</a>
+                    <a class="dropdown-item {% if 'yogasOnline' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('yogasOnline') }}">Yoga en ligne</a>
+                    <a class="dropdown-item {% if 'programsOnline' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('programsOnline') }}">Programmes</a>
+                    <a class="dropdown-item {% if 'eBooksOnline' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('eBooksOnline') }}">E-books</a>
+                    {#<a class="dropdown-item" href="#">Podcast</a>#}
+                </div>
+            </li>
+            <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2">
+                <a class="col-10 nav-link" href="#">
+                    Équilibre énergétique
+                </a>
+                <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </p>
+                <div class="dropdown-menu w-100 text-center">
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'yogaBalance' %}current-item{% endif %}" href="{{ path('yogaBalance') }}">Yoga</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'sonoConsult' %}current-item{% endif %}" href="{{ path('sonoConsult') }}">Sonothérapie</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Astrologie</a>
+                </div>
+            </li>
+            <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'blogIndex' %}active{% endif %}">
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a>
+            </li>
+            <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'indexContact' %}active{% endif %}">
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'indexContact' %}current-item{% endif %}" href="{{ path('indexContact') }}">Contact</a>
+            </li>
+            <li aria-hidden="true" class="dropdown-divider"></li>
+            <li class="col-12 px-2 text-center align-items-center nav-item {% if app.request.attributes.get('_route') == 'indexContact' %}active{% endif %}">
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'app_account' %}current-item{% endif %}" href="{{ path('app_account') }}">
+                    <i class="far fa-user fa-lg"></i>
+                    Mon compte</a>
+            </li>
+            {% if app.user %}
+                <li class="col-12 px-2 text-center align-items-center nav-item {% if app.request.attributes.get('_route') == 'indexContact' %}active{% endif %}">
+                    <a class="nav-link {% if app.request.attributes.get('_route') == 'app_logout' %}current-item{% endif %}" href="{{ path('app_logout') }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Déconnexion</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+{# END MOBILE MENU #}

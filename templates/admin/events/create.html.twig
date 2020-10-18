@@ -1,0 +1,26 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <h1>Créer un nouvel évènement</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active"><a href="{{ path('eventsAdmin') }}">Évènements</a></li>
+        <li class="breadcrumb-item active">Créer un nouvel évènement</li>
+    </ol>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.subTitle) }}
+    {{ form_row(form.content) }}
+    {{ form_row(form.img) }}
+    {{ form_row(form.type) }}
+    {{ form_row(form.address) }}
+    {{ form_row(form.startDate) }}
+    {{ form_row(form.endDate) }}
+    {{ form_row(form.landingPageUrl) }}
+    {{ form_row(form.price) }}
+    {{ form_row(form.eventPriceType) }}
+    <a href="#" id="add_pricing" class="btn btn-success">Ajouter un tarif</a>
+    {{ form_row(form.nbMinParticipant) }}
+    {{ form_row(form.nbMaxParticipant) }}
+    {{ form_end(form) }}
+{% endblock %}

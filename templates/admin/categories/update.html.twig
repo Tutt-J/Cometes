@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <h1>Modifier une catégorie</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active"><a href="{{ path('categoriesAdmin') }}">Catégories</a></li>
+        <li class="breadcrumb-item active">Modifier une catégorie</li>
+    </ol>
+    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+{% endblock %}

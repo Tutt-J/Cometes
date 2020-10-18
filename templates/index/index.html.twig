@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {# PHOTOS CAROUSEL #}
+    <header class="container-fluid p-0">
+        <div id="carouselExampleControls" class="carousel home slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="overlay"></div>
+                    <img class="d-block w-100 h-100" src="{{ asset('build/images/photo-main.jpeg') }}" alt="Photo d'une main avec des dessins en peinture">
+                    <div class="carousel-caption m-auto d-flex flex-column align-items-center justify-content-center w-80 text-center"></div>
+                </div>
+                <div class="carousel-item">
+                    <div class="overlay"></div>
+                    <img class="d-block w-100 h-100" src="{{ asset('build/images/fleur-main.jpeg') }}" alt="Photo d'une main tenant un tournesol">
+                    <div class="carousel-caption m-auto d-flex flex-column align-items-center justify-content-center w-80 text-center"></div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </header>
+    {# END PHOTOS CAROUSEL #}
+
+    {# VOUS ACCOMPAGNER... #}
+    <section class="container mt-100 mb-5">
+        <header class="col-12 text-center">
+            <h2>Vous accompagner sur le chemin de votre développement personnel et spirituel.
+                <br/>
+                Pour une vie sereine, équilibrée et harmonieuse.
+
+            </h2>
+        </header>
+        <div class="row text-center justify-content-around">
+            <div class="col-12 col-md-4 my-3 my-md-5">
+                <a href="{{ path('retreatsEvent') }}">
+                    <img loading="lazy" class="opacity_hover col-12 p-0 mw-200" src="{{ asset('build/images/design_retraites.jpeg') }}" alt="">
+                </a>
+            </div>
+            <div class="col-12 col-md-4 my-3 my-md-5">
+                <a href="{{ path('ritualsEvent') }}">
+                    <img loading="lazy" class="opacity_hover col-12 p-0 mw-200" src="{{ asset('build/images/design_rituels.jpeg') }}" alt="">
+                </a>
+            </div>
+            <div class="col-12 col-md-4 my-3 my-md-5">
+                <a href="{{ path('workshopsEvent') }}">
+                    <img loading="lazy" class="opacity_hover col-12 p-0 mw-200 " src="{{ asset('build/images/design_ateliers.jpeg') }}" alt="">
+                </a>
+            </div>
+        </div>
+    </section>
+    {# END VOUS ACCOMPAGNER... #}
+
+    {# THREE NEXT EVENTS #}
+    {% if events is not empty %}
+        <section class="container-fluid p-0 mb-3">
+            <header class="py-4 background-green mb-5 mt-4 text-center col-12">
+                <h2 class="m-0">Découvrez nos évènements</h2>
+            </header>
+            <div class="container">
+                <div class="row list justify-content-around flex-wrap text-center">
+                    {% for event in events %}
+                        <article class="item col-12 col-md-4 mb-3 d-flex flex-column align-items-center">
+                            <a class="d-flex align-items-center text-center w-100 w-md-75 mw-200" href="{{ path(event.path, { 'slug': event.slug })}}">
+                                <figure>
+                                    <div class="effect"></div>
+                                    <img loading="lazy" class="w-100" src="{{ asset('uploads/cover_img/'~event.img.url) }}" alt="{{ event.img.alt }}">
+                                </figure>
+                            </a>
+                            <div class="infos mt-3 w-100 w-md-75 mw-200">
+                                <h2 class="d-initial">
+                                    <a href="{{ path(event.path, { 'slug': event.slug })}}">{{ event.title | raw }}</a>
+                                </h2>
+                                <p>{% if event.startDate | date('Ymd') != event.endDate | date('Ymd')%}
+                                    <strong>Du {{event.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM')}} au {{event.endDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY')}}</strong>
+                                    {% else %}
+                                        <strong>{{event.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY')}}</strong>
+                                {% endif %}
+
+                                </p>
+                            </div>
+                        </article>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </section>
+    {% endif %}
+    {# END THREE NEXT EVENTS #}
+
+    {% include 'index/_social.html.twig' %}
+
+{% endblock %}

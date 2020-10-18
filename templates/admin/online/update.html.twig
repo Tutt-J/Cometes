@@ -1,0 +1,25 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <h1>Modifier un contenu</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('onlineAdmin') }}">Magie en ligne</a></li>
+        <li class="breadcrumb-item active">Modifier un contenu</li>
+    </ol>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.content) }}
+    {{ form_row(form.img) }}
+    {{ form_row(form.type) }}
+    {{ form_row(form.price) }}
+    {{ form_row(form.fidelityPrice) }}
+    {{ form_row(form.eventDate) }}
+    {{ form_row(form.ref) }}
+    {{ form_row(form.onlineLink) }}
+    {{ form_row(form.isOnline) }}
+    {{ form_row(form.isPack) }}
+    {{ form_row(form.neverPassed) }}
+    {{ form_row(form.pack) }}
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,50 @@
+body{
+  .letter-spacing-initial{
+    letter-spacing:initial !important;
+  }
+
+  .object-fit-cover{
+    object-fit: cover;
+  }
+
+  .scale-down{
+    object-fit: scale-down;
+  }
+
+  .w-60{
+    width:60% !important;
+  }
+
+  .mw-200{
+    max-width:200px;
+  }
+
+  .background-white{
+    background-color:$blanc  !important;
+  }
+
+  .background-green{
+    background-color:$vert_clair !important;
+  }
+
+  .background-rose{
+    background-color: $rose  !important;
+  }
+
+  .background-dark-green{
+    background-color:$vert  !important;
+  }
+
+  .rm-content-margin{
+    margin-bottom:-3rem;
+  }
+
+  .opacity_hover:hover{
+    opacity:0.9;
+  }
+
+  .instagram{
+    height:150px;
+    width:150px;
+  }
+}

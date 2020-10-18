@@ -1,0 +1,97 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<h1>Rituels</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Rituels</li>
+</ol>
+<div class="d-flex mb-3">
+    <button class="btn btn-primary ml-auto">Planifier un rituel</button>
+</div>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Liste des rituels
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Adresse</th>
+                    <th>Image</th>
+                    <th>Nombre de place</th>
+                    <th>Prix</th>
+                    <th>Uniquement en ligne</th>
+                    <th>Manque des éléments</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Adresse</th>
+                    <th>Image</th>
+                    <th>Nombre de place</th>
+                    <th>Prix</th>
+                    <th>Uniquement en ligne</th>
+                    <th>Manque des éléments</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for ritual in rituals %}
+                    <tr>
+                        <td>{{ ritual.title }}</td>
+                        <td>{{ ritual.content  | truncate(75, true) | raw}}</td>
+                        <td>{{ ritual.date | localizeddate('none', 'none', null, null, 'EEEE d MMMM ') | capitalize}}</td>
+                        <td>
+                            {% if ritual.address %}
+                                {{ ritual.address.name }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if ritual.img %}
+                                <img style="max-width:150px" src="{{ asset('build/images/'~ritual.img.url) }}"/>
+                            {% endif %}
+                        </td>
+                        <td>{{ ritual.nbPlace }}</td>
+                        <td>{{ ritual.price }}€</td>
+                        <td>
+                            {% if ritual.onlyOnline == 1 %}
+                                Oui
+                            {% else %}
+                                Non
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if ritual.complete == 1 %}
+                                Non
+                            {% else %}
+                                Oui
+                            {% endif %}
+                        </td>
+                        <td>{{ritual.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>{{ritual.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>
+                            <a  onclick="window.open(this.href);return false" href="{{ path('ritualEvent', { 'slug': ritual.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
+                            <a href="" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
+                            <a href="" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <h1>Modifier un hashtag</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active"><a href="{{ path('keywordsAdmin') }}">Hashtags</a></li>
+        <li class="breadcrumb-item active">Modifier un hashtag</li>
+    </ol>
+    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+{% endblock %}

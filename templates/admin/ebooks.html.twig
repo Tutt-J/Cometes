@@ -1,0 +1,81 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<h1>E-books</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">E-books</li>
+</ol>
+<div class="d-flex mb-3">
+    <button class="btn btn-primary ml-auto">Créer un e-book</button>
+</div>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Liste des e-books
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Référence</th>
+                    <th>En ligne</th>
+                    <th>Image</th>
+                    <th>E-book</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Référence</th>
+                    <th>En ligne</th>
+                    <th>Image</th>
+                    <th>E-book</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for ebook in ebooks %}
+                    <tr>
+                        <td>{{ ebook.title }}</td>
+                        <td>{{ ebook.content  | truncate(75, true) | raw}}</td>
+                        <td>{{ ebook.price }}€</td>
+                        <td>{{ ebook.ref }}</td>
+                        <td>
+                            {% if ebook.isOnline == 1 %}
+                                Oui
+                            {% else %}
+                                Non
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if ebook.img %}
+                                <img style="max-width:150px" src="{{ asset('build/images/'~ebook.img.url) }}"/>
+                            {% endif %}
+                        </td>
+                        <td><a onclick="window.open(this.href);return false" href="{{path('app_ebook', { 'path':  ebook.onlineLink~'.pdf' })}}">Voir</a></td>
+                        <td>{{ebook.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>{{ebook.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>
+                            <a  onclick="window.open(this.href);return false" href="{{ path('eBookOnline', { 'slug': ebook.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
+                            <a href="" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
+                            <a href="" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endblock %}

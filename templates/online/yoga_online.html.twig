@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Séances de yoga en ligne | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose des séances de yoga accessibles en ligne et destinés à vous accompagner dans votre développement personnel et spirituel.{% endblock %}
+{% block ogImage %}{{app.request.getSchemeAndHttpHost ~ asset('build/images/design_yoga.jpeg') }}{% endblock %}
+
+{% block Titre %}Séances de yoga en ligne{% endblock %}
+{% block content %}
+    <div class="container my-5">
+        <section class="row mt-4 mb-3 align-items-center">
+            <div class="col-12 mb-2">
+                <p>Afin de vous permettre de suivre mes cours, suivant votre propre agenda et peu importe le lieu où vous vous trouvez, je vous propose ici des séances de yoga en ligne.</p>
+            </div>
+        </section>
+        <section class="row mt-4 mb-3 align-items-center text-justify">
+            <div class="col-12 mb-2">
+                <h4 class="mb-3"><strong>Contenu des enseignements :</strong></h4>
+                <p>Nous pratiquerons ensemble le Yoga Vinyasa.</p>
+                <p>En sanskrit, nyasa veut dire « placer » et vi « d’une certaine façon ».</p>
+                <p>On trouve souvent la définition de cette pratique comme la synchronisation du souffle et du mouvement. C’est une pratique dynamique dans laquelle les postures s’enchaînent suivant un flow composé de diverses séquences.</p>
+                <p>Dérivé de l’Ashtanga yoga, il est néanmoins beaucoup moins strict et codifié.</p>
+                <p>Vous avez dans le descriptif de chaque séance la thématique explorée, qui se veut à chaque fois différente et nouvelle.</p>
+                <p>Dans ma conception holistique du Yoga, j’amène toujours à mes séquences des pistes et des réflexions destinées à vous aider à cheminer sur la voie de votre croissance personnelle.</p>
+                Mes cours se veulent « Tous niveaux », et vous pouvez les suivre même si vous débutez. Je propose toujours des variations des postures, afin que chacun puisse trouver son épanouissement dans la pratique.</p>
+                <p>Les seules choses qu’il vous faut pour suivre mes cours en ligne sont :</p>
+                <ul>
+                    <li>un accès à internet pour visionner mes vidéos,</li>
+                    <li>un tapis de Yoga,</li>
+                    <li>et éventuellement des accessoires si vous en ressentez le besoin (blocs, sangles, coussin et couverture).</li>
+                </ul>
+                <p>Nous explorerons lors de ces séances :</p>
+                <ul>
+                    <li>Des postures, également appelées Asanas,</li>
+                    <li>Des respirations ou Pranayamas,</li>
+                    <li>De la méditation et visualisation,</li>
+                    <li>Des mantras.</li>
+                </ul>
+                <h4 class="mt-3"><strong>Durée des séances:</strong></h4>
+                <p>60 minutes.</p>
+                <h4><strong>Tarif :</strong></h4>
+                <p>12 euros par cours.<br/>
+                    Tarif préférentiel de 10 euros par séance au-delà de 3 séances commandées (Appliqué automatiquement à votre panier).</p>
+            </div>
+        </section>
+        {% if contents %}
+            <section class="row list mt-5 mb-3">
+                <h3 class="mb-4 col-12"><strong>Je réserve mes séances de yoga !</strong></h3>
+                {% for content in contents %}
+                    <article class="item col-12 col-sm-6 col-md-3 mb-3 d-flex flex-column align-items-center text-center">
+                        <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path('yogaOnline', { 'slug': content.slug }) }}">
+                            <figure>
+                                <div class="effect"></div>
+                                <img class="w-100" src="{{ asset('uploads/cover_img/'~content.img.url) }}" alt="{{ content.img.alt }}">
+                            </figure>
+                        </a>
+                        <div class="infos mt-3 w-100 mw-200">
+                            <h2 class="d-initial"><a href="{{ path('yogaOnline', { 'slug': content.slug }) }}">{{ content.title | raw }}</a></h2>
+                            <p>
+                                <strong>{{ content.Price }}€</strong>
+                            </p>
+                        </div>
+                    </article>
+
+                {% endfor %}
+            </section>
+        {% endif %}
+    </div>
+{% endblock %}

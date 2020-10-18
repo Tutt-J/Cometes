@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialiser mon mot de passe{% endblock %}
+{% block Titre %}Réinitialiser mon mot de passe{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        {{ form_start(resetForm) }}
+        {{ form_widget(resetForm) }}
+        {{ form_end(resetForm) }}
+    </div>
+
+{% endblock %}

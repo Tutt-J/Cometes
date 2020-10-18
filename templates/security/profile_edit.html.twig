@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer mes informations personnelles | {{ parent() }}{% endblock %}
+
+{% block Titre %}Editer mes informations personnelles{% endblock %}
+
+
+{% block content %}
+    <div class="container py-5">
+        <p class="mb-4"><a href="{{ path('app_account') }}"><< Revenir à mon compte</a></p>
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+        <div class="row">
+            <a class="col-12" href="{{ path('user_change_password') }}" class="text-warning"><strong>Réinitialiser mon mot de passe</strong></a>
+            <a class="col-12" href="{{ path('user_delete') }}" class="text-danger"><strong>Supprimer mon compte</strong></a>
+        </div>
+
+    </div>
+
+{% endblock %}

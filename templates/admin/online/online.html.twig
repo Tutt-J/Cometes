@@ -1,0 +1,83 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<h1>Magie en ligne</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Magie en ligne</li>
+</ol>
+<div class="d-flex mb-3">
+    <button onclick="location.href='{{path('createOnlineAdmin')}}';" class="btn btn-primary ml-auto">Créer un contenu</button>
+</div>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Liste des contenus en ligne
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Référence</th>
+                    <th>En ligne</th>
+                    <th>Image</th>
+                    <th>Vidéo</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Type</th>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Référence</th>
+                    <th>En ligne</th>
+                    <th>Image</th>
+                    <th>Vidéo</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for ritual in rituals %}
+                    <tr>
+                        <td>{{ ritual.type.slug | capitalize }}</td>
+                        <td>{{ ritual.title }}</td>
+                        <td>{{ ritual.content  | truncate(75, true) | raw}}</td>
+                        <td>{{ ritual.price }}€</td>
+                        <td>{{ ritual.ref }}</td>
+                        <td>
+                            {% if ritual.isOnline == 1 %}
+                                Oui
+                            {% else %}
+                                Non
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if ritual.img %}
+                                <img style="max-width:150px" src="{{ asset('uploads/cover_img/'~ritual.img.url) }}"/>
+                            {% endif %}
+                        </td>
+                       <td><a href= 'https://www.youtube.com/watch?v='~ritual.onlineLink>Voir</a></td>
+                        <td>{{ritual.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>{{ritual.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>
+                            <a  onclick="window.open(this.href);return false" href="{{ path(ritual.type.slug~'Online', { 'slug': ritual.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
+                            <a href="{{ path('updateOnlineAdmin', {'id':ritual.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Slowbuilding | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose des activités et ateliers destinés
+    à vos collaborateurs et leur bien-être.{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_slow_building.jpeg') }}{% endblock %}
+
+{% block Titre %}Slowbuilding{% endblock %}
+
+{% block content %}
+    <div class="container ritual text-justify  mb-5">
+        <div class="row mt-5 mb-3 align-items-center">
+            <figure class="mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6 col-lg-5 text-center">
+                <img class="mw-200 w-100" src="{{ asset('build/images/fleurs-plateau.jpeg') }}" alt="Demi-cercle de fleurs">
+            </figure>
+            <div class="col-lg-7">
+                <p>La richesse et la durabilité d&#39;une entreprise reposent avant tout sur les êtres humains qui
+                    l&#39;incarnent et lui donnent vie, mais aussi sur leur capacité à travailler ensemble.
+                    Nombre d’entrepreneurs l’ont compris et ont recours au team building pour fédérer leurs
+                    organisations.</p>
+                <p>A l’ère des burn-out et de nombreux cas de souffrance au travail, nombre de sociétés ont
+                    également à cœur de favoriser le bien-être et la communication au sein de leurs équipes.
+                    C’est pour répondre à ces besoins que je propose également des activités et ateliers destinés
+                    à vos collaborateurs et leur bien-être.</p>
+                <p ><strong>Mes ateliers :</strong></p>
+                <ul >
+                    <li>Gestion du stress par le yoga et la méditation,</li>
+                    <li>Soin collectif de relaxation par les bols tibétains.</li>
+                </ul>
+                <p>J’imagine également et à la demande des séjours et séminaires d’entreprises sur les
+                    thématiques du bien-être au travail.</p>
+                <p>Pour de plus amples renseignements, n’hésitez pas à me contacter via le formulaire de
+                    contact ou directement par mail à l’adresse <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel<!--triugtb65-->lo@cha<!--t5588h^ùm^th-->made.co</a>.</p>
+            </div>
+        </div>
+    </div>
+    {% include 'events/_opinions.html.twig' %}
+
+{% endblock %}

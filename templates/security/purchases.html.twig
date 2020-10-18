@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes | {{ parent() }}{% endblock %}
+
+{% block Titre %}Historique des commandes{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <p class="mb-4"><a href="{{ path('app_account') }}"><< Revenir à mon compte</a></p>
+        {% if purchases is empty %}
+            <em>Vous n'avez pas encore passé de commande</em>
+        {% else %}
+            <div class="accordion" id="accordionExample">
+                {% for purchase in purchases %}
+                    <div class="card">
+                        <div class="card-header" style="cursor: pointer;" id="headingOne" data-toggle="collapse" data-target="{{ '#collapse'~loop.index }}" aria-expanded="true" aria-controls="{{ 'collapse'~loop.index }}">
+                            <p>
+                                Commande du {{ purchase.purchase.createdAt | date ('d/m/Y') }} - {{ purchase.purchase.amount }}€
+                            </p>
+                        </div>
+
+                        <div id="{{ 'collapse'~loop.index }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body row justify-content-between">
+                                <ul>
+                                    {%  for content in purchase.contents %}
+                                        <li class="mb-3"><a href="{{ path(content.path, {'slug':content.entity.slug}) }}">{{ content.entity.title }}</a> <br/>
+                                            {% if content.entity.ref is defined %}
+                                                <small><em>{{ content.entity.ref }}</em></small> <br/>
+                                            {% endif %}
+                                            Prix : {{ content.price }}€<br/>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div>
+                                    <a download href="{{ '/invoices/Facture_WEB'~ purchase.purchase.createdAt | date('Y')~'_'~purchase.purchase.id~'.pdf' }}">Télécharger ma facture</a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+            </div>
+        {% endif %}
+        <p class="text-center mt-3"><strong>Retrouvez toute votre magie en ligne <a href="{{ path('app_account_online_content') }}">ici</a></strong></p>
+    </div>
+
+{% endblock %}

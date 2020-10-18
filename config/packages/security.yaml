@@ -1,0 +1,40 @@
+security:
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: ~
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            logout:
+                path: app_logout
+                invalidate_session: false
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: '^/secure', roles: ROLE_ADMIN, requires_channel: https }
+        - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        # catch all other URLs
+        - { path: '^/admin', roles:  [IS_AUTHENTICATED_FULLY, ROLE_ADMIN], requires_channel: https }
+        - { path: '^/mon-compte', roles: ROLE_USER, requires_channel: https }
+        - { path: '^/efconnect', role: ROLE_ADMIN }
+        - { path: '^/elfinder', role: ROLE_ADMIN }
+        - { path: '^/evenements/s-inscrire', roles: ROLE_USER, requires_channel: https}
+

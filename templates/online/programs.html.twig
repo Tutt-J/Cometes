@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Programmes | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose des Programmes accessibles en ligne et destinés à vous accompagner dans votre développement personnel et spirituel.{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_magie.jpeg') }}{% endblock %}
+
+{% block Titre %}Programmes{% endblock %}
+{% block content %}
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12">
+                <p>Je travaille fort sur de nouveaux projets qui seront d&eacute;voil&eacute;s sous peu&nbsp;!</p>
+                <p>Pour &ecirc;tre inform&eacute;e en avant-premi&egrave;re, inscris-toi &agrave; ma newsletter et rejoins mon groupe priv&eacute; sur Facebook.</p>
+            </div>
+        </div>
+        {% if programs %}
+        <section class="row list mt-5 mb-3">
+            <h3 class="mb-4 col-12"><strong>Je m'inscris aux programmes !</strong></h3>
+            {% for program in programs %}
+                <article class="item col-12 col-sm-6 col-md-3 mb-3 d-flex flex-column align-items-center text-center">
+                    <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path('programOnline', { 'slug': program.slug }) }}">
+                        <figure>
+                            <div class="effect"></div>
+                            <img class="w-100" src="{{ asset('/uploads/cover_img/'~program.img.url) }}" alt="{{ program.img.alt }}">
+                        </figure>
+                    </a>
+                    <div class="infos mt-3 w-100 mw-200">
+                        <h2 class="d-initial"><a href="{{ path('programOnline', { 'slug': program.slug }) }}">{{ program.title | raw }}</a></h2>
+                        <p>
+                            <strong>{{ program.Price }}€</strong>
+                        </p>
+                    </div>
+                </article>
+
+            {% endfor %}
+        </section>
+        {% endif %}
+    </div>
+
+    {% include 'index/_social.html.twig' %}
+{% endblock %}

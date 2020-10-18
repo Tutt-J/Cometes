@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes e-books | {{ parent() }}{% endblock %}
+
+{% block Titre %}Mes e-books{% endblock %}
+
+
+{% block headScript %}
+    <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <p class="mb-4"><a href="{{ path('app_account') }}"><< Revenir à mon compte</a></p>
+        {% if contentsOnline is empty %}
+            <p>Vous n'avez pas encore commandé de e-books. Vous êtes interessé, cliquez <a href="{{ path('eBooksOnline') }}">ici</a></p>
+        {% endif %}
+        <div class="row mt-4">
+            {% for ebook in contentsOnline %}
+            <div class="col-md-4 text-center">
+                <a target="_blank" class="col-12 mt-3 d-block" href="{{path('app_ebook', { 'path':  ebook.onlineLink~'.pdf' })}}"><img class="mw-100" src="{{ asset('uploads/cover_img/'~ebook.coverImg.Url) }}" alt="{{ ebook.coverImg.Alt }}"></a>
+                <a target="_blank" class="col-12 mt-3 d-block" href="{{path('app_ebook', { 'path':  ebook.onlineLink~'.pdf' })}}"><i class="far fa-eye mr-3"></i>Lire en ligne</a>
+                <a class="col-12 mt-3 d-block" href="{{path('app_ebook', { 'path':  ebook.onlineLink~'.pdf' })}}" download><i class="fas fa-download mr-3"></i>Télécharger</a>
+            </div>
+            {% endfor %}
+        </div>
+{% endblock %}
+
+{% block script %}
+<script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
+{% endblock %}

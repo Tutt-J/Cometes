@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% if app.session.get('acceptCookies') %}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107700688-5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-107700688-5');
+        </script>
+    {% endif %}
+    <meta charset="UTF-8">
+    <link rel="icon" href="{{ asset('build/images/favicon.png') }}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Chamade{% endblock %}</title>
+    <meta name="description" content="{% block metaDescription %}Chamade vous accompagne sur le chemin de votre développement personnel et spirituel.{% endblock %}" />
+    <meta property="og:url" content=" {% block ogUrl %}{{ app.request.uri }}{% endblock %}" />
+    <meta property="og:type" content=" {% block ogType %}website{% endblock %}" />
+    <meta property="og:title" content="{{  block('title') }}" />
+    <meta property="og:description" content=" {{ block('metaDescription') }}" />
+    <meta property="og:image" content="{% block ogImage %}{{  app.request.getSchemeAndHttpHost ~ asset('build/images/logo_basique.png') }}{% endblock %}" />
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block headScript %}
+    {% endblock %}
+</head>
+<body>
+    <div class="loader"></div>
+    {# FLASHBAG MESSAGE #}
+    {% set success = app.flashes('success') %}
+    {% if success is not empty %}
+        <div class="alert alert-fade alert-success">
+            {% for message in success %}
+                {{ message }}<br/>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% set info = app.flashes('info') %}
+    {% if info is not empty %}
+        <div class="alert alert-fade alert-info">
+            {% for message in info %}
+                {{ message }}<br/>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% set error =  app.flashes('error')  %}
+    {% if error is not empty %}
+        <div class="alert alert-fade alert-danger">
+            {% for message in error %}
+                {{ message }}<br/>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {# END FLASHBAG MESSAGE #}
+
+    {# LOAD HOME HEADER #}
+    {% if app.request.attributes.get('_route') != 'home' %}
+        <header class="position-absolute w-100 page-header d-flex flex-column align-items-center bg-header"
+                style="background-image: url({% block bannerUrl %}{{ asset('build/images/bg_header.jpeg') }}{% endblock %})">
+            <div class="container d-flex flex-wrap  justify-content-around">
+                <div class="row col-12 align-items-center">
+                    <a class="text-center mx-auto" href="{{ path('home') }}">
+                        <img class="w-50" src="{{ asset('build/images/logo_blanc.png') }}" alt="Logo de chamade"/>
+                    </a>
+                    {% include '_nav.html.twig' %}
+                </div>
+                <div class="row my-5">
+                    <h1 class="px-3">{% block Titre %}{% endblock %}</h1>
+                </div>
+            </div>
+            <div class="container-fluid position-fixed d-none" style="background:#f2b6a0">
+                <div class="container  d-flex flex-wrap align-items-center justify-content-around">
+                    <a class="text-center" href="{{ path('home') }}">
+                        <img class="w-50" src="{{ asset('build/images/logo_blanc.png') }}" alt="Logo de chamade"/>
+                    </a>
+                    {% include '_nav.html.twig' %}
+                </div>
+            </div>
+        </header>
+    {# LOAD OTHERS PAGE HEADER #}
+    {% else %}
+        <header class="position-fixed w-100">
+            <div class="row justify-content-center mt-3 big_logo">
+                <a class="text-center " href="{{ path('home') }}">
+                    <img class="w-50" src="{{ asset('build/images/logo_blanc.png') }}" alt="Logo de chamade"/>
+                </a>
+            </div>
+            <div class="container d-flex flex-wrap align-items-center justify-content-around">
+                <a class="text-center d-none little_logo" href="{{ path('home') }}">
+                    <img class="w-50" src="{{ asset('build/images/logo_blanc.png') }}" alt="Logo de chamade"/>
+                </a>
+                {% include '_nav.html.twig' %}
+            </div>
+        </header>
+    {% endif %}
+    {# END HEADER#}
+
+    {# PAGE CONTENT #}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {# END PAGE CONTENT#}
+
+    {# FOOTER #}
+    <footer class="text-center">
+        <div class="container">
+            <div class="row">
+                <h3 class="mt-3 col-12">Retrouvez nous sur</h3>
+                <div class="m-auto">
+                    <a href="https://www.facebook.com/chamadepage"><i class="fab fa-facebook-square"></i></a>
+                    <a href="https://www.instagram.com/_chamade_/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="row mt-3 ">
+                <div class="col-12">
+                    <p class="mb-1">Chamade © 2020</p>
+                    <p>Made by <a href="https://www.digistos.com">Digistos</a></p>
+                </div>
+            </div>
+            <ul class="row mt-2 list-unstyled justify-content-center">
+                <li class="ml-2 mr-2"><a href="{{ path('legalNotice') }}">Mentions légales</a></li>
+                <li class="ml-2 mr-2"><a href="{{ path('privacyPolicy') }}">Politique de confidentialité</a></li>
+                <li class="ml-2 mr-2"><a href="{{ path('cookieNotice') }}">Politique des cookies</a></li>
+                <li class="ml-2 mr-2"><a href="{{ path('TOSales') }}">CGV</a></li>
+                <li class="ml-2 mr-2"><a href="{{ path('TOEvent') }}">Conditions particulières pour les évènements et séjours</a></li>
+            </ul>
+        </div>
+    </footer>
+    {# ENDFOOTER #}
+
+    {# COOKIES NOTICE#}
+    {% if not app.session.get('acceptCookies') %}
+        <div class="container-fluid">
+            <div class="cookie-notice row p-3 w-100 background-dark-green position-fixed align-items-center justify-content-between" >
+                <p class="text-white text-center m-0 col-12 col-md-7 col-lg-8">Ce site Web utilise des cookies pour personnaliser le contenu et analyser le trafic afin de vous offrir une meilleure expérience.
+                    <a href="{{ path('cookieNotice') }}">Lire la politique des cookies</a>
+                </p>
+                <div class="col-12 col-md-5 row mx-auto justify-content-center col-lg-4 justify-content-md-end">
+                    <button class="accept col-12 col-sm-4  btn btn-success mr-sm-3 mt-3 mt-md-0">J'accepte</button>
+                    <button class="refuse col-12 col-sm-4 btn btn-danger mt-3 mt-md-0">Je refuse</button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {# END COOKIES NOTICE#}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    </body>
+</html>
+

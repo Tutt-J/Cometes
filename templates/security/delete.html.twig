@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supprimer mon compte | {{ parent() }}{% endblock %}
+
+{% block Titre %}Supprimer mon compte{% endblock %}
+
+{% block content %}
+    <div class="container py-5 text-center">
+        <h2 class="mb-3">Souhaitez-vous vraiment supprimer votre compte et vos données personnelles ?</h2>
+        <p>Si vous continuez, votre compte sera désactivé et l'ensemble de vos données seront anonymisées.</p>
+        <p><em>"L’anonymisation est un traitement qui consiste à utiliser un ensemble de techniques de manière à rendre impossible, en pratique, toute identification de la personne par quelque moyen que ce soit et ce de manière irréversible. Lorsque l’anonymisation est effective, le RGPD ne s’applique plus aux données ainsi anonymisées, celles-ci n’étant dès lors plus à caractère personnel.</em>"</p>
+        <form method="post" action="">
+            <div class="form-group col-12">
+                <button type="submit" id="delet_confirm" name="delete_confirm" class="btn btn-primary">Supprimer mon compte</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

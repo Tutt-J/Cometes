@@ -1,0 +1,77 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<h1>{{ articles.title }}</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active"><a href="{{ path('eventsAdmin') }}">Évènements</a></li>
+    <li class="breadcrumb-item active">{{ articles.title }}</li>
+</ol>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        {{ articles.title }}
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>E-mail</th>
+                    <th>Date d'inscription</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>E-mail</th>
+                    <th>Date d'inscription</th>
+                    <th>Actions</th
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for article in articles.userEvents %}
+                <tr>
+                    <td>{{ article.user.lastName }}</td>
+                    <td>{{ article.user.firstName }}</td>
+                    <td><a href="mailto:{{ article.user.email }}">{{ article.user.email }}</a></td>
+                    <td>{{article.order.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                    <td>
+                        <a  onclick="window.open(this.href);return false" href="{{ path('blogArticle', { 'slug': article.event.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
+                        <a href="{{ path('updatePostAdmin', {'id':article.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
+                        <p data-id="{{ article.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Voulez vous supprimer
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <form action="{{ path('deletePostAdmin') }}" method="post">
+                            <input type="hidden" class="idValue" name="id" value="">
+                            <input type="submit" class="btn btn-primary" value="Supprimer"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

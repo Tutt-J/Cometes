@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{content.title}} | {{ parent() }}{% endblock %}
+{% block metaDescription %}{{ content.content|striptags("&nbsp;&gt;")|truncate(155, '...') }}{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('uploads/cover_img/'~content.img.url) }}{% endblock %}
+
+{% block ogTitle %}{{content.title}} | {{ parent() }}{% endblock %}
+
+{% block Titre %}{{content.title}}{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <p class="mb-4"><a href="{{ path(path~'sOnline') }}"><< Retour à la liste</a></p>
+        <hr>
+        <div class="m-sm-auto mw-sm-75 mw-lg-100 d-flex flex-wrap justify-content-around">
+            <div class="image-gallery mb-3 col-12 col-lg-6">
+                <figure >
+                    <img class="primary mw-200 w-100" src="{{ asset('uploads/cover_img/'~content.img.url) }}" alt="{{ content.img.alt }}"/>
+                </figure>
+            </div>
+            <div class="infos p-3 col-12 col-lg-6">
+                <h1>{{content.title}}</h1>
+                <p>Référence : <em>{{content.ref}}</em></p>
+                <div class="mb-3 text-justify">{{content.content | raw}}</div>
+                <p><strong>Prix :</strong>
+                    {{content.price}}€
+                </p>
+                <form action="{{ path('addBasket') }}" method="post" class="form-inline">
+                    <input type="hidden" id="id" name="id" value="{{content.id}}">
+                    <input class="btn btn-primary" type="submit"  id="addBasket" name="addBasket" value="Ajouter au panier">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

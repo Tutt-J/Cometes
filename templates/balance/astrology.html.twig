@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Astrologie | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose la lecture de votre carte du ciel, comme un outil de compréhension de votre incarnation et de votre mission de vie.{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_astrologie.jpeg') }}{% endblock %}
+
+{% block Titre %}Astrologie{% endblock %}
+{% block content %}
+        <div class="container ritual text-justify  mb-5">
+            <section class="row mt-4 align-items-center mb-3" >
+                <div class="col-12">
+                    <p>Depuis toute petite je suis fascinée par les Astres et les Planètes.</p>
+                    <p>Si je n’ai jamais douté de leur influence sur nos humeurs, j’ai découvert en me formant à
+                        l’astrologie qu’ils constituaient une clé de lecture précieuse sur la voie du développement
+                        personnel et spirituel.</p>
+
+                    <p>A partir de novembre, je proposerai des lectures de cartes du ciel dont l’objectif est de vous
+                        guider vers une meilleure connaissance de vous-même.</p>
+                    <p>Ma démarche n’est ni fataliste, ni prédictive.</p>
+                    <p>Mon approche est celle d&#39;une astrologie du développement personnel, destinée à vous
+                        éveiller à vous-même, à mieux connaître les énergies qui vous composent et, in fine, à
+                        favoriser une meilleure acceptation de soi.</p>
+                    <p>Comment ça se passe ?</p>
+                    <p>Une fois les informations requises en ma possession, nous convenons d’un rendez-vous de
+                        lecture ensemble via l’application ZOOM.</p>
+                    <p>Préparée au préalable (ce qui constitue un temps préparatoire d’environ 2-3 heures), je vous
+                        présente alors de vive voix, pendant une heure environ, les principaux traits ressortant de
+                        votre carte du ciel.</p>
+                    <p>Avec notamment :</p>
+                    <ul>
+                        <li> L’étude de votre signe de Soleil, de Lune et votre ascendant.</li>
+                        <li>L’étude des énergies maitresses ou manquantes (eau, terre, air et feu).</li>
+                        <li>Les éléments marquants de votre carte (alliances, oppositions…).</li>
+                        <li>L’étude de Saturne et des nœuds lunaires, pour mieux comprendre votre incarnation
+                            et mission d’âme.</li>
+                    </ul>
+                </div>
+                <div class="mt-3 col-12">
+                    <h3><strong>Infos pratiques :</strong></h3>
+                    <p>Service disponible à partir de novembre.</p>
+                    <p><strong>Durée :</strong> 1h30</p>
+                    <p><strong>Tarif :</strong> 80 euros</p>
+                    <p>Contactez-moi pour réserver votre séance à <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel<!--triugtb65-->lo@cha<!--t5588h^ùm^th-->made.co</a>.</p>
+                </div>
+            </section>
+        </div>
+{% endblock %}

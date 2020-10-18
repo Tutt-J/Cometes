@@ -1,0 +1,42 @@
+<section class="container-fluid pt-3 pb-3 background-dark-green rm-content-margin">
+    <div class="container">
+        <div class="row list justify-content-around flex-wrap">
+            {% if 'rituals' not in app.request.attributes.get('_route') %}
+                <div class="item item-5 mb-5 d-flex flex-column m-lg-2">
+                    <a class="text-center" href="{{ path('ritualsOnline') }}">
+                        <figure class="change-ratio">
+                            <img class="mw-100 h-100" src="{{ asset('build/images/design_rituels_en_ligne.jpeg') }}" alt="">
+                        </figure>
+                    </a>
+                </div>
+            {% endif %}
+            {% if 'eBooks' not in app.request.attributes.get('_route') %}
+                <div class="item item-5 mb-5 d-flex flex-column m-lg-2">
+                    <a class="text-center" href="{{ path('eBooksOnline') }}">
+                        <figure class="change-ratio">
+                            <img class="mw-100 h-100" src="{{ asset('build/images/design_ebooks.jpeg') }}" alt="">
+                        </figure>
+                    </a>
+                </div>
+            {% endif %}
+            {% if 'podcasts' not in app.request.attributes.get('_route') %}
+                <div class="item item-5 mb-5 d-flex flex-column m-lg-2">
+                    <a class="text-center" href="{{ path('podcastsOnline') }}">
+                        <figure class="change-ratio">
+                            <img class="mw-100 h-100" src="{{ asset('build/images/design_podcasts.jpeg') }}" alt="">
+                        </figure>
+                    </a>
+                </div>
+            {% endif %}
+            {% if 'videos' not in app.request.attributes.get('_route') %}
+                <div class="item item-5 mb-5 d-flex flex-column m-lg-2">
+                    <a class="text-center" href="{{ path('videosOnline') }}">
+                        <figure class="change-ratio">
+                            <img class="mw-100 h-100" src="{{ asset('build/images/design_videos.jpeg') }}" alt="">
+                        </figure>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

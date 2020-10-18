@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <h1>Modifier un programme</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('programsAdmin') }}">Programmes</a></li>
+        <li class="breadcrumb-item active">Modifier un programme</li>
+    </ol>
+    {{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.content) }}
+    {{ form_row(form.img) }}
+    {{ form_row(form.teachable_url) }}
+    {{ form_row(form.price) }}
+    {{ form_row(form.isOnline) }}
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande validée | {{ parent() }}{% endblock %}
+{% block Titre %}Votre commande est validée !{% endblock %}
+{% block content %}
+    <div class="container my-5">
+        <h2 class="mt-3 mb-4">Récapitulatif</h2>
+        <div class="wrapper table">
+            <div class="Rtable Rtable--5cols Rtable--collapse">
+                <div class="Rtable-row Rtable-row--head d-none d-md-flex">
+                    <div class="Rtable-cell image-cell column-heading text-center">Image</div>
+                    <div class="Rtable-cell libelle-cell column-heading">Libellé</div>
+                    <div class="Rtable-cell prix-link-cell column-heading">Prix</div>
+                </div>
+
+                {% for content in app.session.get('purchaseSuccess') %}
+                    <div class="Rtable-row align-items-center">
+                        <div class="Rtable-cell image-cell">
+                            <div class="Rtable-cell--content image-content text-center">
+                                <img class="mw-100" src="{{ asset('uploads/cover_img/'~content['imageUrl']) }}" alt="{{ content['imageAlt'] }}"/>
+                            </div>
+                        </div>
+                        <div class="Rtable-cell libelle-cell">
+                            <div class="Rtable-cell--content libelle-content"><a href="{{ path(content.path, { 'slug': content.Entity.slug }) }}">{{content.Entity.Title}}</a>
+                                <br/>
+                                <small>
+                                    <em>{{content.Entity.Ref}}</em>
+                                </small></div>
+                        </div>
+                        <div class="Rtable-cell prix-link-cell">
+                            <div class="Rtable-cell--content prix-link-content">
+                                {% if content.isFidelity %}
+                                    {{ content.Entity.fidelityPrice}}€
+                                    <br/><em>Remise fidélité appliquée</em>
+                                {% else %}
+                                    {{ content.Entity.price}}€
+                                {% endif %}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="column">
+            <p class="text-right col-12 ">
+                <strong>Total : {{ app.session.get('purchaseSuccessInfos')['totalAmount']}}€</strong> <br>
+                <small>TVA non applicable - article 293 B du CGI </small>
+            </p>
+        </div>
+        <p class="text-center"><strong>Vous pouvez retrouver vos contenus achetés <a href="{{ path('app_account_online_content') }}">ici</a></strong></p>
+    </div>
+{% endblock %}

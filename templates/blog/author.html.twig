@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{author.name}} | {{ parent() }}{% endblock %}
+{% block metaDescription %}{{ author.content|striptags("&nbsp;&gt;")|truncate(155, '...') }}{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/'~author.img.url) }}{% endblock %}
+
+{% block Titre %}{{author.name}}{% endblock %}
+
+{% block content %}
+    <section class="container page-author py-5">
+        <div class="author d-flex flex-wrap justify-content-around">
+            <figure class="col-12 text-center">
+                <img class="mb-4 mb-md-0" src="{{ asset('uploads/cover_img/'~author.img.url) }}" alt="{{ author.img.alt }}"/>
+            </figure>
+            <div class="mt-4 mb-4 col-12">
+                <div class="text-justify">{{ author.content | raw }}</div>
+            </div>
+        </div>
+        <div class="author-article mt-5 ">
+            <h2 class="mb-4">Ses derniers articles</h2>
+            <div class="row list full-height-list justify-content-around flex-wrap">
+                {% for article in articles %}
+                    {% set index = loop.index0  %}
+                    <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">
+                        <a class="d-flex align-items-center text-center w-100 w-md-75 mw-200" href="{{ path('blogArticle', { 'slug': article.slug }) }}">
+                            <figure>
+                                <div class="effect"></div>
+                                <img class="w-100" src="{{ asset('uploads/cover_img/'~article.img.url) }}" alt="{{ article.img.alt }}">
+                            </figure>
+                        </a>
+                        <div class="infos mt-3 w-100 w-md-75 mw-200">
+                            <p>
+                                <a href="{{ path('blogCategory', { 'slug': article.category.slug }) }}">{{ article.category.wording }}</a>
+                            </p>
+                            <h2 class="d-initial"><a href="{{ path('blogArticle', { 'slug': article.slug }) }}">{{article.title}}</a></h2>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier | {{ parent() }}{% endblock %}
+
+{% block Titre %}Panier{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        {% if app.session.get('basket') is empty %}
+            <em>Votre panier est vide. Vous pouvez visiter notre rubrique <a href="{{ path('homeOnline') }}">"Magie en ligne"</a></em>
+        {% else %}
+            <div class="wrapper table">
+                <div class="Rtable Rtable--5cols Rtable--collapse">
+                    <div class="Rtable-row Rtable-row--head d-none d-md-flex">
+                        <div class="Rtable-cell image-cell column-heading text-center">Image</div>
+                        <div class="Rtable-cell libelle-cell column-heading">Libellé</div>
+                        <div class="Rtable-cell prix-link-cell column-heading">Prix</div>
+                        <div class="Rtable-cell action-link-cell column-heading">Action</div>
+                    </div>
+
+                    {% for content in app.session.get('basket') %}
+                        <div class="Rtable-row align-items-center">
+                            <div class="Rtable-cell image-cell">
+                                <div class="Rtable-cell--content image-content text-center">
+                                    <img class="mw-100" src="{{ asset('uploads/cover_img/'~content['imageUrl']) }}" alt="{{ content['imageAlt'] }}"/>
+                                </div>
+                            </div>
+                            <div class="Rtable-cell libelle-cell">
+                                <div class="Rtable-cell--content libelle-content"><a href="{{ path(content.path, { 'slug': content.Entity.slug }) }}">{{content.Entity.Title}}</a>
+                                    <br/>
+                                    <small>
+                                        <em>{{content.Entity.Ref}}</em>
+                                    </small></div>
+                            </div>
+                            <div class="Rtable-cell prix-link-cell">
+                                <div class="Rtable-cell--content prix-link-content">{{  content.Entity.Price}}€</div>
+                            </div>
+                            <div class="Rtable-cell action-link-cell">
+                                <div class="Rtable-cell--content action-link-content">
+                                    <form action="{{ path('removeContentBasket') }}" method="post">
+                                        <input type="hidden" id="id" name="id" value="{{content.Entity.id}}">
+                                        <button type="submit" class="btn btn-danger" id="removeBasket" name="removeBasket">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="column">
+                <p class="text-right col-12 ">
+                    <strong>Total avant remise (à l'étape suivante) : {{ app.session.get('purchaseInfos')['totalAmount']}}€</strong> <br>
+                    <small>TVA non applicable - article 293 B du CGI </small>
+                </p>
+                <p class="text-right col-12">
+                    <button onclick="location.href='{{ path("home") }}'" type="submit" class="btn btn-info mb-3 mb-sm-0" id="processBasket" name="processBasket">
+                        Poursuivre mes achats
+                    </button>
+                    <button onclick="location.href='{{ path("processBasket") }}'" type="submit" class="btn btn-success mb-3 mb-sm-0" id="processBasket" name="processBasket">
+                        Passer la commande
+                    </button>
+                </p>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<h1>Catégories</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Catégories</li>
+</ol>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Liste des catégories
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Nombre d'utilisation</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Nombre d'utilisation</th>
+                    <th>Date de création</th>
+                    <th>Date de mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.wording }}</td>
+                        <td>{{ category.content  | truncate(75, true) | raw}}</td>
+                        <td>{{ category.articles | length }}</td>
+                        <td>{{category.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>{{category.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>
+                            {% if category.id != 13 %}
+                                <a  onclick="window.open(this.href);return false" href="{{ path('blogCategory', { 'slug': category.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
+                                <a href="{{ path('updateCategoryAdmin', {'id': category.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
+                                <p data-title="{{ category.wording }}" data-id="{{ category.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Etes-vous sûr de vouloir supprimer la catégorie "<span class="titleValue"></span>" ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <form action="{{ path('deleteCategoryAdmin') }}" method="post">
+                            <input type="hidden" class="idValue" name="id" value="">
+                            <input type="submit" class="btn btn-primary" value="Supprimer"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
