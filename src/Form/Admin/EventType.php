@@ -28,6 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -126,6 +127,7 @@ class EventType extends BaseType
             ->add('price', IntegerType::class, [
                 'label' => 'Prix<span class="text-danger"> *</span>',
                 'label_html' => true,
+                'required' => true
             ])
             ->add('eventPriceType', CollectionType::class, [
                 'entry_type' => AdminEventPriceType::class,
@@ -142,6 +144,21 @@ class EventType extends BaseType
                 'label' => 'Nombre maximum de participantes<span class="text-danger"> *</span>',
                 'label_html' => true,
             ])
+            ->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                function (FormEvent $event) use ($builder) {
+                    $identifier = $event->getData();
+                    $element = $event->getForm();
+                    if ($identifier) {
+                        if (empty($event->getData()['price']) && empty($event->getData()['eventPriceType'])) {
+                                $element->addError(new FormError('Vous devez choisir au moins un tarif ou une liste de tarif.'));
+                        }
+                        $event->setData($identifier);
+                    }
+                }
+
+            )
+
         ;
     }
 }
