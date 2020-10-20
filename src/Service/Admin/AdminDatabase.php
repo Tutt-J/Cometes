@@ -210,11 +210,13 @@ class AdminDatabase
     public function event($form)
     {
         $event = $form->getData();
+        if($event->getPrice() == null && !empty($event->getEventPricings())){
+            $event->setPrice(0);
+        }
         $this->setMultiplePricing($form, $event);
         $this->setImg($form, $event);
         $event->setStartDate($this->formatDate($form->get('startDate')->getData(), 'd/m/Y H:i'));
         $event->setEndDate($this->formatDate($form->get('endDate')->getData(), 'd/m/Y H:i'));
-
         $this->em->persist($event);
         $this->em->flush();
     }

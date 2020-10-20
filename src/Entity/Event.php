@@ -99,6 +99,12 @@ class Event
      */
     private $address;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $onlineEvent;
+
+
     public function __construct()
     {
         $this->userEvents = new ArrayCollection();
@@ -324,6 +330,18 @@ class Event
                 $eventPricing->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOnlineEvent(): ?bool
+    {
+        return $this->onlineEvent;
+    }
+
+    public function setOnlineEvent(bool $onlineEvent): self
+    {
+        $this->onlineEvent = $onlineEvent;
 
         return $this;
     }

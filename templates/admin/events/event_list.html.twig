@@ -39,7 +39,7 @@
                     <td>{{ article.user.lastName }}</td>
                     <td>{{ article.user.firstName }}</td>
                     <td><a href="mailto:{{ article.user.email }}">{{ article.user.email }}</a></td>
-                    <td>{{article.order.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                    <td>{{article.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                     <td>
                         <a  onclick="window.open(this.href);return false" href="{{ path('blogArticle', { 'slug': article.event.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
                         <a href="{{ path('updatePostAdmin', {'id':article.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>

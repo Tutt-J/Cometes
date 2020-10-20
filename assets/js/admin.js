@@ -27,9 +27,7 @@ $(document).ready(function() {
         });
 
         // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-        if (index == 0) {
-            addPricing($container);
-        } else {
+        if (index !== 0) {
             // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
             $container.children('fieldset').each(function(index) {
                 $(this).children('legend').text('Tarif n°' + (index+1))

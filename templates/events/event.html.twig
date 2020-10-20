@@ -39,7 +39,9 @@
         <section class="row justify-content-around my-5 box_infos background-green text-center p-3 mx-2 mx-sm-0">
             <div class="col-md-4">
                 <h4><strong>Lieu</strong></h4>
-                {% if event.address is null %}
+                {% if event.onlineEvent %}
+                    <p>En ligne</p>
+                {% elseif event.address is null %}
                     <p>A définir.</p>
                 {% else %}
                     <address>{{ event.address.name }}<br/>

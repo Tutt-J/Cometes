@@ -43,7 +43,7 @@ class EventPriceType extends AbstractType
                 'query_builder' => function (EventPricingRepository $er) use ($options) {
                     return $er->createQueryBuilder('u')
                         ->where('u.event = :event')
-                        ->andWhere('u.startValidityDate <= :now or u.endValidityDate > :now')
+                        ->andWhere('u.startValidityDate <= :now or u.endValidityDate >= :now')
                         ->setParameter('now', (new DateTime())->format('Y-m-d'))
                         ->setParameter('event', $options['event'])
 
