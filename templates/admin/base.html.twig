@@ -17,10 +17,7 @@
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
-            </div>
+                <button class="btn btn-info" onclick="location.href='{{path('home')}}';" type="button">Retour au site</button>
         </div>
     </form>
     <!-- Navbar-->
@@ -28,10 +25,10 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">Settings</a>
-                <a class="dropdown-item" href="#">Activity Log</a>
+                <a class="dropdown-item" href="{{ path('app_account') }}">Compte client</a>
+                <a class="dropdown-item" href="{{ path('updateUserAdmin', {'id': app.user.id}) }}">Editer mon profil</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="login.html">Logout</a>
+                <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
             </div>
         </li>
     </ul>
@@ -94,7 +91,7 @@
                     </a>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
+                    <div class="small">Connecté en tant que:</div>
                     {{ app.user.username }}
                 </div>
         </nav>

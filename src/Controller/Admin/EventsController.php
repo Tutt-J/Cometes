@@ -109,20 +109,13 @@ class EventsController extends AbstractController
 
 
         $form = $this->createForm(EventType::class, $event);
-        $form->get('startDate')->setData(($event->getStartDate()->format('d/m/Y H:i')));
-
-        if (!is_null($event->getEndDate())) {
-            $form->get('endDate')->setData(($event->getEndDate()->format('d/m/Y H:i')));
-        }
-
-        $form->get('eventPriceType')->setData($event->getEventPricings());
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $adminDatabase->event($form);
 
-            $this->addFlash('success', 'L\'évènement a bien été mise à jour');
+            $this->addFlash('success', 'L\'évènement a bien été mis à jour');
 
             return $this->redirectToRoute('eventsAdmin');
         }

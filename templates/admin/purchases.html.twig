@@ -51,8 +51,8 @@
                         <td>{{ purchaseLine.purchase.content }}</td>
                         <td>{{ purchaseLine.purchase.status }}</td>
                         <td>{{ purchaseLine.purchase.stripeId }}</td>
-                        <td>{{purchaseLine.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
-                        <td>{{purchaseLine.purchase.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td data-sort="{{purchaseLine.purchase.createdAt |date("Y/m/d")}}">{{purchaseLine.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td data-sort="{{purchaseLine.purchase.updatedAt |date("Y/m/d")}}">{{purchaseLine.purchase.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

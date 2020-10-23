@@ -40,8 +40,8 @@
                         <td>{{ category.wording }}</td>
                         <td>{{ category.content  | truncate(75, true) | raw}}</td>
                         <td>{{ category.articles | length }}</td>
-                        <td>{{category.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
-                        <td>{{category.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td data-sort="{{category.createdAt |date("Y/m/d")}}">{{category.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td data-sort="{{category.updatedAt |date("Y/m/d")}}">{{category.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td>
                             {% if category.id != 13 %}
                                 <a  onclick="window.open(this.href);return false" href="{{ path('blogCategory', { 'slug': category.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>

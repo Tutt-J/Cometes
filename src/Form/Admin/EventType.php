@@ -76,6 +76,9 @@ class EventType extends BaseType
                 'label' => 'Type<span class="text-danger"> *</span>',
                 'label_html' => true,
             ])
+            ->add('onlineEvent', CheckboxType::class, array(
+                'label' => 'Ceci est un évènement en ligne'
+            ))
             ->add('address', EntityType::class, [
                 'class' => Address::class,
                 'query_builder' => function (AddressRepository $er) {
@@ -88,7 +91,7 @@ class EventType extends BaseType
                 'label' => 'Lieu',
                 'label_html' => true,
             ])
-            ->add('startDate', TextType::class, [
+            ->add('startDate', DateTimeType::class, [
                 'constraints' => array(
                     new NotBlank([
                         'message' => SELF::NOTEMPTY_MESSAGE
@@ -100,9 +103,8 @@ class EventType extends BaseType
                     'class' => 'automatic_date',
                     'placeholder' => '01/01/2000 08:00',
                 ],
-                'mapped' => false,
             ])
-            ->add('endDate', TextType::class, [
+            ->add('endDate', DateTimeType::class, [
                 'constraints' => array(
                     new NotBlank([
                         'message' => SELF::NOTEMPTY_MESSAGE
@@ -114,7 +116,6 @@ class EventType extends BaseType
                     'class' => 'automatic_date',
                     'placeholder' => '01/01/2000 08:00',
                 ],
-                'mapped' => false
             ])
             ->add('landingPageUrl', UrlType::class, [
                 'constraints' => array(
@@ -129,9 +130,8 @@ class EventType extends BaseType
                 'label_html' => true,
                 'required' => true
             ])
-            ->add('eventPriceType', CollectionType::class, [
+            ->add('eventPricings', CollectionType::class, [
                 'entry_type' => AdminEventPriceType::class,
-                "mapped" => false,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'OU Ajouter une liste de différents tarifs (ex: early birdy, chambre de deux, etc)'
@@ -150,7 +150,7 @@ class EventType extends BaseType
                     $identifier = $event->getData();
                     $element = $event->getForm();
                     if ($identifier) {
-                        if (empty($event->getData()['price']) && empty($event->getData()['eventPriceType'])) {
+                        if (empty($event->getData()['price']) && empty($event->getData()['eventPricings'])) {
                                 $element->addError(new FormError('Vous devez choisir au moins un tarif ou une liste de tarif.'));
                         }
                         $event->setData($identifier);
