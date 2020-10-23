@@ -37,8 +37,8 @@
                     <tr>
                         <td>{{ keyword.keyword }} </td>
                         <td>{{ keyword.articles | length }}</td>
-                        <td>{{keyword.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
-                        <td>{{keyword.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td data-sort="{{keyword.createdAt |date("Y/m/d")}}">{{keyword.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td data-sort="{{keyword.updatedAt |date("Y/m/d")}}">{{keyword.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td>
                             <a  onclick="window.open(this.href);return false" href="{{ path('blogTag', { 'slug': keyword.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
                             <a href="{{ path('updateKeywordAdmin', {'id':keyword.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>

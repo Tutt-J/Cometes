@@ -12,7 +12,7 @@ require('../js/adminScripts.js');
 $(document).ready(function() {
         bsCustomFileInput.init()
         // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-        var $container = $('div#event_eventPriceType');
+        var $container = $('div#event_eventPricings');
 
 
         // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement

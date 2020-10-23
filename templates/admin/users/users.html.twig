@@ -64,8 +64,8 @@
                                 {{ role }}<br/>
                             {% endfor %}
                         </td>
-                        <td>{{user.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y H:m')}}</td>
-                        <td>{{user.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y H:m')}}</td>
+                        <td data-sort="{{user.createdAt |date("Y/m/d")}}">{{user.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td data-sort="{{user.updatedAt |date("Y/m/d")}}">{{user.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td>
                             <a href="{{path('updateUserAdmin', {'id' : user.id})}}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
                             <a href="{{path('updatePasswordUserAdmin', {'id' : user.id})}}" class="text-warning mr-2" title="Modifier le mot de passe"><i class="fas fa-key"></i></a>

@@ -68,8 +68,8 @@
                             {% endif %}
                         </td>
                        <td><a href= 'https://www.youtube.com/watch?v='~ritual.onlineLink>Voir</a></td>
-                        <td>{{ritual.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
-                        <td>{{ritual.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td data-sort="{{ritual.createdAt |date("Y/m/d")}}">{{ritual.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td data-sort="{{ritual.updatedAt |date("Y/m/d")}}">{{ritual.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td>
                             <a  onclick="window.open(this.href);return false" href="{{ path(ritual.type.slug~'Online', { 'slug': ritual.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
                             <a href="{{ path('updateOnlineAdmin', {'id':ritual.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>

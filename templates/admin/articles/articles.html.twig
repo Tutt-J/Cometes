@@ -50,8 +50,8 @@
                             <img style="max-width:150px" src="{{ asset('uploads/cover_img/'~article.img.url) }}"/>
                         {% endif %}
                     </td>
-                    <td>{{article.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
-                    <td>{{article.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                    <td data-sort="{{article.createdAt |date("Y/m/d")}}">{{article.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                    <td data-sort="{{article.updatedAt |date("Y/m/d")}}">{{article.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                     <td>
                         <a  onclick="window.open(this.href);return false" href="{{ path('blogArticle', { 'slug': article.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
                         <a href="{{ path('updatePostAdmin', {'id':article.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>

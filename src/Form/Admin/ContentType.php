@@ -71,14 +71,15 @@ class ContentType extends BaseType
                         'message' => SELF::NOTEMPTY_MESSAGE
                     ]),
                 ),
-                'label' => 'Date de début (doit être celle de l\'évènement en physique)<span class="text-danger"> *</span>',
+                'label' => 'Date de début<span class="text-danger"> *</span>',
                 'label_html' => true,
                 'attr' => [
                     'class' => 'automatic_date',
                     'placeholder' => '01/01/2000',
                 ],
                 'mapped' => false,
-                'required' => true
+                'required' => true,
+                'help' => "Pour les rituels mettre la date du rituel en physique, pour le reste mettre la date de sortie."
             ])
             ->add('ref', TextType::class, [
                 'constraints' => [
@@ -105,7 +106,7 @@ class ContentType extends BaseType
                 ],
             ])
             ->add('isOnline', CheckboxType::class, array(
-                'label' => 'En ligne'
+                'label' => 'Afficher sur le site'
             ))
             ->add('isPack', CheckboxType::class, array(
                 'label' => 'Correspond à un pack'

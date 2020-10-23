@@ -189,17 +189,11 @@ class AdminDatabase
 
     public function setMultiplePricing($form, $event)
     {
-        $arrayPricing= $form->get('eventPriceType');
+        $arrayPricing= $form->get('eventPricings');
         if ($arrayPricing) {
-            foreach ($arrayPricing as $pricing) {
-                $eventPricing=new EventPricing();
-                $eventPricing->setContent($pricing->get('content')->getData());
-                $eventPricing->setPrice($pricing->get('price')->getData());
-                $eventPricing->setEvent($event);
-                $eventPricing->setStartValidityDate($this->formatDate($pricing->get('startValidityDate')->getData(), 'd/m/Y'));
-                $eventPricing->setEndValidityDate($this->formatDate($pricing->get('endValidityDate')->getData(), 'd/m/Y'));
-                $this->em->persist($eventPricing);
-                $event->addEventPricing($eventPricing);
+            foreach ($arrayPricing->getData() as $pricing) {
+                $pricing->setEvent($event);
+                $this->em->persist($pricing);
             }
         }
     }
@@ -213,11 +207,10 @@ class AdminDatabase
         if($event->getPrice() == null && !empty($event->getEventPricings())){
             $event->setPrice(0);
         }
-        $this->setMultiplePricing($form, $event);
         $this->setImg($form, $event);
-        $event->setStartDate($this->formatDate($form->get('startDate')->getData(), 'd/m/Y H:i'));
-        $event->setEndDate($this->formatDate($form->get('endDate')->getData(), 'd/m/Y H:i'));
         $this->em->persist($event);
+        $this->setMultiplePricing($form, $event);
+
         $this->em->flush();
     }
 
