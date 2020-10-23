@@ -4,13 +4,18 @@ namespace App\Controller\Admin;
 use App\Entity\Author;
 use App\Entity\Category;
 use App\Entity\Content;
+use App\Entity\Purchase;
+use App\Entity\PurchaseContent;
 use App\Entity\User;
+use App\Entity\UserEvent;
 use App\Form\ChangePasswordType;
 use App\Form\UserType;
 use App\Form\UserUpdateAdminType;
 use App\Service\Admin\ReportGenerator;
+use App\Service\StripeHelper;
 use App\Service\UsersHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -64,5 +69,39 @@ class AdminController extends AbstractController
                 'purchases' => $report->getPurchases(),
             ]
         );
+    }
+
+    /**
+     * @Route("/admin/commandes/remboursement", name="refundPurchaseAdmin")
+     *
+     * @param $id
+     * @param StripeHelper $stripeHelper
+     * @return RedirectResponse
+     */
+    public function refundPurchaseAction(StripeHelper $stripeHelper)
+    {
+        $id=$_POST['id'];
+        $em = $this->getDoctrine()->getManager();
+
+        $purchase=$this->getDoctrine()
+            ->getRepository(Purchase::class)
+            ->find($id);
+
+        foreach($purchase->getPurchaseContent() as $purchaseContent){
+            $em->remove($purchaseContent);
+        }
+
+        if(!is_null($purchase->getUserEvent())){
+            $em->remove($purchase->getUserEvent());
+        }
+
+        $stripeHelper->refund($purchase->getStripeId());
+
+        $purchase->setStatus('Remboursé');
+        $em->persist($purchase);
+        $em->flush();
+
+        $this->addFlash('success', 'La commande a été remboursée');
+        return $this->redirectToRoute('purchasesAdmin');
     }
 }
