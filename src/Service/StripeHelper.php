@@ -180,4 +180,10 @@ class StripeHelper
 
         return $purchase;
     }
+
+    public function refund($charge){
+        $this->stripeClient->refunds->create([
+            'payment_intent' => $charge,
+        ]);
+    }
 }

@@ -24,6 +24,7 @@
                     <th>Identifiant stripe</th>
                     <th>Date de création</th>
                     <th>Date de mise à jour</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tfoot>
@@ -36,6 +37,7 @@
                     <th>Identifiant stripe</th>
                     <th>Date de création</th>
                     <th>Date de mise à jour</th>
+                    <th>Actions</th>
                 </tr>
                 </tfoot>
                 <tbody>
@@ -53,10 +55,37 @@
                         <td>{{ purchaseLine.purchase.stripeId }}</td>
                         <td data-sort="{{purchaseLine.purchase.createdAt |date("Y/m/d")}}">{{purchaseLine.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td data-sort="{{purchaseLine.purchase.updatedAt |date("Y/m/d")}}">{{purchaseLine.purchase.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        <td>
+                            {% if purchaseLine.purchase.status != "Remboursé" and purchaseLine.purchase.status != "Offert" %}
+                            <p data-title="{{ purchaseLine.purchase.user.firstName~" "~purchaseLine.purchase.user.lastName }}" data-id="{{ purchaseLine.purchase.id }}" data-toggle="modal" data-target="#deleteModal" class="text-primary" title="Rembourser"><i class="fas fa-undo-alt"></i></p>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Voulez-vous rembourser "<span class="titleValue"></span>" ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <form action="{{ path('refundPurchaseAdmin') }}" method="post">
+                            <input type="hidden" class="idValue" name="id" value="">
+                            <input type="submit" class="btn btn-primary" value="Rembourser"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {% endblock %}
