@@ -162,6 +162,7 @@ class OnlineController extends AbstractController
         return $this->render(
             'admin/online/offer.html.twig',
             [
+                'content' => $content,
                 'form' => $form->createView(),
             ]
         );

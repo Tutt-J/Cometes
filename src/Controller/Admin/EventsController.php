@@ -1,9 +1,15 @@
 <?php
 namespace App\Controller\Admin;
 
+use App\Entity\Content;
 use App\Entity\Event;
+use App\Entity\Purchase;
+use App\Entity\PurchaseContent;
+use App\Entity\UserEvent;
 use App\Form\Admin\EventType;
+use App\Form\Admin\OfferContentType;
 use App\Service\Admin\AdminDatabase;
+use App\Service\BasketAdministrator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -146,5 +152,68 @@ class EventsController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('eventsAdmin');
+    }
+
+    /**
+     * @Route("/admin/evenements/{id}/offrir", name="offerEventAdmin")
+     *
+     * @param $id
+     * @param Request $request
+     * @param BasketAdministrator $basketAdministrator
+     * @return Response
+     */
+    public function offerEventAction($id, Request $request, BasketAdministrator $basketAdministrator)
+    {
+        $event = $this->getDoctrine()
+            ->getRepository(Event::class)
+            ->findOneBy(
+                ['id' => $id]
+            );
+
+        $form = $this->createForm(OfferContentType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $purchase = new Purchase();
+            $purchase->setStripeId("Offert donc pas de stripe");
+            $purchase->setStatus("Offert");
+            $purchase->setAmount(0);
+            $purchase->setUser($form->get('user')->getData());
+            $purchase->setContent($form->get('content')->getData());
+
+            $userEvent = new UserEvent();
+            $userEvent->setUser($form->get('user')->getData());
+            $userEvent->setEvent($event);
+            $userEvent->setPurchase($purchase);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($userEvent);
+            $em->persist($purchase);
+            $em->flush();
+
+            $items = [
+                [
+                    "custom" => [
+                        "name" => $event->getTitle()
+                    ],
+                    "quantity" => 1,
+                    "amount" => 0,
+                ]
+            ];
+
+
+            $basketAdministrator->getInvoice($items, $purchase, $form->get('user')->getData());
+
+            $this->addFlash('success', 'L\'évènement a bien été offert');
+            return $this->redirectToRoute('eventsAdmin');
+        }
+
+        return $this->render(
+            'admin/events/offer.html.twig',
+            [
+                'event' => $event,
+                'form' => $form->createView(),
+            ]
+        );
     }
 }
