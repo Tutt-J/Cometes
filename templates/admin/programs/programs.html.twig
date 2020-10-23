@@ -74,28 +74,10 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Etes-vous sûr de vouloir supprimer le programme "<span class="titleValue"></span>" ?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                        <form action="{{ path('deleteProgramAdmin') }}" method="post">
-                            <input type="hidden" class="idValue" name="id" value="">
-                            <input type="submit" class="btn btn-primary" value="Supprimer"/>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{ include('_modal.html.twig', {
+            'question': "Etes-vous sûr de vouloir supprimer le programme",
+            "actionPath": "deleteProgramAdmin",
+            "btnValue": "Supprimer"
+        }) }}
     </div>
     {% endblock %}

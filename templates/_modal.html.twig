@@ -1,0 +1,20 @@
+{% if idModal is not defined %}
+    {% set idModal= "deleteModal"%}
+{% endif %}
+<div class="modal fade" id="{{ idModal }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                {{ question }} "<span class="titleValue"></span>" ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
+                <form action="{{ path(actionPath) }}" method="post">
+                    <input type="hidden" class="idValue" name="id" value="">
+                    <input type="submit" class="btn btn-primary" value="{{ btnValue }}"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

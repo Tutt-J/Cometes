@@ -10,6 +10,7 @@ use App\Form\Admin\EventType;
 use App\Form\Admin\OfferContentType;
 use App\Service\Admin\AdminDatabase;
 use App\Service\BasketAdministrator;
+use App\Service\StripeHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -215,5 +216,34 @@ class EventsController extends AbstractController
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route("/admin/evenements/annulation", name="cancelEventAdmin")
+     *
+     * @param StripeHelper $stripeHelper
+     * @return RedirectResponse
+     */
+    public function cancelEventAction(StripeHelper $stripeHelper)
+    {
+        $id=$_POST['id'];
+
+        $event=$this->getDoctrine()
+            ->getRepository(Event::class)
+            ->find($id);
+        $em = $this->getDoctrine()->getManager();
+
+        foreach($event->getUserEvents() as $userEvent){
+            $purchase=$userEvent->getPurchase();
+            $stripeHelper->refund($purchase->getStripeId());
+            $purchase->setStatus('Remboursé');
+            $em->persist($purchase);
+            $em->remove($userEvent);
+        }
+
+        $em->flush();
+
+        $this->addFlash('success', 'L\'évènement a été annulé et les participantes remboursées');
+        return $this->redirectToRoute('eventsAdmin');
     }
 }
