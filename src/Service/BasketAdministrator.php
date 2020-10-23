@@ -321,8 +321,11 @@ class BasketAdministrator
         }
     }
 
-    public function getInvoice($items, $purchase)
+    public function getInvoice($items, $purchase, $user=null)
     {
+        if(is_null($user)){
+            $user=$this->security->getUser();
+        }
         $invoice = new InvoicePrinter("A4", "€", "fr");
 
         /* Header settings */
@@ -334,10 +337,10 @@ class BasketAdministrator
         $invoice->setTime(date('H:i:s', time()));   //Billing Time
         $invoice->setFrom(array("Chamade","419 RUE DE BORINGES","74930 REIGNIER-ESERY"));
         $invoice->setTo(array(
-            utf8_decode($this->security->getUser()->getFirstName()).' '.utf8_decode($this->security->getUser()->getLastName()),
-            utf8_decode($this->security->getUser()->getAddress()->getStreet()),
-            utf8_decode($this->security->getUser()->getAddress()->getPostalCode())." ".utf8_decode($this->security->getUser()->getAddress()->getCity()),
-            utf8_decode($this->security->getUser()->getAddress()->getCountry())
+            $this->str_to_utf8($user->getFirstName()).' '.$this->str_to_utf8($user->getLastName()),
+            $this->str_to_utf8($user->getAddress()->getStreet()),
+            $this->str_to_utf8($user->getAddress()->getPostalCode())." ".$this->str_to_utf8($user->getAddress()->getCity()),
+            $this->str_to_utf8($user->getAddress()->getCountry())
         ));
 
         $total=0;
@@ -355,7 +358,11 @@ class BasketAdministrator
         }
         $invoice->addTotal("Total", $total);
         $invoice->flipflop();
-        $invoice->addBadge("Payée");
+        if($total == 0){
+            $invoice->addBadge("Offert");
+        } else{
+            $invoice->addBadge("Payée");
+        }
 
         $invoice->setFooternote("Chamade");
 
@@ -367,5 +374,12 @@ class BasketAdministrator
         $invoice->render($path, 'F');
 
         return $path;
+    }
+
+    public function str_to_utf8 ($str) {
+        $decoded = utf8_decode($str);
+        if (mb_detect_encoding($decoded , 'UTF-8', true) === false)
+            return $str;
+        return $decoded;
     }
 }

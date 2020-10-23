@@ -1,0 +1,14 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <h1>Offrir un contenu</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('onlineAdmin') }}">Magie en ligne</a></li>
+        <li class="breadcrumb-item active">Offrir un contenu</li>
+    </ol>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.user) }}
+    {{ form_row(form.content) }}
+    {{ form_end(form) }}
+{% endblock %}

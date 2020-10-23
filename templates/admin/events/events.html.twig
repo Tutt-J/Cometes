@@ -54,6 +54,8 @@
                         <a href="{{ path('updateEventAdmin', {'id':article.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
                         <p data-title="{{ article.title }}" data-id="{{ article.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>
                         <a href="{{ path('eventsListAdmin', {'slug':article.slug}) }}" class="text-primary mr-2" title="Liste des inscrites"><i class="fas fa-clipboard-list"></i></a>
+                        <a href="" class="text-success mr-2" title="Editer"><i class="fas fa-gift"></i></a>
+
                     </td>
                 </tr>
                 {% endfor %}
