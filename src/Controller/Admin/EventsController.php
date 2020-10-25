@@ -226,11 +226,11 @@ class EventsController extends AbstractController
      */
     public function cancelEventAction(StripeHelper $stripeHelper)
     {
-        $id=$_POST['id'];
-
         $event=$this->getDoctrine()
             ->getRepository(Event::class)
-            ->find($id);
+            ->findOneBy(
+                ['id' => $_POST['id']]
+            );
         $em = $this->getDoctrine()->getManager();
 
         foreach($event->getUserEvents() as $userEvent){
