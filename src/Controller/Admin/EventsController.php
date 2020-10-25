@@ -218,7 +218,7 @@ class EventsController extends AbstractController
 
         foreach($event->getUserEvents() as $userEvent){
             $purchase=$userEvent->getPurchase();
-            if(($stripeHelper->refund($purchase->getStripeId())) == true){
+            if(($stripeHelper->refund($purchase->getStripeId()))){
                 $purchase->setStatus('Remboursé');
                 $em->persist($purchase);
                 $em->remove($userEvent);
