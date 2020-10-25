@@ -39,7 +39,6 @@ $(document).ready(function() {
         function addPricing(container) {
             // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
             var number_field = $container.find('fieldset').length;
-            alert(number_field);
             // Dans le contenu de l'attribut « data-prototype », on remplace :
             // - le texte "__name__label__" qu'il contient par le label du champ
             // - le texte "__name__" qu'il contient par le numéro du champ
