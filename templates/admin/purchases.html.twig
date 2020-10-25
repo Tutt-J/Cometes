@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Commandes</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Tableau de bord</a></li>
     <li class="breadcrumb-item active">Commandes</li>
 </ol>
 <div class="card mb-4">
@@ -43,7 +43,7 @@
                 <tbody>
                 {% for purchaseLine in purchases %}
                     <tr>
-                        <td>{{ purchaseLine.purchase.user.firstName }} {{ purchaseLine.purchase.user.lastName }}</td>
+                        <td><a href="{{path('updateUserAdmin', {'id' :  purchaseLine.purchase.user.id})}}">{{ purchaseLine.purchase.user.firstName }} {{ purchaseLine.purchase.user.lastName }}</a></td>
                         <td>
                             {% for content in purchaseLine.contents %}
                                 {{ content }} <br/>
@@ -52,7 +52,7 @@
                         <td>{{ purchaseLine.purchase.amount }}</td>
                         <td>{{ purchaseLine.purchase.content }}</td>
                         <td>{{ purchaseLine.purchase.status }}</td>
-                        <td>{{ purchaseLine.purchase.stripeId }}</td>
+                        <td><a target="_blank" href={{ "https://dashboard.stripe.com/payments/"~purchaseLine.purchase.stripeId }}>{{ purchaseLine.purchase.stripeId }}</a></td>
                         <td data-sort="{{purchaseLine.purchase.createdAt |date("Y/m/d")}}">{{purchaseLine.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td data-sort="{{purchaseLine.purchase.updatedAt |date("Y/m/d")}}">{{purchaseLine.purchase.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td>

@@ -56,7 +56,7 @@
         "symfony/security-bundle": "*",
         "symfony/serializer-pack": "*",
         "symfony/string": "*",
-        "symfony/translation": "*",
+        "symfony/translation": "5.1.*",
         "symfony/twig-pack": "*",
         "symfony/validator": "*",
         "symfony/web-link": "*",
@@ -65,8 +65,7 @@
         "symfonycasts/reset-password-bundle": "^1.1",
         "twig/extensions": "^1.5",
         "twig/twig": "^2.0",
-        "vimeo/vimeo-api": "^3.0",
-      "ext-http": "*"
+        "vimeo/vimeo-api": "^3.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.1",

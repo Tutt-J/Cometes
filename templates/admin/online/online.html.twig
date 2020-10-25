@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Magie en ligne</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Tableau de bord</a></li>
     <li class="breadcrumb-item active">Magie en ligne</li>
 </ol>
 <div class="d-flex mb-3">
@@ -50,7 +50,7 @@
                 <tbody>
                 {% for ritual in rituals %}
                     <tr>
-                        <td>{{ ritual.type.slug | capitalize }}</td>
+                        <td>{{ ritual.type.slug|trans }}</td>
                         <td>{{ ritual.title }}</td>
                         <td>{{ ritual.content  | truncate(75, true) | raw}}</td>
                         <td>{{ ritual.price }}€</td>
@@ -67,7 +67,11 @@
                                 <img style="max-width:150px" src="{{ asset('uploads/cover_img/'~ritual.img.url) }}"/>
                             {% endif %}
                         </td>
-                       <td><a href= 'https://www.youtube.com/watch?v='~ritual.onlineLink>Voir</a></td>
+                       <td>
+                           {% if ritual.onlineLink %}
+                           <a onclick="window.open(this.href);return false" href="{{'https://www.youtube.com/watch?v='~ritual.onlineLink  }}">Voir la vidéo</a>
+                           {% endif %}
+                       </td>
                         <td data-sort="{{ritual.createdAt |date("Y/m/d")}}">{{ritual.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td data-sort="{{ritual.updatedAt |date("Y/m/d")}}">{{ritual.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td>

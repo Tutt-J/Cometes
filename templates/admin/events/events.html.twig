@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Évènements</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Tableau de bord</a></li>
     <li class="breadcrumb-item active">Évènements</li>
 </ol>
 <div class="d-flex mb-3">
@@ -19,8 +19,8 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                 <tr>
-                    <th>Titre</th>
                     <th>Type</th>
+                    <th>Titre</th>
                     <th>Image</th>
                     <th>Date de création</th>
                     <th>Date de mise à jour</th>
@@ -29,8 +29,8 @@
                 </thead>
                 <tfoot>
                 <tr>
-                    <th>Titre</th>
                     <th>Type</th>
+                    <th>Titre</th>
                     <th>Image</th>
                     <th>Date de création</th>
                     <th>Date de mise à jour</th>
@@ -40,8 +40,8 @@
                 <tbody>
                 {% for article in articles %}
                 <tr>
+                    <td>{{  article.type.slug|trans }}</td>
                     <td>{{ article.title }}</td>
-                    <td>{{ article.type.slug }}</td>
                     <td>
                         {% if article.img %}
                             <img style="max-width:150px" src="{{ asset('uploads/cover_img/'~article.img.url) }}"/>

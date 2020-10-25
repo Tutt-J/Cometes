@@ -17,7 +17,9 @@
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
-                <button class="btn btn-info" onclick="location.href='{{path('home')}}';" type="button">Retour au site</button>
+            <div class="input-group">
+                <button class="btn btn-info" onclick="window.open('{{path('home')}}');return false" type="button">Retour au site</button>
+            </div>
         </div>
     </form>
     <!-- Navbar-->

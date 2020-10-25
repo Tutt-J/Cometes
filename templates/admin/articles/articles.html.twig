@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Articles</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Tableau de bord</a></li>
     <li class="breadcrumb-item active">Articles</li>
 </ol>
 <div class="d-flex mb-3">
@@ -43,8 +43,8 @@
                 {% for article in articles %}
                 <tr>
                     <td>{{ article.title }}</td>
-                    <td>{{ article.category.wording }}</td>
-                    <td>{{ article.author.name }}</td>
+                    <td><a onclick="window.open(this.href);return false" href="{{ path('blogCategory', { 'slug': article.category.slug }) }}">{{ article.category.wording }}</a></td>
+                    <td><a onclick="window.open(this.href);return false" href="{{ path('blogAuthor', { 'slug': article.author.slug }) }}">{{ article.author.name }}</a></td>
                     <td>
                         {% if article.img %}
                             <img style="max-width:150px" src="{{ asset('uploads/cover_img/'~article.img.url) }}"/>
