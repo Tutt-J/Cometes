@@ -55,6 +55,5 @@ class OfferContentType extends AbstractType
                     'class' => 'col-md-12 text-right'
                 ]
             ]);
-        ;
     }
 }

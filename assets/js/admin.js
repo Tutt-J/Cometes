@@ -29,8 +29,8 @@ $(document).ready(function() {
         // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
         if (index !== 0) {
             // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
-            $container.children('fieldset').each(function(index) {
-                $(this).children('legend').text('Tarif n°' + (index+1))
+            $container.children('fieldset').each(function(loop_index) {
+                $(this).children('legend').text('Tarif n°' + (loop_index+1))
                 addDeleteLink($(this));
             });
         }
@@ -38,13 +38,14 @@ $(document).ready(function() {
         // La fonction qui ajoute un formulaire CategoryType
         function addPricing(container) {
             // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-            var index = $container.find('fieldset').length;
+            var number_field = $container.find('fieldset').length;
+            alert(number_field);
             // Dans le contenu de l'attribut « data-prototype », on remplace :
             // - le texte "__name__label__" qu'il contient par le label du champ
             // - le texte "__name__" qu'il contient par le numéro du champ
             var template = container.attr('data-prototype')
-                .replace(/__name__label__/g, 'Tarif n°' + (index+1))
-                .replace(/__name__/g,        index)
+                .replace(/__name__label__/g, 'Tarif n°' + (number_field+1))
+                .replace(/__name__/g,        number_field)
             ;
 
             // On crée un objet jquery qui contient ce template
@@ -68,8 +69,8 @@ $(document).ready(function() {
             // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
             $deleteLink.click(function(e) {
                 $prototype.remove();
-                $container.children('fieldset').each(function(index) {
-                    $(this).children('legend').text('Tarif n°' + (index+1))
+                $container.children('fieldset').each(function(delete_loop_index) {
+                    $(this).children('legend').text('Tarif n°' + (delete_loop_index+1))
                 });
                 e.preventDefault(); // évite qu'un # apparaisse dans l'URL
                 return false;

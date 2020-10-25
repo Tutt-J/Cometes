@@ -146,7 +146,7 @@ class EventType extends BaseType
             ])
             ->addEventListener(
                 FormEvents::PRE_SUBMIT,
-                function (FormEvent $event) use ($builder) {
+                function (FormEvent $event) {
                     $identifier = $event->getData();
                     $element = $event->getForm();
                     if ($identifier) {

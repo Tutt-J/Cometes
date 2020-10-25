@@ -80,12 +80,13 @@ class AdminController extends AbstractController
      */
     public function refundPurchaseAction(StripeHelper $stripeHelper)
     {
-        $id=$_POST['id'];
         $em = $this->getDoctrine()->getManager();
 
         $purchase=$this->getDoctrine()
             ->getRepository(Purchase::class)
-            ->find($id);
+            ->findOneBy(
+                ['id' => $_POST['id']]
+            );
 
         foreach($purchase->getPurchaseContent() as $purchaseContent){
             $em->remove($purchaseContent);

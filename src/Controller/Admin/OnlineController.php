@@ -1,17 +1,13 @@
 <?php
 namespace App\Controller\Admin;
 
-use App\Entity\Article;
 use App\Entity\Content;
-use App\Entity\Purchase;
 use App\Entity\PurchaseContent;
-use App\Form\Admin\ArticleType;
 use App\Form\Admin\ContentType;
-use App\Form\Admin\OfferContentType;
 use App\Service\Admin\AdminDatabase;
+use App\Service\Admin\OfferHelper;
 use App\Service\BasketAdministrator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -108,11 +104,12 @@ class OnlineController extends AbstractController
     /**
      * @Route("/admin/contenus-en-ligne/{id}/offrir", name="offerContentAdmin")
      *
-     * @param Request $request
+     * @param $id
      * @param BasketAdministrator $basketAdministrator
+     * @param OfferHelper $offerHelper
      * @return Response
      */
-    public function offerContentAction($id, Request $request, BasketAdministrator $basketAdministrator)
+    public function offerContentAction($id, BasketAdministrator $basketAdministrator, OfferHelper $offerHelper)
     {
         $content = $this->getDoctrine()
             ->getRepository(Content::class)
@@ -120,16 +117,10 @@ class OnlineController extends AbstractController
                 ['id' => $id]
             );
 
-        $form = $this->createForm(OfferContentType::class);
-        $form->handleRequest($request);
+       $form = $offerHelper->createForm();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $purchase= new Purchase();
-            $purchase->setStripeId("Offert donc pas de stripe");
-            $purchase->setStatus("Offert");
-            $purchase->setAmount(0);
-            $purchase->setUser($form->get('user')->getData());
-            $purchase->setContent($form->get('content')->getData());
+            $purchase = $offerHelper->setPurchase($form);
 
             $purchaseContent=new PurchaseContent();
             $purchaseContent->setPurchase($purchase);
@@ -137,21 +128,10 @@ class OnlineController extends AbstractController
             $purchaseContent->setQuantity(1);
             $purchaseContent->setPrice(0);
             $purchase->addPurchaseContent($purchaseContent);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($purchaseContent);
-            $em->persist($purchase);
-            $em->flush();
 
-            $items=[
-                [
-                    "custom" => [
-                        "name" => $content->getTitle()
-                    ],
-                    "quantity" => 1,
-                    "amount" => 0,
-                ]
-            ];
+            $offerHelper->persistAndFlush($purchase, $purchaseContent);
 
+            $items=$offerHelper->setItem($content->getTitle());
 
             $basketAdministrator->getInvoice($items, $purchase, $form->get('user')->getData());
 
