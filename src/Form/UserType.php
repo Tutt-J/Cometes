@@ -26,6 +26,28 @@ class UserType extends AbstractType
 {
     const NOTEMPTY_MESSAGE ="Ce champ ne peut pas être vide.";
 
+    public function setFieldForName($name){
+        return [
+            'constraints' => [
+                new Length([
+                    'normalizer' => 'trim',
+                    'min' => 2,
+                    'max' => 25,
+                    'minMessage' => 'Le '.$name.' doit au moins contenir {{ limit }} caractères',
+                    'maxMessage' => 'Le '.$name.' ne doit pas dépasser {{limit}} caractères',
+                    'allowEmptyString' => false,
+                ]),
+                new NotBlank([
+                    'message' => SELF::NOTEMPTY_MESSAGE
+                ])
+            ],
+            'label' => $name.'<span class="text-danger"> *</span>',
+            'label_html' => true,
+            'row_attr' => [
+                'class' => 'col-md-6'
+            ],
+        ]
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -44,66 +66,9 @@ class UserType extends AbstractType
                     'class' => 'col-md-6'
                 ],
             ])
-            ->add('username', TextType::class, [
-                'constraints' => [
-                    new Length([
-                        'normalizer' => 'trim',
-                        'min' => 2,
-                        'max' => 25,
-                        'minMessage' => 'Le pseudo doit au moins contenir {{ limit }} caractères',
-                        'maxMessage' => 'Le pseudo ne doit pas dépasser {{limit}} caractères',
-                        'allowEmptyString' => false,
-                    ]),
-                    new NotBlank([
-                        'message' => SELF::NOTEMPTY_MESSAGE
-                    ])
-                ],
-                'label' => 'Pseudo<span class="text-danger"> *</span>',
-                'label_html' => true,
-                'row_attr' => [
-                    'class' => 'col-md-6'
-                ],
-            ])
-            ->add('firstname', TextType::class, [
-                'constraints' => [
-                    new Length([
-                        'normalizer' => 'trim',
-                        'min' => 2,
-                        'max' => 255,
-                        'minMessage' => 'Le prénom doit au moins contenir {{ limit }} caractères',
-                        'maxMessage' => 'Le prénom ne doit pas dépasser {{limit}} caractères',
-                        'allowEmptyString' => false,
-                    ]),
-                    new NotBlank([
-                        'message' => SELF::NOTEMPTY_MESSAGE
-                    ])
-                ],
-                'label' => 'Prénom<span class="text-danger"> *</span>',
-                'label_html' => true,
-                'row_attr' => [
-                    'class' => 'col-md-6'
-                ],
-            ])
-            ->add('lastname', TextType::class, [
-                'constraints' => [
-                    new Length([
-                        'normalizer' => 'trim',
-                        'min' => 2,
-                        'max' => 255,
-                        'minMessage' => 'Le nom de famille doit au moins contenir {{ limit }} caractères',
-                        'maxMessage' => 'Le nom de famille ne doit pas dépasser {{limit}} caractères',
-                        'allowEmptyString' => false,
-                    ]),
-                    new NotBlank([
-                        'message' => SELF::NOTEMPTY_MESSAGE
-                    ])
-                ],
-                'label' => 'Nom<span class="text-danger"> *</span>',
-                'label_html' => true,
-                'row_attr' => [
-                    'class' => 'col-md-6'
-                ],
-            ])
+            ->add('username', TextType::class, $this->setFieldForName("Pseudo"))
+            ->add('firstname', TextType::class, $this->setFieldForName("Prénom"))
+            ->add('lastname', TextType::class,  $this->setFieldForName("Nom"))
             ->add('plainPassword', RepeatedType::class, array(
                 'constraints' => [
                     new Length([
@@ -196,4 +161,6 @@ class UserType extends AbstractType
                 )
         ]);
     }
+
+
 }
