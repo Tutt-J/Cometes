@@ -52,38 +52,30 @@
                     <td>
                         <a  onclick="window.open(this.href);return false" href="{{ path(article.type.slug~'Event', { 'slug': article.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
                         <a href="{{ path('updateEventAdmin', {'id':article.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
-                        <p data-title="{{ article.title }}" data-id="{{ article.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>
+                        {% if article.userEvents is empty  %}
+                            <p data-title="{{ article.title }}" data-id="{{ article.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>
+                        {% else %}
+                            <p data-title="{{ article.title }}" data-id="{{ article.id }}" data-toggle="modal" data-target="#cancelModal" class="text-danger" title="Annuler"><i class="fas fa-times"></i></p>
+                        {% endif %}
                         <a href="{{ path('eventsListAdmin', {'slug':article.slug}) }}" class="text-primary mr-2" title="Liste des inscrites"><i class="fas fa-clipboard-list"></i></a>
                         <a href="{{ path('offerEventAdmin', {'id': article.id}) }}" class="text-success mr-2" title="Offrir"><i class="fas fa-gift"></i></a>
-
                     </td>
                 </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
+        {{ include('_modal.html.twig', {
+            'question': "Etes-vous sûr de vouloir supprimer l'évènement",
+            "actionPath": "deleteEventAdmin",
+            "btnValue": "Supprimer"
+        }) }}
 
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Etes-vous sûr de vouloir supprimer l'évènement "<span class="titleValue"></span>" ?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                        <form action="{{ path('deleteEventAdmin') }}" method="post">
-                            <input type="hidden" class="idValue" name="id" value="">
-                            <input type="submit" class="btn btn-primary" value="Supprimer"/>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{ include('_modal.html.twig', {
+            'question': "Etes-vous sûr de vouloir annuler (tous les participants seront remboursés et avertis) l'évènement",
+            "actionPath": "cancelEventAdmin",
+            "btnValue": "Annuler",
+            'idModal': "cancelModal"
+        }) }}
     </div>
 {% endblock %}
