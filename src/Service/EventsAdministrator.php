@@ -261,7 +261,7 @@ class EventsAdministrator
             $message="Vous êtes déjà inscrit à cet évènement";
         }
         if (!$this->checkNbMaxParticipant($event)) {
-            $message="Le nombre maximum de participantes pour cette évènement est atteint.";
+            $message="Le nombre maximum de participantes pour cet évènement est atteint.";
         }
         if (!$this->checkEventPassed($event)) {
             $message="Cet évènement est passé ou a lieu dans moins de 24 heures. Vous ne pouvez plus vous y inscrire.";
@@ -318,7 +318,7 @@ class EventsAdministrator
             $isTrue=false;
         }
         if (!$this->checkNbMaxParticipant($event)) {
-            $this->flashbag->add('error', 'Le nombre maximum de participantes pour cette évènement est atteint.');
+            $this->flashbag->add('error', 'Le nombre maximum de participantes pour cet évènement est atteint.');
             $isTrue=false;
         }
         if (!$this->checkEventPassed($event)) {

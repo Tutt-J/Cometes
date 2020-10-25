@@ -89,26 +89,6 @@ $(document).ready(function() {
         }
     });
 
-    $('p[data-target="#deleteModal"]').click(function(event) {
-        event.stopPropagation();
-        var id = $(this).data('id');
-        var title = $(this).data('title');
-        $("#deleteModal .modal-footer .idValue").val(id);
-        $("#deleteModal .modal-body .titleValue").text(title);
-        $('#deleteModal').modal('toggle');
-    });
-
-    $('p[data-target="#cancelModal"]').click(function(event) {
-        event.stopPropagation();
-        var id = $(this).data('id');
-        var title = $(this).data('title');
-        $("#cancelModal .modal-footer .idValue").val(id);
-        $("#cancelModal .modal-body .titleValue").text(title);
-        $('#cancelModal').modal('toggle');
-    });
-
-
-
     $('.custom-file-label').html('Choisissez un fichier');
 
     $('.custom-file-input').on('change', function(event) {
@@ -119,6 +99,23 @@ $(document).ready(function() {
     });
 });
 
+$('p[data-target="#deleteModal"]').click(function(event) {
+    event.stopPropagation();
+    var id = $(this).data('id');
+    var title = $(this).data('title');
+    $("#deleteModal .modal-footer .idValue").val(id);
+    $("#deleteModal .modal-body .titleValue").text(title);
+    $('#deleteModal').modal('toggle');
+});
+
+$('p[data-target="#cancelModal"]').click(function(event) {
+    event.stopPropagation();
+    var id = $(this).data('id');
+    var title = $(this).data('title');
+    $("#cancelModal .modal-footer .idValue").val(id);
+    $("#cancelModal .modal-body .titleValue").text(title);
+    $('#cancelModal').modal('toggle');
+});
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 // const $ = require('jquery');
 

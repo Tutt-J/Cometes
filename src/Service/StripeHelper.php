@@ -3,15 +3,10 @@
 namespace App\Service;
 
 use App\Entity\Purchase;
-use App\Entity\Content;
-use App\Entity\Type;
-use App\Entity\UserEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Exception\ApiErrorException;
-use Stripe\Stripe;
 use Stripe\StripeClient;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -182,8 +177,13 @@ class StripeHelper
     }
 
     public function refund($charge){
-        $this->stripeClient->refunds->create([
-            'payment_intent' => $charge,
-        ]);
+        try {
+            $this->stripeClient->refunds->create([
+                'payment_intent' => $charge,
+            ]);
+            return true;
+        } catch (ApiErrorException $e) {
+            return false;
+        }
     }
 }
