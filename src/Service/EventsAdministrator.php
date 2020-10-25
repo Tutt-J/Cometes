@@ -357,11 +357,9 @@ class EventsAdministrator
 
         $this->session->set('description', "");
 
-        if ($form->has('friend') && $form->has('already')) {
-            if (!empty($form->get('friend')->getData()) || $form->get('already')->getData() == 1) {
+        if (($form->has('friend') && $form->has('already')) && (!empty($form->get('friend')->getData()) || $form->get('already')->getData() == 1)) {
                 $price=$price - ($price * (5 / 100));
                 $this->generateDescription($form->get('friend')->getData(), $form->get('already')->getData());
-            }
         }
 
         $this->session->set('price', $price);

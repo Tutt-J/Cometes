@@ -378,8 +378,9 @@ class BasketAdministrator
 
     public function str_to_utf8 ($str) {
         $decoded = utf8_decode($str);
-        if (mb_detect_encoding($decoded , 'UTF-8', true) === false)
+        if (mb_detect_encoding($decoded , 'UTF-8', true) === false){
             return $str;
+        }
         return $decoded;
     }
 }
