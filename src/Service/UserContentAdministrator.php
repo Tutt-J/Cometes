@@ -151,10 +151,15 @@ class UserContentAdministrator
             if ($downloader->hasVideo()) {
                 // Get the video download link info
                 $videoDownloadLink = $downloader->getVideoDownloadLink();
-
-                $videoTitle = $videoDownloadLink[0]['title'];
-                $videoFormat = $videoDownloadLink[0]['format'];
-                $downloadURL = $videoDownloadLink[0]['url'];
+                foreach($videoDownloadLink as $video){
+                    if($video['quality'] == "hd720"){
+                        $videoDownloadLink=$video;
+                        break;
+                    }
+                }
+                $videoTitle = $videoDownloadLink['title'];
+                $videoFormat = $videoDownloadLink['format'];
+                $downloadURL = $videoDownloadLink['url'];
                 $fileName = strtolower(str_replace(' ', '_', $videoTitle)).'.'.$videoFormat;
 
                 if (!empty($downloadURL)) {
