@@ -150,13 +150,7 @@ class UserContentAdministrator
             // Validate the youtube video url
             if ($downloader->hasVideo()) {
                 // Get the video download link info
-                $videoDownloadLink = $downloader->getVideoDownloadLink();
-                foreach($videoDownloadLink as $video){
-                    if($video['quality'] == "hd720"){
-                        $videoDownloadLink=$video;
-                        break;
-                    }
-                }
+                $videoDownloadLink = $this->getVideoDownloadLink($downloader);
                 $videoTitle = $videoDownloadLink['title'];
                 $videoFormat = $videoDownloadLink['format'];
                 $downloadURL = $videoDownloadLink['url'];
@@ -179,5 +173,21 @@ class UserContentAdministrator
         } else {
             throw new InvalidArgumentException('L\'url de la vidéo est invalide.');
         }
+    }
+
+    /**
+     * @param bool $downloader
+     * @return mixed
+     */
+    public function getVideoDownloadLink(bool $downloader)
+    {
+        $videoDownloadLink = $downloader->getVideoDownloadLink();
+        foreach ($videoDownloadLink as $video) {
+            if ($video['quality'] == "hd720") {
+                $videoDownloadLink = $video;
+                break;
+            }
+        }
+        return $videoDownloadLink;
     }
 }
