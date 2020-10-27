@@ -33,7 +33,10 @@ class ProgramsController extends AbstractController
     {
         $contents= $this->getDoctrine()
             ->getRepository(Program::class)
-            ->findAll();
+            ->findBy(
+                array(),
+                array('updatedAt' => 'DESC')
+            );
 
         return $this->render(
             'admin/programs/programs.html.twig',

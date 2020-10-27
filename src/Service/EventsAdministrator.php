@@ -116,7 +116,7 @@ class EventsAdministrator
     {
         return $this->em
             ->getRepository(Event::class)
-            ->findThreeBecomeRituals();
+            ->findThreeBecomeEvent();
     }
 
     /**

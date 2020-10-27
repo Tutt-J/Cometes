@@ -31,7 +31,7 @@ class PostsController extends AbstractController
             ->getRepository(Article::class)
             ->findBy(
                 array(),
-                array('createdAt' => 'DESC')
+                array('updatedAt' => 'DESC')
             );
 
         return $this->render(

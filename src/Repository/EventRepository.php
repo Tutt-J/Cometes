@@ -47,7 +47,7 @@ class EventRepository extends ServiceEntityRepository
      * @return mixed
      * @throws Exception
      */
-    public function findThreeBecomeRituals()
+    public function findThreeBecomeEvent()
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.startDate > :now')

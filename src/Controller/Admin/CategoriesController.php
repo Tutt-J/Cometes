@@ -35,7 +35,7 @@ class CategoriesController extends AbstractController
             ->getRepository(Category::class)
             ->findBy(
                 array(),
-                array('wording' => 'DESC')
+                array('wording' => 'ASC')
             );
 
         return $this->render(

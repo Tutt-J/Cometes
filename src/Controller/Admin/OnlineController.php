@@ -31,7 +31,10 @@ class OnlineController extends AbstractController
     {
         $contents= $this->getDoctrine()
             ->getRepository(Content::class)
-            ->findAll();
+            ->findBy(
+                array(),
+                array('updatedAt' => 'DESC')
+            );
 
         return $this->render(
             'admin/online/online.html.twig',

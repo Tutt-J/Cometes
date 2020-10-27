@@ -31,8 +31,10 @@ class OpinionsController extends AbstractController
     {
         $articles = $this->getDoctrine()
             ->getRepository(Opinion::class)
-            ->findAll();
-
+            ->findBy(
+                array(),
+                array('client' => 'ASC')
+            );
         return $this->render(
             'admin/opinions/opinions.html.twig',
             [

@@ -41,7 +41,7 @@ class UsersController extends AbstractController
             ->getRepository(User::class)
             ->findBy(
                 array(),
-                array('username' => 'DESC')
+                array('username' => 'ASC')
             );
 
         return $this->render(

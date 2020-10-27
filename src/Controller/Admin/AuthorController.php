@@ -34,7 +34,7 @@ class AuthorController extends AbstractController
             ->getRepository(Author::class)
             ->findBy(
                 array(),
-                array('name' => 'DESC')
+                array('name' => 'ASC')
             );
 
         return $this->render(

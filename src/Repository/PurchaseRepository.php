@@ -16,6 +16,11 @@ class PurchaseRepository extends ServiceEntityRepository
 {
     const WHERE_YEAR ="YEAR(a.createdAt) = :year";
     const SELECT_SUM ="SUM(a.amount) as amount";
+    const USER_ROLE_REQUEST= "u.roles NOT LIKE :role";
+    const USER_ROLE_BIND = '%"'.'ROLE_ADMIN'.'"%';
+    const STATUS_REQUEST = 'a.status != :status';
+    const STATUS_BIND = "Remboursé";
+
 
     /**
      * PurchaseRepository constructor.
@@ -33,14 +38,19 @@ class PurchaseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->select(self::SELECT_SUM)
+            ->innerJoin('a.user', 'u')
             ->where(self::WHERE_YEAR)
+            ->andWhere(self::USER_ROLE_REQUEST)
             ->andWhere('MONTH(a.createdAt) = :month')
             ->andWhere('DAY(a.createdAt) = :day')
+            ->andWhere(self::STATUS_REQUEST)
             ->setParameters(
                 array(
                     'year' => date("Y"),
                     'month' =>date("m"),
-                    'day' =>date("d")
+                    'day' =>date("d"),
+                    'role' => self::USER_ROLE_BIND,
+                    'status' => self::STATUS_BIND
                 )
             )
             ->getQuery()
@@ -58,10 +68,19 @@ class PurchaseRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('a')
             ->select(self::SELECT_SUM)
+            ->innerJoin('a.user', 'u')
             ->where('a.createdAt >= :start')
             ->andWhere('a.createdAt <= :end')
-            ->setParameter('start', $start_week)
-            ->setParameter('end', $end_week)
+            ->andWhere(self::USER_ROLE_REQUEST)
+            ->andWhere(self::STATUS_REQUEST)
+            ->setParameters(
+                array(
+                    'start' => $start_week,
+                    'end' =>$end_week,
+                    'role' => self::USER_ROLE_BIND,
+                    'status' => self::STATUS_BIND
+                )
+            )
             ->getQuery()
             ->getResult()
             ;
@@ -74,12 +93,17 @@ class PurchaseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->select(self::SELECT_SUM)
+            ->innerJoin('a.user', 'u')
             ->where(self::WHERE_YEAR)
             ->andWhere('MONTH(a.createdAt) = :month')
+            ->andWhere(self::USER_ROLE_REQUEST)
+            ->andWhere(self::STATUS_REQUEST)
             ->setParameters(
                 array(
                     'month' =>$month,
-                    'year' => date("Y")
+                    'year' => date("Y"),
+                    'role' => self::USER_ROLE_BIND,
+                    'status' => self::STATUS_BIND
                 )
             )
             ->getQuery()
@@ -94,10 +118,15 @@ class PurchaseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->select(self::SELECT_SUM)
+            ->innerJoin('a.user', 'u')
             ->where(self::WHERE_YEAR)
+            ->andWhere(self::USER_ROLE_REQUEST)
+            ->andWhere(self::STATUS_REQUEST)
             ->setParameters(
                 array(
                     'year' => date("Y"),
+                    'role' => self::USER_ROLE_BIND,
+                    'status' => self::STATUS_BIND
                 )
             )
             ->getQuery()
