@@ -112,17 +112,17 @@ class ReportGenerator
     {
         return $this->em
             ->getRepository(UserEvent::class)
-            ->findAll();
+            ->findAllNotAdmin();
     }
 
     public function getNbContents()
     {
         return $this->em
             ->getRepository(PurchaseContent::class)
-            ->findAll();
+            ->findAllNotAdmin();
     }
 
-    public function getFiveNextEvents()
+    public function getThreeNextEvents()
     {
         return $this->em
             ->getRepository(Event::class)

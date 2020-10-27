@@ -49,7 +49,7 @@ class AdminController extends AbstractController
             'totalYear' => $report->getTotalYear()[0]['amount'],
             'totalEvents' => sizeof($report->getNbEvents()),
             'totalContents' => sizeof($report->getNbContents()),
-            'nextEvents' => $report->getFiveNextEvents()
+            'nextEvents' => $report->getThreeNextEvents()
         ]);
     }
 

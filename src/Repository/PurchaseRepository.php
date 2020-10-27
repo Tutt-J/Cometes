@@ -18,6 +18,8 @@ class PurchaseRepository extends ServiceEntityRepository
     const SELECT_SUM ="SUM(a.amount) as amount";
     const USER_ROLE_REQUEST= "u.roles NOT LIKE :role";
     const USER_ROLE_BIND = '%"'.'ROLE_ADMIN'.'"%';
+    const STATUS_REQUEST = 'a.status != :status';
+    const STATUS_BIND = "Remboursé";
 
 
     /**
@@ -41,12 +43,14 @@ class PurchaseRepository extends ServiceEntityRepository
             ->andWhere(self::USER_ROLE_REQUEST)
             ->andWhere('MONTH(a.createdAt) = :month')
             ->andWhere('DAY(a.createdAt) = :day')
+            ->andWhere(self::STATUS_REQUEST)
             ->setParameters(
                 array(
                     'year' => date("Y"),
                     'month' =>date("m"),
                     'day' =>date("d"),
-                    'role' => self::USER_ROLE_BIND
+                    'role' => self::USER_ROLE_BIND,
+                    'status' => self::STATUS_BIND
                 )
             )
             ->getQuery()
@@ -68,11 +72,13 @@ class PurchaseRepository extends ServiceEntityRepository
             ->where('a.createdAt >= :start')
             ->andWhere('a.createdAt <= :end')
             ->andWhere(self::USER_ROLE_REQUEST)
+            ->andWhere(self::STATUS_REQUEST)
             ->setParameters(
                 array(
                     'start' => $start_week,
                     'end' =>$end_week,
-                    'role' => self::USER_ROLE_BIND
+                    'role' => self::USER_ROLE_BIND,
+                    'status' => self::STATUS_BIND
                 )
             )
             ->getQuery()
@@ -91,11 +97,13 @@ class PurchaseRepository extends ServiceEntityRepository
             ->where(self::WHERE_YEAR)
             ->andWhere('MONTH(a.createdAt) = :month')
             ->andWhere(self::USER_ROLE_REQUEST)
+            ->andWhere(self::STATUS_REQUEST)
             ->setParameters(
                 array(
                     'month' =>$month,
                     'year' => date("Y"),
-                    'role' => self::USER_ROLE_BIND
+                    'role' => self::USER_ROLE_BIND,
+                    'status' => self::STATUS_BIND
                 )
             )
             ->getQuery()
@@ -113,10 +121,12 @@ class PurchaseRepository extends ServiceEntityRepository
             ->innerJoin('a.user', 'u')
             ->where(self::WHERE_YEAR)
             ->andWhere(self::USER_ROLE_REQUEST)
+            ->andWhere(self::STATUS_REQUEST)
             ->setParameters(
                 array(
                     'year' => date("Y"),
-                    'role' => self::USER_ROLE_BIND
+                    'role' => self::USER_ROLE_BIND,
+                    'status' => self::STATUS_BIND
                 )
             )
             ->getQuery()

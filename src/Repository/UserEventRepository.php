@@ -31,4 +31,23 @@ class UserEventRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, UserEvent::class);
     }
+
+    /**
+     * @return mixed
+     */
+    public function findAllNotAdmin()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            ->innerJoin('a.user', 'u')
+            ->where("u.roles NOT LIKE :role")
+            ->setParameters(
+                array(
+                    'role' =>  '%"'.'ROLE_ADMIN'.'"%'
+                )
+            )
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
