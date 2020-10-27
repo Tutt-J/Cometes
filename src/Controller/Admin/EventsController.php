@@ -39,7 +39,7 @@ class EventsController extends AbstractController
             ->getRepository(Event::class)
             ->findBy(
                 array(),
-                array('createdAt' => 'DESC')
+                array('updatedAt' => 'DESC')
             );
 
         return $this->render(

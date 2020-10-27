@@ -31,7 +31,7 @@ class KeywordsController extends AbstractController
             ->getRepository(Keyword::class)
             ->findBy(
                 array(),
-                array('keyword' => 'DESC')
+                array('keyword' => 'ASC')
             );
 
         return $this->render(

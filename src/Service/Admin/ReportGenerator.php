@@ -37,7 +37,7 @@ class ReportGenerator
            ->getRepository(Purchase::class)
            ->findBy(
                array(),
-               array('createdAt' => 'DESC')
+               array('updatedAt' => 'DESC')
            );
 
         $purchasesArray=[];
@@ -126,6 +126,6 @@ class ReportGenerator
     {
         return $this->em
             ->getRepository(Event::class)
-            ->findThreeBecomeRituals();
+            ->findThreeBecomeEvent();
     }
 }

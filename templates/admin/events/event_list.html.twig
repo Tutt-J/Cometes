@@ -33,12 +33,14 @@
                 </tfoot>
                 <tbody>
                 {% for article in articles.userEvents %}
-                <tr>
-                    <td>{{ article.user.lastName }}</td>
-                    <td>{{ article.user.firstName }}</td>
-                    <td><a href="mailto:{{ article.user.email }}">{{ article.user.email }}</a></td>
-                    <td>{{article.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
-                </tr>
+                    {% if 'ROLE_ADMIN' not in article.user.roles  %}
+                        <tr>
+                            <td>{{ article.user.lastName }}</td>
+                            <td>{{ article.user.firstName }}</td>
+                            <td><a href="mailto:{{ article.user.email }}">{{ article.user.email }}</a></td>
+                            <td>{{article.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>

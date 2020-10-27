@@ -42,25 +42,27 @@
                 </tfoot>
                 <tbody>
                 {% for purchaseLine in purchases %}
-                    <tr>
-                        <td><a href="{{path('updateUserAdmin', {'id' :  purchaseLine.purchase.user.id})}}">{{ purchaseLine.purchase.user.firstName }} {{ purchaseLine.purchase.user.lastName }}</a></td>
-                        <td>
-                            {% for content in purchaseLine.contents %}
-                                {{ content }} <br/>
-                            {% endfor %}
-                        </td>
-                        <td>{{ purchaseLine.purchase.amount }}</td>
-                        <td>{{ purchaseLine.purchase.content }}</td>
-                        <td>{{ purchaseLine.purchase.status }}</td>
-                        <td><a target="_blank" href={{ "https://dashboard.stripe.com/payments/"~purchaseLine.purchase.stripeId }}>{{ purchaseLine.purchase.stripeId }}</a></td>
-                        <td data-sort="{{purchaseLine.purchase.createdAt |date("Y/m/d")}}">{{purchaseLine.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
-                        <td data-sort="{{purchaseLine.purchase.updatedAt |date("Y/m/d")}}">{{purchaseLine.purchase.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
-                        <td>
-                            {% if purchaseLine.purchase.status != "Remboursé" and purchaseLine.purchase.status != "Offert" %}
-                            <p data-title="{{ purchaseLine.purchase.user.firstName~" "~purchaseLine.purchase.user.lastName }}" data-id="{{ purchaseLine.purchase.id }}" data-toggle="modal" data-target="#deleteModal" class="text-primary" title="Rembourser"><i class="fas fa-undo-alt"></i></p>
-                            {% endif %}
-                        </td>
-                    </tr>
+                    {% if 'ROLE_ADMIN' not in  purchaseLine.purchase.user.roles  %}
+                        <tr>
+                            <td><a href="{{path('updateUserAdmin', {'id' :  purchaseLine.purchase.user.id})}}">{{ purchaseLine.purchase.user.firstName }} {{ purchaseLine.purchase.user.lastName }}</a></td>
+                            <td>
+                                {% for content in purchaseLine.contents %}
+                                    {{ content }} <br/>
+                                {% endfor %}
+                            </td>
+                            <td>{{ purchaseLine.purchase.amount }}</td>
+                            <td>{{ purchaseLine.purchase.content }}</td>
+                            <td>{{ purchaseLine.purchase.status }}</td>
+                            <td><a target="_blank" href={{ "https://dashboard.stripe.com/payments/"~purchaseLine.purchase.stripeId }}>{{ purchaseLine.purchase.stripeId }}</a></td>
+                            <td data-sort="{{purchaseLine.purchase.createdAt |date("Y/m/d")}}">{{purchaseLine.purchase.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                            <td data-sort="{{purchaseLine.purchase.updatedAt |date("Y/m/d")}}">{{purchaseLine.purchase.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
+                            <td>
+                                {% if purchaseLine.purchase.status != "Remboursé" and purchaseLine.purchase.status != "Offert" %}
+                                <p data-title="{{ purchaseLine.purchase.user.firstName~" "~purchaseLine.purchase.user.lastName }}" data-id="{{ purchaseLine.purchase.id }}" data-toggle="modal" data-target="#deleteModal" class="text-primary" title="Rembourser"><i class="fas fa-undo-alt"></i></p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
