@@ -33,9 +33,11 @@ class PurchaseContentRepository extends ServiceEntityRepository
             ->innerJoin('a.purchase', 'p')
             ->innerJoin('p.user', 'u')
             ->where("u.roles NOT LIKE :role")
+            ->andWhere('p.status != :status')
             ->setParameters(
                 array(
-                    'role' =>  '%"'.'ROLE_ADMIN'.'"%'
+                    'role' =>  '%"'.'ROLE_ADMIN'.'"%',
+                    'status' => "Remboursé"
                 )
             )
             ->getQuery()
