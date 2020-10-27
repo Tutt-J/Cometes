@@ -20,6 +20,7 @@ class PurchaseRepository extends ServiceEntityRepository
     const USER_ROLE_BIND = '%"'.'ROLE_ADMIN'.'"%';
     const STATUS_REQUEST = 'a.status != :status';
     const STATUS_BIND = "Remboursé";
+    const JOIN_USER = 'a.user';
 
 
     /**
@@ -38,7 +39,7 @@ class PurchaseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->select(self::SELECT_SUM)
-            ->innerJoin('a.user', 'u')
+            ->innerJoin(self::JOIN_USER , 'u')
             ->where(self::WHERE_YEAR)
             ->andWhere(self::USER_ROLE_REQUEST)
             ->andWhere('MONTH(a.createdAt) = :month')
@@ -68,7 +69,7 @@ class PurchaseRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('a')
             ->select(self::SELECT_SUM)
-            ->innerJoin('a.user', 'u')
+            ->innerJoin(self::JOIN_USER, 'u')
             ->where('a.createdAt >= :start')
             ->andWhere('a.createdAt <= :end')
             ->andWhere(self::USER_ROLE_REQUEST)
@@ -93,7 +94,7 @@ class PurchaseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->select(self::SELECT_SUM)
-            ->innerJoin('a.user', 'u')
+            ->innerJoin(self::JOIN_USER, 'u')
             ->where(self::WHERE_YEAR)
             ->andWhere('MONTH(a.createdAt) = :month')
             ->andWhere(self::USER_ROLE_REQUEST)
@@ -118,7 +119,7 @@ class PurchaseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->select(self::SELECT_SUM)
-            ->innerJoin('a.user', 'u')
+            ->innerJoin(self::JOIN_USER, 'u')
             ->where(self::WHERE_YEAR)
             ->andWhere(self::USER_ROLE_REQUEST)
             ->andWhere(self::STATUS_REQUEST)
