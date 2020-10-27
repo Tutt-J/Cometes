@@ -41,7 +41,6 @@ class AdminController extends AbstractController
     {
         //nb user event / nb max
         //si min atteint une couleur sinon une autre si max une autre
-
         return $this->render('admin/home.html.twig', [
             'purchases' => $report->getPurchases(),
             'totalDay' => $report->getTotalDay()[0]['amount'],
