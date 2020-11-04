@@ -321,7 +321,7 @@ class BasketAdministrator
         }
     }
 
-    public function getInvoice($items, $purchase, $user=null)
+    public function getInvoice($items, $purchase, $user=null, $refund = false)
     {
         if(is_null($user)){
             $user=$this->security->getUser();
@@ -358,10 +358,13 @@ class BasketAdministrator
         }
         $invoice->addTotal("Total", $total);
         $invoice->flipflop();
-        if($total == 0){
+        if($refund){
+            $invoice->addBadge("Remboursé");
+        } elseif($total == 0){
             $invoice->addBadge("Offert");
         } else{
             $invoice->addBadge("Payée");
+
         }
 
         $invoice->setFooternote("Chamade");
