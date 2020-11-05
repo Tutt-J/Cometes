@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
@@ -168,7 +169,7 @@ class EventsController extends AbstractController
      * @param OfferHelper $offerHelper
      * @param MailerInterface $mailer
      * @return Response
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function offerEventAction(
         $id,
@@ -230,14 +231,12 @@ class EventsController extends AbstractController
      * @Route("/admin/evenements/annulation", name="cancelEventAdmin")
      *
      * @param StripeHelper $stripeHelper
-     * @param OfferHelper $offerHelper
      * @param MailerInterface $mailer
      * @return RedirectResponse
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function cancelEventAction(
         StripeHelper $stripeHelper,
-        OfferHelper $offerHelper,
         MailerInterface $mailer
     )
     {
@@ -274,7 +273,5 @@ class EventsController extends AbstractController
 
         $this->addFlash('success', 'L\'évènement a été annulé et les participantes remboursées');
         return $this->redirectToRoute('eventsAdmin');
-
-
     }
 }
