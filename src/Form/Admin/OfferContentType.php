@@ -48,6 +48,7 @@ class OfferContentType extends AbstractType
                 'class' => User::class,
                 'label' => 'Cliente<span class="text-danger"> *</span>',
                 'label_html' => true,
+                'help' => "Assurez vous que la cliente n'a pas déjà le contenu ou l'évènement sinon il n'y a aucun interet."
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
