@@ -35,7 +35,7 @@ class OfferContentType extends AbstractType
                     new Length([
                         'normalizer' => 'trim',
                         'max' => 255,
-                        'maxMessage' => 'Le titre ne doit pas dépasser {{limit}} caractères',
+                        'maxMessage' => 'Le motif ne doit pas dépasser {{limit}} caractères',
                         'allowEmptyString' => false,
                     ]),
                 ],
@@ -48,6 +48,7 @@ class OfferContentType extends AbstractType
                 'class' => User::class,
                 'label' => 'Cliente<span class="text-danger"> *</span>',
                 'label_html' => true,
+                'help' => "Assurez vous que la cliente n'a pas déjà le contenu ou l'évènement sinon il n'y a aucun interet."
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',

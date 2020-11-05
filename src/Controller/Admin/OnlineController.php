@@ -7,9 +7,13 @@ use App\Form\Admin\ContentType;
 use App\Service\Admin\AdminDatabase;
 use App\Service\Admin\OfferHelper;
 use App\Service\BasketAdministrator;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -110,9 +114,16 @@ class OnlineController extends AbstractController
      * @param $id
      * @param BasketAdministrator $basketAdministrator
      * @param OfferHelper $offerHelper
+     * @param MailerInterface $mailer
      * @return Response
+     * @throws TransportExceptionInterface
      */
-    public function offerContentAction($id, BasketAdministrator $basketAdministrator, OfferHelper $offerHelper)
+    public function offerContentAction(
+        $id,
+        BasketAdministrator $basketAdministrator,
+        OfferHelper $offerHelper,
+        MailerInterface $mailer
+    )
     {
         $content = $this->getDoctrine()
             ->getRepository(Content::class)
@@ -136,7 +147,20 @@ class OnlineController extends AbstractController
 
             $items=$offerHelper->setItem($content->getTitle());
 
-            $basketAdministrator->getInvoice($items, $purchase, $form->get('user')->getData());
+            $invoice= $basketAdministrator->getInvoice($items, $purchase, $form->get('user')->getData());
+
+            //SEND CLIENT MAIL
+            $message = (new TemplatedEmail())
+                ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                ->to($form->get('user')->getData()->getEmail())
+                ->subject('Un contenu en ligne vous a été offert')
+                ->htmlTemplate('emails/offer_content.html.twig')
+                ->context([
+                    'name' => $content->getTitle(),
+                    'reason' =>$form->get('content')->getData()
+                ])
+                ->attachFromPath($invoice);
+            $mailer->send($message);
 
             $this->addFlash('success', 'Le contenu a bien été offert');
             return $this->redirectToRoute('onlineAdmin');

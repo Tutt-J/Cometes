@@ -1,24 +1,17 @@
 <?php
 namespace App\Controller\Admin;
 
-use App\Entity\Author;
-use App\Entity\Category;
-use App\Entity\Content;
 use App\Entity\Purchase;
-use App\Entity\PurchaseContent;
-use App\Entity\User;
-use App\Entity\UserEvent;
-use App\Form\ChangePasswordType;
-use App\Form\UserType;
-use App\Form\UserUpdateAdminType;
 use App\Service\Admin\ReportGenerator;
+use App\Service\BasketAdministrator;
 use App\Service\StripeHelper;
-use App\Service\UsersHelper;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -73,11 +66,17 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/commandes/remboursement", name="refundPurchaseAdmin")
      *
-     * @param $id
      * @param StripeHelper $stripeHelper
+     * @param BasketAdministrator $basketAdministrator
+     * @param MailerInterface $mailer
      * @return RedirectResponse
+     * @throws TransportExceptionInterface
      */
-    public function refundPurchaseAction(StripeHelper $stripeHelper)
+    public function refundPurchaseAction(
+        StripeHelper $stripeHelper,
+        BasketAdministrator $basketAdministrator,
+        MailerInterface $mailer
+    )
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -87,8 +86,17 @@ class AdminController extends AbstractController
                 ['id' => $_POST['id']]
             );
 
+        $items=[];
+
         foreach($purchase->getPurchaseContent() as $purchaseContent){
             $em->remove($purchaseContent);
+            array_push($items, [
+                "custom" => [
+                    "name" => $purchaseContent->getContent()->getTitle()
+                ],
+                "quantity" => $purchaseContent->getQuantity(),
+                "amount" => $purchaseContent->getPrice()*100,
+            ]);
         }
 
         if(!is_null($purchase->getUserEvent())){
@@ -97,9 +105,28 @@ class AdminController extends AbstractController
 
         $stripeHelper->refund($purchase->getStripeId());
 
+
+        $invoice = $basketAdministrator->getInvoice($items, $purchase, $purchase->getUser(), true);
+
+        //SEND CLIENT MAIL
+        $message = (new TemplatedEmail())
+            ->from(new Address('postmaster@chamade.co', 'Chamade'))
+            ->to($purchase->getUser()->getEmail())
+            ->subject('Remboursement d\'une commande')
+            ->htmlTemplate('emails/refunding_order.html.twig')
+            ->context([
+                'number' => 'WEB'.$purchase->getCreatedAt()->format("Y").'_'.$purchase->getId(),
+                'price' => $purchase->getAmount()
+            ])
+            ->attachFromPath($invoice);
+        $mailer->send($message);
+
         $purchase->setStatus('Remboursé');
         $em->persist($purchase);
         $em->flush();
+
+
+
 
         $this->addFlash('success', 'La commande a été remboursée');
         return $this->redirectToRoute('purchasesAdmin');

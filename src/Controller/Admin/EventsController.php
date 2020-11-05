@@ -12,10 +12,14 @@ use App\Service\Admin\AdminDatabase;
 use App\Service\Admin\OfferHelper;
 use App\Service\BasketAdministrator;
 use App\Service\StripeHelper;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -162,9 +166,18 @@ class EventsController extends AbstractController
      * @param $id
      * @param Request $request
      * @param BasketAdministrator $basketAdministrator
+     * @param OfferHelper $offerHelper
+     * @param MailerInterface $mailer
      * @return Response
+     * @throws TransportExceptionInterface
      */
-    public function offerEventAction($id, Request $request, BasketAdministrator $basketAdministrator, OfferHelper $offerHelper)
+    public function offerEventAction(
+        $id,
+        Request $request,
+        BasketAdministrator $basketAdministrator,
+        OfferHelper $offerHelper,
+        MailerInterface $mailer
+    )
     {
         $event = $this->getDoctrine()
             ->getRepository(Event::class)
@@ -186,7 +199,20 @@ class EventsController extends AbstractController
 
             $items=$offerHelper->setItem($event->getTitle());
 
-            $basketAdministrator->getInvoice($items, $purchase, $form->get('user')->getData());
+            $invoice = $basketAdministrator->getInvoice($items, $purchase, $form->get('user')->getData());
+
+            //SEND CLIENT MAIL
+            $message = (new TemplatedEmail())
+                ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                ->to($form->get('user')->getData()->getEmail())
+                ->subject('Un évènement vous a été offert')
+                ->htmlTemplate('emails/offer_event.html.twig')
+                ->context([
+                    'name' => $event->getTitle(),
+                    'reason' => $form->get('content')->getData()
+                ])
+                ->attachFromPath($invoice);
+            $mailer->send($message);
 
             $this->addFlash('success', 'L\'évènement a bien été offert');
             return $this->redirectToRoute('eventsAdmin');
@@ -205,9 +231,14 @@ class EventsController extends AbstractController
      * @Route("/admin/evenements/annulation", name="cancelEventAdmin")
      *
      * @param StripeHelper $stripeHelper
+     * @param MailerInterface $mailer
      * @return RedirectResponse
+     * @throws TransportExceptionInterface
      */
-    public function cancelEventAction(StripeHelper $stripeHelper)
+    public function cancelEventAction(
+        StripeHelper $stripeHelper,
+        MailerInterface $mailer
+    )
     {
         $event=$this->getDoctrine()
             ->getRepository(Event::class)
@@ -216,14 +247,27 @@ class EventsController extends AbstractController
             );
         $em = $this->getDoctrine()->getManager();
 
-        foreach($event->getUserEvents() as $userEvent){
-            $purchase=$userEvent->getPurchase();
-            if($stripeHelper->refund($purchase->getStripeId())){
-                $purchase->setStatus('Remboursé');
-                $em->persist($purchase);
-                $em->remove($userEvent);
-            }
-        }
+         foreach($event->getUserEvents() as $userEvent){
+             $purchase=$userEvent->getPurchase();
+             if($stripeHelper->refund($purchase->getStripeId())){
+                 $purchase->setStatus('Remboursé');
+                 $em->persist($purchase);
+             }
+
+             $em->remove($userEvent);
+
+             //SEND CLIENT MAIL
+             $message = (new TemplatedEmail())
+                 ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                 ->to($purchase->getUser()->getEmail())
+                 ->subject('Annulation de l\'évènement "'.$event->getTitle().'"')
+                 ->htmlTemplate('emails/cancel_event.html.twig')
+                 ->context([
+                     'name' => $event->getTitle(),
+                     'reason' => $_POST['reason']
+                 ]);
+             $mailer->send($message);
+         }
 
         $em->flush();
 
