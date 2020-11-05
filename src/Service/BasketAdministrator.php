@@ -335,12 +335,12 @@ class BasketAdministrator
         $invoice->setReference('WEB'.date('Y').'_'.$purchase->getId());   // Reference
         $invoice->setDate(date('d/m/Y', time()));   //Billing Date
         $invoice->setTime(date('H:i:s', time()));   //Billing Time
-        $invoice->setFrom(array("Chamade","419 RUE DE BORINGES","74930 REIGNIER-ESERY"));
+        $invoice->setFrom(array("CHAMADE","419 RUE DE BORINGES","74930 REIGNIER-ESERY"));
         $invoice->setTo(array(
-            $this->str_to_utf8($user->getFirstName()).' '.$this->str_to_utf8($user->getLastName()),
-            $this->str_to_utf8($user->getAddress()->getStreet()),
-            $this->str_to_utf8($user->getAddress()->getPostalCode())." ".$this->str_to_utf8($user->getAddress()->getCity()),
-            $this->str_to_utf8($user->getAddress()->getCountry())
+            $this->stripAccents($user->getFirstName()).' '.$this->stripAccents($user->getLastName()),
+            $this->stripAccents($user->getAddress()->getStreet()),
+            $this->stripAccents($user->getAddress()->getPostalCode())." ".$this->stripAccents($user->getAddress()->getCity()),
+            $this->stripAccents($user->getAddress()->getCountry())
         ));
 
         $total=0;
@@ -379,11 +379,7 @@ class BasketAdministrator
         return $path;
     }
 
-    public function str_to_utf8 ($str) {
-        $decoded = utf8_decode($str);
-        if (mb_detect_encoding($decoded , 'UTF-8', true) === false){
-            return $str;
-        }
-        return $decoded;
+    function stripAccents($str) {
+        return strtoupper(strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY'));
     }
 }
