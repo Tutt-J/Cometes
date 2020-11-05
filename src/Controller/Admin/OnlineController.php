@@ -11,6 +11,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
@@ -115,7 +116,7 @@ class OnlineController extends AbstractController
      * @param OfferHelper $offerHelper
      * @param MailerInterface $mailer
      * @return Response
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function offerContentAction(
         $id,
@@ -153,9 +154,10 @@ class OnlineController extends AbstractController
                 ->from(new Address('postmaster@chamade.co', 'Chamade'))
                 ->to($form->get('user')->getData()->getEmail())
                 ->subject('Un contenu en ligne vous a été offert')
-                ->htmlTemplate('emails/offer_event.html.twig')
+                ->htmlTemplate('emails/offer_content.html.twig')
                 ->context([
                     'name' => $content->getTitle(),
+                    'reason' =>$form->get('content')->getData()
                 ])
                 ->attachFromPath($invoice);
             $mailer->send($message);

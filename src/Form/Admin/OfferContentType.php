@@ -35,7 +35,7 @@ class OfferContentType extends AbstractType
                     new Length([
                         'normalizer' => 'trim',
                         'max' => 255,
-                        'maxMessage' => 'Le titre ne doit pas dépasser {{limit}} caractères',
+                        'maxMessage' => 'Le motif ne doit pas dépasser {{limit}} caractères',
                         'allowEmptyString' => false,
                     ]),
                 ],

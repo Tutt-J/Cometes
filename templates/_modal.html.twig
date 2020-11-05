@@ -9,10 +9,18 @@
                 {{ question }} "<span class="titleValue"></span>" ?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
-                <form action="{{ path(actionPath) }}" method="post">
+                <form action="{{ path(actionPath) }}" method="post" class="w-100">
                     <input type="hidden" class="idValue" name="id" value="">
-                    <input type="submit" class="btn btn-primary" value="{{ btnValue }}"/>
+                    {% if idModal == "cancelModal" %}
+                        <div class="form-group col-12">
+                            <label for="reason" class="required">Motif<span class="text-danger"> *</span></label>
+                            <input type="text" id="reason" name="reason" required="required" class="form-control">
+                        </div>
+                    {% endif %}
+                    <div class="form-group col-12 text-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
+                        <input type="submit" class="btn btn-primary" value="{{ btnValue }}"/>
+                    </div>
                 </form>
             </div>
         </div>

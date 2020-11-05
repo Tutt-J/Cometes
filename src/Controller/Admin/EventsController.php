@@ -165,7 +165,10 @@ class EventsController extends AbstractController
      * @param $id
      * @param Request $request
      * @param BasketAdministrator $basketAdministrator
+     * @param OfferHelper $offerHelper
+     * @param MailerInterface $mailer
      * @return Response
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function offerEventAction(
         $id,
@@ -205,6 +208,7 @@ class EventsController extends AbstractController
                 ->htmlTemplate('emails/offer_event.html.twig')
                 ->context([
                     'name' => $event->getTitle(),
+                    'reason' => $form->get('content')->getData()
                 ])
                 ->attachFromPath($invoice);
             $mailer->send($message);
@@ -226,12 +230,14 @@ class EventsController extends AbstractController
      * @Route("/admin/evenements/annulation", name="cancelEventAdmin")
      *
      * @param StripeHelper $stripeHelper
+     * @param OfferHelper $offerHelper
      * @param MailerInterface $mailer
      * @return RedirectResponse
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function cancelEventAction(
         StripeHelper $stripeHelper,
+        OfferHelper $offerHelper,
         MailerInterface $mailer
     )
     {
@@ -242,30 +248,33 @@ class EventsController extends AbstractController
             );
         $em = $this->getDoctrine()->getManager();
 
-        foreach($event->getUserEvents() as $userEvent){
-            $purchase=$userEvent->getPurchase();
-            if($stripeHelper->refund($purchase->getStripeId())){
-                $purchase->setStatus('Remboursé');
-                $em->persist($purchase);
-            }
+         foreach($event->getUserEvents() as $userEvent){
+             $purchase=$userEvent->getPurchase();
+             if($stripeHelper->refund($purchase->getStripeId())){
+                 $purchase->setStatus('Remboursé');
+                 $em->persist($purchase);
+             }
 
-            $em->remove($userEvent);
+             $em->remove($userEvent);
 
-            //SEND CLIENT MAIL
-            $message = (new TemplatedEmail())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
-                ->to($purchase->getUser()->getEmail())
-                ->subject('Annulation de l\'évènement "'.$event->getTitle().'"')
-                ->htmlTemplate('emails/cancel_event.html.twig')
-                ->context([
-                    'name' => $event->getTitle(),
-                ]);
-            $mailer->send($message);
-        }
+             //SEND CLIENT MAIL
+             $message = (new TemplatedEmail())
+                 ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                 ->to($purchase->getUser()->getEmail())
+                 ->subject('Annulation de l\'évènement "'.$event->getTitle().'"')
+                 ->htmlTemplate('emails/cancel_event.html.twig')
+                 ->context([
+                     'name' => $event->getTitle(),
+                     'reason' => $_POST['reason']
+                 ]);
+             $mailer->send($message);
+         }
 
         $em->flush();
 
         $this->addFlash('success', 'L\'évènement a été annulé et les participantes remboursées');
         return $this->redirectToRoute('eventsAdmin');
+
+
     }
 }
