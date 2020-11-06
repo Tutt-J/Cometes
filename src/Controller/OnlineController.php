@@ -67,40 +67,6 @@ class OnlineController extends AbstractController
     }
 
     /**
-     * @Route("/magie-en-ligne/yoga-en-ligne", name="yogasOnline")
-     *
-     * @param int $page
-     * @param ContentOnlineAdministrator $contentOnlineAdministrator
-     * @return Response
-     */
-    public function yogasAction(ContentOnlineAdministrator $contentOnlineAdministrator, int $page = 1)
-    {
-        return $this->render(
-            'online/yoga_online.html.twig',
-            [
-                'contents' => $contentOnlineAdministrator->getContentsToBecome('yoga', $page)
-            ]
-        );
-    }
-
-    /**
-     * @Route("/magie-en-ligne/yoga-en-ligne/{slug}",
-     * name="yogaOnline",
-     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
-     *
-     * @param $slug
-     * @param ContentOnlineAdministrator $contentOnlineAdministrator
-     * @return Response
-     */
-    public function yogaAction($slug, ContentOnlineAdministrator $contentOnlineAdministrator)
-    {
-        return $this->render(
-            SELF::INDEX_RENDER,
-            $contentOnlineAdministrator->generateContent($slug, 'yoga')
-        );
-    }
-
-    /**
      * @Route("/magie-en-ligne/e-books", name="eBooksOnline")
      *
      * @param ContentOnlineAdministrator $contentOnlineAdministrator

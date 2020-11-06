@@ -134,6 +134,15 @@ class IndexController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/astrologie", name="astroConsult")
+     *
+     * @return Response
+     */
+    public function astroAction()
+    {
+        return $this->render('index/astrology.html.twig');
+    }
 
     /**
      * @Route("/mentions-legales", name="legalNotice")

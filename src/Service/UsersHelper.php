@@ -80,6 +80,9 @@ class UsersHelper
         $user->setPassword($encodedPassword);
         $this->em->flush();
 
+        $this->addFlash('success', 'Le mot de passe a bien été mis à jour.');
+
+
         return new RedirectResponse($this->router->generate($path));
     }
 

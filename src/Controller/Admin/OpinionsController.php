@@ -60,6 +60,7 @@ class OpinionsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $adminDatabase->basic($form);
+            $this->addFlash('success', 'Le témoignage a bien été créé.');
 
             return $this->redirectToRoute('opinionsAdmin');
         }
@@ -122,6 +123,8 @@ class OpinionsController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($article);
         $entityManager->flush();
+
+        $this->addFlash('success', 'Le témoignage a bien été supprimée.');
 
         return $this->redirectToRoute('opinionsAdmin');
     }

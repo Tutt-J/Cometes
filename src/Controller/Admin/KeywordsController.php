@@ -103,6 +103,9 @@ class KeywordsController extends AbstractController
         $entityManager->remove($keyword);
         $entityManager->flush();
 
+        $this->addFlash('success', 'Le mot-clé a été mis à jour.');
+
+
         return $this->redirectToRoute('keywordsAdmin');
     }
 }

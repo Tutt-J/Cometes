@@ -62,6 +62,8 @@ class ProgramsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $adminDatabase->basicWithImg($form);
 
+            $this->addFlash('success', 'Le programme a bien été créé.');
+
             return $this->redirectToRoute('programsAdmin');
         }
 
@@ -120,6 +122,8 @@ class ProgramsController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($article);
         $entityManager->flush();
+
+        $this->addFlash('success', 'Le programme a bien été supprimée.');
 
         return $this->redirectToRoute('programsAdmin');
     }

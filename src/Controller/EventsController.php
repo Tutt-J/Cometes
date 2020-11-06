@@ -41,7 +41,7 @@ class EventsController extends AbstractController
     }
 
     /**
-     * @Route("/evenements/cercles-de-lune", name="circlesEvent")
+     * @Route("/magie-en-ligne/cercles-de-lune", name="circlesEvent")
      * @param EventsAdministrator $eventsAdministrator
      * @return mixed
      */
@@ -60,7 +60,7 @@ class EventsController extends AbstractController
     }
 
     /**
-     * @Route("/evenements/cercles-de-lune/{slug}",
+     * @Route("/magie-en-ligne/cercles-de-lune/{slug}",
      * name="circleEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
@@ -118,25 +118,7 @@ class EventsController extends AbstractController
 
 
     /**
-     * @Route("/evenements/yoga/{slug}",
-     * name="yogaEvent",
-     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
-     *
-     * @param string $slug
-     *
-     * @param EventsAdministrator $eventsAdministrator
-     * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function yogaAction(string $slug, EventsAdministrator $eventsAdministrator)
-    {
-        return $eventsAdministrator->renderEventPage($slug);
-    }
-
-    /**
-     * @Route("/evenements/ateliers", name="workshopsEvent")
+     * @Route("/magie-en-ligne/ateliers", name="workshopsEvent")
      *
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
@@ -156,7 +138,7 @@ class EventsController extends AbstractController
     }
 
     /**
-     * @Route("/evenements/ateliers/{slug}",
+     * @Route("/magie-en-ligne/ateliers/{slug}",
      * name="workshopEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *

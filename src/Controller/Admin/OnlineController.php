@@ -64,6 +64,8 @@ class OnlineController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $adminDatabase->online($form);
 
+            $this->addFlash('success', 'Le contenu a bién été créé.');
+
             return $this->redirectToRoute('onlineAdmin');
         }
 
@@ -96,7 +98,7 @@ class OnlineController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $adminDatabase->online($form);
-            $this->addFlash('success', 'Le contenu a bien été mise à jour');
+            $this->addFlash('success', 'Le contenu a bien été mis à jour');
             return $this->redirectToRoute('onlineAdmin');
         }
 

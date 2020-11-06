@@ -1,12 +1,10 @@
 <article class="item col-12 col-sm-6 col-md-3 mb-5 mb-lg-3 d-flex flex-column align-items-center text-center">
-    <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path(content.type.slug~'Online', { 'slug': content.slug }) }}">
-        <figure>
+        <figure class="d-flex align-items-center text-center w-100 mw-200">
             <div class="effect"></div>
             <img class="w-100" src="{{ asset('uploads/cover_img/'~content.img.url) }}" alt="{{ content.img.alt }}">
         </figure>
-    </a>
     <div class="infos mt-3 w-100 mw-200">
-        <h2 class="d-initial"><a href="{{ path('ritualOnline', { 'slug': content.slug }) }}">{{ content.title | raw }} {{ content.eventDate | date('Y')}}</a></h2>
+        <h2 class="d-initial">{{ content.title | raw }} {{ content.eventDate | date('Y')}}</h2>
         {% if "now"|date("Y/m/d") < content.eventDate | date_modify("-2 day")|date("Y/m/d") or content.onlineLink is null  %}
             <p class="mt-3">Disponible le {{ content.eventDate | date_modify("-2 day") | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY') }}</p>
         {% else %}

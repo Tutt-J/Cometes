@@ -80,6 +80,8 @@ class UsersController extends AbstractController
             $entityManager->persist($newUser);
             $entityManager->flush();
 
+            $this->addFlash('success', 'L\'utilisateur a bien été créé.');
+
             return $this->redirectToRoute('usersAdmin');
         }
 

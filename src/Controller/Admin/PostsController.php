@@ -57,6 +57,7 @@ class PostsController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $adminDatabase->post($form);
+            $this->addFlash('success', 'L\'article a bien été créé.');
 
             return $this->redirectToRoute('postsAdmin');
         }
@@ -124,6 +125,8 @@ class PostsController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($article);
         $entityManager->flush();
+
+        $this->addFlash('success', 'L\'article a bien été supprimé.');
 
         return $this->redirectToRoute('postsAdmin');
     }

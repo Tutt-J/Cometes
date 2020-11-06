@@ -60,6 +60,7 @@ class AuthorController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $adminDatabase->basicWithImg($form);
+            $this->addFlash('success', 'L\'auteur a bien été créé.');
 
             return $this->redirectToRoute('authorsAdmin');
         }
@@ -141,6 +142,9 @@ class AuthorController extends AbstractController
 
         $entityManager->remove($author);
         $entityManager->flush();
+
+        $this->addFlash('success', 'L\'auteur a bien été supprimé.');
+
 
         return $this->redirectToRoute('authorsAdmin');
     }

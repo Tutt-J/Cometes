@@ -11,6 +11,7 @@ use App\Form\Admin\OfferContentType;
 use App\Service\Admin\AdminDatabase;
 use App\Service\Admin\OfferHelper;
 use App\Service\BasketAdministrator;
+use App\Service\MailjetAdministrator;
 use App\Service\StripeHelper;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -94,6 +95,8 @@ class EventsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $adminDatabase->event($form);
 
+            $this->addFlash('success', 'L\'évènement a bien été créé.');
+
             return $this->redirectToRoute('eventsAdmin');
         }
 
@@ -157,6 +160,9 @@ class EventsController extends AbstractController
         $entityManager->remove($article);
         $entityManager->flush();
 
+        $this->addFlash('success', 'L\'évènement a bien été supprimé');
+
+
         return $this->redirectToRoute('eventsAdmin');
     }
 
@@ -168,6 +174,7 @@ class EventsController extends AbstractController
      * @param BasketAdministrator $basketAdministrator
      * @param OfferHelper $offerHelper
      * @param MailerInterface $mailer
+     * @param MailjetAdministrator $mailjetAdministrator
      * @return Response
      * @throws TransportExceptionInterface
      */
@@ -176,7 +183,8 @@ class EventsController extends AbstractController
         Request $request,
         BasketAdministrator $basketAdministrator,
         OfferHelper $offerHelper,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        MailjetAdministrator $mailjetAdministrator
     )
     {
         $event = $this->getDoctrine()
@@ -200,6 +208,7 @@ class EventsController extends AbstractController
             $items=$offerHelper->setItem($event->getTitle());
 
             $invoice = $basketAdministrator->getInvoice($items, $purchase, $form->get('user')->getData());
+            $mailjetAdministrator->addContact($form->get('user')->getData()->getEmail(), substr($event->getTitle(), 0, 40).' '.($event->getStartDate())->format('mY'));
 
             //SEND CLIENT MAIL
             $message = (new TemplatedEmail())

@@ -119,6 +119,9 @@ class CategoriesController extends AbstractController
             $entityManager->remove($category);
             $entityManager->flush();
 
+        $this->addFlash('success', 'La catégorie a bien été supprimée.');
+
+
         return $this->redirectToRoute('categoriesAdmin');
     }
 }
