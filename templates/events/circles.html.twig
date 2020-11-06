@@ -1,57 +1,72 @@
+
+
 {% extends 'base.html.twig' %}
-
 {% block title %}Cercles de lune | {{ parent() }}{% endblock %}
-
 {% block metaDescription %}CHAMADE propose des cercles de lune qui sont un autre moyen de se reconnecter à la cyclicité de la nature et de la vie
     en général.{% endblock %}
 {% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_cercle.jpeg') }}{% endblock %}
-
 {% block Titre %}Cercles de lune{% endblock %}
-
 {% block content %}
     <div class="container text-justify my-5">
-        <section class="row mt-4 mb-3  text-center" >
+        <section class="row mt-4 mb-3" >
             <h3 class="col-12 text-center">Le cercle de lune est un autre moyen de se reconnecter à la cyclicité de la nature et de la vie
-                en général.</h3>
+                en général.
+            </h3>
+            <p class="col-12 ">C'est l'occasion, deux fois par mois, de vous offrir un temps d'introspection et de bien-être.
+                Pour connecter à votre intuition et à ce qui est réellement important pour vous.
+            </p>
+            <p class="col-12">Pendant ces Cercles, je propose :</p>
+            <ul>
+                <li>Un point sur les énergies astrologiques et énergétiques du moment.</li>
+                <li>Une pratique de Yoga holistique.</li>
+            </ul>
+            <p class="col-12">Certifiée en Yoga Vinyasa auprès de l'école Kula Collective (YTT 200H), le yoga est à mon sens une voie privilégiée de connaissance de soi et d'harmonie intérieure.<br/><br/>
+                Je pratique un Yoga du bien-être, qui considère l’individu dans sa globalité, dans sa dimension humaine sacrée, bien au-delà des postures et enchaînements parfaits vus sur les réseaux sociaux.<br/><br/>
+                Nous pratiquerons ensemble le Yoga Vinyasa.<br/><br/>
+                En sanskrit, nyasa veut dire « placer » et vi « d’une certaine façon ».<br/><br/>
+                On trouve souvent la définition de cette pratique comme la synchronisation du souffle et du mouvement. C’est une pratique dynamique dans laquelle les postures s’enchaînent suivant un flow composé de diverses séquences.<br/><br/>
+                Mes cours se veulent « Tous niveaux », et vous pouvez les suivre même si vous débutez. Je propose toujours des variations des postures, afin que chacun puisse trouver son épanouissement dans la pratique.
+            </p>
+            <ul>
+                <li>Un Cercle de partage. Moment d'échanges privilégié entre les participantes.</li>
+                <li>Un tirage d'Oracle.</li>
+            </ul>
+            <p class="col-12">Evidemment, chaque Cercle est unique et le contenu est susceptible d'évoluer.</p>
+            <p class="col-12">Les seules choses qu’il vous faut pour suivre ces Cercles sont :</p>
+            <ul>
+                <li>un accès à internet pour visionner mes vidéos,</li>
+                <li>un tapis de Yoga,</li>
+                <li>et éventuellement des accessoires si vous en ressentez le besoin (blocs, sangles, coussin et couverture).</li>
+            </ul>
         </section>
         <section class="row mt-5 mb-3 align-items-center">
             <figure class="mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6 col-xl-3 col-lg-5 text-center">
                 <img class="mw-200 w-100" src="{{  asset('build/images/design_cercle.jpeg') }}" alt="Demi-cercle de fleurs">
             </figure>
             <div class="col-xl-9 col-lg-7">
-                <div class="mt-3 mt-lg-0 col-12">
-                    <h4><strong>Contenu des cercles :</strong></h4>
-                    <ul>
-                        <li>Pratique relaxante de Yoga doux tous niveaux,</li>
-                        <li>Retour sur les énergies astrologiques du moment,</li>
-                        <li>Cercle de partage,</li>
-                        <li>Tirage d&#39;Oracle.</li>
-                    </ul>
-                </div>
                 {% if circles %}
-                <div class="mt-5 col-12">
-                    <h4 ><strong>Calendrier des Cercles 2020/2021 :</strong></h4>
-                    <ul>
-                        {% for circle in circles %}
-                            <li>
-                                {{ circle.title }} du {{circle.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY')}}<br/>
-                                <a href="{{ path('circleEvent', { 'slug': circle.slug }) }}">En savoir plus</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                    <div class="mt-5 col-12">
+                        <h4 ><strong>Calendrier des Cercles 2020/2021 :</strong></h4>
+                        <ul>
+                            {% for circle in circles %}
+                                <li>
+                                    {{ circle.title }} du {{circle.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY')}}<br/>
+                                    <a href="{{ path('circleEvent', { 'slug': circle.slug }) }}">En savoir plus</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 {% endif %}
-
             </div>
         </section>
         <section class="row my-5 box_infos background-green text-center p-3 mx-2 mx-sm-0">
             <div class="col-md-4">
                 <h3><strong>Lieu</strong></h3>
-                <address>A définir.</address>
+                <address>En ligne, via Zoom</address>
             </div>
             <div class="col-md-4">
                 <h3><strong>Tarif</strong></h3>
-                <p>25 euros par cercle et par personne.</p>
+                <p>12 euros par cercle et par personne. <br/> Pour trois cercles achetés, un à 10 euros.</p>
             </div>
             <div class="col-md-4">
                 <h3><strong>Horaires</strong></h3>
@@ -70,28 +85,33 @@
                     <h4 class="mb-3"><strong>Pour en savoir plus :</strong></h4>
                     <p>Il fut un temps où nos ancêtres vivaient selon les diverses phases de la lune et des saisons.</p>
                     <p>Encore aujourd&#39;hui, cet astre influence les marées et les naissances, preuve de son pouvoir à
-                        la fois intense et mystérieux sur nos existences terrestres.</p>
+                        la fois intense et mystérieux sur nos existences terrestres.
+                    </p>
                     <p>Revenir à cette temporalité, accepter l&#39;impermanence, puis le renouveau. Autant de clés qui
                         nous permettent de reconnecter à un mode de vie durable, qui favorise l&#39;humain comme
                         personne cyclique et non pas comme une machine devant fournir en tout temps une
-                        performance linéaire et optimale.</p>
+                        performance linéaire et optimale.
+                    </p>
                     <p>Explorer le cycle lunaire, c&#39;est aussi un excellent moyen de retrouver le caractère sacré des
                         cycles menstruels féminins et de connecter aux divers archétypes associés à chaque phase.
                         Explorer cette dimension de notre féminité est une mine de connaissances et constitue un
-                        passage de choix vers notre puissance personnelle.</p>
+                        passage de choix vers notre puissance personnelle.
+                    </p>
                     <p>Les Cercles de lune sont différents des Rituels LES DIMANCHES DE CHAMADE en ce qu&#39;il
                         s&#39;agit de cercles de parole entre femmes, à la fois bienveillants et sacrés, dans lesquelles
                         chaque participante a l&#39;occasion de partager son ressenti du moment, une expérience ou
-                        une question.</p>
+                        une question.
+                    </p>
                     <p>Ils représentent une belle occasion d&#39;expérimenter la sororité et les liens de soutien et
                         d&#39;écoute qui unissent les femmes depuis la nuit des temps.
                         Chacun de ces Cercles de lune contient une pratique de Yoga doux tous niveaux, une lecture
                         des énergies astrologiques en cours et un tirage d&#39;oracle, destinés à apporter à chaque
-                        participante des éclairages complémentaires.</p>
+                        participante des éclairages complémentaires.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
     {% include 'events/_opinions.html.twig' %}
-
 {% endblock %}
+
