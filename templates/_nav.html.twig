@@ -46,32 +46,20 @@
             <ul class="p-0 m-0 position-absolute d-none w-auto">
                 <li class="d-block"><a class="{% if 'retreat' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('retreatsEvent') }}">Retraites</a></li>
                 <li class="d-block"><a class="{% if 'rituals' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('ritualsEvent') }}">Rituels</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'circleEvent' %}current-item{% endif %}" href="{{ path('circlesEvent') }}">Cercles de lune</a></li>
-                <li class="d-block"><a class="{% if 'workshop' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('workshopsEvent') }}">Ateliers</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'blessingEvent' %}current-item{% endif %}" href="{{path('blessingEvent')}}">Blessing-way</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'slowBuildingEvent' %}current-item{% endif %}" href="{{path('slowBuildingEvent')}}">Slowbuilding</a></li>
             </ul>
         </li>
         <li class="position-relative">
             <a href="{{ path('homeOnline') }}"><span class="{% if 'Online' in app.request.attributes.get('_route') %}current-item{% endif %}">Magie en ligne</span></a>
             <ul class="p-0 m-0 position-absolute d-none w-auto">
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'ritualsOnline' %}current-item{% endif %}" href="{{ path('ritualsOnline') }}">Rituels en ligne</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'videosOnline' %}current-item{% endif %}" href="{{ path('videosOnline') }}">Ateliers en ligne</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'yogasOnline' %}current-item{% endif %}" href="{{ path('yogasOnline') }}">Yoga en ligne</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'videosOnline' %}current-item{% endif %}" href="{{ path('workshopsEvent') }}">Ateliers</a></li>
+                                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'circleEvent' %}current-item{% endif %}" href="{{ path('circlesEvent') }}">Cercles de lune</a></li>
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'programsOnline' %}current-item{% endif %}" href="{{ path('programsOnline') }}">Programmes</a></li>
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'eBooksOnline' %}current-item{% endif %}" href="{{ path('eBooksOnline') }}">E-books</a></li>
-                {#
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'podcastsOnline' %}current-item{% endif %}" href="{{ path('podcastsOnline') }}">Podcast</a></li>
-                #}
             </ul>
         </li>
         <li class="position-relative">
-            <span class="{% if 'Consult' in app.request.attributes.get('_route') or 'Balance' in app.request.attributes.get('_route') %}current-item{% endif %}" >Équilibre énergétique</span>
-            <ul class="p-0 m-0 position-absolute d-none w-auto">
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'yogaBalance' %}current-item{% endif %}" href="{{ path('yogaBalance') }}">Yoga</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'sonoConsult' %}current-item{% endif %}" href="{{ path('sonoConsult') }}">Sonothérapie</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Astrologie</a></li>
-            </ul>
+            <a href="{{ path('astroConsult') }}"><span class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}">Astrologie</span></a>
         </li>
         <li><a class="{% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a></li>
         <li><a class="{% if app.request.attributes.get('_route') == 'indexContact' %}current-item{% endif %}" href="{{ path('indexContact') }}">Contact</a></li>
