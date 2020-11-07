@@ -5,6 +5,7 @@ namespace App\Form\Admin;
 use App\Entity\EventPricing;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,23 +41,33 @@ class AdminEventPriceType extends AbstractType
                 'label' => 'Prix<span class="text-danger"> *</span>',
                 'label_html' => true,
             ])
-            ->add('startValidityDate', BirthdayType::class, [
+            ->add('startValidityDate', DateType::class, [
                 'years' => range(date('Y'), date('Y')+2),
-                'label' => 'Date de début de validité<span class="text-danger"> *</span>',
+                'label' => 'Date de début de validité',
                 'label_html' => true,
                 "required"=>true,
-                'help' => "La date choisie est comprise."
+                'help' => "La date choisie est comprise.",
+                'placeholder' => [
+                    'year' => 'Année',
+                    'month' => 'Mois',
+                    'day' => 'Jour',
+                ]
                 ])
-            ->add('endValidityDate', BirthdayType::class, [
+            ->add('endValidityDate', DateType::class, [
                 'years' => range(date('Y'), date('Y')+2),
-                'label' => 'Date de fin de validité<span class="text-danger"> *</span>',
+                'label' => 'Date de fin de validité',
                 'label_html' => true,
                 'attr' => [
                     'class' => 'automatic_date',
                     'placeholder' => '01/01/2000',
                 ],
                 "required"=>true,
-                'help' => "La date choisie est comprise."
+                'help' => "La date choisie est comprise.",
+                'placeholder' => [
+                    'year' => 'Année',
+                    'month' => 'Mois',
+                    'day' => 'Jour',
+                ]
             ])
         ;
     }
