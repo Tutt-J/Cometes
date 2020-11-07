@@ -75,7 +75,9 @@
                         <td data-sort="{{ritual.createdAt |date("Y/m/d")}}">{{ritual.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td data-sort="{{ritual.updatedAt |date("Y/m/d")}}">{{ritual.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td>
+                           {% if ritual.type.slug != "yoga" %}
                             <a  onclick="window.open(this.href);return false" href="{{ path(ritual.type.slug~'Online', { 'slug': ritual.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
+                            {%endif%}
                             <a href="{{ path('updateOnlineAdmin', {'id':ritual.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
                             <a href="{{ path("offerContentAdmin", {'id': ritual.id}) }}" class="text-success mr-2" title="Offrir"><i class="fas fa-gift"></i></a>
                         </td>
