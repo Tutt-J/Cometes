@@ -92,30 +92,24 @@ class EventType extends BaseType
                 'label_html' => true,
             ])
             ->add('startDate', DateTimeType::class, [
+                'years' => range(date('Y'), date('Y')+2),
                 'constraints' => array(
                     new NotBlank([
                         'message' => SELF::NOTEMPTY_MESSAGE
                     ]),
                 ),
                 'label' => 'Date de début<span class="text-danger"> *</span>',
-                'label_html' => true,
-                'attr' => [
-                    'class' => 'automatic_date',
-                    'placeholder' => '01/01/2000 08:00',
-                ],
+                'label_html' => true
             ])
             ->add('endDate', DateTimeType::class, [
+                'years' => range(date('Y'), date('Y')+2),
                 'constraints' => array(
                     new NotBlank([
                         'message' => SELF::NOTEMPTY_MESSAGE
                     ]),
                 ),
                 'label' => 'Date de fin <span class="text-danger"> *</span>',
-                'label_html' => true,
-                'attr' => [
-                    'class' => 'automatic_date',
-                    'placeholder' => '01/01/2000 08:00',
-                ],
+                'label_html' => true
             ])
             ->add('landingPageUrl', UrlType::class, [
                 'constraints' => array(
