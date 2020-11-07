@@ -158,6 +158,12 @@ class EventsController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($article);
+
+        //Remove mutiple pricing
+        foreach($article->getEventPricings() as $pricing){
+            $entityManager->remove($pricing);
+        }
+
         $entityManager->flush();
 
         $this->addFlash('success', 'L\'évènement a bien été supprimé');
