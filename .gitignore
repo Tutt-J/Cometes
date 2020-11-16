@@ -72,3 +72,10 @@ node_modules
 /php.ini
 /.env.local
 /nbproject/private/
+
+
+#netbeans specific
+core
+nbproject/*
+!nbproject/project.properties
+!nbproject/project.xml
