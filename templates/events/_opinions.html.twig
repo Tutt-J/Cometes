@@ -6,7 +6,7 @@
                     <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
                         <div class="w-75 mx-auto">
                             <h3>{{ opinion.client }} :</h3>
-                            <p>« {{opinion.content}} »</p>
+                            <p>{{opinion.content | raw }}</p>
                         </div>
                     </div>
                 {% endfor %}

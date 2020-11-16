@@ -71,3 +71,4 @@ node_modules
 /migrations/*
 /php.ini
 /.env.local
+/nbproject/private/
