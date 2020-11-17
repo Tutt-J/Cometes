@@ -170,7 +170,7 @@ class BasketController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         if ($session->get('basket') && $session->get('stripe')) {
-            $charge= $stripeHelper->retrievePurchase();
+            $charge= $stripeHelper->retrievePurchase('Basket');
 
             //SET PURCHASE
             $purchase=$stripeHelper->setPurchase($charge);

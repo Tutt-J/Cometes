@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Class BasketAdministrator
  * @package App\Service
@@ -73,7 +73,7 @@ class StripeHelper
         try {
             $client = $this->stripeClient->customers->all(['email' => $user->getEmail()]);
         } catch (ApiErrorException $e) {
-            $this->flashbag->add('error', $e);
+                $this->flashbag->add('error', 'Impossible de récupérer le listing client Stripe. Veuillez nous contacter. ('.$e.')');
             $return = new RedirectResponse($this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL));
         }
         if (empty($client['data'])) {
@@ -90,7 +90,7 @@ class StripeHelper
                     ]
                 ]);
             } catch (ApiErrorException $e) {
-                $this->flashbag->add('error', $e);
+                $this->flashbag->add('error', 'Problème Stripe lors de la création du client. Veuillez nous contacter. ('.$e.')');
                 $return = new RedirectResponse($this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL));
             }
         } else {
@@ -99,7 +99,7 @@ class StripeHelper
                     $client['data'][0]['id']
                 );
             } catch (ApiErrorException $e) {
-                $this->flashbag->add('error', $e);
+                $this->flashbag->add('error', 'Impossible de récupérer le client sur Stripe. Veuillez nous contacter. ('.$e.')');
                 $return = new RedirectResponse($this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL));
             }
         }
@@ -128,23 +128,24 @@ class StripeHelper
             );
             $this->session->set('stripe', $stripeCreate);
         } catch (ApiErrorException $e) {
-            $this->flashbag->add('error', $e);
+                $this->flashbag->add('error', 'Impossible de procéder au paiement. Veuillez nous contacter. ('.$e.')');
             return new RedirectResponse($this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL));
         }
     }
 
-    public function retrievePurchase()
+    public function retrievePurchase($return)
     {
         try {
             return $this->stripeClient->checkout->sessions->retrieve(
-                $this->session->get('stripe')['id']
+               $this->session->get('stripe')['id']
             );
         } catch (ApiErrorException $e) {
-            return $e;
+            $this->flashbag->add('error', 'Le paiement n\'est pas trouvé ou a échoué. Veuillez nous contacter. ('.$e.')');
+            return new RedirectResponse($this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL));
         }
     }
 
-    public function retrievePaymentIntents($id)
+    public function retrievePaymentIntents($id, $return)
     {
         try {
             return $this->stripeClient->paymentIntents->retrieve(
@@ -152,7 +153,8 @@ class StripeHelper
                 []
             );
         } catch (ApiErrorException $e) {
-            return $e;
+            $this->flashbag->add('error', 'Nous ne pouvons pas retrouver les informations de paiements. Veuillez nous contacter. ('.$e.')');
+            return new RedirectResponse($this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL));
         }
     }
 

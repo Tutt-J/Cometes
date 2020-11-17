@@ -103,32 +103,34 @@ class AdminController extends AbstractController
             $em->remove($purchase->getUserEvent());
         }
 
-        $stripeHelper->refund($purchase->getStripeId());
+        $refund = $stripeHelper->refund($purchase->getStripeId());
+        
+        if($refund){
+            $invoice = $basketAdministrator->getInvoice($items, $purchase, $purchase->getUser(), true);
+            //SEND CLIENT MAIL
+            $message = (new TemplatedEmail())
+                ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                ->to($purchase->getUser()->getEmail())
+                ->subject('Remboursement d\'une commande')
+                ->htmlTemplate('emails/refunding_order.html.twig')
+                ->context([
+                    'number' => 'WEB'.$purchase->getCreatedAt()->format("Y").'_'.$purchase->getId(),
+                    'price' => $purchase->getAmount()
+                ])
+                ->attachFromPath($invoice);
+            $mailer->send($message);
+
+            $purchase->setStatus('Remboursé');
+            $em->persist($purchase);
+            $em->flush();
+
+            $this->addFlash('success', 'La commande a été remboursée');
+        } else{
+           $this->addFlash('error', 'Echec du remboursement, veuillez vérifier que la commande est remboursable sur Stripe.');
+        }
 
 
-        $invoice = $basketAdministrator->getInvoice($items, $purchase, $purchase->getUser(), true);
-
-        //SEND CLIENT MAIL
-        $message = (new TemplatedEmail())
-            ->from(new Address('postmaster@chamade.co', 'Chamade'))
-            ->to($purchase->getUser()->getEmail())
-            ->subject('Remboursement d\'une commande')
-            ->htmlTemplate('emails/refunding_order.html.twig')
-            ->context([
-                'number' => 'WEB'.$purchase->getCreatedAt()->format("Y").'_'.$purchase->getId(),
-                'price' => $purchase->getAmount()
-            ])
-            ->attachFromPath($invoice);
-        $mailer->send($message);
-
-        $purchase->setStatus('Remboursé');
-        $em->persist($purchase);
-        $em->flush();
-
-
-
-
-        $this->addFlash('success', 'La commande a été remboursée');
+        
         return $this->redirectToRoute('purchasesAdmin');
     }
 }
