@@ -263,7 +263,7 @@ class EventsController extends AbstractController
 
             //SET PURCHASE
             $purchase=$stripeHelper->setPurchase($charge);
-            $purchase->setContent($stripeHelper->retrievePaymentIntents($charge['payment_intent'])['metadata']['Description'], 'RegisterEvent');
+            $purchase->setContent($stripeHelper->retrievePaymentIntents($charge['payment_intent'], 'RegisterEvent')['metadata']['Description']);
             $em->persist($purchase);
 
 
