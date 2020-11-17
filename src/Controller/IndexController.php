@@ -35,8 +35,6 @@ class IndexController extends AbstractController
      */
     public function indexAction(EventsAdministrator $eventAdministrator, YouTubeDownloader $youTubeDownloader)
     {
-
-
         $events=$eventAdministrator->getThreeNextEvents();
 
         return $this->render(
@@ -139,8 +137,16 @@ class IndexController extends AbstractController
      *
      * @return Response
      */
-    public function astroAction()
+    public function astroAction(SessionInterface $session)
     {
+        
+      if(isset($_GET['affiliate'])){
+          $session->set('affiliate', $_GET['affiliate']);
+      }
+      if(null == $session->get('affiliate')){
+          $session->set('affiliate', "");
+      }
+
         return $this->render('index/astrology.html.twig');
     }
 
