@@ -42,7 +42,7 @@
                 </tfoot>
                 <tbody>
                 {% for purchaseLine in purchases %}
-                    {% if 'ROLE_ADMIN' in  purchaseLine.purchase.user.roles  %}
+                    {% if 'ROLE_ADMIN' not in  purchaseLine.purchase.user.roles  %}
                         <tr>
                             <td><a href="{{path('updateUserAdmin', {'id' :  purchaseLine.purchase.user.id})}}">{{ purchaseLine.purchase.user.firstName }} {{ purchaseLine.purchase.user.lastName }}</a></td>
                             <td>
