@@ -79,7 +79,7 @@ class OpinionsController extends AbstractController
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updateOpinion(Opinion $opinion, $request, AdminDatabase $adminDatabase)
+    public function updateOpinion(Opinion $opinion, Request $request, AdminDatabase $adminDatabase)
     {
         $form = $this->createForm(OpinionType::class, $opinion);
 

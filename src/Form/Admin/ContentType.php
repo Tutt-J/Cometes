@@ -105,9 +105,6 @@ class ContentType extends BaseType
                     'placeholder' => 'Laisses vide, je le fais quand je mets la vidéo en ligne',
                 ],
             ])
-            ->add('isOnline', CheckboxType::class, array(
-                'label' => 'Afficher sur le site'
-            ))
             ->add('isPack', CheckboxType::class, array(
                 'label' => 'Correspond à un pack'
             ))

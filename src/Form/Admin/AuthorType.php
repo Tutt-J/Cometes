@@ -22,6 +22,7 @@ class AuthorType extends BaseType
         parent::buildForm($builder, $options);
         $builder
             ->remove('title')
+            ->remove('isOnline')
             ->add('name', TextType::class, [
                 'constraints' => [
                     new Length([

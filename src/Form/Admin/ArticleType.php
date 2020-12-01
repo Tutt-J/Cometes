@@ -71,13 +71,6 @@ class ArticleType extends BaseType
                 'label_html' => true,
                 'mapped' => false
             ])
-            ->add('isOnline', ChoiceType::class, array(
-                'choices'  => [
-                    'Brouillon' => 0,
-                    'Publié' => 1,
-                ],
-                'label' => 'Afficher sur le site'
-            ))
         ;
     }
 

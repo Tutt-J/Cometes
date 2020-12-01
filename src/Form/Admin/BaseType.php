@@ -72,7 +72,7 @@ class BaseType extends AbstractType
                     'Brouillon' => 0,
                     'Publié' => 1,
                 ],
-                'label' => 'Afficher sur le site'
+                'label' => 'État de publication'
             ))
         ;
     }

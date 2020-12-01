@@ -45,13 +45,6 @@ class ProgramType extends BaseType
                 'label_html' => true,
                 'required' => true
             ])
-            ->add('isOnline', ChoiceType::class, array(
-                'choices'  => [
-                    'Brouillon' => 0,
-                    'Publié' => 1,
-                ],
-                'label' => 'État'
-            ))
         ;
     }
 
