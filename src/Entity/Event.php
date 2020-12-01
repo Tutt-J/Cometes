@@ -104,6 +104,11 @@ class Event
      */
     private $onlineEvent;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isOnline;
+
 
     public function __construct()
     {
@@ -342,6 +347,18 @@ class Event
     public function setOnlineEvent(bool $onlineEvent): self
     {
         $this->onlineEvent = $onlineEvent;
+
+        return $this;
+    }
+
+    public function getIsOnline(): ?bool
+    {
+        return $this->isOnline;
+    }
+
+    public function setIsOnline(bool $isOnline): self
+    {
+        $this->isOnline = $isOnline;
 
         return $this;
     }
