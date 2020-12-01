@@ -14,6 +14,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
+    const IS_ONLINE ="a.isOnline = :online";
+
     /**
      * ArticleRepository constructor.
      * @param ManagerRegistry $registry
@@ -33,7 +35,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->addSelect('RAND() as HIDDEN rand')
             ->andWhere('a.category = :val')
             ->andWhere('a.id != :id')
-            ->andWhere('a.isOnline = :online')
+            ->andWhere(SELF::IS_ONLINE)
             ->setParameters(array('val'=> $current->getCategory(), 'id' => $current->getId(), 'online' => 1))
             ->orderBy('rand')
             ->setMaxResults(3)
@@ -45,7 +47,7 @@ class ArticleRepository extends ServiceEntityRepository
     public function findPrev($current){
         return $this->createQueryBuilder('a')
             ->andWhere('a.id < :id')
-            ->andWhere('a.isOnline = :online')
+            ->andWhere(SELF::IS_ONLINE)
             ->setParameters(array( 'id' => $current->getId(), 'online' => 1))
             ->setMaxResults(1)
             ->getQuery()
@@ -56,7 +58,7 @@ class ArticleRepository extends ServiceEntityRepository
     public function findNext($current){
         return $this->createQueryBuilder('a')
             ->andWhere('a.id > :id')
-            ->andWhere('a.isOnline = :online')
+            ->andWhere(SELF::IS_ONLINE)
             ->setParameters(array( 'id' => $current->getId(), 'online' => 1))
             ->setMaxResults(1)
             ->getQuery()
@@ -75,7 +77,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->leftJoin('a.keywords', 'c')
             ->addSelect('c')
             ->andWhere('c.keyword = :c')
-            ->andWhere('a.isOnline = :online')
+            ->andWhere(SELF::IS_ONLINE)
             ->setParameters(array('c' => $keyword->getKeyword(), 'online' => 1))
             ->getQuery()
             ->getResult();
