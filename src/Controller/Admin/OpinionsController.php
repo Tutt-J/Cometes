@@ -74,20 +74,14 @@ class OpinionsController extends AbstractController
     /**
      * @Route("/admin/temoignages/{id}/modifier", name="updateOpinionAdmin")
      *
-     * @param $id
+     * @param Opinion $opinion
      * @param Request $request
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updateOpinion($id, Request $request, AdminDatabase $adminDatabase)
+    public function updateOpinion(Opinion $opinion, Request $request, AdminDatabase $adminDatabase)
     {
-        $event = $this->getDoctrine()
-            ->getRepository(Opinion::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
-
-        $form = $this->createForm(OpinionType::class, $event);
+        $form = $this->createForm(OpinionType::class, $opinion);
 
         $form->handleRequest($request);
 

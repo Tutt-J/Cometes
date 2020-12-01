@@ -39,12 +39,13 @@
                 <li>et éventuellement des accessoires si vous en ressentez le besoin (blocs, sangles, coussin et couverture).</li>
             </ul>
         </section>
+        {% if circles %}
         <section class="row mt-5 mb-3 align-items-center">
             <figure class="mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6 col-xl-3 col-lg-5 text-center">
                 <img class="mw-200 w-100" src="{{  asset('build/images/design_cercle.jpeg') }}" alt="Demi-cercle de fleurs">
             </figure>
             <div class="col-xl-9 col-lg-7">
-                {% if circles %}
+
                     <div class="mt-5 col-12">
                         <h4 ><strong>Calendrier des Cercles 2020/2021 :</strong></h4>
                         <ul>
@@ -56,9 +57,10 @@
                             {% endfor %}
                         </ul>
                     </div>
-                {% endif %}
             </div>
         </section>
+        {% endif %}
+
         <section class="row my-5 box_infos background-green text-center p-3 mx-2 mx-sm-0">
             <div class="col-md-4">
                 <h3><strong>Lieu</strong></h3>

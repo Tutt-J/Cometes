@@ -35,7 +35,7 @@ class BlogController extends AbstractController
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
             ->findBy(
-                array(),
+                array('isOnline' => 1),
                 array('createdAt' => 'DESC')
             );
 
@@ -61,19 +61,12 @@ class BlogController extends AbstractController
      * name="blogArticle",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param string $slug
-     *
+     * @param Article $article
      * @return Response
      */
-    public function articleAction(string $slug)
+    public function articleAction(Article $article)
     {
-        $article = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findOneBy(
-                ['slug' => $slug]
-            );
-
-        if (empty($article)) {
+        if (empty($article) || !$article->getIsOnline()) {
             throw new NotFoundHttpException('Cet article n\'existe pas');
         }
 
@@ -83,15 +76,11 @@ class BlogController extends AbstractController
 
         $article_before = $this->getDoctrine()
             ->getRepository(Article::class)
-            ->findOneBy(
-                ['id' => $article->getId()-1]
-            );
+            ->findPrev($article);
 
         $article_next = $this->getDoctrine()
             ->getRepository(Article::class)
-            ->findOneBy(
-                ['id' => $article->getId()+1]
-            );
+            ->findNext($article);
 
         return $this->render(
             'blog/article.html.twig',
@@ -110,23 +99,29 @@ class BlogController extends AbstractController
      * name="blogAuthor",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param string $slug
-     *
+     * @param Author $author
      * @return Response
      */
-    public function authorAction(string $slug)
+    public function authorAction(Author $author)
     {
-        $author = $this->getDoctrine()
-            ->getRepository(Author::class)
-            ->findOneBy(
-                ['slug' => $slug]
+        $articles = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->findBy(
+                [
+                    'isOnline' => 1,
+                    'author' => $author
+                ],
+                [
+                    'createdAt' => "DESC"
+                ],
+                3
             );
 
         return $this->render(
             'blog/author.html.twig',
             [
             'author' => $author,
-            'articles' => $author->getArticles()->slice(0, 3)
+            'articles' => $articles
             ]
         );
     }
@@ -137,24 +132,27 @@ class BlogController extends AbstractController
      * name="blogCategory",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param string $slug
+     * @param Category $category
      * @param Request $request
      * @param PaginatorInterface $paginator
      * @param int $page
      *
      * @return Response
      */
-    public function categoryAction(string $slug, Request $request, PaginatorInterface $paginator, int $page = 1)
+    public function categoryAction(Category $category, Request $request, PaginatorInterface $paginator, int $page = 1)
     {
-        $cat = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneBy(
-                ['slug' => $slug]
+        $articles = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->findBy(
+                [
+                    'isOnline' => 1,
+                    'category' => $category
+                ],
+                ['createdAt' => "DESC"],
             );
 
-
         $articles = $paginator->paginate(
-            $cat->getArticles(),
+            $articles,
             $request->query->getInt('page', $page),
             9
         );
@@ -164,7 +162,7 @@ class BlogController extends AbstractController
             [
             'articles' => $articles,
             'type' => 'cat',
-            'cat' => $cat
+            'cat' => $category
             ]
         );
     }
@@ -175,23 +173,20 @@ class BlogController extends AbstractController
      * name="blogTag",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param string $slug
-     *
+     * @param Keyword $keyword
      * @param Request $request
      * @param PaginatorInterface $paginator
      * @param int $page
      * @return Response
      */
-    public function tagAction(string $slug, Request $request, PaginatorInterface $paginator, int $page = 1)
+    public function tagAction(Keyword $keyword, Request $request, PaginatorInterface $paginator, int $page = 1)
     {
-        $tag = $this->getDoctrine()
-            ->getRepository(Keyword::class)
-            ->findOneBy(
-                ['slug' => $slug]
-            );
+        $articles = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->findByKeyword($keyword);
 
         $articles = $paginator->paginate(
-            $tag->getArticles(),
+            $articles,
             $request->query->getInt('page', $page),
             9
         );
@@ -201,7 +196,7 @@ class BlogController extends AbstractController
             [
             'articles' => $articles,
             'type' => 'tag',
-            'tag' => $tag
+            'tag' => $keyword
             ]
         );
     }
