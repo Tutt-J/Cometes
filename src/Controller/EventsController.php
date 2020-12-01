@@ -64,8 +64,7 @@ class EventsController extends AbstractController
      * name="circleEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param string $slug
-     *
+     * @param Event $event
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
      * @throws LoaderError
@@ -179,8 +178,7 @@ class EventsController extends AbstractController
      * name="retreatEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param $slug
-     *
+     * @param Event $event
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
      * @throws LoaderError

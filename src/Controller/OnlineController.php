@@ -22,9 +22,6 @@ class OnlineController extends AbstractController
      *
      * @param GlobalsGenerator $socialGenerator
      * @return Response
-     * @throws InstagramAuthException
-     * @throws InstagramException
-     * @throws InvalidArgumentException
      */
     public function homeAction(GlobalsGenerator $socialGenerator)
     {
@@ -155,9 +152,6 @@ class OnlineController extends AbstractController
      * @param GlobalsGenerator $socialGenerator
      * @param ContentOnlineAdministrator $contentOnlineAdministrator
      * @return Response
-     * @throws InstagramAuthException
-     * @throws InstagramException
-     * @throws InvalidArgumentException
      */
     public function programsAction(GlobalsGenerator $socialGenerator, ContentOnlineAdministrator $contentOnlineAdministrator)
     {
@@ -176,21 +170,13 @@ class OnlineController extends AbstractController
      * name="programOnline",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param string $slug
+     * @param Program $program
      * @return Response
      */
-    public function programAction(string $slug)
+    public function programAction(Program $program)
     {
-        $program= $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findOneBy(
-                [
-                    'slug' => $slug,
-                    'is_online' => 1
-                ]
-            );
-        if (empty($program)) {
-            throw new NotFoundHttpException('Le contenu n\'existe pas');
+        if (empty($program) || !$program->getIsOnline()) {
+            throw new NotFoundHttpException('Le programme que vous cherchez n\'existe pas ou plus.');
         }
         return $this->render(
             'online/program.html.twig',
