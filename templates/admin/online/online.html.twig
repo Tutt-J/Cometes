@@ -24,7 +24,7 @@
                     <th>Description</th>
                     <th>Prix</th>
                     <th>Référence</th>
-                    <th>En ligne</th>
+                    <th>État</th>
                     <th>Image</th>
                     <th>Vidéo</th>
                     <th>Date de création</th>
@@ -39,7 +39,7 @@
                     <th>Description</th>
                     <th>Prix</th>
                     <th>Référence</th>
-                    <th>En ligne</th>
+                    <th>État</th>
                     <th>Image</th>
                     <th>Vidéo</th>
                     <th>Date de création</th>
@@ -57,9 +57,9 @@
                         <td>{{ ritual.ref }}</td>
                         <td>
                             {% if ritual.isOnline == 1 %}
-                                Oui
+                                En ligne
                             {% else %}
-                                Non
+                                Hors ligne
                             {% endif %}
                         </td>
                         <td>
