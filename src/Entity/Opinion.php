@@ -27,6 +27,12 @@ class Opinion
      */
     private $content;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isOnline;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class Opinion
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getIsOnline(): ?bool
+    {
+        return $this->isOnline;
+    }
+
+    public function setIsOnline(bool $isOnline): self
+    {
+        $this->isOnline = $isOnline;
 
         return $this;
     }
