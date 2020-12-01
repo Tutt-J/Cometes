@@ -49,22 +49,15 @@ class CategoriesController extends AbstractController
     /**
      * @Route("/admin/categories/{id}/modifier", name="updateCategoryAdmin")
      *
-     * @param $id
+     * @param Category $category
      * @param Request $request
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updateCategory($id, Request $request, AdminDatabase $adminDatabase)
+    public function updateCategory(Category $category, Request $request, AdminDatabase $adminDatabase)
     {
-        if ($id != 13) {
-            $keyword = $this->getDoctrine()
-                ->getRepository(Category::class)
-                ->findOneBy(
-                    ['id' => $id]
-                );
-
-
-            $form = $this->createForm(CategoryType::class, $keyword);
+        if ($category->getId() != 13) {
+            $form = $this->createForm(CategoryType::class, $category);
 
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {

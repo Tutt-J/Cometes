@@ -1,10 +1,8 @@
 <?php
 namespace App\Controller\Admin;
 
-use App\Entity\Address;
 use App\Entity\Article;
 use App\Entity\Author;
-use App\Form\Admin\ArticleType;
 use App\Form\Admin\AuthorType;
 use App\Service\Admin\AdminDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -74,20 +72,14 @@ class AuthorController extends AbstractController
     /**
      * @Route("/admin/auteur/{id}/modifier", name="updateAuthorAdmin")
      *
-     * @param $id
+     * @param Author $author
      * @param Request $request
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updateAuthor($id, Request $request, AdminDatabase $adminDatabase)
+    public function updateAuthor(Author $author, Request $request, AdminDatabase $adminDatabase)
     {
-        $article = $this->getDoctrine()
-            ->getRepository(Author::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
-
-        $form = $this->createForm(AuthorType::class, $article);
+        $form = $this->createForm(AuthorType::class, $author);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

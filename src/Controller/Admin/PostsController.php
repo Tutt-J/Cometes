@@ -71,19 +71,13 @@ class PostsController extends AbstractController
     /**
      * @Route("/admin/articles/{id}/modifier", name="updatePostAdmin")
      *
-     * @param $id
+     * @param Article $article
      * @param Request $request
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updatePost($id, Request $request, AdminDatabase $adminDatabase)
+    public function updatePost(Article $article, Request $request, AdminDatabase $adminDatabase)
     {
-        $article = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
-
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 

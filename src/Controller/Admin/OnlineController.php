@@ -78,19 +78,13 @@ class OnlineController extends AbstractController
     /**
      * @Route("/admin/contenus-en-ligne/{id}/modifier", name="updateOnlineAdmin")
      *
-     * @param $id
+     * @param Content $content
      * @param Request $request
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updateOnline($id, Request $request, AdminDatabase $adminDatabase)
+    public function updateOnline(Content $content, Request $request, AdminDatabase $adminDatabase)
     {
-        $content = $this->getDoctrine()
-            ->getRepository(Content::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
-
         $form = $this->createForm(ContentType::class, $content);
 
         $form->get('eventDate')->setData(($content->getEventDate()->format('d/m/Y')));
@@ -113,7 +107,7 @@ class OnlineController extends AbstractController
     /**
      * @Route("/admin/contenus-en-ligne/{id}/offrir", name="offerContentAdmin")
      *
-     * @param $id
+     * @param Content $content
      * @param BasketAdministrator $basketAdministrator
      * @param OfferHelper $offerHelper
      * @param MailerInterface $mailer
@@ -121,18 +115,12 @@ class OnlineController extends AbstractController
      * @throws TransportExceptionInterface
      */
     public function offerContentAction(
-        $id,
+        Content $content,
         BasketAdministrator $basketAdministrator,
         OfferHelper $offerHelper,
         MailerInterface $mailer
     )
     {
-        $content = $this->getDoctrine()
-            ->getRepository(Content::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
-
        $form = $offerHelper->createForm();
 
         if ($form->isSubmitted() && $form->isValid()) {

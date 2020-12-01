@@ -76,20 +76,15 @@ class ProgramsController extends AbstractController
     /**
      * @Route("/admin/programmes/{id}/modifier", name="updateProgramAdmin")
      *
-     * @param $id
+     * @param Program $program
      * @param Request $request
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updateProgram($id, Request $request, AdminDatabase $adminDatabase)
+    public function updateProgram(Program $program, Request $request, AdminDatabase $adminDatabase)
     {
-        $content = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
 
-        $form = $this->createForm(ProgramType::class, $content);
+        $form = $this->createForm(ProgramType::class, $program);
 
         $form->handleRequest($request);
 

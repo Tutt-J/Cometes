@@ -45,20 +45,13 @@ class KeywordsController extends AbstractController
     /**
      * @Route("/admin/hashtags/{id}/modifier", name="updateKeywordAdmin")
      *
-     * @param $id
+     * @param Keyword $keyword
      * @param Request $request
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updateKeyword($id, Request $request, AdminDatabase $adminDatabase)
+    public function updateKeyword(Keyword $keyword, Request $request, AdminDatabase $adminDatabase)
     {
-        $keyword = $this->getDoctrine()
-            ->getRepository(Keyword::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
-
-
         $form = $this->createForm(KeywordType::class, $keyword);
 
         $form->handleRequest($request);
