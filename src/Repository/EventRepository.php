@@ -29,14 +29,17 @@ class EventRepository extends ServiceEntityRepository
     /**
      * @param $type
      * @return mixed
+     * @throws Exception
      */
     public function findBecomeEvents($type)
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.startDate > :now')
             ->andWhere('r.type = :type')
+            ->andWhere('r.isOnline = :online')
             ->setParameter('now', new DateTime())
             ->setParameter('type', $type)
+            ->setParameter('online', 1)
             ->orderBy('r.startDate', 'ASC')
             ->getQuery()
             ->getResult()
@@ -51,7 +54,9 @@ class EventRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.startDate > :now')
+            ->andWhere('r.isOnline = :online')
             ->setParameter('now', new DateTime())
+            ->setParameter('online', 1)
             ->orderBy('r.startDate', 'ASC')
             ->setMaxResults(3)
             ->getQuery()

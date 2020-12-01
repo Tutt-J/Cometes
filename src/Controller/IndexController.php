@@ -31,9 +31,9 @@ class IndexController extends AbstractController
      * @Route("/", name="home")
      *
      * @param EventsAdministrator $eventAdministrator
-     * @return Response
+     * @return void
      */
-    public function indexAction(EventsAdministrator $eventAdministrator, YouTubeDownloader $youTubeDownloader)
+    public function indexAction(EventsAdministrator $eventAdministrator)
     {
         $events=$eventAdministrator->getThreeNextEvents();
 
