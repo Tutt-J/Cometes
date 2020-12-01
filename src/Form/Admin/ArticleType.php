@@ -13,6 +13,8 @@ use App\Repository\CategoryRepository;
 use App\Repository\KeywordRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -69,6 +71,13 @@ class ArticleType extends BaseType
                 'label_html' => true,
                 'mapped' => false
             ])
+            ->add('isOnline', ChoiceType::class, array(
+                'choices'  => [
+                    'Brouillon' => 0,
+                    'Publié' => 1,
+                ],
+                'label' => 'Afficher sur le site'
+            ))
         ;
     }
 

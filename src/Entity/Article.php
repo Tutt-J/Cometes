@@ -64,6 +64,11 @@ class Article
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isOnline;
+
     public function __construct()
     {
         $this->keywords = new ArrayCollection();
@@ -173,6 +178,18 @@ class Article
         if ($this->keywords->contains($keyword)) {
             $this->keywords->removeElement($keyword);
         }
+
+        return $this;
+    }
+
+    public function getIsOnline(): ?bool
+    {
+        return $this->isOnline;
+    }
+
+    public function setIsOnline(bool $isOnline): self
+    {
+        $this->isOnline = $isOnline;
 
         return $this;
     }
