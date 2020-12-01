@@ -94,20 +94,13 @@ class UsersController extends AbstractController
     /**
      * @Route("/admin/utilisateurs/{id}/modifier", name="updateUserAdmin")
      *
-     * @param $id
+     * @param User $user
      * @param Request $request
      * @return Response
      */
-    public function updateUser($id, Request $request)
+    public function updateUser(User $user, Request $request)
     {
-        $article = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
-
-
-        $form = $this->createForm(UserUpdateAdminType::class, $article);
+        $form = $this->createForm(UserUpdateAdminType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -134,13 +127,9 @@ class UsersController extends AbstractController
      * @param UsersHelper $usersHelper
      * @return Response
      */
-    public function updatePasswordUser($id, Request $request, UsersHelper $usersHelper)
+    public function updatePasswordUser(User $user, Request $request, UsersHelper $usersHelper)
     {
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
+
 
         $form = $this->createForm(ChangePasswordType::class);
         $form->handleRequest($request);

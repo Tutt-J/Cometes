@@ -58,16 +58,11 @@ class EventsController extends AbstractController
     /**
      * @Route("/admin/evenements/liste/{slug}", name="eventsListAdmin")
      *
-     * @param $slug
+     * @param Event $event
      * @return Response
      */
-    public function listEventAction($slug)
+    public function listEventAction(Event $event)
     {
-        $event = $this->getDoctrine()
-            ->getRepository(Event::class)
-            ->findOneBy(
-                array('slug' => $slug),
-            );
 
         return $this->render(
             'admin/events/event_list.html.twig',
@@ -109,19 +104,13 @@ class EventsController extends AbstractController
     /**
      * @Route("/admin/evenements/{id}/modifier", name="updateEventAdmin")
      *
-     * @param $id
+     * @param Event $event
      * @param Request $request
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updateEvent($id, Request $request, AdminDatabase $adminDatabase)
+    public function updateEvent(Event $event, Request $request, AdminDatabase $adminDatabase)
     {
-        $event = $this->getDoctrine()
-            ->getRepository(Event::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
-
 
         $form = $this->createForm(EventType::class, $event);
 
@@ -185,7 +174,7 @@ class EventsController extends AbstractController
      * @throws TransportExceptionInterface
      */
     public function offerEventAction(
-        $id,
+        Event $event,
         Request $request,
         BasketAdministrator $basketAdministrator,
         OfferHelper $offerHelper,
@@ -193,12 +182,6 @@ class EventsController extends AbstractController
         MailjetAdministrator $mailjetAdministrator
     )
     {
-        $event = $this->getDoctrine()
-            ->getRepository(Event::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
-
         $form = $offerHelper->createForm();
 
         if ($form->isSubmitted() && $form->isValid()) {
