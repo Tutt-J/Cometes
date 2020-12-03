@@ -64,17 +64,16 @@ class EventsController extends AbstractController
      * name="circleEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param string $slug
-     *
+     * @param Event $event
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function circleAction(string $slug, EventsAdministrator $eventsAdministrator)
+    public function circleAction(Event $event, EventsAdministrator $eventsAdministrator)
     {
-        return $eventsAdministrator->renderEventPage($slug);
+        return $eventsAdministrator->renderEventPage($event);
     }
 
     /**
@@ -103,17 +102,16 @@ class EventsController extends AbstractController
      * name="ritualEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param string $slug
-     *
+     * @param Event $event
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function ritualAction(string $slug, EventsAdministrator $eventsAdministrator)
+    public function ritualAction(Event $event, EventsAdministrator $eventsAdministrator)
     {
-        return $eventsAdministrator->renderEventPage($slug);
+        return $eventsAdministrator->renderEventPage($event);
     }
 
 
@@ -142,17 +140,16 @@ class EventsController extends AbstractController
      * name="workshopEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param string $slug
-     *
+     * @param Event $event
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function workshopAction(string $slug, EventsAdministrator $eventsAdministrator)
+    public function workshopAction(Event $event, EventsAdministrator $eventsAdministrator)
     {
-        return $eventsAdministrator->renderEventPage($slug);
+        return $eventsAdministrator->renderEventPage($event);
     }
 
     /**
@@ -181,22 +178,21 @@ class EventsController extends AbstractController
      * name="retreatEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
-     * @param $slug
-     *
+     * @param Event $event
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function retreatAction($slug, EventsAdministrator $eventsAdministrator)
+    public function retreatAction(Event $event, EventsAdministrator $eventsAdministrator)
     {
-        return $eventsAdministrator->renderEventPage($slug, true, EventPriceType::class, 'EventPricing');
+        return $eventsAdministrator->renderEventPage($event, true, EventPriceType::class, 'EventPricing');
     }
 
     /**
      * @Route("/evenements/s-inscrire/{slug}", name="registerEvent")
-     * @param $slug
+     * @param Event $event
      * @param MailjetAdministrator $mailjetAdministrator
      * @param EventsAdministrator $eventsAdministrator
      * @param StripeHelper $stripeHelper
@@ -204,13 +200,15 @@ class EventsController extends AbstractController
      * @return mixed
      */
     public function eventRegister(
-        $slug,
+        Event $event,
         MailjetAdministrator $mailjetAdministrator,
         EventsAdministrator $eventsAdministrator,
         StripeHelper $stripeHelper,
         SessionInterface $session
     ) {
-        $event=$eventsAdministrator->getEvent($slug);
+        if(!$event->getIsOnline()){
+            throw new NotFoundHttpException('L\'évènement "'.$event->getTitle().'" n\'est pas ou plus disponible.');
+        }
 
         if (!$eventsAdministrator->canRegister($event)) {
             return $this->redirectToRoute($session->get('referent')['path'], ['slug'=>$session->get('referent')['slug']]);

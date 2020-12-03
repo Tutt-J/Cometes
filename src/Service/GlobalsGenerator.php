@@ -76,7 +76,7 @@ class GlobalsGenerator
         return $this->em
             ->getRepository(Opinion::class)
             ->findBy(
-                [],
+                ['isOnline' => 1],
                 ['id' => 'DESC']
             );
     }

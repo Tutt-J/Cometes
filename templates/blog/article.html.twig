@@ -22,12 +22,12 @@
         <nav class="mb-3 d-flex justify-content-between">
             <span>
             {% if before != null %}
-                <a href="{{ path('blogArticle', { 'slug':before.slug }) }}"><i class="fas fa-arrow-left mr-3"></i>Article précédent</a>
+                <a href="{{ path('blogArticle', { 'slug':before.0.slug }) }}"><i class="fas fa-arrow-left mr-3"></i>Article précédent</a>
             {% endif %}
             </span>
             <span>
             {% if next != null %}
-                <a href="{{ path('blogArticle', { 'slug':next.slug }) }}">Article suivant<i class="fas fa-arrow-right ml-3"></i></a>
+                <a href="{{ path('blogArticle', { 'slug':next.0.slug }) }}">Article suivant<i class="fas fa-arrow-right ml-3"></i></a>
             {% endif %}
             </span>
 

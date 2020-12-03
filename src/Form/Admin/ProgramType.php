@@ -44,9 +44,6 @@ class ProgramType extends BaseType
                 'label_html' => true,
                 'required' => true
             ])
-            ->add('isOnline', CheckboxType::class, array(
-                'label' => 'Afficher sur le site'
-            ))
         ;
     }
 

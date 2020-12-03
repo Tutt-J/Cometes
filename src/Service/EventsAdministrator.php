@@ -142,25 +142,6 @@ class EventsAdministrator
     }
 
     /**
-     * @param $slug
-     * @return object|null
-     */
-    public function getEvent($slug)
-    {
-        $event= $this->em
-            ->getRepository(Event::class)
-            ->findOneBy(
-                ['slug' => $slug]
-            );
-
-        if (is_null($event)) {
-            throw new NotFoundHttpException('Cet évènement n\'existe pas.');
-        }
-
-        return $event;
-    }
-
-    /**
      * @param $event
      * @return bool
      */
@@ -190,20 +171,19 @@ class EventsAdministrator
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function renderEventPage($slug)
+    public function renderEventPage($event)
     {
+        if(!$event || !$event->getIsOnline()){
+            throw new NotFoundHttpException('L\'évènement "'.$event->getTitle().'" n\'est pas ou plus disponible.');
+        }
+
         $this->session->set('referent', [
-            'path'=> $this->getEvent($slug)->getType()->getSlug().'Event',
-            'slug'=> $slug
+            'path'=> $event->getType()->getSlug().'Event',
+            'slug'=> $event->getSlug()
         ]);
 
-        $event=$this->em
-            ->getRepository(Event::class)
-            ->findOneBy(
-                ['slug' => $slug]
-            );
 
-        if ($this->generateMessageError($slug) === true) {
+        if ($this->generateMessageError($event) === true) {
             if (!$event->getEventPricings()->isEmpty()) {
                 $form = $this->formFactory->create(
                     EventPriceType::class,
@@ -226,13 +206,13 @@ class EventsAdministrator
                 && $form->isValid()
                 && true === $form['agreeTerms']->getData()
                 && true === $form['agreeCgv']->getData()) {
-                return $this->submitForm($multiplePrice, $form, $event, $slug);
+                return $this->submitForm($multiplePrice, $form, $event);
             }
             $formView=$form->createView();
             $errorMessage=null;
         } else {
             $formView=null;
-            $errorMessage=$this->generateMessageError($slug);
+            $errorMessage=$this->generateMessageError($event);
         }
 
         $response = new Response();
@@ -240,7 +220,7 @@ class EventsAdministrator
         $response->setContent($this->twig->render(
             'events/event.html.twig',
             [
-                'event' => $this->getEvent($slug),
+                'event' => $event,
                 'form' => $formView,
                 'maxMessage' => $errorMessage
             ]
@@ -250,12 +230,11 @@ class EventsAdministrator
     }
 
     /**
-     * @param $slug
+     * @param $event
      * @return string
      */
-    public function generateMessageError($slug)
+    public function generateMessageError($event)
     {
-        $event=$this->getEvent($slug);
         $message=true;
         if ($this->checkAlreadyRegister($event)) {
             $message="Vous êtes déjà inscrit à cet évènement";
@@ -344,10 +323,9 @@ class EventsAdministrator
      * @param bool $mutiplePrice
      * @param FormInterface $form
      * @param object|null $event
-     * @param $slug
      * @return RedirectResponse
      */
-    public function submitForm(bool $mutiplePrice, FormInterface $form, ?object $event, $slug): RedirectResponse
+    public function submitForm(bool $mutiplePrice, FormInterface $form, ?object $event): RedirectResponse
     {
         if ($mutiplePrice === true) {
             $price = $form->get('choice')->getData()->getPrice();
@@ -364,6 +342,6 @@ class EventsAdministrator
 
         $this->session->set('price', $price);
 
-        return new RedirectResponse($this->router->generate('registerEvent', ['slug' => $slug]));
+        return new RedirectResponse($this->router->generate('registerEvent', ['slug' => $event->getSlug()]));
     }
 }
