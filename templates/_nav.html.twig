@@ -65,8 +65,6 @@
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroTraining' %}current-item{% endif %}" href="{{ path('astroTraining') }}">Formations</a></li>
             </ul>
         </li>
-        <li class="position-relative">
-        </li>
         <li><a class="{% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a></li>
         <li><a class="{% if app.request.attributes.get('_route') == 'indexContact' %}current-item{% endif %}" href="{{ path('indexContact') }}">Contact</a></li>
     </ul>

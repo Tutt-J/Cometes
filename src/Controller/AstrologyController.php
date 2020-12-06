@@ -31,7 +31,7 @@ class AstrologyController extends AbstractController
           $session->set('affiliate', "");
       }
 
-        return $this->render('astrology/astrology.html.twig');
+        return $this->render('astrology/consult.html.twig');
     }
 
     /**
@@ -46,7 +46,7 @@ class AstrologyController extends AbstractController
             ->getRepository(Program::class)
             ->findByType("Astrology");
 
-        return $this->render('astrology/astro_training.html.twig', [
+        return $this->render('astrology/training.html.twig', [
             'programs' => $programs
         ]);
     }
