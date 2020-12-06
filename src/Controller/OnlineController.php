@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Program;
+use App\Entity\TypeProgram;
 use App\Service\ContentOnlineAdministrator;
 use App\Service\GlobalsGenerator;
 use Instagram\Exception\InstagramAuthException;
@@ -149,17 +150,14 @@ class OnlineController extends AbstractController
     /**
      * @Route("/magie-en-ligne/programmes", name="programsOnline")
      *
-     * @param GlobalsGenerator $socialGenerator
-     * @param ContentOnlineAdministrator $contentOnlineAdministrator
      * @return Response
      */
-    public function programsAction(GlobalsGenerator $socialGenerator, ContentOnlineAdministrator $contentOnlineAdministrator)
+    public function programsAction()
     {
         $programs= $this->getDoctrine()
             ->getRepository(Program::class)
-            ->findBy(
-                ['is_online' => 1]
-            );
+            ->findByType("Program");
+
         return $this->render('online/programs.html.twig', [
             'programs' => $programs
         ]);
