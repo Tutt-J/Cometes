@@ -133,11 +133,12 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/astrologie", name="astroConsult")
+     * @Route("/astrologie/consultations", name="astroConsult")
      *
+     * @param SessionInterface $session
      * @return Response
      */
-    public function astroAction(SessionInterface $session)
+    public function astroConsultAction(SessionInterface $session)
     {
         
       if(isset($_GET['affiliate'])){
@@ -146,6 +147,25 @@ class IndexController extends AbstractController
       if(null == $session->get('affiliate')){
           $session->set('affiliate', "");
       }
+
+        return $this->render('index/astrology.html.twig');
+    }
+
+    /**
+     * @Route("/astrologie/formations", name="astroTraining")
+     *
+     * @param SessionInterface $session
+     * @return Response
+     */
+    public function astroTrainingAction(SessionInterface $session)
+    {
+
+        if(isset($_GET['affiliate'])){
+            $session->set('affiliate', $_GET['affiliate']);
+        }
+        if(null == $session->get('affiliate')){
+            $session->set('affiliate', "");
+        }
 
         return $this->render('index/astrology.html.twig');
     }

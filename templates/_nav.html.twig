@@ -59,7 +59,13 @@
             </ul>
         </li>
         <li class="position-relative">
-            <a href="{{ path('astroConsult') }}"><span class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}">Astrologie</span></a>
+            <span class="{% if 'astro' in app.request.attributes.get('_route') %}current-item{% endif %}">Astrologie</span>
+            <ul class="p-0 m-0 position-absolute d-none w-auto">
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Consultations</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroTraining' %}current-item{% endif %}" href="{{ path('astroTraining') }}">Formations</a></li>
+            </ul>
+        </li>
+        <li class="position-relative">
         </li>
         <li><a class="{% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a></li>
         <li><a class="{% if app.request.attributes.get('_route') == 'indexContact' %}current-item{% endif %}" href="{{ path('indexContact') }}">Contact</a></li>
@@ -128,10 +134,17 @@
                     {#<a class="dropdown-item" href="#">Podcast</a>#}
                 </div>
             </li>
-            <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2">
-                <a class="col-10 nav-link" href="{{ path('astroConsult') }}">
+            <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
+                <a class="col-10 nav-link" href="#">
                     Astrologie
                 </a>
+                <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </p>
+                <div class="dropdown-menu w-100 text-center">
+                    <a class="dropdown-item {% if 'astroConsult' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroConsult') }}">Consultations</a>
+                    <a class="dropdown-item {% if 'astroTraining' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroTraining') }}">Formations</a>
+                </div>
             </li>
             <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'blogIndex' %}active{% endif %}">
                 <a class="nav-link {% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a>
