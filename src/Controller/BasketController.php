@@ -124,23 +124,9 @@ class BasketController extends AbstractController
      * @return Response
      *
      */
-    public function paymentBasketAction(SessionInterface $session, StripeHelper $stripeHelper)
+    public function paymentBasketAction(SessionInterface $session, StripeHelper $stripeHelper, BasketAdministrator $basketAdministrator)
     {
-        $items=[];
-        foreach ($session->get('basket') as $content) {
-            if ($content['isFidelity']) {
-                $price=$content['Entity']->getFidelityPrice();
-            } else {
-                $price=$content['Entity']->getPrice();
-            }
-            $array= [
-                'name' => $content['Entity']->getTitle(),
-                'amount' => $price*100,
-                'currency' => 'eur',
-                'quantity' => 1,
-            ];
-            array_push($items, $array);
-        }
+        $items = $basketAdministrator->formatItems($session);
 
         $stripeHelper->registerPayment($items, 'Basket');
 
@@ -174,14 +160,18 @@ class BasketController extends AbstractController
     ) {
         $em = $this->getDoctrine()->getManager();
 
-        if ($session->get('basket') && $session->get('stripe')) {
-            $charge= $stripeHelper->retrievePurchase('Basket');
+        if ($session->get('basket') ) {
+            if($session->get('stripe')){
+                $charge= $stripeHelper->retrievePurchase('Basket');
+                //SET PURCHASE
+                $purchase=$stripeHelper->setPurchase($charge['payment_intent']);
+            } else{
+                $purchase=$stripeHelper->setPurchase("Pas d\'id stripe car offert avec la carte cadeau ". $session->get('promoCode')->getCode());
+            }
 
-            //SET PURCHASE
-            $purchase=$stripeHelper->setPurchase($charge);
 
             //SET ALL PURCHASE CONTENTS
-            for ($i=0; $i < sizeof($charge['display_items']);$i++) {
+            for ($i=0; $i < sizeof($session->get('basket'));$i++) {
                 $content = $this->getDoctrine()
                     ->getRepository(Content::class)
                     ->findOneBy(
@@ -191,7 +181,7 @@ class BasketController extends AbstractController
                 $purchaseContent=new PurchaseContent();
                 $purchaseContent->setPurchase($purchase);
                 $purchaseContent->setContent($content);
-                $purchaseContent->setQuantity($charge['display_items'][$i]['quantity']);
+                $purchaseContent->setQuantity(1);
                 if ($session->get('basket')[$i]['isFidelity']) {
                     $purchaseContent->setPrice($content->getFidelityPrice());
                 } else {
@@ -204,7 +194,7 @@ class BasketController extends AbstractController
             $em->persist($purchase);
 
             $em->flush();
-            $invoice=$basketAdministrator->getInvoice($charge['display_items'], $purchase);
+            $invoice=$basketAdministrator->getInvoice($session->get('basket'), $purchase);
 
             $message = (new TemplatedEmail())
                 ->from(new Address('postmaster@chamade.co', 'Chamade'))
@@ -215,8 +205,8 @@ class BasketController extends AbstractController
             $mailer->send($message);
 
             $contents='<ul>';
-            foreach ($charge['display_items'] as $item) {
-                $contents.= '<li>'.$item['custom']['name'].'</li>';
+            foreach ($session->get('basket') as $item) {
+                $contents.= '<li>'.$item['Entity']->getTitle().'</li>';
             }
             $contents.='</ul>';
 
@@ -250,7 +240,6 @@ class BasketController extends AbstractController
         return $this->render('basket/confirm_basket.html.twig');
     }
 
-
     /**
      * @Route("/mon-compte/retour-commande", name="errorBasket")
      *
@@ -261,4 +250,6 @@ class BasketController extends AbstractController
         $this->addFlash('error', 'Une erreur est survenue au moment du paiement... Veuillez réessayer ou nous contacter');
         return $this->redirectToRoute('processBasket');
     }
+
+
 }

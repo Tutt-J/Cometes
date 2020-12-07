@@ -361,15 +361,15 @@ class BasketAdministrator
         $total=0;
         foreach ($items as $item) {
             $invoice->addItem(
-                $item['custom']['name'],
+                $item['Entity']->getTitle(),
                 null,
-                $item['quantity'],
+                1,
                 false,
-                $item['amount']/100,
+                $item['Entity']->getPrice(),
                 false,
-                ($item['quantity']*$item['amount'])/100
+                $item['Entity']->getPrice()
             );
-            $total+=($item['quantity']*$item['amount'])/100;
+            $total+=$item['Entity']->getPrice();
         }
         if(null != $this->session->get('applyPromo')){
             $invoice->addTotal("Réductions", $this->session->get('applyPromo'));
@@ -417,5 +417,29 @@ class BasketAdministrator
 
     function stripAccents($str) {
         return strtoupper(strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY'));
+    }
+
+    /**
+     * @param SessionInterface $session
+     * @return array
+     */
+    public function formatItems(SessionInterface $session): array
+    {
+        $items = [];
+        foreach ($this->session->get('basket') as $content) {
+            if ($content['isFidelity']) {
+                $price = $content['Entity']->getFidelityPrice();
+            } else {
+                $price = $content['Entity']->getPrice();
+            }
+            $array = [
+                'name' => $content['Entity']->getTitle(),
+                'amount' => $price * 100,
+                'currency' => 'eur',
+                'quantity' => 1,
+            ];
+            array_push($items, $array);
+        }
+        return $items;
     }
 }

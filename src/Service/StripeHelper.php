@@ -163,16 +163,12 @@ class StripeHelper
         return $this->stripeClient;
     }
 
-    public function setPurchase($charge)
+    public function setPurchase($stripeId)
     {
         $purchase=new Purchase();
-        $purchase->setStripeId($charge['payment_intent']);
-        $totalAmount=0;
-        foreach ($charge['display_items'] as $item) {
-            $totalAmount+=$item['amount']*$item['quantity'];
-        }
+        $purchase->setStripeId($stripeId);
         $purchase->setStatus("Paiement accepté");
-        $purchase->setAmount($totalAmount/100);
+        $purchase->setAmount($this->session->get('purchaseInfos')['totalAmount']);
         $purchase->setUser($this->security->getUser());
 
         return $purchase;
