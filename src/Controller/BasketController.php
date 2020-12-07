@@ -45,6 +45,9 @@ class BasketController extends AbstractController
         $basketAdministrator->initializeSessions();
         $basketAdministrator->resetFidelity();
         $basketAdministrator->checkBasket();
+        if(isset($_POST['verify_code'])){
+            //Do some stuff
+        }
 
         return $this->render('basket/basket.html.twig');
     }

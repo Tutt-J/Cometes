@@ -49,11 +49,11 @@
                     {% endfor %}
                 </div>
             </div>
-            <form class="text-right col-12 col-md-6 offset-md-6" action="{{ path("shopBasket") }}">
+            <form class="text-right col-12 col-md-6 offset-md-6" action="{{ path("shopBasket") }}" method="post">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Code promotionnel ou carte cadeau" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <input type="submit" class="btn btn-primary mb-3 mb-sm-0" name="processBasket" value="Vérifier"/>
+                        <input type="submit" class="btn btn-primary mb-3 mb-sm-0" name="verify_code" value="Vérifier"/>
                     </div>
                 </div>
             </form>
