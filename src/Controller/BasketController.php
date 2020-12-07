@@ -2,12 +2,14 @@
 // src/Controller/shopController
 namespace App\Controller;
 
+use App\Entity\PromoCode;
 use App\Entity\Purchase;
 use App\Entity\PurchaseContent;
 use App\Entity\Content;
 use App\Entity\User;
 use App\Service\BasketAdministrator;
 use App\Service\ContentsBasketChecker;
+use App\Service\ProcessPurchase;
 use App\Service\StripeHelper;
 use Stripe\Checkout\Session;
 use Stripe\Exception\ApiErrorException;
@@ -22,6 +24,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -145,91 +148,18 @@ class BasketController extends AbstractController
      *
      * @param SessionInterface $session
      *
-     * @param MailerInterface $mailer
-     * @param BasketAdministrator $basketAdministrator
-     * @param StripeHelper $stripeHelper
+     * @param ProcessPurchase $processPurchase
      * @return RedirectResponse|Response
-     *
-     * @throws TransportExceptionInterface
      */
     public function successBasketAction(
         SessionInterface $session,
-        MailerInterface $mailer,
-        BasketAdministrator $basketAdministrator,
-        StripeHelper $stripeHelper
+        ProcessPurchase $processPurchase
     ) {
         $em = $this->getDoctrine()->getManager();
 
         if ($session->get('basket') ) {
-            if($session->get('stripe')){
-                $charge= $stripeHelper->retrievePurchase('Basket');
-                //SET PURCHASE
-                $purchase=$stripeHelper->setPurchase($charge['payment_intent']);
-            } else{
-                $purchase=$stripeHelper->setPurchase("Pas d\'id stripe car offert avec la carte cadeau ". $session->get('promoCode')->getCode());
-            }
-
-
-            //SET ALL PURCHASE CONTENTS
-            for ($i=0; $i < sizeof($session->get('basket'));$i++) {
-                $content = $this->getDoctrine()
-                    ->getRepository(Content::class)
-                    ->findOneBy(
-                        ['id' => $session->get('basket')[$i]['Entity']->getId()]
-                    );
-
-                $purchaseContent=new PurchaseContent();
-                $purchaseContent->setPurchase($purchase);
-                $purchaseContent->setContent($content);
-                $purchaseContent->setQuantity(1);
-                if ($session->get('basket')[$i]['isFidelity']) {
-                    $purchaseContent->setPrice($content->getFidelityPrice());
-                } else {
-                    $purchaseContent->setPrice($content->getPrice());
-                }
-
-                $purchase->addPurchaseContent($purchaseContent);
-                $em->persist($purchaseContent);
-            }
-            $em->persist($purchase);
-
-            $em->flush();
-            $invoice=$basketAdministrator->getInvoice($session->get('basket'), $purchase);
-
-            $message = (new TemplatedEmail())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
-                ->to($this->getUser()->getEmail())
-                ->subject('Confirmation de commande')
-                ->htmlTemplate('emails/purchase_confirm.html.twig')
-                ->attachFromPath($invoice);
-            $mailer->send($message);
-
-            $contents='<ul>';
-            foreach ($session->get('basket') as $item) {
-                $contents.= '<li>'.$item['Entity']->getTitle().'</li>';
-            }
-            $contents.='</ul>';
-
-            $emailAdmin = (new Email())
-                ->from(new Address('postmaster@chamade.co', 'SITE WEB Chamade'))
-                ->to('hello@chamade.co')
-                ->subject('Nouvel achat sur le site')
-                ->html(
-                    '
-                    <p>Nom : '.$this->getUser()->getFirstName().' '.$this->getUser()->getLastName().'</p>
-                    <p>Email : <a href="mailto:'.$this->getUser()->getEmail().'">'.$this->getUser()->getEmail().'</a></p>
-                    <p>Contenus :</p>'.$contents
-                );
-            $mailer->send($emailAdmin);
-
-            $session->set('purchaseSuccess', $session->get('basket'));
-            $session->set('purchaseSuccessInfos', $session->get('purchaseInfos'));
-            $session->remove('basket');
-            $session->remove('purchaseInfos');
-            $session->remove('stripe');
-            $session->remove('promoCode');
-            $session->remove('applyPromo');
-            $session->remove('description');
+            $processPurchase->processPurcharse();
+            $processPurchase->changeSession();
         } else {
             $session->remove('purchaseSuccess');
             $session->remove('purchaseSuccessInfos');

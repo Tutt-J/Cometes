@@ -8,6 +8,7 @@ use App\Form\EventPriceType;
 use App\Service\BasketAdministrator;
 use App\Service\EventsAdministrator;
 use App\Service\MailjetAdministrator;
+use App\Service\ProcessPurchase;
 use App\Service\StripeHelper;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -244,6 +245,7 @@ class EventsController extends AbstractController
      * @param MailerInterface $mailer
      * @param StripeHelper $stripeHelper
      * @param BasketAdministrator $basketAdministrator
+     * @param ProcessPurchase $processPurchase
      * @return RedirectResponse|Response
      *
      * @throws TransportExceptionInterface
@@ -252,7 +254,7 @@ class EventsController extends AbstractController
         SessionInterface $session,
         MailerInterface $mailer,
         StripeHelper $stripeHelper,
-        BasketAdministrator $basketAdministrator
+        ProcessPurchase $processPurchase
     ) {
         $em = $this->getDoctrine()->getManager();
 
@@ -281,7 +283,7 @@ class EventsController extends AbstractController
             $em->flush();
 
             //SEND CLIENT MAIL
-            $invoice=$basketAdministrator->getInvoice($charge['display_items'], $purchase);
+            $invoice=$processPurchase->getInvoice($charge['display_items'], $purchase);
             $message = (new TemplatedEmail())
                 ->from(new Address('postmaster@chamade.co', 'Chamade'))
                 ->to($this->getUser()->getEmail())

@@ -336,66 +336,7 @@ class BasketAdministrator
         }
     }
 
-    public function getInvoice($items, $purchase, $user=null, $refund = false)
-    {
-        if(is_null($user)){
-            $user=$this->security->getUser();
-        }
-        $invoice = new InvoicePrinter("A4", "€", "fr");
 
-        /* Header settings */
-        $invoice->setLogo("build/images/logo_basique.png");   //logo image path
-        $invoice->setColor("#f28066");      // pdf color scheme
-        $invoice->setType("Facture");    // Invoice Type
-        $invoice->setReference('WEB'.date('Y').'_'.$purchase->getId());   // Reference
-        $invoice->setDate(date('d/m/Y', time()));   //Billing Date
-        $invoice->setTime(date('H:i:s', time()));   //Billing Time
-        $invoice->setFrom(array("CHAMADE","419 RUE DE BORINGES","74930 REIGNIER-ESERY"));
-        $invoice->setTo(array(
-            $this->stripAccents($user->getFirstName()).' '.$this->stripAccents($user->getLastName()),
-            $this->stripAccents($user->getAddress()->getStreet()),
-            $this->stripAccents($user->getAddress()->getPostalCode())." ".$this->stripAccents($user->getAddress()->getCity()),
-            $this->stripAccents($user->getAddress()->getCountry())
-        ));
-
-        $total=0;
-        foreach ($items as $item) {
-            $invoice->addItem(
-                $item['Entity']->getTitle(),
-                null,
-                1,
-                false,
-                $item['Entity']->getPrice(),
-                false,
-                $item['Entity']->getPrice()
-            );
-            $total+=$item['Entity']->getPrice();
-        }
-        if(null != $this->session->get('applyPromo')){
-            $invoice->addTotal("Réductions", $this->session->get('applyPromo'));
-            $total=$total-$this->session->get('applyPromo');
-        }
-        $invoice->addTotal("Total", $total);
-        $invoice->flipflop();
-        if($refund){
-            $invoice->addBadge("Remboursé");
-        } elseif($total == 0 ){
-            $invoice->addBadge("Offert");
-        } else{
-            $invoice->addBadge("Payée");
-        }
-
-        $invoice->setFooternote("Chamade");
-
-        if (!file_exists('invoices')) {
-            mkdir('invoices', 0775, true);
-        }
-        
-        $path='invoices/Facture_WEB'.date('Y').'_'.$purchase->getId().'.pdf';
-        $invoice->render($path, 'F');
-
-        return $path;
-    }
 
     function verifyPromoCode($promoCode){
         $promoCode=$this->em
@@ -415,9 +356,7 @@ class BasketAdministrator
         $this->session->set('promoCode', $promoCode);
     }
 
-    function stripAccents($str) {
-        return strtoupper(strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY'));
-    }
+
 
     /**
      * @param SessionInterface $session
