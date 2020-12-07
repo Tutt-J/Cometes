@@ -42,6 +42,9 @@
         </div>
         <div class="column">
             <p class="text-right col-12 ">
+                {% if  app.session.get('applyPromo') %}
+                    <strong>Réduction : {{ app.session.get('applyPromo') }}€</strong><br/>
+                {% endif %}
                 <strong>Total : {{ app.session.get('purchaseSuccessInfos')['totalAmount']}}€</strong> <br>
                 <small>TVA non applicable - article 293 B du CGI </small>
             </p>

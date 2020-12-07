@@ -371,15 +371,18 @@ class BasketAdministrator
             );
             $total+=($item['quantity']*$item['amount'])/100;
         }
+        if(null != $this->session->get('applyPromo')){
+            $invoice->addTotal("Réductions", $this->session->get('applyPromo'));
+            $total=$total-$this->session->get('applyPromo');
+        }
         $invoice->addTotal("Total", $total);
         $invoice->flipflop();
         if($refund){
             $invoice->addBadge("Remboursé");
-        } elseif($total == 0){
+        } elseif($total == 0 ){
             $invoice->addBadge("Offert");
         } else{
             $invoice->addBadge("Payée");
-
         }
 
         $invoice->setFooternote("Chamade");
