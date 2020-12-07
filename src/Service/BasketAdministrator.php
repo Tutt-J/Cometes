@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Content;
+use App\Entity\PromoCode;
 use App\Entity\Type;
 use App\Entity\UserEvent;
 use App\Form\UserType;
@@ -97,6 +98,19 @@ class BasketAdministrator
                 }
             }
         }
+
+        if(null !== $this->session->get('promoCode')){
+            $priceWithCode=$price-$this->session->get('promoCode')->getRestAmount();
+            if( $priceWithCode <0){
+                $priceWithCode=0;
+                $this->session->set('applyPromo', $price);
+            } else{
+                $this->session->set('applyPromo', $this->session->get('promoCode')->getRestAmount());
+            }
+            $price=$priceWithCode;
+            $this->session->set('description', 'Réduction de '.$this->session->get('applyPromo').'€ avec la carte cadeau numéro '.$this->session->get('promoCode')->getCode());
+        }
+
         $this->session->set('purchaseInfos', array(
             "totalContent" => sizeof($this->session->get('basket')),
             "totalAmount" => $price,
@@ -292,6 +306,7 @@ class BasketAdministrator
             }
         }
         $this->session->set('basket', $value);
+
         $this->setPurchaseInfos();
     }
 
@@ -377,6 +392,22 @@ class BasketAdministrator
         $invoice->render($path, 'F');
 
         return $path;
+    }
+
+    function verifyPromoCode($promoCode){
+        $promoCode=$this->em
+            ->getRepository(PromoCode::class)
+            ->findOneBy(
+                [
+                    'code' => $promoCode
+                ]
+            );
+
+        if($promoCode == null){
+            $this->session->remove('promoCode');
+            $this->session->remove('applyPromo');
+        }
+        $this->session->set('promoCode', $promoCode);
     }
 
     function stripAccents($str) {

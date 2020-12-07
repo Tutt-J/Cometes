@@ -43,11 +43,12 @@ class BasketController extends AbstractController
     public function basketAction(BasketAdministrator $basketAdministrator)
     {
         $basketAdministrator->initializeSessions();
+        if(isset($_POST['verify_code'])){
+            $basketAdministrator->verifyPromoCode($_POST['promo_code']);
+        }
         $basketAdministrator->resetFidelity();
         $basketAdministrator->checkBasket();
-        if(isset($_POST['verify_code'])){
-            //Do some stuff
-        }
+
 
         return $this->render('basket/basket.html.twig');
     }
@@ -98,6 +99,7 @@ class BasketController extends AbstractController
      * @Route("/mon-compte/passer-la-commande", name="processBasket")
      *
      * @param BasketAdministrator $basketAdministrator
+     * @param SessionInterface $session
      * @return Response
      */
     public function processBasketAction(BasketAdministrator $basketAdministrator, SessionInterface $session)
@@ -235,6 +237,9 @@ class BasketController extends AbstractController
             $session->remove('basket');
             $session->remove('purchaseInfos');
             $session->remove('stripe');
+            $session->remove('promoCode');
+            $session->remove('applyPromo');
+            $session->remove('description');
         } else {
             $session->remove('purchaseSuccess');
             $session->remove('purchaseSuccessInfos');
