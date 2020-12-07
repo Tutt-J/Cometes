@@ -111,26 +111,38 @@ class StripeHelper
         $client=$this->setCustomer($return);
 
         try {
-            $stripeCreate = $this->stripeClient->checkout->sessions->create(
-                [
-                    'customer' => $client['id'],
-                    'payment_method_types' => ['card'],
-                    'line_items' => $items,
-                    'payment_intent_data' => [
-                        'metadata' => [
-                            'Description' => $this->session->get('description')
-                        ]
-                    ],
-                    'success_url' => $this->router->generate('success'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL)
-                    ,
-                    'cancel_url' => $this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL)
-                ]
-            );
+            $stripeRequest= [
+                'customer' => $client['id'],
+                'payment_method_types' => ['card'],
+                'line_items' => $items,
+                'payment_intent_data' => [
+                    'metadata' => [
+                        'Description' => $this->session->get('description')
+                    ]
+                ],
+                'success_url' => $this->router->generate('success'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL)
+                ,
+                'cancel_url' => $this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL)
+            ];
+            if($this->session->get('applyPromo')){
+                $discount=$this->createDiscount();
+                $stripeRequest['discounts']= [['coupon' => $discount['id']]];
+            }
+            $stripeCreate = $this->stripeClient->checkout->sessions->create($stripeRequest);
+
             $this->session->set('stripe', $stripeCreate);
         } catch (ApiErrorException $e) {
                 $this->flashbag->add('error', 'Impossible de procéder au paiement. Veuillez nous contacter. ('.$e.')');
             return new RedirectResponse($this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL));
         }
+    }
+
+    public function createDiscount(){
+        return $this->stripeClient->coupons->create([
+            'amount_off' => $this->session->get('applyPromo')*100,
+            'currency' => 'EUR',
+            'duration' => 'once',
+        ]);
     }
 
     public function retrievePurchase($return)

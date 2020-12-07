@@ -244,7 +244,6 @@ class EventsController extends AbstractController
      *
      * @param MailerInterface $mailer
      * @param StripeHelper $stripeHelper
-     * @param BasketAdministrator $basketAdministrator
      * @param ProcessPurchase $processPurchase
      * @return RedirectResponse|Response
      *

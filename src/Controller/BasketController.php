@@ -124,8 +124,8 @@ class BasketController extends AbstractController
      * @param SessionInterface $session
      *
      * @param StripeHelper $stripeHelper
+     * @param BasketAdministrator $basketAdministrator
      * @return Response
-     *
      */
     public function paymentBasketAction(SessionInterface $session, StripeHelper $stripeHelper, BasketAdministrator $basketAdministrator)
     {
