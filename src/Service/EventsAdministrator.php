@@ -287,15 +287,11 @@ class EventsAdministrator
     public function generateDescription($friend, $already)
     {
         if (!empty($friend) && $already == 1) {
-            $this->session->set("description", "Réduction de 5% car vient avec " . $friend . " et a déjà participé à une retraite chamade");
+            $this->session->set("description", "Réduction de 5% car vient avec " . $friend . " et a déjà participé à une retraite chamade.");
         } elseif (!empty($friend)) {
-            $this->session->set("description", "Réduction de 5% car vient avec " . $friend);
+            $this->session->set("description", "Réduction de 5% car vient avec " . $friend.'.');
         } else {
-            $this->session->set("description", "Réduction de 5% car a déjà participé à une retraite chamade");
-        }
-
-        if($this->session->get('promoCode')){
-            $this->session->set("description",$this->session->get('description')." et réduction de ".$this->session->get('applyPromo')."€ avec la carte cadeau numéro ".$this->session->get('promoCode')->getCode());
+            $this->session->set("description", "Réduction de 5% car a déjà participé à une retraite chamade.");
         }
     }
 
@@ -360,6 +356,9 @@ class EventsAdministrator
         if (($form->has('friend') && $form->has('already')) && (!empty($form->get('friend')->getData()) || $form->get('already')->getData() == 1)) {
             $price=$price - ($price * (5 / 100));
             $this->generateDescription($form->get('friend')->getData(), $form->get('already')->getData());
+        }
+        if($this->session->get('promoCode')){
+            $this->session->set("description",$this->session->get('description')." Réduction de ".$this->session->get('applyPromo')."€ avec la carte cadeau numéro ".$this->session->get('promoCode')->getCode().".");
         }
 
         $this->session->set('price', $price);
