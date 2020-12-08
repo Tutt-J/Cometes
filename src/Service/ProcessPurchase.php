@@ -13,6 +13,8 @@ use Konekt\PdfInvoice\InvoicePrinter;
 use Stripe\StripeClient;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
 
@@ -93,6 +95,9 @@ class ProcessPurchase
         $this->em->flush();
         $this->sendMail->sendTemplated($this->getInvoice($this->session->get('basket'), $this->purchase), 'Confirmation de commande', 'purchase_confirm');
         $this->sendAdminContentHtmlMail();
+        if($this->session->get('affiliate')){
+
+        }
     }
 
     public function processEventPurchase(){
@@ -190,7 +195,12 @@ class ProcessPurchase
     public function sendAdminContentHtmlMail(){
         $contents='<ul>';
         foreach ($this->session->get('basket') as $item) {
-            $contents.= '<li>'.$item['Entity']->getTitle().'</li>';
+            $affiliate="Non affilié";
+            $this->session->remove('affiliateGift');
+            if($item['Entity']->getType()->getSlug() == "giftCard" && $this->session->get('affiliateGift')){
+                $affiliate = "Affilié à ".$this->session->get('affiliateGift');
+            }
+            $contents.= '<li>'.$item['Entity']->getTitle().' - '.$affiliate.'</li>';
         }
         $contents.='</ul>';
         $html='<p>Nom : '.$this->security->getUser()->getFirstName().' '.$this->security->getUser()->getLastName().'</p>
@@ -198,6 +208,7 @@ class ProcessPurchase
                     <p>Contenus :</p>'.$contents;
         $this->sendMail->sendBasicEmail($html, 'Nouvel achat sur le site');
     }
+
 
     public function sendAdminEventHtmlMail(){
         $html='<p>Nom : '.$this->security->getUser()->getFirstName().' '.$this->security->getUser()->getLastName().'</p>

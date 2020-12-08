@@ -15,6 +15,7 @@ use Psr\Cache\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -68,22 +69,25 @@ class OnlineController extends AbstractController
         );
     }
 
-        /**
-         * @Route("/magie-en-ligne/cartes-cadeaux", name="giftCardOnline")
-         *
-         * @param int $page
-         * @param ContentOnlineAdministrator $contentOnlineAdministrator
-         * @return Response
-         */
-        public function giftCardAction(ContentOnlineAdministrator $contentOnlineAdministrator, int $page = 1)
-        {
-            return $this->render(
-                'online/gift_card.html.twig',
-                [
-                    'contents' => $contentOnlineAdministrator->getContentsToBecome('giftCard', $page),
-                ]
-            );
+    /**
+     * @Route("/magie-en-ligne/cartes-cadeaux", name="giftCardOnline")
+     *
+     * @param int $page
+     * @param ContentOnlineAdministrator $contentOnlineAdministrator
+     * @return Response
+     */
+    public function giftCardAction(SessionInterface $session, ContentOnlineAdministrator $contentOnlineAdministrator, int $page = 1)
+    {
+        if(isset($_GET['affiliate'])){
+            $session->set('affiliateGift', $_GET['affiliate']);
         }
+        return $this->render(
+            'online/gift_card.html.twig',
+            [
+                'contents' => $contentOnlineAdministrator->getContentsToBecome('giftCard', $page),
+            ]
+        );
+    }
 
     /**
      * @Route("/magie-en-ligne/e-books", name="eBooksOnline")
