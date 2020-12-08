@@ -87,7 +87,9 @@ class ProcessPurchase
 
     public function processBasketPurcharse(){
         $this->setPurchaseContent();
-        $this->updatePromoCode();
+        if($this->session->get('promoCode')){
+            $this->updatePromoCode();
+        }
         $this->em->flush();
         $this->sendMail->sendTemplated($this->getInvoice($this->session->get('basket'), $this->purchase), 'Confirmation de commande', 'purchase_confirm');
         $this->sendAdminContentHtmlMail();
@@ -95,7 +97,9 @@ class ProcessPurchase
 
     public function processEventPurchase(){
         $this->setPurchaseEvent();
-        $this->updatePromoCode();
+        if($this->session->get('promoCode')){
+            $this->updatePromoCode();
+        }
         $this->em->flush();
         $items=[
             [
@@ -162,6 +166,10 @@ class ProcessPurchase
                 ->findOneBy(
                     ['id' => $this->session->get('basket')[$i]['Entity']->getId()]
                 );
+
+            if($content->getType()->getSlug() == "giftCard"){
+                $promoCode=$this->setPromoCode($content->getPrice());
+            }
 
             $purchaseContent=new PurchaseContent();
             $purchaseContent->setPurchase($this->purchase);
@@ -316,5 +324,21 @@ class ProcessPurchase
         return true;
     }
 
+
+    public function setPromoCode($amount){
+        $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $res = "";
+
+        for ($i = 0; $i < 6; $i++) {
+            $res .= $chars[mt_rand(0, strlen($chars) - 1)];
+        }
+
+        $promoCode=new PromoCode();
+        $promoCode->setAmount($amount);
+        $promoCode->setRestAmount($amount);
+        $promoCode->setCode($res);
+        $this->em->persist($promoCode);
+        return $res;
+    }
 
 }

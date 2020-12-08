@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cartes cadeaux | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose des cartes cadeaux afin de faire profiter vos proches de ses contenus.{% endblock %}
+{% block ogImage %}{{app.request.getSchemeAndHttpHost ~ asset('build/images/design_rituels_en_ligne.jpeg') }}{% endblock %}
+
+{% block Titre %}Cartes cadeaux{% endblock %}
+{% block content %}
+    <div class="container my-5">
+        <section class="row list mt-5 mb-3">
+            {% for content in contents %}
+                <article class="item col-12 col-sm-6 col-md-3 mb-3 d-flex flex-column align-items-center text-center">
+                    <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path('ritualOnline', { 'slug': content.slug }) }}">
+                        <figure>
+                            <div class="effect"></div>
+                            <img class="w-100" src="{{ asset('uploads/cover_img/'~content.img.url) }}" alt="{{ content.img.alt }}">
+                        </figure>
+                    </a>
+                    <div class="infos mt-3 w-100 mw-200">
+                        <h2 class="d-initial"><a href="{{ path('ritualOnline', { 'slug': content.slug }) }}">{{ content.title | raw }}</a></h2>
+                        <p>
+                            <strong>{{ content.Price }}€</strong>
+                        </p>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    </div>
+{% endblock %}

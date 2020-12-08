@@ -65,6 +65,23 @@ class OnlineController extends AbstractController
     }
 
     /**
+     * @Route("/magie-en-ligne/cartes-cadeaux", name="giftCardOnline")
+     *
+     * @param int $page
+     * @param ContentOnlineAdministrator $contentOnlineAdministrator
+     * @return Response
+     */
+    public function giftCardAction(ContentOnlineAdministrator $contentOnlineAdministrator, int $page = 1)
+    {
+        return $this->render(
+            'online/gift_card.html.twig',
+            [
+                'contents' => $contentOnlineAdministrator->getContentsToBecome('giftCard', $page),
+            ]
+        );
+    }
+
+    /**
      * @Route("/magie-en-ligne/e-books", name="eBooksOnline")
      *
      * @param ContentOnlineAdministrator $contentOnlineAdministrator
