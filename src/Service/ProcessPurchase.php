@@ -167,10 +167,6 @@ class ProcessPurchase
                     ['id' => $this->session->get('basket')[$i]['Entity']->getId()]
                 );
 
-            if($content->getType()->getSlug() == "giftCard"){
-                $promoCode=$this->setPromoCode($content->getPrice());
-            }
-
             $purchaseContent=new PurchaseContent();
             $purchaseContent->setPurchase($this->purchase);
             $purchaseContent->setContent($content);

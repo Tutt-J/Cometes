@@ -140,7 +140,7 @@ class BasketAdministrator
             //Check if content already on basket
             if (!empty($this->session->get('basket'))) {
                 foreach ($this->session->get('basket') as $content) {
-                    if ($content['Entity']->getid() == $id) {
+                    if ($content['Entity']->getid() == $id && $content['Entity']->getType()->getSlug() != "giftCard") {
                         $this->flashbag->add('error', 'Ce contenu se trouve déjà dans votre panier.');
                         return null;
                     }

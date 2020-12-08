@@ -86,6 +86,7 @@ class Content
      */
     private $neverPassed;
 
+
     public function __construct()
     {
         $this->purchaseContent = new ArrayCollection();
@@ -265,5 +266,6 @@ class Content
 
         return $this;
     }
+
 
 }

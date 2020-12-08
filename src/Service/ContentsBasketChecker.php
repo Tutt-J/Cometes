@@ -157,12 +157,14 @@ class ContentsBasketChecker
             $this->flashbag->add('error', 'Le contenu "'.$content->getTitle().'" n\'est plus disponible à la vente, il a été supprimé de votre panier.');
             $isTrue=false;
         }
-        //check if ritual is already buy
-        if (!$this->checkContentAlreadyBuy($content)) {
-            $this->flashbag->add('error', 'Vous avez déjà acheté le contenu "'.$content->getTitle().'", il a été supprimé de votre panier');
-            $isTrue=false;
+        if($content->getType()->getSlug() != "giftCard"){
+            //check if ritual is already buy
+            if (!$this->checkContentAlreadyBuy($content)) {
+                $this->flashbag->add('error', 'Vous avez déjà acheté le contenu "'.$content->getTitle().'", il a été supprimé de votre panier');
+                $isTrue=false;
+            }
         }
-        //chekc if to become
+        //check if to become
         if (!$this->checkEventPassed($content)) {
             $this->flashbag->add('error', 'Le contenu "'.$content->getTitle().'" est déjà passé, il a été supprimé de votre panier');
             $isTrue=false;
