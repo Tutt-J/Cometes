@@ -65,7 +65,8 @@
         "symfonycasts/reset-password-bundle": "^1.1",
         "twig/extensions": "^1.5",
         "twig/twig": "^2.0",
-        "vimeo/vimeo-api": "^3.0"
+        "vimeo/vimeo-api": "^3.0",
+      "ext-gd": "*"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.1",

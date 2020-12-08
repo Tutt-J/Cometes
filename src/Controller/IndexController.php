@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\ContactType;
 use App\Service\EventsAdministrator;
 use App\Service\MailchimpAdministrator;
+use App\Service\ProcessPurchase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -31,8 +32,10 @@ class IndexController extends AbstractController
      * @param EventsAdministrator $eventAdministrator
      * @return Response
      */
-    public function indexAction(EventsAdministrator $eventAdministrator)
+    public function indexAction(EventsAdministrator $eventAdministrator, ProcessPurchase $processPurchase)
     {
+//        $processPurchase->generateGiftCard(10, "abc");
+//        die;
         $events=$eventAdministrator->getThreeNextEvents();
 
         return $this->render(

@@ -63,6 +63,10 @@ class ProcessPurchase
      */
     private ?object $event;
     private $amount;
+    /**
+     * @var array
+     */
+    private $giftCard=[];
 
     /**
      * BasketAdministrator constructor.
@@ -93,11 +97,11 @@ class ProcessPurchase
             $this->updatePromoCode();
         }
         $this->em->flush();
-        $this->sendMail->sendTemplated($this->getInvoice($this->session->get('basket'), $this->purchase), 'Confirmation de commande', 'purchase_confirm');
-        $this->sendAdminContentHtmlMail();
-        if($this->session->get('affiliate')){
-
+        $this->sendMail->sendTemplated(array_merge([$this->getInvoice($this->session->get('basket'), $this->purchase)],$this->giftCard), 'Confirmation de commande', 'purchase_confirm');
+        foreach($this->giftCard as $giftCard){
+            unlink($giftCard);
         }
+        $this->sendAdminContentHtmlMail();
     }
 
     public function processEventPurchase(){
@@ -112,7 +116,7 @@ class ProcessPurchase
                 'isFidelity' => false
             ]
         ];
-        $this->sendMail->sendTemplated($this->getInvoice($items, $this->purchase), 'Votre pré-inscription a bien été prise en compte', 'event_confirm', ['event' => $this->event]);
+        $this->sendMail->sendTemplated([$this->getInvoice($items, $this->purchase)], 'Votre pré-inscription a bien été prise en compte', 'event_confirm', ['event' => $this->event]);
         $this->sendAdminEventHtmlMail();
     }
 
@@ -174,6 +178,7 @@ class ProcessPurchase
 
             if($content->getType()->getSlug() == "giftCard"){
                 $promoCode=$this->setPromoCode($content->getPrice());
+                array_push($this->giftCard, $this->generateGiftCard($content->getPrice(), $promoCode));
             }
 
             $purchaseContent=new PurchaseContent();
@@ -359,6 +364,34 @@ class ProcessPurchase
         $promoCode->setCode($res);
         $this->em->persist($promoCode);
         return $res;
+    }
+
+    public function generateGiftCard($amount, $code){
+
+        // Load And Create Image From Source
+        $our_image = imagecreatefromjpeg('build/images/a_propos.jpeg');
+
+        // Allocate A Color For The Text Enter RGB Value
+        $color = imagecolorallocate($our_image, 255, 255, 255);
+
+        // Set Path to Font File
+        $font_path = getcwd().'/fonts/arima-madurai-v5-latin/arima-madurai-v5-latin-regular.ttf';
+
+        $angle=0;
+
+
+        // Print Text On Image
+        imagettftext($our_image, 20,$angle,125,200, $color, $font_path,  $amount.'€');
+        imagettftext($our_image, 20,$angle,200,500, $color, $font_path,  $code);
+
+        // Send Image to Browser
+        $name='../assets/gift_cards/Carte_cadeau_'.rand(0,100000).'.jpg';
+        imagejpeg($our_image, $name);
+
+        // Clear Memory
+        imagedestroy($our_image);
+
+        return $name;
     }
 
 }

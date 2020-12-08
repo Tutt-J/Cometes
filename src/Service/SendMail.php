@@ -47,14 +47,17 @@ class SendMail
         $this->security = $security;
     }
 
-    public function sendTemplated($document, $subject, $template, $context = []){
+    public function sendTemplated(array $documents, $subject, $template, $context = []){
         $message = (new TemplatedEmail())
             ->from(new Address('postmaster@chamade.co', 'Chamade'))
             ->to($this->security->getUser()->getEmail())
             ->subject( $subject)
             ->htmlTemplate('emails/'.$template.'.html.twig')
-            ->attachFromPath($document)
             ->context($context);
+
+        foreach($documents as $document){
+            $message->attachFromPath($document);
+        }
         $this->mailer->send($message);
     }
 
