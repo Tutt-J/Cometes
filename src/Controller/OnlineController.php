@@ -70,13 +70,13 @@ class OnlineController extends AbstractController
     }
 
     /**
-     * @Route("/magie-en-ligne/cartes-cadeaux", name="giftCardOnline")
+     * @Route("/magie-en-ligne/cartes-cadeaux", name="giftCardsOnline")
      *
      * @param int $page
      * @param ContentOnlineAdministrator $contentOnlineAdministrator
      * @return Response
      */
-    public function giftCardAction(SessionInterface $session, ContentOnlineAdministrator $contentOnlineAdministrator, int $page = 1)
+    public function giftCardsAction(SessionInterface $session, ContentOnlineAdministrator $contentOnlineAdministrator, int $page = 1)
     {
         if(isset($_GET['affiliate'])){
             $session->set('affiliateGift', $_GET['affiliate']);
@@ -86,6 +86,23 @@ class OnlineController extends AbstractController
             [
                 'contents' => $contentOnlineAdministrator->getContentsToBecome('giftCard', $page),
             ]
+        );
+    }
+
+    /**
+     * @Route("/magie-en-ligne/cartes-cadeaux/{slug}",
+     * name="giftCardOnline",
+     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
+     *
+     * @param $slug
+     * @param ContentOnlineAdministrator $contentOnlineAdministrator
+     * @return Response
+     */
+    public function giftCardAction($slug, ContentOnlineAdministrator $contentOnlineAdministrator)
+    {
+        return $this->render(
+            SELF::INDEX_RENDER,
+            $contentOnlineAdministrator->generateContent($slug, 'giftCard')
         );
     }
 
