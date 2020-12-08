@@ -201,7 +201,6 @@ class ProcessPurchase
         $contents='<ul>';
         foreach ($this->session->get('basket') as $item) {
             $affiliate="Non affilié";
-            $this->session->remove('affiliateGift');
             if($item['Entity']->getType()->getSlug() == "giftCard" && $this->session->get('affiliateGift')){
                 $affiliate = "Affilié à ".$this->session->get('affiliateGift');
             }
