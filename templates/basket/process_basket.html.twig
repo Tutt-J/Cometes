@@ -66,13 +66,15 @@
             </p>
             <p class="text-right col-12">
                 {% if app.session.get('purchaseInfos')['totalAmount'] == 0  %}
-                    {% set url = "successBasket" %}
+                    <button onclick="location.href='{{ path("successBasket") }}'" type="submit" class="btn btn-success" id="processBasket" name="processBasket">
+                        Procéder à la validation (sans paiement)
+                    </button>
                 {% else %}
-                    {% set url = "paymentBasket" %}
+                    <button onclick="location.href='{{ path("paymentBasket") }}'" type="submit" class="btn btn-success" id="processBasket" name="processBasket">
+                        Procéder au paiement
+                    </button>
                 {% endif %}
-                <button onclick="location.href='{{ path(url) }}'" type="submit" class="btn btn-success" id="processBasket" name="processBasket">
-                    Procéder au paiement
-                </button>
+
             </p>
         </div>
     </div>

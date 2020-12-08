@@ -321,7 +321,7 @@ class ProcessPurchase
 
     public function checkPromoCode(){
         if($this->session->get('promoCode')){
-            $this->verifyPromoCode($this->session->get('promoCode'));
+            $this->verifyPromoCode($this->session->get('promoCode')->getCode());
         }
 
         if(isset($_POST['verify_code'])){
@@ -338,6 +338,7 @@ class ProcessPurchase
             );
 
         if($promoCode == null){
+            dd('test');
             $this->session->remove('promoCode');
             $this->session->remove('applyPromo');
             $this->flashbag->add('error', 'Le code promotionnel est invalide.');
