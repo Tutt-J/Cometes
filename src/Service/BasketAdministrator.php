@@ -285,7 +285,7 @@ class BasketAdministrator
     {
         //Replace isFidelity by true for all contents needed
         for ($x=0; $x < sizeof($classedContents); $x++) {
-            if ($x<$nbFidelityToApply) {
+            if ($x<$nbFidelityToApply && $classedContents[$x]['Entity']->getType()->getSlug()!= "giftCard") {
                 $replace=array("isFidelity" => true);
                 $array= array_replace($classedContents[$x], $replace);
                 $classedContents[$x]=$array;
