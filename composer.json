@@ -4,6 +4,7 @@
     "require": {
         "php": "7.4.*",
         "ext-ctype": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "ext-json": "*",
         "antishov/doctrine-extensions-bundle": "^1.4",
@@ -65,8 +66,7 @@
         "symfonycasts/reset-password-bundle": "^1.1",
         "twig/extensions": "^1.5",
         "twig/twig": "^2.0",
-        "vimeo/vimeo-api": "^3.0",
-      "ext-gd": "*"
+        "vimeo/vimeo-api": "^3.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.1",

@@ -15,7 +15,7 @@
                     <div class="card">
                         <div class="card-header" style="cursor: pointer;" id="headingOne" data-toggle="collapse" data-target="{{ '#collapse'~loop.index }}" aria-expanded="true" aria-controls="{{ 'collapse'~loop.index }}">
                             <p>
-                                Commande du {{ purchase.purchase.createdAt | date ('d/m/Y') }} - {{ purchase.purchase.amount }}€
+                                Commande du {{ purchase.purchase.createdAt | date ('d/m/Y') }} - {{ purchase.purchase.amount | replace({".00" : ""}) }}€
                             </p>
                         </div>
 
@@ -34,7 +34,7 @@
                                             {% if content.entity.ref is defined %}
                                                 <small><em>{{ content.entity.ref }}</em></small> <br/>
                                             {% endif %}
-                                            Prix : {{ content.price }}€<br/>
+                                            Prix : {{ content.price | replace({".00" : ""}) }}€<br/>
                                         </li>
                                     {% endfor %}
                                 </ul>
