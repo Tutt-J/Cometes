@@ -128,8 +128,8 @@ class StripeHelper
                 $discount=$this->createDiscount();
                 $stripeRequest['discounts']= [['coupon' => $discount['id']]];
             }
-            $stripeCreate = $this->stripeClient->checkout->sessions->create($stripeRequest);
 
+            $stripeCreate = $this->stripeClient->checkout->sessions->create($stripeRequest);
             $this->session->set('stripe', $stripeCreate);
         } catch (ApiErrorException $e) {
                 $this->flashbag->add('error', 'Impossible de procéder au paiement. Veuillez nous contacter. ('.$e.')');

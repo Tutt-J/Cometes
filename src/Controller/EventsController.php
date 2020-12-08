@@ -9,6 +9,7 @@ use App\Service\BasketAdministrator;
 use App\Service\EventsAdministrator;
 use App\Service\MailjetAdministrator;
 use App\Service\ProcessPurchase;
+use App\Service\SendMail;
 use App\Service\StripeHelper;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -207,6 +208,8 @@ class EventsController extends AbstractController
         StripeHelper $stripeHelper,
         SessionInterface $session
     ) {
+        $session->set('event', $event);
+
         if(!$event->getIsOnline()){
             throw new NotFoundHttpException('L\'évènement "'.$event->getTitle().'" n\'est pas ou plus disponible.');
         }
@@ -223,9 +226,14 @@ class EventsController extends AbstractController
             ]
         ];
 
+        if($session->get('applyPromo')) {
+            $total=$session->get('price')-$session->get('applyPromo');
+            if($total<=0){
+                return $this->redirectToRoute('successRegisterEvent');
+            }
+        }
         $stripeHelper->registerPayment($items, 'RegisterEvent');
 
-        $session->set('event', $event->getId());
 
         $mailjetAdministrator->addContact($this->getUser()->getEmail(), substr($event->getTitle(), 0, 45).' '.($event->getStartDate())->format('Y'));
         return $this->render(
@@ -240,80 +248,32 @@ class EventsController extends AbstractController
     /**
      * @Route("/mon-compte/confirmation-d-inscription", name="successRegisterEvent")
      *
+     * @param ProcessPurchase $processPurchase
      * @param SessionInterface $session
      *
-     * @param MailerInterface $mailer
-     * @param StripeHelper $stripeHelper
-     * @param ProcessPurchase $processPurchase
      * @return RedirectResponse|Response
-     *
-     * @throws TransportExceptionInterface
      */
     public function successRegisterAction(
-        SessionInterface $session,
-        MailerInterface $mailer,
-        StripeHelper $stripeHelper,
-        ProcessPurchase $processPurchase
+        ProcessPurchase $processPurchase,
+        SessionInterface $session
     ) {
-        $em = $this->getDoctrine()->getManager();
 
-        if ($session->get('stripe')) {
-            $charge= $stripeHelper->retrievePurchase('RegisterEvent');
-
-            //SET PURCHASE
-            $purchase=$stripeHelper->setPurchase($charge);
-            $purchase->setContent($stripeHelper->retrievePaymentIntents($charge['payment_intent'], 'RegisterEvent')['metadata']['Description']);
-            $em->persist($purchase);
-
-
-            //SET USER EVENT
-            $event = $this->getDoctrine()
+        if($session->get('event')){
+            $event=$this->getDoctrine()
                 ->getRepository(Event::class)
                 ->findOneBy(
-                    ['id' => $session->get('event')]
+                    [
+                        'id' => $session->get('event')->getId()
+                    ]
                 );
-            $userEvent=new UserEvent();
-            $userEvent->setUser($this->getUser());
-            $userEvent->setEvent($event);
-            $userEvent->setPurchase($purchase);
-            $em->persist($userEvent);
-
-            //FLUSH ALL
-            $em->flush();
-
-            //SEND CLIENT MAIL
-            $invoice=$processPurchase->getInvoice($charge['display_items'], $purchase);
-            $message = (new TemplatedEmail())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
-                ->to($this->getUser()->getEmail())
-                ->subject('Votre pré-inscription a bien été prise en compte')
-                ->htmlTemplate('emails/event_confirm.html.twig')
-                ->context([
-                    'event' => $event,
-                ])
-                ->attachFromPath($invoice);
-            $mailer->send($message);
-
-            //SEND AMDIN MAIL
-            $emailAdmin = (new Email())
-                ->from(new Address('postmaster@chamade.co', 'SITE WEB Chamade'))
-                ->to('hello@chamade.co')
-                ->subject('Nouvel inscription à un évènement')
-                ->html('
-                    <p>Nom : '.$this->getUser()->getFirstName().' '.$this->getUser()->getLastName().'</p>
-                    <p>Email : <a href="mailto:'.$this->getUser()->getEmail().'">'.$this->getUser()->getEmail().'</a></p>
-                    <p>Évènement : '.$event->getTitle().'</p>
-                ');
-            $mailer->send($emailAdmin);
-
-            //REMOVE SESSION VARS
+            $processPurchase->processEventPurchase();
             $session->remove('stripe');
             $session->remove('price');
             $session->remove('description');
+            $session->remove('event');
         } else {
             return $this->redirectToRoute('user_purchases');
         }
-
         return $this->render('events/confirm_register.html.twig', [
             'event' => $event
         ]);

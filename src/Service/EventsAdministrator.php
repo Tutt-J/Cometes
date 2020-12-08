@@ -76,6 +76,10 @@ class EventsAdministrator
     private FlashBagInterface $flashbag;
 
     const DATE_FORMAT='Y-m-d H:i';
+    /**
+     * @var ProcessPurchase
+     */
+    private ProcessPurchase $processPurchase;
 
 
     /**
@@ -97,7 +101,8 @@ class EventsAdministrator
         SessionInterface $session,
         Security $security,
         Environment $twig,
-        FlashBagInterface $flashbag
+        FlashBagInterface $flashbag,
+        ProcessPurchase $processPurchase
     ) {
         $this->em = $em;
         $this->session = $session;
@@ -107,6 +112,7 @@ class EventsAdministrator
         $this->formFactory=$formFactory;
         $this->twig = $twig;
         $this->flashbag=$flashbag;
+        $this->processPurchase= $processPurchase;
     }
 
     /**
@@ -338,6 +344,18 @@ class EventsAdministrator
         if (($form->has('friend') && $form->has('already')) && (!empty($form->get('friend')->getData()) || $form->get('already')->getData() == 1)) {
                 $price=$price - ($price * (5 / 100));
                 $this->generateDescription($form->get('friend')->getData(), $form->get('already')->getData());
+        }
+
+        if(null != $form->get("promoCode")->getData()){
+            if(!$this->processPurchase->verifyPromoCode($form->get("promoCode")->getData())){
+                return new RedirectResponse($this->router->generate($this->session->get('referent')['path'], ['slug' => $this->session->get('referent')['slug']]));
+            }
+            $priceWithCode=$price-$this->session->get('promoCode')->getRestAmount();
+            if( $priceWithCode <0){
+                $this->session->set('applyPromo', $price);
+            } else{
+                $this->session->set('applyPromo', $this->session->get('promoCode')->getRestAmount());
+            }
         }
 
         $this->session->set('price', $price);

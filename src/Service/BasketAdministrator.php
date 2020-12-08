@@ -338,26 +338,6 @@ class BasketAdministrator
 
 
 
-    function verifyPromoCode($promoCode){
-        $promoCode=$this->em
-            ->getRepository(PromoCode::class)
-            ->findOneBy(
-                [
-                    'code' => $promoCode
-                ]
-            );
-
-        if($promoCode == null){
-            $this->session->remove('promoCode');
-            $this->session->remove('applyPromo');
-            $this->flashbag->add('error', 'Le code promotionnel est invalide.');
-        }
-        $this->flashbag->add('success', 'Le code a été appliqué avec succès.');
-        $this->session->set('promoCode', $promoCode);
-    }
-
-
-
     /**
      * @param SessionInterface $session
      * @return array

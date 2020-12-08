@@ -3,9 +3,11 @@
 namespace App\Service;
 
 use App\Entity\Content;
+use App\Entity\Event;
 use App\Entity\PromoCode;
 use App\Entity\Purchase;
 use App\Entity\PurchaseContent;
+use App\Entity\UserEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Konekt\PdfInvoice\InvoicePrinter;
 use Stripe\StripeClient;
@@ -54,6 +56,11 @@ class ProcessPurchase
      * @var SendMail
      */
     private SendMail $sendMail;
+    /**
+     * @var object|null
+     */
+    private ?object $event;
+    private $amount;
 
     /**
      * BasketAdministrator constructor.
@@ -78,44 +85,76 @@ class ProcessPurchase
         $this->sendMail = $sendMail;
     }
 
-    public function processPurcharse(){
+    public function processBasketPurcharse(){
         $this->setPurchaseContent();
         $this->updatePromoCode();
         $this->em->flush();
-        $this->sendMail->sendTemplated($this->getInvoice($this->session->get('basket'), $this->purchase));
-        $this->sendAdminHtmlMail();
+        $this->sendMail->sendTemplated($this->getInvoice($this->session->get('basket'), $this->purchase), 'Confirmation de commande', 'purchase_confirm');
+        $this->sendAdminContentHtmlMail();
     }
 
-    public function sendAdminHtmlMail(){
-        $contents='<ul>';
-        foreach ($this->session->get('basket') as $item) {
-            $contents.= '<li>'.$item['Entity']->getTitle().'</li>';
-        }
-        $contents.='</ul>';
-        $html='<p>Nom : '.$this->security->getUser()->getFirstName().' '.$this->security->getUser()->getLastName().'</p>
-                    <p>Email : <a href="mailto:'.$this->security->getUser()->getEmail().'">'.$this->security->getUser()->getEmail().'</a></p>
-                    <p>Contenus :</p>'.$contents;
-        $this->sendMail->sendBasicEmail($html);
+    public function processEventPurchase(){
+        $this->setPurchaseEvent();
+        $this->updatePromoCode();
+        $this->em->flush();
+        $items=[
+            [
+                'Entity' => $this->event,
+                'isFidelity' => false
+            ]
+        ];
+        $this->sendMail->sendTemplated($this->getInvoice($items, $this->purchase), 'Votre pré-inscription a bien été prise en compte', 'event_confirm', ['event' => $this->event]);
+        $this->sendAdminEventHtmlMail();
     }
 
-    public function setPurchase(){
-
+    public function setPurchase()
+    {
         $purchase=new Purchase();
-        if($this->session->get('stripe')){
+
+        if($this->session->get('stripe')) {
             $charge= $this->stripeHelper->retrievePurchase('Basket');
             $purchase->setStripeId($charge['payment_intent']);
+            $totalAmount=0;
+            foreach ($charge['display_items'] as $item) {
+                $totalAmount+=$item['amount']*$item['quantity'];
+            }
+            $purchase->setAmount($totalAmount/100);
+            if(!empty($this->stripeHelper->retrievePaymentIntents($charge['payment_intent'], 'RegisterEvent')['metadata']['Description'])){
+                $purchase->setContent($this->stripeHelper->retrievePaymentIntents($charge['payment_intent'], 'RegisterEvent')['metadata']['Description']);
+            }
+            $purchase->setStatus("Paiement accepté");
         } else{
-            $purchase->setStripeId("Pas d\'id stripe car offert avec la carte cadeau ". $this->session->get('promoCode')->getCode());
+            $purchase->setStripeId("Pas d'id stripe car offert avec la carte cadeau ". $this->session->get('promoCode')->getCode());
+            $purchase->setAmount($this->amount);
+            $purchase->setStatus("Offert avec code promotionnel ou carte cadeau");
         }
-        $purchase->setStatus("Paiement accepté");
-        $purchase->setAmount($this->session->get('purchaseInfos')['totalAmount']);
+
         $purchase->setUser($this->security->getUser());
 
         return $purchase;
     }
 
+    public function setPurchaseEvent(){
+        $this->event = $this->session->get('event');
+        $this->amount=$this->event->getPrice();
+        $this->purchase=$this->setPurchase();
+        $this->em->persist($this->purchase);
+        $userEvent=new UserEvent();
+        $userEvent->setUser($this->security->getUser());
+        $event = $this->em
+            ->getRepository(Event::class)
+            ->findOneBy(
+                ['id' => $this->session->get('event')]
+            );
+        $userEvent->setEvent($event);
+        $userEvent->setPurchase($this->purchase);
+        $this->em->persist($userEvent);
+    }
+
     public function setPurchaseContent(){
         $this->purchase=$this->setPurchase();
+        $this->amount=$this->session->get('purchaseInfos')['totalAmount'];
+
         //SET ALL PURCHASE CONTENTS
         for ($i=0; $i < sizeof($this->session->get('basket'));$i++) {
             $content = $this->em
@@ -140,6 +179,25 @@ class ProcessPurchase
         $this->em->persist($this->purchase);
     }
 
+    public function sendAdminContentHtmlMail(){
+        $contents='<ul>';
+        foreach ($this->session->get('basket') as $item) {
+            $contents.= '<li>'.$item['Entity']->getTitle().'</li>';
+        }
+        $contents.='</ul>';
+        $html='<p>Nom : '.$this->security->getUser()->getFirstName().' '.$this->security->getUser()->getLastName().'</p>
+                    <p>Email : <a href="mailto:'.$this->security->getUser()->getEmail().'">'.$this->security->getUser()->getEmail().'</a></p>
+                    <p>Contenus :</p>'.$contents;
+        $this->sendMail->sendBasicEmail($html, 'Nouvel achat sur le site');
+    }
+
+    public function sendAdminEventHtmlMail(){
+        $html='<p>Nom : '.$this->security->getUser()->getFirstName().' '.$this->security->getUser()->getLastName().'</p>
+                    <p>Email : <a href="mailto:'.$this->security->getUser()->getEmail().'">'.$this->security->getUser()->getEmail().'</a></p>
+                    <p>Évènement : '.$this->event->getTitle().'</p>
+                ';
+        $this->sendMail->sendBasicEmail($html, 'Nouvel inscription à un évènement');
+    }
     public function updatePromoCode(){
         $promoCode=$this->em
             ->getRepository(PromoCode::class)
@@ -149,7 +207,11 @@ class ProcessPurchase
                 ]
             );
         $promoCode->setRestAmount($promoCode->getRestAmount()-$this->session->get('applyPromo'));
-        $this->em->persist($promoCode);
+        if($promoCode->getRestAmount() > 0){
+            $this->em->persist($promoCode);
+        } else{
+            $this->em->remove($promoCode);
+        }
     }
 
 
@@ -230,8 +292,29 @@ class ProcessPurchase
         $this->session->remove('description');
     }
 
-    function stripAccents($str) {
+    public function stripAccents($str) {
         return strtoupper(strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY'));
     }
+
+    public function verifyPromoCode($promoCode){
+        $promoCode=$this->em
+            ->getRepository(PromoCode::class)
+            ->findOneBy(
+                [
+                    'code' => $promoCode
+                ]
+            );
+
+        if($promoCode == null){
+            $this->session->remove('promoCode');
+            $this->session->remove('applyPromo');
+            $this->flashbag->add('error', 'Le code promotionnel est invalide.');
+            return false;
+        }
+        $this->flashbag->add('success', 'Le code a été appliqué avec succès.');
+        $this->session->set('promoCode', $promoCode);
+        return true;
+    }
+
 
 }

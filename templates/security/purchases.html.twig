@@ -23,7 +23,14 @@
                             <div class="card-body row justify-content-between">
                                 <ul>
                                     {%  for content in purchase.contents %}
-                                        <li class="mb-3"><a href="{{ path(content.path, {'slug':content.entity.slug}) }}">{{ content.entity.title }}</a> <br/>
+                                        <li class="mb-3">
+                                            {% if content.path != 'yogaOnline' %}
+                                                <a href="{{ path(content.path, {'slug':content.entity.slug}) }}">{{ content.entity.title }}</a>
+                                            {% else %}
+                                                {{ content.entity.title }}
+                                            {% endif %}
+
+                                            <br/>
                                             {% if content.entity.ref is defined %}
                                                 <small><em>{{ content.entity.ref }}</em></small> <br/>
                                             {% endif %}

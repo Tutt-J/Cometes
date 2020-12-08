@@ -43,11 +43,11 @@ class BasketController extends AbstractController
      *
      * @return Response
      */
-    public function basketAction(BasketAdministrator $basketAdministrator)
+    public function basketAction(BasketAdministrator $basketAdministrator, ProcessPurchase $processPurchase)
     {
         $basketAdministrator->initializeSessions();
         if(isset($_POST['verify_code'])){
-            $basketAdministrator->verifyPromoCode($_POST['promo_code']);
+            $processPurchase->verifyPromoCode($_POST['promo_code']);
         }
         $basketAdministrator->resetFidelity();
         $basketAdministrator->checkBasket();
@@ -158,7 +158,7 @@ class BasketController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         if ($session->get('basket') ) {
-            $processPurchase->processPurcharse();
+            $processPurchase->processBasketPurcharse();
             $processPurchase->changeSession();
         } else {
             $session->remove('purchaseSuccess');

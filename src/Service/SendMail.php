@@ -47,21 +47,22 @@ class SendMail
         $this->security = $security;
     }
 
-    public function sendTemplated($document){
+    public function sendTemplated($document, $subject, $template, $context = []){
         $message = (new TemplatedEmail())
             ->from(new Address('postmaster@chamade.co', 'Chamade'))
             ->to($this->security->getUser()->getEmail())
-            ->subject('Confirmation de commande')
-            ->htmlTemplate('emails/purchase_confirm.html.twig')
-            ->attachFromPath($document);
+            ->subject( $subject)
+            ->htmlTemplate('emails/'.$template.'.html.twig')
+            ->attachFromPath($document)
+            ->context($context);
         $this->mailer->send($message);
     }
 
-    public function sendBasicEmail($html){
+    public function sendBasicEmail($html,$subject){
         $emailAdmin = (new Email())
             ->from(new Address('postmaster@chamade.co', 'SITE WEB Chamade'))
             ->to('hello@chamade.co')
-            ->subject('Nouvel achat sur le site')
+            ->subject($subject)
             ->html($html);
         $this->mailer->send($emailAdmin);
     }
