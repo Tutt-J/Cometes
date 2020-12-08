@@ -175,17 +175,6 @@ class StripeHelper
         return $this->stripeClient;
     }
 
-    public function setPurchase($stripeId)
-    {
-        $purchase=new Purchase();
-        $purchase->setStripeId($stripeId);
-        $purchase->setStatus("Paiement accepté");
-        $purchase->setAmount($this->session->get('purchaseInfos')['totalAmount']);
-        $purchase->setUser($this->security->getUser());
-
-        return $purchase;
-    }
-
     public function refund($charge){
         try {
             $this->stripeClient->refunds->create([

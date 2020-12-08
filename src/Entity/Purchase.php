@@ -44,7 +44,7 @@ class Purchase
     private $stripeId;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $amount;
 
@@ -89,18 +89,6 @@ class Purchase
     public function setStripeId(string $stripeId): self
     {
         $this->stripeId = $stripeId;
-
-        return $this;
-    }
-
-    public function getAmount(): ?int
-    {
-        return $this->amount;
-    }
-
-    public function setAmount(int $amount): self
-    {
-        $this->amount = $amount;
 
         return $this;
     }
@@ -175,6 +163,18 @@ class Purchase
     public function setContent(?string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getAmount(): ?string
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(string $amount): self
+    {
+        $this->amount = $amount;
 
         return $this;
     }

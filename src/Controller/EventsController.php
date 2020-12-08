@@ -268,7 +268,9 @@ class EventsController extends AbstractController
                 );
             $processPurchase->processEventPurchase();
             $session->remove('stripe');
-            $session->remove('price');
+            $session->remove('promoCode');
+            $session->remove('applyPromo');
+            $session->remove('description');
             $session->remove('description');
             $session->remove('event');
         } else {

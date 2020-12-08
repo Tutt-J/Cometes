@@ -78,13 +78,14 @@
                     {% if form.choice is defined %}
                         {{ form_row(form.choice) }}
                     {% endif %}
-                    {% if form.friend is defined %}
+                {{ form_row(form.promoCode) }}
+
+                {% if form.friend is defined %}
                         {{ form_row(form.friend) }}
                     {% endif %}
                     {% if form.already is defined %}
                         {{ form_row(form.already) }}
                     {% endif %}
-                    {{ form_row(form.promoCode) }}
                     {{ form_row(form.agreeTerms, {'attr': {
                         'oninvalid':"this.setCustomValidity('Vous devez accepter nos conditions particulières pour les évènements et séjours')",
                         'oninput':"this.setCustomValidity('')"

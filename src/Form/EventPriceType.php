@@ -49,6 +49,12 @@ class EventPriceType extends AbstractType
 
                         ;
                 }
+            ])
+            ->add('promoCode', TextType::class, [
+                'label' => 'Code promotionnel ou carte cadeau',
+                'mapped' => false,
+                'required' => false,
+                'help' => "Le bon sera appliqué à l'étape suivante s'il est valide"
             ]);
         if($options['event']->getType()->getSlug() == 'retreat'){
             $builder->add('friend', TextType::class, [

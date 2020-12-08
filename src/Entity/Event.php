@@ -74,7 +74,7 @@ class Event
     private $userEvents;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $price;
 
@@ -236,18 +236,6 @@ class Event
         return $this;
     }
 
-    public function getPrice(): ?int
-    {
-        return $this->price;
-    }
-
-    public function setPrice(int $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     public function getType(): ?Type
     {
         return $this->type;
@@ -359,6 +347,18 @@ class Event
     public function setIsOnline(bool $isOnline): self
     {
         $this->isOnline = $isOnline;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

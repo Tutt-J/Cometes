@@ -293,6 +293,10 @@ class EventsAdministrator
         } else {
             $this->session->set("description", "Réduction de 5% car a déjà participé à une retraite chamade");
         }
+
+        if($this->session->get('promoCode')){
+            $this->session->set("description",$this->session->get('description')." et réduction de ".$this->session->get('applyPromo')."€ avec la carte cadeau numéro ".$this->session->get('promoCode')->getCode());
+        }
     }
 
     public function canRegister($event)
@@ -341,11 +345,6 @@ class EventsAdministrator
 
         $this->session->set('description', "");
 
-        if (($form->has('friend') && $form->has('already')) && (!empty($form->get('friend')->getData()) || $form->get('already')->getData() == 1)) {
-                $price=$price - ($price * (5 / 100));
-                $this->generateDescription($form->get('friend')->getData(), $form->get('already')->getData());
-        }
-
         if(null != $form->get("promoCode")->getData()){
             if(!$this->processPurchase->verifyPromoCode($form->get("promoCode")->getData())){
                 return new RedirectResponse($this->router->generate($this->session->get('referent')['path'], ['slug' => $this->session->get('referent')['slug']]));
@@ -356,6 +355,11 @@ class EventsAdministrator
             } else{
                 $this->session->set('applyPromo', $this->session->get('promoCode')->getRestAmount());
             }
+        }
+
+        if (($form->has('friend') && $form->has('already')) && (!empty($form->get('friend')->getData()) || $form->get('already')->getData() == 1)) {
+            $price=$price - ($price * (5 / 100));
+            $this->generateDescription($form->get('friend')->getData(), $form->get('already')->getData());
         }
 
         $this->session->set('price', $price);

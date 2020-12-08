@@ -21,7 +21,8 @@ class EventType extends AbstractType
             ->add('promoCode', TextType::class, [
                 'label' => 'Code promotionnel ou carte cadeau',
                 'mapped' => false,
-                'required' => false
+                'required' => false,
+                'help' => "Le bon sera appliqué à l'étape suivante s'il est valide"
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-particulieres-pour-les-evenements-et-sejours">conditions particulières pour les évènements et séjours</a><span class="text-danger"> *</span>' ,

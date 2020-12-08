@@ -126,8 +126,12 @@ class BasketController extends AbstractController
      * @param BasketAdministrator $basketAdministrator
      * @return Response
      */
-    public function paymentBasketAction(SessionInterface $session, StripeHelper $stripeHelper, BasketAdministrator $basketAdministrator)
+    public function paymentBasketAction(SessionInterface $session, StripeHelper $stripeHelper, BasketAdministrator $basketAdministrator, ProcessPurchase $processPurchase)
     {
+        $processPurchase->checkPromoCode();
+        $basketAdministrator->checkBasket();
+        $basketAdministrator->applyFidelity();
+
         $items = $basketAdministrator->formatItems($session);
 
         $stripeHelper->registerPayment($items, 'Basket');

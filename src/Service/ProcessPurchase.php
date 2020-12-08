@@ -110,6 +110,7 @@ class ProcessPurchase
             $this->updatePromoCode();
         }
         $this->em->flush();
+        $this->event->setPrice($this->session->get('price'));
         $items=[
             [
                 'Entity' => $this->event,
@@ -131,7 +132,7 @@ class ProcessPurchase
             foreach ($charge['display_items'] as $item) {
                 $totalAmount+=$item['amount']*$item['quantity'];
             }
-            $purchase->setAmount($totalAmount/100);
+            $purchase->setAmount(($totalAmount-$charge['total_details']['amount_discount'])/100);
             if(!empty($this->stripeHelper->retrievePaymentIntents($charge['payment_intent'], 'RegisterEvent')['metadata']['Description'])){
                 $purchase->setContent($this->stripeHelper->retrievePaymentIntents($charge['payment_intent'], 'RegisterEvent')['metadata']['Description']);
             }
@@ -165,8 +166,8 @@ class ProcessPurchase
     }
 
     public function setPurchaseContent(){
-        $this->purchase=$this->setPurchase();
         $this->amount=$this->session->get('purchaseInfos')['totalAmount'];
+        $this->purchase=$this->setPurchase();
 
         //SET ALL PURCHASE CONTENTS
         for ($i=0; $i < sizeof($this->session->get('basket'));$i++) {
@@ -263,20 +264,21 @@ class ProcessPurchase
 
         $total=0;
         foreach ($items as $item) {
+            if($item['isFidelity']){
+                $price=$item['Entity']->getFidelityPrice();
+            } else{
+                $price=$item['Entity']->getPrice();
+            }
             $invoice->addItem(
                 $item['Entity']->getTitle(),
                 null,
                 1,
                 false,
-                $item['Entity']->getPrice(),
+                $price,
                 false,
-                $item['Entity']->getPrice()
+                $price
             );
-            if($item['isFidelity']){
-                $total+=$item['Entity']->getFidelityPrice();
-            } else{
-                $total+=$item['Entity']->getPrice();
-            }
+            $total+=$price;
         }
         if(null != $this->session->get('applyPromo')){
             $invoice->addTotal("Réductions", $this->session->get('applyPromo'));
@@ -338,7 +340,6 @@ class ProcessPurchase
             );
 
         if($promoCode == null){
-            dd('test');
             $this->session->remove('promoCode');
             $this->session->remove('applyPromo');
             $this->flashbag->add('error', 'Le code promotionnel est invalide.');
