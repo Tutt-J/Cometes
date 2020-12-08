@@ -304,6 +304,15 @@ class ProcessPurchase
         return strtoupper(strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY'));
     }
 
+    public function checkPromoCode(){
+        if($this->session->get('promoCode')){
+            $this->verifyPromoCode($this->session->get('promoCode'));
+        }
+
+        if(isset($_POST['verify_code'])){
+            $this->verifyPromoCode($_POST['promo_code']);
+        }
+    }
     public function verifyPromoCode($promoCode){
         $promoCode=$this->em
             ->getRepository(PromoCode::class)
