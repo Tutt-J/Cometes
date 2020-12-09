@@ -45,6 +45,9 @@ class StripeHelper
      */
     protected UrlGeneratorInterface $router;
 
+    /**
+     * @var StripeClient
+     */
     private StripeClient $stripeClient;
 
     /**
@@ -67,6 +70,10 @@ class StripeHelper
         $this->router= $router;
     }
 
+    /**
+     * @param $return
+     * @return \Stripe\Customer|RedirectResponse
+     */
     public function setCustomer($return)
     {
         $user=$this->security->getUser();
@@ -106,6 +113,14 @@ class StripeHelper
         return $return;
     }
 
+    /**
+     *
+     * Register Stripe payment
+     *
+     * @param $items
+     * @param $return
+     * @return RedirectResponse
+     */
     public function registerPayment($items, $return)
     {
         $client=$this->setCustomer($return);
@@ -124,12 +139,17 @@ class StripeHelper
                 ,
                 'cancel_url' => $this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL)
             ];
+
+            //If we have a promo code, create a discount and apply it to stripe checkout
             if($this->session->get('applyPromo')){
                 $discount=$this->createDiscount();
                 $stripeRequest['discounts']= [['coupon' => $discount['id']]];
             }
 
+            //Create Stripe checkout session
             $stripeCreate = $this->stripeClient->checkout->sessions->create($stripeRequest);
+
+            //Set a variable with stripe session
             $this->session->set('stripe', $stripeCreate);
         } catch (ApiErrorException $e) {
                 $this->flashbag->add('error', 'Impossible de procéder au paiement. Veuillez nous contacter. ('.$e.')');
@@ -137,6 +157,10 @@ class StripeHelper
         }
     }
 
+    /**
+     * @return \Stripe\Coupon
+     * @throws ApiErrorException
+     */
     public function createDiscount(){
         return $this->stripeClient->coupons->create([
             'amount_off' => $this->session->get('applyPromo')*100,
@@ -145,6 +169,10 @@ class StripeHelper
         ]);
     }
 
+    /**
+     * @param $return
+     * @return \Stripe\Checkout\Session|RedirectResponse
+     */
     public function retrievePurchase($return)
     {
         try {
@@ -157,6 +185,11 @@ class StripeHelper
         }
     }
 
+    /**
+     * @param $id
+     * @param $return
+     * @return \Stripe\PaymentIntent|RedirectResponse
+     */
     public function retrievePaymentIntents($id, $return)
     {
         try {
@@ -170,11 +203,18 @@ class StripeHelper
         }
     }
 
+    /**
+     * @return StripeClient
+     */
     public function getStripe()
     {
         return $this->stripeClient;
     }
 
+    /**
+     * @param $charge
+     * @return bool
+     */
     public function refund($charge){
         try {
             $this->stripeClient->refunds->create([

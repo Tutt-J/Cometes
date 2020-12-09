@@ -42,6 +42,9 @@ class BasketAdministrator
      */
     private Security $security;
 
+    /**
+     * @var UserContentAdministrator
+     */
     private UserContentAdministrator $userContentAdministrator;
 
     /**
@@ -70,14 +73,49 @@ class BasketAdministrator
     }
 
     /**
+     * Add content to basket with multiple content verification and content checker
      *
+     * @param int $id
+     * @return bool|null
+     */
+    public function addContent(int $id)
+    {
+        $this->initializeSessions();
+
+        //Check if content exist
+        if (!empty($this->getContent($id))) {
+            //Check if content already on basket
+            if (!empty($this->session->get('basket'))) {
+                foreach ($this->session->get('basket') as $content) {
+                    //Verify if exist on basket and if content is not gift card (multiple buy possible)
+                    if ($content['Entity']->getid() == $id && $content['Entity']->getType()->getSlug() != "giftCard") {
+                        $this->flashbag->add('error', 'Ce contenu se trouve déjà dans votre panier.');
+                        return false;
+                    }
+                }
+            }
+            //Check content if is online, already buy or to become
+            if ($this->contentsBasketChecker->checkContent($this->getContent($id))) {
+                //Add content to basket
+                return $this->addContentAction($id);
+            }
+        } else {
+            $this->flashbag->add('error', 'Le contenu demandé n\'est pas trouvé');
+        }
+        return false;
+    }
+
+    /**
+     * Set empty basket and purchase infos
      */
     public function initializeSessions()
     {
+        //Set empty basket on session
         if (!is_array($this->session->get('basket'))) {
             $this->session->set('basket', []);
         }
 
+        //
         if (!is_array($this->session->get('purchaseInfos'))) {
             $this->session->set('purchaseInfos', array(
                 "totalContent" => 0,
@@ -86,6 +124,9 @@ class BasketAdministrator
         }
     }
 
+    /**
+     *
+     */
     public function setPurchaseInfos()
     {
         $price=0;
@@ -127,35 +168,7 @@ class BasketAdministrator
         return $this->contentsBasketChecker->getContent($id);
     }
 
-    /**
-     * @param int $id
-     * @return bool|null
-     */
-    public function addContent(int $id)
-    {
-        $this->initializeSessions();
 
-        //Check if content exist
-        if (!empty($this->getContent($id))) {
-            //Check if content already on basket
-            if (!empty($this->session->get('basket'))) {
-                foreach ($this->session->get('basket') as $content) {
-                    if ($content['Entity']->getid() == $id && $content['Entity']->getType()->getSlug() != "giftCard") {
-                        $this->flashbag->add('error', 'Ce contenu se trouve déjà dans votre panier.');
-                        return null;
-                    }
-                }
-            }
-            //Check content if is online, already buy or to become
-            if ($this->contentsBasketChecker->checkContent($this->getContent($id))) {
-                //Add content to basket
-                return $this->addContentAction($id);
-            }
-        } else {
-            $this->flashbag->add('error', 'Le contenu demandé n\'est pas trouvé');
-        }
-        return null;
-    }
 
     /**
      * @param int $id
@@ -184,13 +197,13 @@ class BasketAdministrator
 
 
     /**
-     * @param int $id
+     * Remove some contact on basket session
+     *
+     * @param $contentToRemove
      */
-    public function removeContent(int $id)
+    public function removeContent($contentToRemove)
     {
         $this->resetFidelity();
-
-        $contentToRemove=$this->getContent($id);
 
         $val = $this->session->get('basket');
 
@@ -206,6 +219,9 @@ class BasketAdministrator
         $this->setPurchaseInfos();
     }
 
+    /**
+     * Put all fidelity at false
+     */
     public function resetFidelity()
     {
         $val = $this->session->get('basket');
@@ -222,7 +238,7 @@ class BasketAdministrator
     }
 
     /**
-     *
+     * Apply didelity where is needed
      */
     public function applyFidelity()
     {
@@ -281,6 +297,14 @@ class BasketAdministrator
         }
     }
 
+    /**
+     *
+     * Construct new classed array with fidelity
+     *
+     * @param $classedContents
+     * @param $nbFidelityToApply
+     * @return array
+     */
     public function constructFidelity($classedContents, $nbFidelityToApply)
     {
         //Replace isFidelity by true for all contents needed
@@ -297,6 +321,12 @@ class BasketAdministrator
         return $this->sortArray($classedContents);
     }
 
+    /**
+     *
+     * Reformat array after fidelity
+     *
+     * @param $classedContents
+     */
     public function reformatArray($classedContents)
     {
         $value=[];
@@ -310,6 +340,12 @@ class BasketAdministrator
         $this->setPurchaseInfos();
     }
 
+    /**
+     * Sort array to have fideliy at the end
+     *
+     * @param $classedContents
+     * @return array
+     */
     public function sortArray($classedContents)
     {
         uasort($classedContents, function ($b, $a) {
@@ -330,16 +366,15 @@ class BasketAdministrator
         if (!empty($this->session->get('basket'))) {
             foreach ($this->session->get('basket') as $content) {
                 if (!$this->contentsBasketChecker->checkContent($this->getContent($content['Entity']->getId()))) {
-                    $this->removeContent($content['Entity']->getId());
+                    $this->removeContent($content['Entity']);
                 }
             }
         }
     }
 
-
-
-
     /**
+     * Format items to stripe
+     *
      * @param SessionInterface $session
      * @return array
      */

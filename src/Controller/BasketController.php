@@ -1,31 +1,15 @@
 <?php
-// src/Controller/shopController
 namespace App\Controller;
 
-use App\Entity\PromoCode;
-use App\Entity\Purchase;
-use App\Entity\PurchaseContent;
-use App\Entity\Content;
-use App\Entity\User;
 use App\Service\BasketAdministrator;
 use App\Service\ContentsBasketChecker;
 use App\Service\ProcessPurchase;
+use App\Service\PromoCode;
 use App\Service\StripeHelper;
-use Stripe\Checkout\Session;
-use Stripe\Exception\ApiErrorException;
-use Stripe\Stripe;
-use Stripe\StripeClient;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,19 +21,23 @@ class BasketController extends AbstractController
     /**
      * @Route("/panier", name="shopBasket")
      *
-     * View the basket
+     * View the basket page
      *
+     * @param SessionInterface $session
      * @param BasketAdministrator $basketAdministrator
      *
+     * @param PromoCode $promoCode
      * @return Response
      */
-    public function basketAction(SessionInterface $session, BasketAdministrator $basketAdministrator, ProcessPurchase $processPurchase)
+    public function basketAction(SessionInterface $session, BasketAdministrator $basketAdministrator, PromoCode $promoCode)
     {
-        $basketAdministrator->initializeSessions();
-        $processPurchase->checkPromoCode();
-        $basketAdministrator->resetFidelity();
-        $basketAdministrator->checkBasket();
+        if($session->get('basket')){
+            $basketAdministrator->resetFidelity();
+            $basketAdministrator->checkBasket();
+        }
 
+        //Check if promo code is always valid
+        $promoCode->checkPromoCode();
 
         return $this->render('basket/basket.html.twig');
     }
@@ -67,8 +55,10 @@ class BasketController extends AbstractController
      */
     public function addBasketAction(SessionInterface $session, BasketAdministrator $basketAdministrator)
     {
+
         $result=$basketAdministrator->addContent($_POST['id']);
-        if ($result == null) {
+        //Redirect if there is an error
+        if (!$result) {
             return $this->redirectToRoute($session->get('referer')['path'], $session->get('referer')['attributes']);
         }
 
@@ -78,6 +68,8 @@ class BasketController extends AbstractController
 
     /**
      * @Route("/modification-panier",name="removeContentBasket")
+     *
+     * Remove some content in basket
      *
      * @param BasketAdministrator $basketAdministrator
      *
@@ -89,7 +81,7 @@ class BasketController extends AbstractController
         if (isset($_POST['removeBasket'])) {
             $contentToRemove=$contentsBasketChecker->getContent($_POST['id']);
             if (isset($contentToRemove)) {
-                $basketAdministrator->removeContent($_POST['id']);
+                $basketAdministrator->removeContent($contentToRemove);
             }
         }
         return $this->redirectToRoute('shopBasket');
@@ -99,19 +91,23 @@ class BasketController extends AbstractController
     /**
      * @Route("/mon-compte/passer-la-commande", name="processBasket")
      *
+     * Page to verify basket
+     *
      * @param BasketAdministrator $basketAdministrator
      * @param SessionInterface $session
+     * @param PromoCode $promoCode
      * @return Response
      */
-    public function processBasketAction(BasketAdministrator $basketAdministrator, SessionInterface $session, ProcessPurchase $processPurchase)
+    public function processBasketAction(BasketAdministrator $basketAdministrator, SessionInterface $session, PromoCode $promoCode)
     {
-        $processPurchase->checkPromoCode();
-        $basketAdministrator->checkBasket();
-        $basketAdministrator->applyFidelity();
-
+        //If basket does not exist, redirect
         if (empty($session->get('basket')) || is_null($session->get('basket'))) {
             return $this->redirectToRoute('shopBasket');
         }
+
+        $promoCode->checkPromoCode();
+        $basketAdministrator->checkBasket();
+        $basketAdministrator->applyFidelity();
 
         return $this->render('basket/process_basket.html.twig');
     }
@@ -120,20 +116,25 @@ class BasketController extends AbstractController
     /**
      * @Route("/mon-compte/paiement_de_la_commande", name="paymentBasket")
      *
+     * Proceed to payment
+     *
      * @param SessionInterface $session
      *
      * @param StripeHelper $stripeHelper
      * @param BasketAdministrator $basketAdministrator
+     * @param PromoCode $promoCode
      * @return Response
      */
-    public function paymentBasketAction(SessionInterface $session, StripeHelper $stripeHelper, BasketAdministrator $basketAdministrator, ProcessPurchase $processPurchase)
+    public function paymentBasketAction(SessionInterface $session, StripeHelper $stripeHelper, BasketAdministrator $basketAdministrator, PromoCode $promoCode)
     {
-        $processPurchase->checkPromoCode();
+        $promoCode->checkPromoCode();
         $basketAdministrator->checkBasket();
         $basketAdministrator->applyFidelity();
 
+        //Format items to Stripe
         $items = $basketAdministrator->formatItems($session);
 
+        //Register payment
         $stripeHelper->registerPayment($items, 'Basket');
 
         return $this->render(
@@ -149,6 +150,8 @@ class BasketController extends AbstractController
     /**
      * @Route("/mon-compte/confirmation-de-votre-commande", name="successBasket")
      *
+     * Success purchase page
+     *
      * @param SessionInterface $session
      *
      * @param ProcessPurchase $processPurchase
@@ -158,12 +161,15 @@ class BasketController extends AbstractController
         SessionInterface $session,
         ProcessPurchase $processPurchase
     ) {
-        $em = $this->getDoctrine()->getManager();
 
+        //If we have a basket, view confirmation page else view user purchases page
         if ($session->get('basket') ) {
+            //Process to purchase
             $processPurchase->processBasketPurcharse();
+            //Remove and set some sessions
             $processPurchase->changeSession();
         } else {
+            //Remove all rest session
             $session->remove('purchaseSuccess');
             $session->remove('purchaseSuccessInfos');
 
@@ -176,6 +182,8 @@ class BasketController extends AbstractController
     /**
      * @Route("/mon-compte/retour-commande", name="errorBasket")
      *
+     * Error payment page return
+     *
      * @return RedirectResponse
      */
     public function errorBasketAction()
@@ -183,6 +191,4 @@ class BasketController extends AbstractController
         $this->addFlash('error', 'Une erreur est survenue au moment du paiement... Veuillez réessayer ou nous contacter');
         return $this->redirectToRoute('processBasket');
     }
-
-
 }

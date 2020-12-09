@@ -39,6 +39,13 @@ class MailjetAdministrator
         ];
     }
 
+    /**
+     *
+     * Create new Event List
+     *
+     * @param $name
+     * @return mixed
+     */
     public function createList($name)
     {
         $body = [
@@ -50,6 +57,13 @@ class MailjetAdministrator
         return $response->getBody()["Data"][0]["ID"];
     }
 
+    /**
+     *
+     * Check if list exist
+     *
+     * @param $name
+     * @return bool|mixed
+     */
     public function alreadyExistList($name)
     {
         $filters = [
@@ -66,12 +80,16 @@ class MailjetAdministrator
     }
 
     /**
+     *
+     * Add contact to event list
+     *
      * @param $mail
      * @param $list
      * @return Response
      */
     public function addContact($mail, $list)
     {
+        //If list not exist, create, else use existant list
         if (!$this->alreadyExistList($list)) {
             $listId=$this->createList($list);
         } else {

@@ -34,6 +34,8 @@ class EventsController extends AbstractController
 {
 
     /**
+     * View Event Index page
+     *
      * @Route("/evenements", name="homeEvent")
      * @return mixed
      */
@@ -43,6 +45,9 @@ class EventsController extends AbstractController
     }
 
     /**
+     *
+     * Circles Events page
+     *
      * @Route("/magie-en-ligne/cercles-de-lune", name="circlesEvent")
      * @param EventsAdministrator $eventsAdministrator
      * @return mixed
@@ -62,6 +67,9 @@ class EventsController extends AbstractController
     }
 
     /**
+     *
+     * One event circle page
+     *
      * @Route("/magie-en-ligne/cercles-de-lune/{slug}",
      * name="circleEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
@@ -79,6 +87,9 @@ class EventsController extends AbstractController
     }
 
     /**
+     *
+     * All Rituals Event Page
+     *
      * @Route("/evenements/rituels", name="ritualsEvent")
      *
      * @param EventsAdministrator $eventsAdministrator
@@ -104,6 +115,8 @@ class EventsController extends AbstractController
      * name="ritualEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
+     * One ritual event page
+     *
      * @param Event $event
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
@@ -119,6 +132,8 @@ class EventsController extends AbstractController
 
     /**
      * @Route("/magie-en-ligne/ateliers", name="workshopsEvent")
+     *
+     * All Workshop Event Page
      *
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
@@ -142,6 +157,8 @@ class EventsController extends AbstractController
      * name="workshopEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
+     * One workshop event page
+     *
      * @param Event $event
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
@@ -156,6 +173,8 @@ class EventsController extends AbstractController
 
     /**
      * @Route("/evenements/retraites", name="retreatsEvent")
+     *
+     * All retreats Event Page
      *
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
@@ -180,6 +199,8 @@ class EventsController extends AbstractController
      * name="retreatEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
+     * One retreat Event Page
+     *
      * @param Event $event
      * @param EventsAdministrator $eventsAdministrator
      * @return Response
@@ -189,11 +210,14 @@ class EventsController extends AbstractController
      */
     public function retreatAction(Event $event, EventsAdministrator $eventsAdministrator)
     {
-        return $eventsAdministrator->renderEventPage($event, true, EventPriceType::class, 'EventPricing');
+        return $eventsAdministrator->renderEventPage($event);
     }
 
     /**
      * @Route("/evenements/s-inscrire/{slug}", name="registerEvent")
+     *
+     * Register to an event
+     *
      * @param Event $event
      * @param MailjetAdministrator $mailjetAdministrator
      * @param EventsAdministrator $eventsAdministrator
@@ -208,15 +232,29 @@ class EventsController extends AbstractController
         StripeHelper $stripeHelper,
         SessionInterface $session
     ) {
-        $session->set('event', $event);
-
+        //If event is offline
         if(!$event->getIsOnline()){
             throw new NotFoundHttpException('L\'évènement "'.$event->getTitle().'" n\'est pas ou plus disponible.');
         }
 
+        //If we can't register to the event, redirect to event page
         if (!$eventsAdministrator->canRegister($event)) {
             return $this->redirectToRoute($session->get('referent')['path'], ['slug'=>$session->get('referent')['slug']]);
         }
+
+        //Put event in session
+        $session->set('event', $event);
+
+        //If we have a promo code
+        if($session->get('applyPromo')) {
+            $total=$session->get('price')-$session->get('applyPromo');
+            //>if total is 0, then no payment directly success
+            if($total<=0){
+                return $this->redirectToRoute('successRegisterEvent');
+            }
+        }
+
+        //Create items format array for Stripe
         $items=[
             [
                 'name' => $event->getTitle().' du '.$event->getStartDate()->format('d/m/Y'),
@@ -226,16 +264,12 @@ class EventsController extends AbstractController
             ]
         ];
 
-        if($session->get('applyPromo')) {
-            $total=$session->get('price')-$session->get('applyPromo');
-            if($total<=0){
-                return $this->redirectToRoute('successRegisterEvent');
-            }
-        }
+        //Register stripe Payment
         $stripeHelper->registerPayment($items, 'RegisterEvent');
 
-
+        //Add contact to Mailjet Event List
         $mailjetAdministrator->addContact($this->getUser()->getEmail(), substr($event->getTitle(), 0, 45).' '.($event->getStartDate())->format('Y'));
+
         return $this->render(
             'basket/payment.html.twig',
             [
@@ -248,6 +282,8 @@ class EventsController extends AbstractController
     /**
      * @Route("/mon-compte/confirmation-d-inscription", name="successRegisterEvent")
      *
+     * Success Register page
+     *
      * @param ProcessPurchase $processPurchase
      * @param SessionInterface $session
      *
@@ -257,7 +293,7 @@ class EventsController extends AbstractController
         ProcessPurchase $processPurchase,
         SessionInterface $session
     ) {
-
+        //If we have an event, view confirmation else view purchases user page
         if($session->get('event')){
             $event=$this->getDoctrine()
                 ->getRepository(Event::class)
@@ -266,11 +302,13 @@ class EventsController extends AbstractController
                         'id' => $session->get('event')->getId()
                     ]
                 );
+            //Process to purchase
             $processPurchase->processEventPurchase();
+
+            //Remove some session
             $session->remove('stripe');
             $session->remove('promoCode');
             $session->remove('applyPromo');
-            $session->remove('description');
             $session->remove('description');
             $session->remove('event');
         } else {
@@ -285,6 +323,8 @@ class EventsController extends AbstractController
     /**
      * @Route("/mon-compte/retour-inscription", name="errorRegisterEvent")
      *
+     * Return page is Stripe Error
+     *
      * @param SessionInterface $session
      * @return RedirectResponse
      */
@@ -296,6 +336,9 @@ class EventsController extends AbstractController
 
 
     /**
+     *
+     * Blessing way Events
+     *
      * @Route("/evenements/blessing-way", name="blessingEvent")
      * @return mixed
      */
@@ -306,6 +349,9 @@ class EventsController extends AbstractController
 
 
     /**
+     *
+     * SlowBuilding Events
+     *
      * @Route("/evenements/slowbuilding", name="slowBuildingEvent")
      * @return mixed
      */

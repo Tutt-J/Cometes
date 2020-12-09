@@ -75,11 +75,18 @@ class EventsAdministrator
      */
     private FlashBagInterface $flashbag;
 
+    /**
+     *
+     */
     const DATE_FORMAT='Y-m-d H:i';
     /**
      * @var ProcessPurchase
      */
     private ProcessPurchase $processPurchase;
+    /**
+     * @var PromoCode
+     */
+    private PromoCode $promoCode;
 
 
     /**
@@ -102,7 +109,8 @@ class EventsAdministrator
         Security $security,
         Environment $twig,
         FlashBagInterface $flashbag,
-        ProcessPurchase $processPurchase
+        ProcessPurchase $processPurchase,
+    PromoCode $promoCode
     ) {
         $this->em = $em;
         $this->session = $session;
@@ -113,6 +121,7 @@ class EventsAdministrator
         $this->twig = $twig;
         $this->flashbag=$flashbag;
         $this->processPurchase= $processPurchase;
+        $this->promoCode= $promoCode;
     }
 
     /**
@@ -148,6 +157,9 @@ class EventsAdministrator
     }
 
     /**
+     *
+     * Check if already regsiter to event
+     *
      * @param $event
      * @return bool
      */
@@ -171,7 +183,10 @@ class EventsAdministrator
 
 
     /**
-     * @param $slug
+     *
+     * Render page for all events types
+     *
+     * @param $event
      * @return RedirectResponse|Response
      * @throws LoaderError
      * @throws RuntimeError
@@ -179,17 +194,20 @@ class EventsAdministrator
      */
     public function renderEventPage($event)
     {
+        //If event not exist or not online
         if(!$event || !$event->getIsOnline()){
             throw new NotFoundHttpException('L\'évènement "'.$event->getTitle().'" n\'est pas ou plus disponible.');
         }
 
+        //Set reference page
         $this->session->set('referent', [
             'path'=> $event->getType()->getSlug().'Event',
             'slug'=> $event->getSlug()
         ]);
 
-
+        //If there is no error
         if ($this->generateMessageError($event) === true) {
+            //If there is multiple pricing, create Form with multiple price, else create simple form
             if (!$event->getEventPricings()->isEmpty()) {
                 $form = $this->formFactory->create(
                     EventPriceType::class,
@@ -207,7 +225,7 @@ class EventsAdministrator
 
             $form->handleRequest($this->requestStack->getCurrentRequest());
 
-            //To be sure for legals reasons
+            //To be sure for legals reasons recheck legals
             if ($form->isSubmitted()
                 && $form->isValid()
                 && true === $form['agreeTerms']->getData()
@@ -236,6 +254,9 @@ class EventsAdministrator
     }
 
     /**
+     *
+     * Generate error message
+     *
      * @param $event
      * @return string
      */
@@ -255,6 +276,8 @@ class EventsAdministrator
     }
 
     /**
+     * Check if there is place
+     *
      * @param $event
      * @return bool
      */
@@ -271,6 +294,13 @@ class EventsAdministrator
         return false;
     }
 
+    /**
+     *
+     * Chec if event is to become
+     *
+     * @param $event
+     * @return bool
+     */
     public function checkEventPassed($event)
     {
         $date = date(SELF::DATE_FORMAT);
@@ -287,12 +317,13 @@ class EventsAdministrator
     public function generateDescription($friend, $already)
     {
         if (!empty($friend) && $already == 1) {
-            $this->session->set("description", "Réduction de 5% car vient avec " . $friend . " et a déjà participé à une retraite chamade.");
+            $description=" Réduction de 5% car vient avec " . $friend . " et a déjà participé à une retraite chamade.";
         } elseif (!empty($friend)) {
-            $this->session->set("description", "Réduction de 5% car vient avec " . $friend.'.');
+            $description=" Réduction de 5% car vient avec " . $friend.'.';
         } else {
-            $this->session->set("description", "Réduction de 5% car a déjà participé à une retraite chamade.");
+            $description=" Réduction de 5% car a déjà participé à une retraite chamade.";
         }
+        $this->session->set("description", $this->session->get('description').$description);
     }
 
     public function canRegister($event)
@@ -326,6 +357,8 @@ class EventsAdministrator
     }
 
     /**
+     * Submit Event Form
+     *
      * @param bool $mutiplePrice
      * @param FormInterface $form
      * @param object|null $event
@@ -333,34 +366,41 @@ class EventsAdministrator
      */
     public function submitForm(bool $mutiplePrice, FormInterface $form, ?object $event): RedirectResponse
     {
+        //If there is multiple price, choose form price, else choose event price
         if ($mutiplePrice === true) {
             $price = $form->get('choice')->getData()->getPrice();
         } else {
             $price=$event->getPrice();
         }
 
+        //Set empty description
         $this->session->set('description', "");
 
+        //If we have a promo code
         if(null != $form->get("promoCode")->getData()){
-            if(!$this->processPurchase->verifyPromoCode($form->get("promoCode")->getData())){
+            //Check validity of code, if not valid return to event page
+            if(!$this->promoCode->verifyPromoCode($form->get("promoCode")->getData())){
                 return new RedirectResponse($this->router->generate($this->session->get('referent')['path'], ['slug' => $this->session->get('referent')['slug']]));
             }
+
+            //Set new price
             $priceWithCode=$price-$this->session->get('promoCode')->getRestAmount();
+            //If $price <0 set promo to price value else set promo to Promo Code Rest Amount Value
             if( $priceWithCode <0){
                 $this->session->set('applyPromo', $price);
             } else{
                 $this->session->set('applyPromo', $this->session->get('promoCode')->getRestAmount());
             }
+            $this->session->set("description",$this->session->get('description')." Réduction de ".$this->session->get('applyPromo')."€ avec la carte cadeau numéro ".$this->session->get('promoCode')->getCode().".");
         }
 
+        //If client has friend or already participate at retreat, apply 5% reduction
         if (($form->has('friend') && $form->has('already')) && (!empty($form->get('friend')->getData()) || $form->get('already')->getData() == 1)) {
             $price=$price - ($price * (5 / 100));
             $this->generateDescription($form->get('friend')->getData(), $form->get('already')->getData());
         }
-        if($this->session->get('promoCode')){
-            $this->session->set("description",$this->session->get('description')." Réduction de ".$this->session->get('applyPromo')."€ avec la carte cadeau numéro ".$this->session->get('promoCode')->getCode().".");
-        }
 
+        //Set event price
         $this->session->set('price', $price);
 
         return new RedirectResponse($this->router->generate('registerEvent', ['slug' => $event->getSlug()]));
