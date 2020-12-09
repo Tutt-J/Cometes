@@ -20,7 +20,7 @@ class PromoCodeRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return PromoCode[] Returns an array of PromoCode objects
+    //  * @return PromoCodeAdministrator[] Returns an array of PromoCodeAdministrator objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PromoCodeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?PromoCode
+    public function findOneBySomeField($value): ?PromoCodeAdministrator
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

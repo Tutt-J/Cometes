@@ -67,9 +67,9 @@ class ProcessPurchase
      */
     private array $giftCard = [];
     /**
-     * @var \App\Service\PromoCode
+     * @var \App\Service\PromoCodeAdministrator
      */
-    private \App\Service\PromoCode $promoCode;
+    private \App\Service\PromoCodeAdministrator $promoCode;
 
     /**
      * BasketAdministrator constructor.
@@ -87,7 +87,7 @@ class ProcessPurchase
         Security $security,
         SessionInterface $session,
         FlashBagInterface $flashbag,
-        \App\Service\PromoCode $promoCode
+        \App\Service\PromoCodeAdministrator $promoCode
     )
     {
         $this->em = $em;

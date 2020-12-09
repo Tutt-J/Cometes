@@ -3,6 +3,7 @@
 namespace App\Service;
 
 
+use App\Entity\PromoCode;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -10,10 +11,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 /**
- * Class PromoCode
+ * Class PromoCodeAdministrator
  * @package App\Service
  */
-class PromoCode
+class PromoCodeAdministrator
 {
     /**
      * @var EntityManagerInterface

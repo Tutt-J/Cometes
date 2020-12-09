@@ -84,9 +84,9 @@ class EventsAdministrator
      */
     private ProcessPurchase $processPurchase;
     /**
-     * @var PromoCode
+     * @var PromoCodeAdministrator
      */
-    private PromoCode $promoCode;
+    private PromoCodeAdministrator $promoCode;
 
 
     /**
@@ -110,7 +110,7 @@ class EventsAdministrator
         Environment $twig,
         FlashBagInterface $flashbag,
         ProcessPurchase $processPurchase,
-    PromoCode $promoCode
+        PromoCodeAdministrator $promoCode
     ) {
         $this->em = $em;
         $this->session = $session;

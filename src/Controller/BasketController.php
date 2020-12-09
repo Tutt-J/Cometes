@@ -1,16 +1,18 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\PromoCode;
 use App\Service\BasketAdministrator;
 use App\Service\ContentsBasketChecker;
 use App\Service\ProcessPurchase;
-use App\Service\PromoCode;
+use App\Service\PromoCodeAdministrator;
 use App\Service\StripeHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class BasketController
@@ -26,18 +28,21 @@ class BasketController extends AbstractController
      * @param SessionInterface $session
      * @param BasketAdministrator $basketAdministrator
      *
-     * @param PromoCode $promoCode
+     * @param PromoCodeAdministrator $promoCode
      * @return Response
      */
-    public function basketAction(SessionInterface $session, BasketAdministrator $basketAdministrator, PromoCode $promoCode)
+    public function basketAction(SessionInterface $session, BasketAdministrator $basketAdministrator, PromoCodeAdministrator $promoCode)
     {
+
+        //Check if promo code is always valid
+        $promoCode->checkPromoCode();
+
         if($session->get('basket')){
             $basketAdministrator->resetFidelity();
             $basketAdministrator->checkBasket();
         }
 
-        //Check if promo code is always valid
-        $promoCode->checkPromoCode();
+
 
         return $this->render('basket/basket.html.twig');
     }
@@ -95,10 +100,10 @@ class BasketController extends AbstractController
      *
      * @param BasketAdministrator $basketAdministrator
      * @param SessionInterface $session
-     * @param PromoCode $promoCode
+     * @param PromoCodeAdministrator $promoCode
      * @return Response
      */
-    public function processBasketAction(BasketAdministrator $basketAdministrator, SessionInterface $session, PromoCode $promoCode)
+    public function processBasketAction(BasketAdministrator $basketAdministrator, SessionInterface $session, PromoCodeAdministrator $promoCode)
     {
         //If basket does not exist, redirect
         if (empty($session->get('basket')) || is_null($session->get('basket'))) {
@@ -122,10 +127,10 @@ class BasketController extends AbstractController
      *
      * @param StripeHelper $stripeHelper
      * @param BasketAdministrator $basketAdministrator
-     * @param PromoCode $promoCode
+     * @param PromoCodeAdministrator $promoCode
      * @return Response
      */
-    public function paymentBasketAction(SessionInterface $session, StripeHelper $stripeHelper, BasketAdministrator $basketAdministrator, PromoCode $promoCode)
+    public function paymentBasketAction(SessionInterface $session, StripeHelper $stripeHelper, BasketAdministrator $basketAdministrator, PromoCodeAdministrator $promoCode)
     {
         $promoCode->checkPromoCode();
         $basketAdministrator->checkBasket();
@@ -161,6 +166,22 @@ class BasketController extends AbstractController
         SessionInterface $session,
         ProcessPurchase $processPurchase
     ) {
+
+
+        $promoCode=$this->getDoctrine()
+            ->getRepository(PromoCode::class)
+            ->findOneBy(
+                [
+                    'code' => $session->get('promoCode')->getCode()
+                ]
+            );
+
+        if(($promoCode && $promoCode->getRestAmount() != $session->get('promoCode')->getRestAmount()) || !isset($promoCode)){
+            $session->remove('promoCode');
+            $session->remove('applyPromo');
+            $this->addFlash('error', 'Le code promotionnel n\'est plus valide ou sa valeur a changé. Merci de réessayer.');
+            return $this->redirectToRoute('shopBasket');
+        }
 
         //If we have a basket, view confirmation page else view user purchases page
         if ($session->get('basket') ) {
