@@ -93,15 +93,17 @@ class AdminController extends AbstractController
         foreach($purchase->getPurchaseContent() as $purchaseContent){
             $em->remove($purchaseContent);
             array_push($items, [
-                "custom" => [
-                    "name" => $purchaseContent->getContent()->getTitle()
-                ],
-                "quantity" => $purchaseContent->getQuantity(),
-                "amount" => $purchaseContent->getPrice()*100,
+                'Entity' => $purchaseContent->getContent(),
+                'isFidelity' => false
             ]);
         }
 
         if(!is_null($purchase->getUserEvent())){
+            $purchase->getUserEvent()->getEvent()->setPrice($purchase->getAmount());
+            array_push($items, [
+                'Entity' => $purchase->getUserEvent()->getEvent(),
+                'isFidelity' => false
+            ]);
             $em->remove($purchase->getUserEvent());
         }
 

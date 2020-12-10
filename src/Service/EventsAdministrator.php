@@ -320,10 +320,13 @@ class EventsAdministrator
             $description=" Réduction de 5% car vient avec " . $friend . " et a déjà participé à une retraite chamade.";
         } elseif (!empty($friend)) {
             $description=" Réduction de 5% car vient avec " . $friend.'.';
-        } else {
+        } elseif($already == 1) {
             $description=" Réduction de 5% car a déjà participé à une retraite chamade.";
         }
-        $this->session->set("description", $this->session->get('description').$description);
+
+        if(isset($description)){
+            $this->session->set("description", $this->session->get('description').$description);
+        }
     }
 
     public function canRegister($event)
@@ -373,6 +376,7 @@ class EventsAdministrator
             $price=$event->getPrice();
         }
 
+
         //Set empty description
         $this->session->set('description', "");
 
@@ -394,12 +398,23 @@ class EventsAdministrator
             $this->session->set("description",$this->session->get('description')." Réduction de ".$this->session->get('applyPromo')."€ avec la carte cadeau numéro ".$this->session->get('promoCode')->getCode().".");
         }
 
-        //If client has friend or already participate at retreat, apply 5% reduction
-        if (($form->has('friend') && $form->has('already')) && (!empty($form->get('friend')->getData()) || $form->get('already')->getData() == 1)) {
-            $price=$price - ($price * (5 / 100));
-            $this->generateDescription($form->get('friend')->getData(), $form->get('already')->getData());
+        $friend='';
+        if($form->has('friend') && !empty($form->get('friend')->getData())){
+            dump('1');
+            $friend=$form->get('friend')->getData();
+            $newPrice=$price - ($price * (5 / 100));
+        }
+        $already=0;
+        if($form->has('already') && $form->get('already')->getData() == 1){
+            $already=$form->get('already')->getData();
+            $newPrice=$price - ($price * (5 / 100));
         }
 
+        if(isset($newPrice)){
+            $price = $newPrice;
+        }
+
+        $this->generateDescription($friend, $already);
         //Set event price
         $this->session->set('price', $price);
 

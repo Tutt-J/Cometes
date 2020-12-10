@@ -62,7 +62,7 @@
                     {% if  app.session.get('applyPromo') %}
                     <strong>Réduction : {{ app.session.get('applyPromo') }}€</strong><br/>
                     {% endif %}
-                    <strong>Total avant remise (à l'étape suivante) : {{ app.session.get('purchaseInfos')['totalAmount']}}€</strong> <br>
+                    <strong>Total avant remise fidélité (à l'étape suivante) : {{ app.session.get('purchaseInfos')['totalAmount']}}€</strong> <br>
                     <small>TVA non applicable - article 293 B du CGI </small>
                 </p>
                 <p class="text-right col-12">

@@ -10,7 +10,7 @@
         <section class="row list mt-5 mb-3">
             {% for content in contents %}
                 <article class="item col-12 col-sm-6 col-md-3 mb-3 d-flex flex-column align-items-center text-center">
-                    <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path('ritualOnline', { 'slug': content.slug }) }}">
+                    <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path('giftCardOnline', { 'slug': content.slug }) }}">
                         <figure>
                             <div class="effect"></div>
                             <img class="w-100" src="{{ asset('uploads/cover_img/'~content.img.url) }}" alt="{{ content.img.alt }}">

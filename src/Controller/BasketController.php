@@ -167,21 +167,24 @@ class BasketController extends AbstractController
         ProcessPurchase $processPurchase
     ) {
 
+        if($session->get('promoCode')){
+            $promoCode=$this->getDoctrine()
+                ->getRepository(PromoCode::class)
+                ->findOneBy(
+                    [
+                        'code' => $session->get('promoCode')->getCode()
+                    ]
+                );
 
-        $promoCode=$this->getDoctrine()
-            ->getRepository(PromoCode::class)
-            ->findOneBy(
-                [
-                    'code' => $session->get('promoCode')->getCode()
-                ]
-            );
-
-        if(($promoCode && $promoCode->getRestAmount() != $session->get('promoCode')->getRestAmount()) || !isset($promoCode)){
-            $session->remove('promoCode');
-            $session->remove('applyPromo');
-            $this->addFlash('error', 'Le code promotionnel n\'est plus valide ou sa valeur a changé. Merci de réessayer.');
-            return $this->redirectToRoute('shopBasket');
+            if(($promoCode && $promoCode->getRestAmount() != $session->get('promoCode')->getRestAmount()) || !isset($promoCode)){
+                $session->remove('promoCode');
+                $session->remove('applyPromo');
+                $this->addFlash('error', 'Le code promotionnel n\'est plus valide ou sa valeur a changé. Merci de réessayer.');
+                return $this->redirectToRoute('shopBasket');
+            }
         }
+
+
 
         //If we have a basket, view confirmation page else view user purchases page
         if ($session->get('basket') ) {
