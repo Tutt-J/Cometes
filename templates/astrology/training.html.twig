@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formations en astrologie | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose des formtaions en Astologie 100% en ligne.{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_astro.jpeg') }}{% endblock %}
+
+{% block Titre %}Formations en astrologie{% endblock %}
+
+{% block content %}
+    {% if programs %}
+    <div class="container-fluid background-white py-5">
+        <div class="container">
+            <div class="row list text-center justify-content-around">
+                {% for program in programs %}
+                    <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">
+                        <a class="d-flex align-items-center text-center w-100 w-md-75 mw-200" href="{{ path('programOnline', { 'slug': program.slug }) }}">
+                            <figure>
+                                <div class="effect background-green"></div>
+                                <img class="w-100" src="{{ asset('uploads/cover_img/'~program.img.url) }}" alt="{{ program.img.alt }}">
+                            </figure>
+                        </a>
+                        <div class="infos mt-3 w-100 w-md-75 mw-200">
+                            <h2 class="d-initial retreat_title"><a href="{{ path('programOnline', { 'slug': program.slug }) }}">{{program.title | raw }}</a></h2>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    {% endif %}
+    <div class="container my-5">
+        <div class="row mt-4 mb-4 align-items-center" >
+            <div class="text-justify">
+                <p>Mystérieuse et technique, il peut te sembler difficile de trouver ton chemin dans les méandres de cet océan de connaissances que représente l'astrologie!</p>
+                <p>Je suis passée par cette étape, mue par une volonté insatiable de comprendre mais déroutée par l’ampleur de la tâche.</p>
+                <p>A l’époque, j’ai moi-même été guidée par des auteures et des astrologues merveilleuses.</p>
+                <p>Puis j’ai développé ma pratique, en commençant par décrypter les subtilités de ma carte du ciel.</p>
+                <p>Je me suis ensuite lancée dans l’aventure des lectures à autrui, en commençant par mes proches, puis en offrant ce service avec Chamade.</p>
+                <p>J’ai lu. Lu. Lu.</p>
+                <p>Puis relu, repris.</p>
+                <p>Questionné, parfois changé mes paradigmes.</p>
+                <p>Laissant place à ma propre lecture de l’astrologie, que j'aime appeler Astrologie holistique.</p>
+                <p>Celle qui permet de prendre en compte toutes les dimensions de notre incarnation.</p>
+                <p>Et de mettre en lumière ses merveilleux cadeaux, ses défis aussi, mais surtout celle qui révèle « le véritable appel de l’âme ».</p>
+                <p>Le mien c’est notamment de transmettre, en toute humilité, ma compréhension de l’astrologie.</p>
+                <p>Elle m’accompagne au quotidien, dans ma vie personnelle mais aussi dans tout ce que je crée avec Chamade.</p>
+                <p>La création de Formations d'astrologie est donc la suite logique de ma démarche, mais aussi une réponse à vos nombreuses demandes d’aller plus loin et d’approfondir.</p>
+                <p>Je remercie celles qui m’ont lancé cet appel, c’est grâce à elles que je débute aujourd’hui cette merveilleuse aventure!</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

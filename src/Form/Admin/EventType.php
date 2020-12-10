@@ -75,6 +75,7 @@ class EventType extends BaseType
                 'choice_label' => 'slug',
                 'label' => 'Type<span class="text-danger"> *</span>',
                 'label_html' => true,
+                'choice_translation_domain' => 'messages'
             ])
             ->add('onlineEvent', CheckboxType::class, array(
                 'label' => 'Ceci est un évènement en ligne'
@@ -138,6 +139,20 @@ class EventType extends BaseType
                 'label' => 'Nombre maximum de participantes<span class="text-danger"> *</span>',
                 'label_html' => true,
             ])
+            ->add('allowFriend', ChoiceType::class, array(
+                'choices'  => [
+                    'Non' => 0,
+                    'Oui' => 1,
+                ],
+                'label' => 'Autoriser la promotion si on vient avec un ami'
+            ))
+            ->add('allowAlready', ChoiceType::class, array(
+                'choices'  => [
+                    'Non' => 0,
+                    'Oui' => 1,
+                ],
+                'label' => 'Autoriser la promotion si on a déjà participé'
+            ))
             ->addEventListener(
                 FormEvents::PRE_SUBMIT,
                 function (FormEvent $event) {

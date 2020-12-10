@@ -7,6 +7,7 @@ use App\Form\Admin\ContentType;
 use App\Service\Admin\AdminDatabase;
 use App\Service\Admin\OfferHelper;
 use App\Service\BasketAdministrator;
+use App\Service\ProcessPurchase;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -108,17 +109,17 @@ class OnlineController extends AbstractController
      * @Route("/admin/contenus-en-ligne/{id}/offrir", name="offerContentAdmin")
      *
      * @param Content $content
-     * @param BasketAdministrator $basketAdministrator
      * @param OfferHelper $offerHelper
      * @param MailerInterface $mailer
+     * @param ProcessPurchase $processPurchase
      * @return Response
      * @throws TransportExceptionInterface
      */
     public function offerContentAction(
         Content $content,
-        BasketAdministrator $basketAdministrator,
         OfferHelper $offerHelper,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        ProcessPurchase $processPurchase
     )
     {
        $form = $offerHelper->createForm();
@@ -135,9 +136,9 @@ class OnlineController extends AbstractController
 
             $offerHelper->persistAndFlush($purchase, $purchaseContent);
 
-            $items=$offerHelper->setItem($content->getTitle());
+            $items=$offerHelper->setItem($content);
 
-            $invoice= $basketAdministrator->getInvoice($items, $purchase, $form->get('user')->getData());
+            $invoice= $processPurchase->getInvoice($items, $purchase, $form->get('user')->getData());
 
             //SEND CLIENT MAIL
             $message = (new TemplatedEmail())

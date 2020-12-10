@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Content;
+use App\Entity\PromoCode;
 use App\Entity\Type;
 use App\Entity\UserEvent;
 use App\Form\UserType;
@@ -41,6 +42,9 @@ class BasketAdministrator
      */
     private Security $security;
 
+    /**
+     * @var UserContentAdministrator
+     */
     private UserContentAdministrator $userContentAdministrator;
 
     /**
@@ -69,14 +73,49 @@ class BasketAdministrator
     }
 
     /**
+     * Add content to basket with multiple content verification and content checker
      *
+     * @param int $id
+     * @return bool|null
+     */
+    public function addContent(int $id)
+    {
+        $this->initializeSessions();
+
+        //Check if content exist
+        if (!empty($this->getContent($id))) {
+            //Check if content already on basket
+            if (!empty($this->session->get('basket'))) {
+                foreach ($this->session->get('basket') as $content) {
+                    //Verify if exist on basket and if content is not gift card (multiple buy possible)
+                    if ($content['Entity']->getid() == $id && $content['Entity']->getType()->getSlug() != "giftCard") {
+                        $this->flashbag->add('error', 'Ce contenu se trouve déjà dans votre panier.');
+                        return false;
+                    }
+                }
+            }
+            //Check content if is online, already buy or to become
+            if ($this->contentsBasketChecker->checkContent($this->getContent($id))) {
+                //Add content to basket
+                return $this->addContentAction($id);
+            }
+        } else {
+            $this->flashbag->add('error', 'Le contenu demandé n\'est pas trouvé');
+        }
+        return false;
+    }
+
+    /**
+     * Set empty basket and purchase infos
      */
     public function initializeSessions()
     {
+        //Set empty basket on session
         if (!is_array($this->session->get('basket'))) {
             $this->session->set('basket', []);
         }
 
+        //
         if (!is_array($this->session->get('purchaseInfos'))) {
             $this->session->set('purchaseInfos', array(
                 "totalContent" => 0,
@@ -85,6 +124,9 @@ class BasketAdministrator
         }
     }
 
+    /**
+     *
+     */
     public function setPurchaseInfos()
     {
         $price=0;
@@ -97,6 +139,19 @@ class BasketAdministrator
                 }
             }
         }
+
+        if(null !== $this->session->get('promoCode')){
+            $priceWithCode=$price-$this->session->get('promoCode')->getRestAmount();
+            if( $priceWithCode <0){
+                $priceWithCode=0;
+                $this->session->set('applyPromo', $price);
+            } else{
+                $this->session->set('applyPromo', $this->session->get('promoCode')->getRestAmount());
+            }
+            $price=$priceWithCode;
+            $this->session->set('description', 'Réduction de '.$this->session->get('applyPromo').'€ avec la carte cadeau numéro '.$this->session->get('promoCode')->getCode());
+        }
+
         $this->session->set('purchaseInfos', array(
             "totalContent" => sizeof($this->session->get('basket')),
             "totalAmount" => $price,
@@ -113,35 +168,7 @@ class BasketAdministrator
         return $this->contentsBasketChecker->getContent($id);
     }
 
-    /**
-     * @param int $id
-     * @return bool|null
-     */
-    public function addContent(int $id)
-    {
-        $this->initializeSessions();
 
-        //Check if content exist
-        if (!empty($this->getContent($id))) {
-            //Check if content already on basket
-            if (!empty($this->session->get('basket'))) {
-                foreach ($this->session->get('basket') as $content) {
-                    if ($content['Entity']->getid() == $id) {
-                        $this->flashbag->add('error', 'Ce contenu se trouve déjà dans votre panier.');
-                        return null;
-                    }
-                }
-            }
-            //Check content if is online, already buy or to become
-            if ($this->contentsBasketChecker->checkContent($this->getContent($id))) {
-                //Add content to basket
-                return $this->addContentAction($id);
-            }
-        } else {
-            $this->flashbag->add('error', 'Le contenu demandé n\'est pas trouvé');
-        }
-        return null;
-    }
 
     /**
      * @param int $id
@@ -170,13 +197,13 @@ class BasketAdministrator
 
 
     /**
-     * @param int $id
+     * Remove some contact on basket session
+     *
+     * @param $contentToRemove
      */
-    public function removeContent(int $id)
+    public function removeContent($contentToRemove)
     {
         $this->resetFidelity();
-
-        $contentToRemove=$this->getContent($id);
 
         $val = $this->session->get('basket');
 
@@ -192,6 +219,9 @@ class BasketAdministrator
         $this->setPurchaseInfos();
     }
 
+    /**
+     * Put all fidelity at false
+     */
     public function resetFidelity()
     {
         $val = $this->session->get('basket');
@@ -208,7 +238,7 @@ class BasketAdministrator
     }
 
     /**
-     *
+     * Apply didelity where is needed
      */
     public function applyFidelity()
     {
@@ -267,11 +297,19 @@ class BasketAdministrator
         }
     }
 
+    /**
+     *
+     * Construct new classed array with fidelity
+     *
+     * @param $classedContents
+     * @param $nbFidelityToApply
+     * @return array
+     */
     public function constructFidelity($classedContents, $nbFidelityToApply)
     {
         //Replace isFidelity by true for all contents needed
         for ($x=0; $x < sizeof($classedContents); $x++) {
-            if ($x<$nbFidelityToApply) {
+            if ($x<$nbFidelityToApply && $classedContents[$x]['Entity']->getType()->getSlug()!= "giftCard") {
                 $replace=array("isFidelity" => true);
                 $array= array_replace($classedContents[$x], $replace);
                 $classedContents[$x]=$array;
@@ -283,6 +321,12 @@ class BasketAdministrator
         return $this->sortArray($classedContents);
     }
 
+    /**
+     *
+     * Reformat array after fidelity
+     *
+     * @param $classedContents
+     */
     public function reformatArray($classedContents)
     {
         $value=[];
@@ -292,9 +336,16 @@ class BasketAdministrator
             }
         }
         $this->session->set('basket', $value);
+
         $this->setPurchaseInfos();
     }
 
+    /**
+     * Sort array to have fideliy at the end
+     *
+     * @param $classedContents
+     * @return array
+     */
     public function sortArray($classedContents)
     {
         uasort($classedContents, function ($b, $a) {
@@ -315,71 +366,35 @@ class BasketAdministrator
         if (!empty($this->session->get('basket'))) {
             foreach ($this->session->get('basket') as $content) {
                 if (!$this->contentsBasketChecker->checkContent($this->getContent($content['Entity']->getId()))) {
-                    $this->removeContent($content['Entity']->getId());
+                    $this->removeContent($content['Entity']);
                 }
             }
         }
     }
 
-    public function getInvoice($items, $purchase, $user=null, $refund = false)
+    /**
+     * Format items to stripe
+     *
+     * @param SessionInterface $session
+     * @return array
+     */
+    public function formatItems(SessionInterface $session): array
     {
-        if(is_null($user)){
-            $user=$this->security->getUser();
+        $items = [];
+        foreach ($this->session->get('basket') as $content) {
+            if ($content['isFidelity']) {
+                $price = $content['Entity']->getFidelityPrice();
+            } else {
+                $price = $content['Entity']->getPrice();
+            }
+            $array = [
+                'name' => $content['Entity']->getTitle(),
+                'amount' => $price * 100,
+                'currency' => 'eur',
+                'quantity' => 1,
+            ];
+            array_push($items, $array);
         }
-        $invoice = new InvoicePrinter("A4", "€", "fr");
-
-        /* Header settings */
-        $invoice->setLogo("build/images/logo_basique.png");   //logo image path
-        $invoice->setColor("#f28066");      // pdf color scheme
-        $invoice->setType("Facture");    // Invoice Type
-        $invoice->setReference('WEB'.date('Y').'_'.$purchase->getId());   // Reference
-        $invoice->setDate(date('d/m/Y', time()));   //Billing Date
-        $invoice->setTime(date('H:i:s', time()));   //Billing Time
-        $invoice->setFrom(array("CHAMADE","419 RUE DE BORINGES","74930 REIGNIER-ESERY"));
-        $invoice->setTo(array(
-            $this->stripAccents($user->getFirstName()).' '.$this->stripAccents($user->getLastName()),
-            $this->stripAccents($user->getAddress()->getStreet()),
-            $this->stripAccents($user->getAddress()->getPostalCode())." ".$this->stripAccents($user->getAddress()->getCity()),
-            $this->stripAccents($user->getAddress()->getCountry())
-        ));
-
-        $total=0;
-        foreach ($items as $item) {
-            $invoice->addItem(
-                $item['custom']['name'],
-                null,
-                $item['quantity'],
-                false,
-                $item['amount']/100,
-                false,
-                ($item['quantity']*$item['amount'])/100
-            );
-            $total+=($item['quantity']*$item['amount'])/100;
-        }
-        $invoice->addTotal("Total", $total);
-        $invoice->flipflop();
-        if($refund){
-            $invoice->addBadge("Remboursé");
-        } elseif($total == 0){
-            $invoice->addBadge("Offert");
-        } else{
-            $invoice->addBadge("Payée");
-
-        }
-
-        $invoice->setFooternote("Chamade");
-
-        if (!file_exists('invoices')) {
-            mkdir('invoices', 0775, true);
-        }
-        
-        $path='invoices/Facture_WEB'.date('Y').'_'.$purchase->getId().'.pdf';
-        $invoice->render($path, 'F');
-
-        return $path;
-    }
-
-    function stripAccents($str) {
-        return strtoupper(strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY'));
+        return $items;
     }
 }

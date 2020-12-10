@@ -78,14 +78,12 @@ class OfferHelper
         $this->em->flush();
     }
 
-    public function setItem($title){
+    public function setItem($content){
+        $content->setPrice(0);
         return [
             [
-                "custom" => [
-                    "name" => $title
-                ],
-                "quantity" => 1,
-                "amount" => 0,
+                'Entity' => $content,
+                'isFidelity' => false
             ]
         ];
     }

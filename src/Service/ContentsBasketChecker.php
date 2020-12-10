@@ -51,7 +51,7 @@ class ContentsBasketChecker
     }
 
     /**
-     * Get all contents for a user
+     * Get all purchases for a user
      *
      * @return object[]
      */
@@ -65,8 +65,30 @@ class ContentsBasketChecker
             );
     }
 
-    //Check si le rituel est déjà acheté
+    /**
+     *
+     * Find a content
+     *
+     * @param int $id
+     * @return object|null
+     */
+    public function getContent(int $id)
+    {
+        return $this->em
+            ->getRepository(Content::class)
+            ->findOneBy(
+                ['id' => $id]
+            );
+    }
 
+    /**
+     *
+     * Check all pack content if already buy
+     *
+     * @param $content
+     * @param $contentToTest
+     * @return bool
+     */
     public function checkPack($content, $contentToTest)
     {
         $contents = $this->em
@@ -93,6 +115,8 @@ class ContentsBasketChecker
     {
         $return = true;
         $purchases=$this->getPurchases();
+
+        //For every purchases
         foreach ($purchases as $purchase) {
             $purchaseContents = $this->em
                 ->getRepository(PurchaseContent::class)
@@ -100,15 +124,20 @@ class ContentsBasketChecker
                     ['purchase' => $purchase]
                 );
 
+            //For every content in the purchase
             foreach ($purchaseContents as $purchaseContent) {
                 $content = $this->em
                     ->getRepository(Content::class)
                     ->findOneBy(
                         ['id' => $purchaseContent->getContent()]
                     );
+
+                //If it's a pack check all content of the pack
                 if ($content->getIsPack()) {
                     $return=$this->checkPack($content, $contentToTest);
                 }
+
+                //If content is equal return false because already buy
                 if ($contentToTest->getId() == $content->getId()) {
                     $return=false;
                 }
@@ -117,8 +146,6 @@ class ContentsBasketChecker
         }
         return $return;
     }
-
-    //Check si le contenu est online
 
     /**
      * Check if content is online
@@ -134,6 +161,13 @@ class ContentsBasketChecker
         return false;
     }
 
+    /**
+     *
+     * Check if content is to become
+     *
+     * @param Content $content
+     * @return bool
+     */
     public function checkEventPassed(Content $content)
     {
         if ($content->getEventDate()->format('Y-m-d') >= date('Y-m-d') || $content->getNeverPassed() === true) {
@@ -144,7 +178,7 @@ class ContentsBasketChecker
 
     /**
      *
-     * Check if content is online and not already buy
+     * Check if content is online, not already buy and not passed
      *
      * @param Content $content
      * @return bool|int
@@ -157,29 +191,17 @@ class ContentsBasketChecker
             $this->flashbag->add('error', 'Le contenu "'.$content->getTitle().'" n\'est plus disponible à la vente, il a été supprimé de votre panier.');
             $isTrue=false;
         }
-        //check if ritual is already buy
-        if (!$this->checkContentAlreadyBuy($content)) {
+
+        //Check if content is already buy but not gift card
+        if($content->getType()->getSlug() != "giftCard" && !$this->checkContentAlreadyBuy($content)){
             $this->flashbag->add('error', 'Vous avez déjà acheté le contenu "'.$content->getTitle().'", il a été supprimé de votre panier');
             $isTrue=false;
         }
-        //chekc if to become
+        //check if to become
         if (!$this->checkEventPassed($content)) {
             $this->flashbag->add('error', 'Le contenu "'.$content->getTitle().'" est déjà passé, il a été supprimé de votre panier');
             $isTrue=false;
         }
         return $isTrue;
-    }
-
-    /**
-     * @param int $id
-     * @return object|null
-     */
-    public function getContent(int $id)
-    {
-        return $this->em
-            ->getRepository(Content::class)
-            ->findOneBy(
-                ['id' => $id]
-            );
     }
 }

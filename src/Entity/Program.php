@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ProgramRepository;
 use App\Service\ContentsTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -42,6 +44,16 @@ class Program
      * @ORM\JoinColumn(nullable=false)
      */
     private $img;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=TypeProgram::class, inversedBy="programs")
+     */
+    private $type;
+
+    public function __construct()
+    {
+        $this->type = new ArrayCollection();
+    }
 
 
     public function getTitle(): ?string
@@ -101,6 +113,30 @@ class Program
     public function setImg(?Image $img): self
     {
         $this->img = $img;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TypeProgram[]
+     */
+    public function getType(): Collection
+    {
+        return $this->type;
+    }
+
+    public function addType(TypeProgram $type): self
+    {
+        if (!$this->type->contains($type)) {
+            $this->type[] = $type;
+        }
+
+        return $this;
+    }
+
+    public function removeType(TypeProgram $type): self
+    {
+        $this->type->removeElement($type);
 
         return $this;
     }

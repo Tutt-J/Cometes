@@ -45,6 +45,9 @@ class StripeHelper
      */
     protected UrlGeneratorInterface $router;
 
+    /**
+     * @var StripeClient
+     */
     private StripeClient $stripeClient;
 
     /**
@@ -67,6 +70,10 @@ class StripeHelper
         $this->router= $router;
     }
 
+    /**
+     * @param $return
+     * @return \Stripe\Customer|RedirectResponse
+     */
     public function setCustomer($return)
     {
         $user=$this->security->getUser();
@@ -106,26 +113,43 @@ class StripeHelper
         return $return;
     }
 
+    /**
+     *
+     * Register Stripe payment
+     *
+     * @param $items
+     * @param $return
+     * @return RedirectResponse
+     */
     public function registerPayment($items, $return)
     {
         $client=$this->setCustomer($return);
 
         try {
-            $stripeCreate = $this->stripeClient->checkout->sessions->create(
-                [
-                    'customer' => $client['id'],
-                    'payment_method_types' => ['card'],
-                    'line_items' => $items,
-                    'payment_intent_data' => [
-                        'metadata' => [
-                            'Description' => $this->session->get('description')
-                        ]
-                    ],
-                    'success_url' => $this->router->generate('success'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL)
-                    ,
-                    'cancel_url' => $this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL)
-                ]
-            );
+            $stripeRequest= [
+                'customer' => $client['id'],
+                'payment_method_types' => ['card'],
+                'line_items' => $items,
+                'payment_intent_data' => [
+                    'metadata' => [
+                        'Description' => $this->session->get('description')
+                    ]
+                ],
+                'success_url' => $this->router->generate('success'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL)
+                ,
+                'cancel_url' => $this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL)
+            ];
+
+            //If we have a promo code, create a discount and apply it to stripe checkout
+            if($this->session->get('applyPromo')){
+                $discount=$this->createDiscount();
+                $stripeRequest['discounts']= [['coupon' => $discount['id']]];
+            }
+
+            //Create Stripe checkout session
+            $stripeCreate = $this->stripeClient->checkout->sessions->create($stripeRequest);
+
+            //Set a variable with stripe session
             $this->session->set('stripe', $stripeCreate);
         } catch (ApiErrorException $e) {
                 $this->flashbag->add('error', 'Impossible de procéder au paiement. Veuillez nous contacter. ('.$e.')');
@@ -133,6 +157,22 @@ class StripeHelper
         }
     }
 
+    /**
+     * @return \Stripe\Coupon
+     * @throws ApiErrorException
+     */
+    public function createDiscount(){
+        return $this->stripeClient->coupons->create([
+            'amount_off' => $this->session->get('applyPromo')*100,
+            'currency' => 'EUR',
+            'duration' => 'once',
+        ]);
+    }
+
+    /**
+     * @param $return
+     * @return \Stripe\Checkout\Session|RedirectResponse
+     */
     public function retrievePurchase($return)
     {
         try {
@@ -145,6 +185,11 @@ class StripeHelper
         }
     }
 
+    /**
+     * @param $id
+     * @param $return
+     * @return \Stripe\PaymentIntent|RedirectResponse
+     */
     public function retrievePaymentIntents($id, $return)
     {
         try {
@@ -158,26 +203,18 @@ class StripeHelper
         }
     }
 
+    /**
+     * @return StripeClient
+     */
     public function getStripe()
     {
         return $this->stripeClient;
     }
 
-    public function setPurchase($charge)
-    {
-        $purchase=new Purchase();
-        $purchase->setStripeId($charge['payment_intent']);
-        $totalAmount=0;
-        foreach ($charge['display_items'] as $item) {
-            $totalAmount+=$item['amount']*$item['quantity'];
-        }
-        $purchase->setStatus("Paiement accepté");
-        $purchase->setAmount($totalAmount/100);
-        $purchase->setUser($this->security->getUser());
-
-        return $purchase;
-    }
-
+    /**
+     * @param $charge
+     * @return bool
+     */
     public function refund($charge){
         try {
             $this->stripeClient->refunds->create([

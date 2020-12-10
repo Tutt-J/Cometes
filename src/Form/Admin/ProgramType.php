@@ -3,18 +3,13 @@
 namespace App\Form\Admin;
 
 use App\Entity\Program;
-use App\Form\ImageType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use App\Entity\TypeProgram;
+use App\Repository\TypeProgramRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -44,6 +39,15 @@ class ProgramType extends BaseType
                 'label' => 'Prix<span class="text-danger"> *</span>',
                 'label_html' => true,
                 'required' => true
+            ])
+            ->add('type', EntityType::class, [
+                'class' => TypeProgram::class,
+                'choice_label' => 'slug',
+                'expanded'     => true,
+                'multiple'     => true,
+                'label' => 'Où placer ce programme/formation<span class="text-danger"> *</span>',
+                'label_html' => true,
+                'choice_translation_domain' => 'messages'
             ])
         ;
     }

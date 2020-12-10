@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 use App\Entity\Purchase;
 use App\Service\Admin\ReportGenerator;
 use App\Service\BasketAdministrator;
+use App\Service\ProcessPurchase;
 use App\Service\StripeHelper;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -75,7 +76,8 @@ class AdminController extends AbstractController
     public function refundPurchaseAction(
         StripeHelper $stripeHelper,
         BasketAdministrator $basketAdministrator,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        ProcessPurchase $processPurchase
     )
     {
         $em = $this->getDoctrine()->getManager();
@@ -91,22 +93,24 @@ class AdminController extends AbstractController
         foreach($purchase->getPurchaseContent() as $purchaseContent){
             $em->remove($purchaseContent);
             array_push($items, [
-                "custom" => [
-                    "name" => $purchaseContent->getContent()->getTitle()
-                ],
-                "quantity" => $purchaseContent->getQuantity(),
-                "amount" => $purchaseContent->getPrice()*100,
+                'Entity' => $purchaseContent->getContent(),
+                'isFidelity' => false
             ]);
         }
 
         if(!is_null($purchase->getUserEvent())){
+            $purchase->getUserEvent()->getEvent()->setPrice($purchase->getAmount());
+            array_push($items, [
+                'Entity' => $purchase->getUserEvent()->getEvent(),
+                'isFidelity' => false
+            ]);
             $em->remove($purchase->getUserEvent());
         }
 
         $refund = $stripeHelper->refund($purchase->getStripeId());
         
         if($refund){
-            $invoice = $basketAdministrator->getInvoice($items, $purchase, $purchase->getUser(), true);
+            $invoice = $processPurchase->getInvoice($items, $purchase, $purchase->getUser(), true);
             //SEND CLIENT MAIL
             $message = (new TemplatedEmail())
                 ->from(new Address('postmaster@chamade.co', 'Chamade'))

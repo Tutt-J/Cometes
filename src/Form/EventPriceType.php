@@ -49,15 +49,23 @@ class EventPriceType extends AbstractType
 
                         ;
                 }
+            ])
+            ->add('promoCode', TextType::class, [
+                'label' => 'Code promotionnel ou carte cadeau',
+                'mapped' => false,
+                'required' => false,
+                'help' => "Le bon sera appliqué à l'étape suivante s'il est valide"
             ]);
-        if($options['event']->getType()->getSlug() == 'retreat'){
+        if($options['event']->getAllowFriend()) {
             $builder->add('friend', TextType::class, [
                 'mapped' => false,
                 'label' => 'Si vous venez avec une amie, son nom et prénom',
                 'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de la retraite',
                 'required' => false
-            ])
-                ->add('already', CheckboxType::class, [
+            ]);
+        }
+        if($options['event']->getAllowAlready()) {
+            $builder->add('already', CheckboxType::class, [
                     'mapped' => false,
                     'label' => 'J\'ai déjà participé à une retraite Chamade',
                     'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de la retraite',

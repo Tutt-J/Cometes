@@ -43,6 +43,7 @@ class ContentType extends BaseType
                 'choice_label' => 'slug',
                 'label' => 'Type<span class="text-danger"> *</span>',
                 'label_html' => true,
+                'choice_translation_domain' => 'messages'
             ])
             ->add('price', IntegerType::class, [
                 'constraints' => array(

@@ -15,7 +15,7 @@
                     <div class="card">
                         <div class="card-header" style="cursor: pointer;" id="headingOne" data-toggle="collapse" data-target="{{ '#collapse'~loop.index }}" aria-expanded="true" aria-controls="{{ 'collapse'~loop.index }}">
                             <p>
-                                Commande du {{ purchase.purchase.createdAt | date ('d/m/Y') }} - {{ purchase.purchase.amount }}€
+                                Commande du {{ purchase.purchase.createdAt | date ('d/m/Y') }} - {{ purchase.purchase.amount | replace({".00" : ""}) }}€
                             </p>
                         </div>
 
@@ -23,11 +23,18 @@
                             <div class="card-body row justify-content-between">
                                 <ul>
                                     {%  for content in purchase.contents %}
-                                        <li class="mb-3"><a href="{{ path(content.path, {'slug':content.entity.slug}) }}">{{ content.entity.title }}</a> <br/>
+                                        <li class="mb-3">
+                                            {% if content.path != 'yogaOnline' %}
+                                                <a href="{{ path(content.path, {'slug':content.entity.slug}) }}">{{ content.entity.title }}</a>
+                                            {% else %}
+                                                {{ content.entity.title }}
+                                            {% endif %}
+
+                                            <br/>
                                             {% if content.entity.ref is defined %}
                                                 <small><em>{{ content.entity.ref }}</em></small> <br/>
                                             {% endif %}
-                                            Prix : {{ content.price }}€<br/>
+                                            Prix : {{ content.price | replace({".00" : ""}) }}€<br/>
                                         </li>
                                     {% endfor %}
                                 </ul>

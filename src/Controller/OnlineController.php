@@ -1,15 +1,21 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Program;
+use App\Entity\PromoCode;
+use App\Entity\TypeProgram;
+use App\Form\Admin\ArticleType;
 use App\Service\ContentOnlineAdministrator;
 use App\Service\GlobalsGenerator;
+use http\Env\Request;
 use Instagram\Exception\InstagramAuthException;
 use Instagram\Exception\InstagramException;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -60,6 +66,43 @@ class OnlineController extends AbstractController
         return $this->render(
             SELF::INDEX_RENDER,
             $contentOnlineAdministrator->generateContent($slug, 'ritual')
+        );
+    }
+
+    /**
+     * @Route("/magie-en-ligne/cartes-cadeaux", name="giftCardsOnline")
+     *
+     * @param int $page
+     * @param ContentOnlineAdministrator $contentOnlineAdministrator
+     * @return Response
+     */
+    public function giftCardsAction(SessionInterface $session, ContentOnlineAdministrator $contentOnlineAdministrator, int $page = 1)
+    {
+        if(isset($_GET['affiliate'])){
+            $session->set('affiliateGift', $_GET['affiliate']);
+        }
+        return $this->render(
+            'online/gift_card.html.twig',
+            [
+                'contents' => $contentOnlineAdministrator->getContentsToBecome('giftCard', $page),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/magie-en-ligne/cartes-cadeaux/{slug}",
+     * name="giftCardOnline",
+     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
+     *
+     * @param $slug
+     * @param ContentOnlineAdministrator $contentOnlineAdministrator
+     * @return Response
+     */
+    public function giftCardAction($slug, ContentOnlineAdministrator $contentOnlineAdministrator)
+    {
+        return $this->render(
+            SELF::INDEX_RENDER,
+            $contentOnlineAdministrator->generateContent($slug, 'giftCard')
         );
     }
 
@@ -149,17 +192,14 @@ class OnlineController extends AbstractController
     /**
      * @Route("/magie-en-ligne/programmes", name="programsOnline")
      *
-     * @param GlobalsGenerator $socialGenerator
-     * @param ContentOnlineAdministrator $contentOnlineAdministrator
      * @return Response
      */
-    public function programsAction(GlobalsGenerator $socialGenerator, ContentOnlineAdministrator $contentOnlineAdministrator)
+    public function programsAction()
     {
         $programs= $this->getDoctrine()
             ->getRepository(Program::class)
-            ->findBy(
-                ['is_online' => 1]
-            );
+            ->findByType("Program");
+
         return $this->render('online/programs.html.twig', [
             'programs' => $programs
         ]);

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35de5505f0de9ffe3f3f3481e806699c",
+    "content-hash": "d17f175d5ad160ca33a814a9dc221ac6",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -1852,6 +1852,7 @@
                 "reflection",
                 "static"
             ],
+            "abandoned": "roave/better-reflection",
             "time": "2020-03-27T11:06:43+00:00"
         },
         {
@@ -11238,6 +11239,7 @@
     "platform": {
         "php": "7.4.*",
         "ext-ctype": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "ext-json": "*"
     },

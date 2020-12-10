@@ -12,6 +12,7 @@ use App\Service\Admin\AdminDatabase;
 use App\Service\Admin\OfferHelper;
 use App\Service\BasketAdministrator;
 use App\Service\MailjetAdministrator;
+use App\Service\ProcessPurchase;
 use App\Service\StripeHelper;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -175,11 +176,11 @@ class EventsController extends AbstractController
      */
     public function offerEventAction(
         Event $event,
-        Request $request,
         BasketAdministrator $basketAdministrator,
         OfferHelper $offerHelper,
         MailerInterface $mailer,
-        MailjetAdministrator $mailjetAdministrator
+        MailjetAdministrator $mailjetAdministrator,
+        ProcessPurchase $processPurchase
     )
     {
         $form = $offerHelper->createForm();
@@ -194,9 +195,9 @@ class EventsController extends AbstractController
 
             $offerHelper->persistAndFlush($purchase, $userEvent);
 
-            $items=$offerHelper->setItem($event->getTitle());
+            $items=$offerHelper->setItem($event);
 
-            $invoice = $basketAdministrator->getInvoice($items, $purchase, $form->get('user')->getData());
+            $invoice = $processPurchase->getInvoice($items, $purchase, $form->get('user')->getData());
             $mailjetAdministrator->addContact($form->get('user')->getData()->getEmail(), substr($event->getTitle(), 0, 40).' '.($event->getStartDate())->format('mY'));
 
             //SEND CLIENT MAIL

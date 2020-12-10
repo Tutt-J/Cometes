@@ -4,6 +4,7 @@
     "require": {
         "php": "7.4.*",
         "ext-ctype": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "ext-json": "*",
         "antishov/doctrine-extensions-bundle": "^1.4",

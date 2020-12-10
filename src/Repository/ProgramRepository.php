@@ -19,4 +19,21 @@ class ProgramRepository extends ServiceEntityRepository
         parent::__construct($registry, Program::class);
     }
 
+    /**
+     * @param $keyword
+     * @return mixed
+     */
+    public function findByType($type)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            ->leftJoin('a.type', 'c')
+            ->addSelect('c')
+            ->andWhere('c.slug = :c')
+            ->andWhere("a.is_online = :online")
+            ->setParameters(array('c' => $type, 'online' => 1))
+            ->getQuery()
+            ->getResult();
+    }
+
 }

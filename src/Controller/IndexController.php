@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Form\ContactType;
 use App\Service\EventsAdministrator;
 use App\Service\MailchimpAdministrator;
-use App\Service\YouTubeDownloader;
+use App\Service\ProcessPurchase;
+use App\Service\PromoCodeAdministrator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ class IndexController extends AbstractController
      * @Route("/", name="home")
      *
      * @param EventsAdministrator $eventAdministrator
-     * @return void
+     * @return Response
      */
     public function indexAction(EventsAdministrator $eventAdministrator)
     {
@@ -132,23 +132,6 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/astrologie", name="astroConsult")
-     *
-     * @return Response
-     */
-    public function astroAction(SessionInterface $session)
-    {
-        
-      if(isset($_GET['affiliate'])){
-          $session->set('affiliate', $_GET['affiliate']);
-      }
-      if(null == $session->get('affiliate')){
-          $session->set('affiliate', "");
-      }
-
-        return $this->render('index/astrology.html.twig');
-    }
 
     /**
      * @Route("/mentions-legales", name="legalNotice")

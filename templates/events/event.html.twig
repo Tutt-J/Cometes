@@ -56,7 +56,7 @@
                 {% if event.eventPricings is not empty %}
                     <p>Variable, voir ci-dessous.</p>
                 {% else %}
-                    <p>{{ event.price }} euros.</p>
+                    <p>{{ event.price | replace({".00" : ""}) }} euros.</p>
                 {% endif %}
             </div>
             {% if event.startDate | date('Ymd') == event.endDate | date('Ymd')%}
@@ -78,7 +78,9 @@
                     {% if form.choice is defined %}
                         {{ form_row(form.choice) }}
                     {% endif %}
-                    {% if form.friend is defined %}
+                {{ form_row(form.promoCode) }}
+
+                {% if form.friend is defined %}
                         {{ form_row(form.friend) }}
                     {% endif %}
                     {% if form.already is defined %}

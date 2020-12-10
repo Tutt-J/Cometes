@@ -49,9 +49,20 @@
                     {% endfor %}
                 </div>
             </div>
+            <form class="text-right col-12 col-md-6 offset-md-6" action="{{ path("shopBasket") }}" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Code promotionnel ou carte cadeau" name="promo_code">
+                    <div class="input-group-append">
+                        <input type="submit" class="btn btn-primary mb-3 mb-sm-0" name="verify_code" value="Vérifier"/>
+                    </div>
+                </div>
+            </form>
             <div class="column">
                 <p class="text-right col-12 ">
-                    <strong>Total avant remise (à l'étape suivante) : {{ app.session.get('purchaseInfos')['totalAmount']}}€</strong> <br>
+                    {% if  app.session.get('applyPromo') %}
+                    <strong>Réduction : {{ app.session.get('applyPromo') }}€</strong><br/>
+                    {% endif %}
+                    <strong>Total avant remise fidélité (à l'étape suivante) : {{ app.session.get('purchaseInfos')['totalAmount']}}€</strong> <br>
                     <small>TVA non applicable - article 293 B du CGI </small>
                 </p>
                 <p class="text-right col-12">

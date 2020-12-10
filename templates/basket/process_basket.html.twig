@@ -58,13 +58,23 @@
         </div>
         <div class="column">
             <p class="text-right col-12 ">
+                {% if  app.session.get('applyPromo') %}
+                    <strong>Réduction : {{ app.session.get('applyPromo') }}€</strong><br/>
+                {% endif %}
                 <strong>Total : {{ app.session.get('purchaseInfos')['totalAmount']}}€</strong> <br>
                 <small>TVA non applicable - article 293 B du CGI </small>
             </p>
             <p class="text-right col-12">
-                <button onclick="location.href='{{ path("paymentBasket") }}'" type="submit" class="btn btn-success" id="processBasket" name="processBasket">
-                    Procéder au paiement
-                </button>
+                {% if app.session.get('purchaseInfos')['totalAmount'] == 0  %}
+                    <button onclick="location.href='{{ path("successBasket") }}'" type="submit" class="btn btn-success" id="processBasket" name="processBasket">
+                        Procéder à la validation (sans paiement)
+                    </button>
+                {% else %}
+                    <button onclick="location.href='{{ path("paymentBasket") }}'" type="submit" class="btn btn-success" id="processBasket" name="processBasket">
+                        Procéder au paiement
+                    </button>
+                {% endif %}
+
             </p>
         </div>
     </div>
