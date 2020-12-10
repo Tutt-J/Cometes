@@ -109,6 +109,16 @@ class Event
      */
     private $isOnline;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $allowFriend;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $allowAlready;
+
 
     public function __construct()
     {
@@ -359,6 +369,30 @@ class Event
     public function setPrice(string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getAllowFriend(): ?bool
+    {
+        return $this->allowFriend;
+    }
+
+    public function setAllowFriend(bool $allowFriend): self
+    {
+        $this->allowFriend = $allowFriend;
+
+        return $this;
+    }
+
+    public function getAllowAlready(): ?bool
+    {
+        return $this->allowAlready;
+    }
+
+    public function setAllowAlready(bool $allowAlready): self
+    {
+        $this->allowAlready = $allowAlready;
 
         return $this;
     }
