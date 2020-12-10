@@ -123,7 +123,7 @@ class PromoCodeAdministrator
      * @return string
      */
     public function setPromoCode($amount){
-        $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $chars = "123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
         $res = "";
 
         for ($i = 0; $i < 6; $i++) {
@@ -146,20 +146,18 @@ class PromoCodeAdministrator
     public function generateGiftCard($amount, $code){
 
         // Load And Create Image From Source
-        $our_image = imagecreatefromjpeg('build/images/a_propos.jpeg');
+        $our_image = imagecreatefromjpeg('build/images/gift_card_mail.jpg');
 
         // Allocate A Color For The Text Enter RGB Value
         $color = imagecolorallocate($our_image, 255, 255, 255);
 
         // Set Path to Font File
-        $font_path = getcwd().'/fonts/arima-madurai-v5-latin/arima-madurai-v5-latin-regular.ttf';
+        $font_path = getcwd().'/fonts/Trocchi-Regular.ttf';
 
         $angle=0;
 
-
         // Print Text On Image
-        imagettftext($our_image, 20,$angle,125,200, $color, $font_path,  $amount.'€');
-        imagettftext($our_image, 20,$angle,200,500, $color, $font_path,  $code);
+        imagettftext($our_image, 56, $angle,650,800, $color, $font_path,  $amount.'€ avec le code '.$code);
 
         // Send Image to Browser
         $name='../assets/gift_cards/Carte_cadeau_'.rand(0,100000).'.jpg';

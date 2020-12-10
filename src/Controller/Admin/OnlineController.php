@@ -136,7 +136,7 @@ class OnlineController extends AbstractController
 
             $offerHelper->persistAndFlush($purchase, $purchaseContent);
 
-            $items=$offerHelper->setItem($content->getTitle());
+            $items=$offerHelper->setItem($content);
 
             $invoice= $processPurchase->getInvoice($items, $purchase, $form->get('user')->getData());
 
