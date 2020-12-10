@@ -23,12 +23,12 @@ class PromoCode
     private $code;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $Amount;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $RestAmount;
 

@@ -380,6 +380,23 @@ class EventsAdministrator
         //Set empty description
         $this->session->set('description', "");
 
+        $friend='';
+        if($form->has('friend') && !empty($form->get('friend')->getData())){
+            $friend=$form->get('friend')->getData();
+            $newPrice=$price - ($price * (5 / 100));
+        }
+        $already=0;
+        if($form->has('already') && $form->get('already')->getData() == 1){
+            $already=$form->get('already')->getData();
+            $newPrice=$price - ($price * (5 / 100));
+        }
+
+        $this->generateDescription($friend, $already);
+
+        if(isset($newPrice)){
+            $price = $newPrice;
+        }
+
         //If we have a promo code
         if(null != $form->get("promoCode")->getData()){
             //Check validity of code, if not valid return to event page
@@ -398,23 +415,6 @@ class EventsAdministrator
             $this->session->set("description",$this->session->get('description')." Réduction de ".$this->session->get('applyPromo')."€ avec la carte cadeau numéro ".$this->session->get('promoCode')->getCode().".");
         }
 
-        $friend='';
-        if($form->has('friend') && !empty($form->get('friend')->getData())){
-            dump('1');
-            $friend=$form->get('friend')->getData();
-            $newPrice=$price - ($price * (5 / 100));
-        }
-        $already=0;
-        if($form->has('already') && $form->get('already')->getData() == 1){
-            $already=$form->get('already')->getData();
-            $newPrice=$price - ($price * (5 / 100));
-        }
-
-        if(isset($newPrice)){
-            $price = $newPrice;
-        }
-
-        $this->generateDescription($friend, $already);
         //Set event price
         $this->session->set('price', $price);
 

@@ -79,6 +79,7 @@ class OfferHelper
     }
 
     public function setItem($content){
+        $content->setPrice(0);
         return [
             [
                 'Entity' => $content,
