@@ -375,10 +375,9 @@ class BasketAdministrator
     /**
      * Format items to stripe
      *
-     * @param SessionInterface $session
      * @return array
      */
-    public function formatItems(SessionInterface $session): array
+    public function formatItems(): array
     {
         $items = [];
         foreach ($this->session->get('basket') as $content) {

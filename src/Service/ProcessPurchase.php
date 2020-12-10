@@ -58,10 +58,7 @@ class ProcessPurchase
      * @var object|null
      */
     private ?object $event;
-    /**
-     * @var
-     */
-    private $amount;
+
     /**
      * @var array
      */
