@@ -34,15 +34,6 @@ class Program
      */
     private $slug;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $teachable_url_certifying;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $teachable_url_not_certifying;
 
     /**
      * @ORM\ManyToOne(targetEntity=Image::class, inversedBy="programs")
@@ -55,9 +46,15 @@ class Program
      */
     private $type;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProgramButtons::class, mappedBy="Program")
+     */
+    private $programButtons;
+
     public function __construct()
     {
         $this->type = new ArrayCollection();
+        $this->programButtons = new ArrayCollection();
     }
 
 
@@ -135,26 +132,32 @@ class Program
         return $this;
     }
 
-    public function getTeachableUrlCertifying(): ?string
+    /**
+     * @return Collection|ProgramButtons[]
+     */
+    public function getProgramButtons(): Collection
     {
-        return $this->teachable_url_certifying;
+        return $this->programButtons;
     }
 
-    public function setTeachableUrlCertifying(string $teachable_url_certifying): self
+    public function addProgramButton(ProgramButtons $programButton): self
     {
-        $this->teachable_url_certifying = $teachable_url_certifying;
+        if (!$this->programButtons->contains($programButton)) {
+            $this->programButtons[] = $programButton;
+            $programButton->setProgram($this);
+        }
 
         return $this;
     }
 
-    public function getTeachableUrlNotCertifying(): ?string
+    public function removeProgramButton(ProgramButtons $programButton): self
     {
-        return $this->teachable_url_not_certifying;
-    }
-
-    public function setTeachableUrlNotCertifying(string $teachable_url_not_certifying): self
-    {
-        $this->teachable_url_not_certifying = $teachable_url_not_certifying;
+        if ($this->programButtons->removeElement($programButton)) {
+            // set the owning side to null (unless already changed)
+            if ($programButton->getProgram() === $this) {
+                $programButton->setProgram(null);
+            }
+        }
 
         return $this;
     }
