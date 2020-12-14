@@ -129,7 +129,10 @@ class EventType extends BaseType
                 'entry_type' => AdminEventPriceType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'label' => 'OU Ajouter une liste de différents tarifs (ex: early birdy, chambre de deux, etc)'
+                'label' => 'OU Ajouter une liste de différents tarifs (ex: early birdy, chambre de deux, etc)',
+                 'label_attr'=> [
+                    'class'=> 'foo'
+                ]
             ])
             ->add('nbMinParticipant', IntegerType::class, [
                 'label' => 'Nombre minimum de participantes<span class="text-danger"> *</span>',

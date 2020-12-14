@@ -22,7 +22,6 @@
                     <th>Titre</th>
                     <th>Description</th>
                     <th>Prix</th>
-                    <th>Url vers Teachable</th>
                     <th>État</th>
                     <th>Image</th>
                     <th>Date de création</th>
@@ -35,7 +34,6 @@
                     <th>Titre</th>
                     <th>Description</th>
                     <th>Prix</th>
-                    <th>Url vers Teachable</th>
                     <th>État</th>
                     <th>Image</th>
                     <th>Date de création</th>
@@ -49,7 +47,6 @@
                         <td>{{ ritual.title }}</td>
                         <td>{{ ritual.content  | truncate(75, true) | raw}}</td>
                         <td>{{ ritual.price }}€</td>
-                        <td><a href="{{ ritual.teachableUrl }}">{{ ritual.teachableUrl }}</a></td>
                         <td>
                             {% if ritual.isOnline == 1 %}
                                 En ligne

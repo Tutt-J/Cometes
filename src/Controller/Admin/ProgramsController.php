@@ -60,7 +60,7 @@ class ProgramsController extends AbstractController
         $form = $this->createForm(ProgramType::class, $content);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $adminDatabase->basicWithImg($form);
+            $adminDatabase->program($form);
 
             $this->addFlash('success', 'Le programme a bien été créé.');
 
@@ -89,7 +89,7 @@ class ProgramsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $adminDatabase->basicWithImg($form);
+            $adminDatabase->program($form);
             $this->addFlash('success', 'Le programme a bien été mise à jour');
             return $this->redirectToRoute('programsAdmin');
         }

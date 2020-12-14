@@ -47,7 +47,7 @@ class Program
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProgramButtons::class, mappedBy="Program")
+     * @ORM\OneToMany(targetEntity=ProgramButtons::class, mappedBy="Program", orphanRemoval=true, fetch="EAGER")
      */
     private $programButtons;
 
@@ -161,4 +161,6 @@ class Program
 
         return $this;
     }
+
+
 }
