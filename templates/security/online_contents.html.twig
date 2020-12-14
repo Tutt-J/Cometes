@@ -25,14 +25,10 @@
                     {{ include('security/_video_render.html.twig', {'content': content}) }}
                 {% endfor %}
             {% endif %}
+             {% if 'yogas' in contents|keys %}
             <div class="col-12 my-3">
                 <h2 class="text-center"><strong>Mes séances de yoga</strong></h2>
             </div>
-            {% if 'yogas' not in contents|keys %}
-                <div class="col-12">
-                    <p class="text-center">Vous n'avez pas encore commandé de séances de yoga. Vous êtes interessé ? Cliquez <a href="{{ path('yogaBalance') }}">ici</a> !</p>
-                </div>
-            {% else %}
                 {% for content in contents.yogas %}
                     {{ include('security/_video_render.html.twig', {'content': content}) }}
                 {% endfor %}

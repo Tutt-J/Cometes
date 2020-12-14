@@ -34,10 +34,6 @@ class Program
      */
     private $slug;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $teachable_url;
 
     /**
      * @ORM\ManyToOne(targetEntity=Image::class, inversedBy="programs")
@@ -50,9 +46,15 @@ class Program
      */
     private $type;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProgramButtons::class, mappedBy="Program", orphanRemoval=true, fetch="EAGER")
+     */
+    private $programButtons;
+
     public function __construct()
     {
         $this->type = new ArrayCollection();
+        $this->programButtons = new ArrayCollection();
     }
 
 
@@ -93,17 +95,6 @@ class Program
         return $this;
     }
 
-    public function getTeachableUrl(): ?string
-    {
-        return $this->teachable_url;
-    }
-
-    public function setTeachableUrl(string $teachable_url): self
-    {
-        $this->teachable_url = $teachable_url;
-
-        return $this;
-    }
 
     public function getImg(): ?Image
     {
@@ -140,4 +131,36 @@ class Program
 
         return $this;
     }
+
+    /**
+     * @return Collection|ProgramButtons[]
+     */
+    public function getProgramButtons(): Collection
+    {
+        return $this->programButtons;
+    }
+
+    public function addProgramButton(ProgramButtons $programButton): self
+    {
+        if (!$this->programButtons->contains($programButton)) {
+            $this->programButtons[] = $programButton;
+            $programButton->setProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgramButton(ProgramButtons $programButton): self
+    {
+        if ($this->programButtons->removeElement($programButton)) {
+            // set the owning side to null (unless already changed)
+            if ($programButton->getProgram() === $this) {
+                $programButton->setProgram(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

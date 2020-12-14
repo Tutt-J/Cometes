@@ -174,6 +174,33 @@ class AdminDatabase
         $this->em->flush();
     }
 
+
+    /**
+     * @param $form
+     */
+    public function program($form)
+    {
+        $program = $form->getData();
+//        foreach($program->getProgramButtons() as $button){
+//            $this->em->remove($button);
+//            $this->em->persist($button);
+//        }
+
+        $arrayButtons = $form->get('programButtons');
+
+        if ($arrayButtons) {
+            foreach ($arrayButtons->getData() as $button) {
+                $button->setProgram($program);
+                $this->em->persist($button);
+            }
+        }
+
+        $this->setImg($form, $program);
+
+        $this->em->persist($program);
+        $this->em->flush();
+    }
+
     /**
      * @param $form
      */

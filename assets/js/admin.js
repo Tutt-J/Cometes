@@ -12,14 +12,17 @@ require('../js/adminScripts.js');
 $(document).ready(function() {
         bsCustomFileInput.init()
         // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-        var $container = $('div#event_eventPricings');
+        var $container = $('.foo + div');
+        console.log($container);
+        //program_programButtons
+    //add_buttons
 
 
         // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
         var index = $container.find('fieldset').length;
 
         // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-        $('#add_pricing').click(function(e) {
+        $('#add_collection').click(function(e) {
             addPricing($container);
 
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
@@ -30,7 +33,7 @@ $(document).ready(function() {
         if (index !== 0) {
             // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
             $container.children('fieldset').each(function(loop_index) {
-                $(this).children('legend').text('Tarif n°' + (loop_index+1))
+                $(this).children('legend').text('Element n°' + (loop_index+1))
                 addDeleteLink($(this));
             });
         }
@@ -43,7 +46,7 @@ $(document).ready(function() {
             // - le texte "__name__label__" qu'il contient par le label du champ
             // - le texte "__name__" qu'il contient par le numéro du champ
             var template = container.attr('data-prototype')
-                .replace(/__name__label__/g, 'Tarif n°' + (number_field+1))
+                .replace(/__name__label__/g, 'Element n°' + (number_field+1))
                 .replace(/__name__/g,        number_field)
             ;
 
@@ -69,7 +72,7 @@ $(document).ready(function() {
             $deleteLink.click(function(e) {
                 $prototype.remove();
                 $container.children('fieldset').each(function(delete_loop_index) {
-                    $(this).children('legend').text('Tarif n°' + (delete_loop_index+1))
+                    $(this).children('legend').text('Element n°' + (delete_loop_index+1))
                 });
                 e.preventDefault(); // évite qu'un # apparaisse dans l'URL
                 return false;

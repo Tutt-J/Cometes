@@ -179,7 +179,7 @@ class UserContentAdministrator
      * @param bool $downloader
      * @return mixed
      */
-    public function getVideoDownloadLink(bool $downloader)
+    public function getVideoDownloadLink($downloader)
     {
         $videoDownloadLink = $downloader->getVideoDownloadLink();
         foreach ($videoDownloadLink as $video) {
