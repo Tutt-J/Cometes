@@ -37,7 +37,12 @@ class Program
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $teachable_url;
+    private $teachable_url_certifying;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $teachable_url_not_certifying;
 
     /**
      * @ORM\ManyToOne(targetEntity=Image::class, inversedBy="programs")
@@ -93,17 +98,6 @@ class Program
         return $this;
     }
 
-    public function getTeachableUrl(): ?string
-    {
-        return $this->teachable_url;
-    }
-
-    public function setTeachableUrl(string $teachable_url): self
-    {
-        $this->teachable_url = $teachable_url;
-
-        return $this;
-    }
 
     public function getImg(): ?Image
     {
@@ -137,6 +131,30 @@ class Program
     public function removeType(TypeProgram $type): self
     {
         $this->type->removeElement($type);
+
+        return $this;
+    }
+
+    public function getTeachableUrlCertifying(): ?string
+    {
+        return $this->teachable_url_certifying;
+    }
+
+    public function setTeachableUrlCertifying(string $teachable_url_certifying): self
+    {
+        $this->teachable_url_certifying = $teachable_url_certifying;
+
+        return $this;
+    }
+
+    public function getTeachableUrlNotCertifying(): ?string
+    {
+        return $this->teachable_url_not_certifying;
+    }
+
+    public function setTeachableUrlNotCertifying(string $teachable_url_not_certifying): self
+    {
+        $this->teachable_url_not_certifying = $teachable_url_not_certifying;
 
         return $this;
     }
