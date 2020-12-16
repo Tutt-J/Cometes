@@ -6,6 +6,7 @@ use App\Entity\Keyword;
 use App\Entity\PromoCode;
 use App\Form\Admin\CategoryType;
 use App\Form\Admin\KeywordType;
+use App\Form\Admin\PromoCodeType;
 use App\Service\Admin\AdminDatabase;
 use Instagram\Exception\InstagramAuthException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,29 +53,30 @@ class PromoCodeController extends AbstractController
      * @param AdminDatabase $adminDatabase
      * @return Response
      */
-    public function updatePromoCode(Category $category, Request $request, AdminDatabase $adminDatabase)
+    public function updatePromoCode(PromoCode $promoCode, Request $request, AdminDatabase $adminDatabase)
     {
-        if ($category->getId() != 13) {
-            $form = $this->createForm(CategoryType::class, $category);
+            $form = $this->createForm(PromoCodeType::class, $promoCode);
 
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $adminDatabase->basic($form);
+                if($form->get('deleteAmount')->getData() <= $promoCode->getRestAmount()){
+                    $adminDatabase->updatePromoCode($form, $promoCode);
 
-                $this->addFlash('success', 'La catégorie a bien été mise à jour');
+                    $this->addFlash('success', 'Le montant du code a été mis à jour');
 
-                return $this->redirectToRoute('categoriesAdmin');
+                    return $this->redirectToRoute('promoCodeAdmin');
+                }
+
+                $this->addFlash('error', 'Le montant à retirer ne peut pas être supérieur à celui disponible sur la carte');
+
             }
 
             return $this->render(
-                'admin/categories/update.html.twig',
+                'admin/promo_code/update.html.twig',
                 [
                     'form' => $form->createView(),
                 ]
             );
-        } else {
-            return $this->redirectToRoute('categoriesAdmin');
-        }
     }
 
     /**

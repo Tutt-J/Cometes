@@ -1,0 +1,13 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <h1>Modifier le montant d'un code promo</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Tableau de bord</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('onlineAdmin') }}">Codes promo</a></li>
+        <li class="breadcrumb-item active">Modifier le montant d'un code promo</li>
+    </ol>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.deleteAmount) }}
+    {{ form_end(form) }}
+{% endblock %}
