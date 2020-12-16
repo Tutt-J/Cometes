@@ -13,6 +13,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -121,13 +122,14 @@ class OnlineController extends AbstractController
         OfferHelper $offerHelper,
         MailerInterface $mailer,
         ProcessPurchase $processPurchase,
-        PromoCodeAdministrator $promoCodeAdministrator
+        PromoCodeAdministrator $promoCodeAdministrator,
+        SessionInterface $session
     )
     {
        $form = $offerHelper->createForm();
-        $amount=$content->getPrice();
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $amount=$content->getPrice();
+
             $purchase = $offerHelper->setPurchase($form);
 
             $purchaseContent=new PurchaseContent();
@@ -136,35 +138,41 @@ class OnlineController extends AbstractController
             $purchaseContent->setQuantity(1);
             $purchaseContent->setPrice(0);
             $purchase->addPurchaseContent($purchaseContent);
+            $offerHelper->persistAndFlush($purchase, $purchaseContent);
 
-
-            $invoice= $processPurchase->getInvoice($offerHelper->setItem($content), $purchase, $form->get('user')->getData());
 
             //SEND CLIENT MAIL
             if($content->getType()->getSlug() == "giftCard"){
                 $giftCard=$promoCodeAdministrator->generateGiftCard($amount,$promoCodeAdministrator->setPromoCode($amount));
-                $message = (new TemplatedEmail())
-                    ->from(new Address('postmaster@chamade.co', 'Chamade'))
-                    ->to($form->get('user')->getData()->getEmail())
-                    ->subject('Une carte cadeau vous a été offerte')
-                    ->htmlTemplate('emails/offer_gift_card.html.twig')
-                    ->context([
-                        'amount' => $amount,
-                    ])
-                    ->attachFromPath($invoice);
-                $message->attachFromPath($giftCard);
+                $this->getDoctrine()->getManager()->flush();
+                $object='Une carte cadeau vous a été offerte';
+                $template='emails/offer_gift_card.html.twig';
+                $context=[
+                    'amount' => $amount,
+                ];
+                $attach=[
+                    $giftCard
+                ];
             } else{
-                $message = (new TemplatedEmail())
-                    ->from(new Address('postmaster@chamade.co', 'Chamade'))
-                    ->to($form->get('user')->getData()->getEmail())
-                    ->subject('Un contenu en ligne vous a été offert')
-                    ->htmlTemplate('emails/offer_content.html.twig')
-                    ->context([
-                        'name' => $content->getTitle(),
-                    ])
-                    ->attachFromPath($invoice);
+                $object='Un contenu en ligne vous a été offert';
+                $template='emails/offer_content.html.twig';
+                $context=[
+                    'name' => $content->getTitle(),
+                ];
+                $attach=[];
             }
-            $offerHelper->persistAndFlush($purchase, $purchaseContent);
+
+            array_push($attach, $processPurchase->getInvoice($offerHelper->setItem($content), $purchase, $form->get('user')->getData()));
+
+            $message = (new TemplatedEmail())
+                ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                ->to($form->get('user')->getData()->getEmail())
+                ->subject($object)
+                ->htmlTemplate($template)
+                ->context($context);
+            foreach($attach as $file){
+                $message->attachFromPath($file);
+            }
 
             $mailer->send($message);
 

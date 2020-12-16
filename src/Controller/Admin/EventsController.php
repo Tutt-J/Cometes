@@ -195,9 +195,7 @@ class EventsController extends AbstractController
 
             $offerHelper->persistAndFlush($purchase, $userEvent);
 
-            $items=$offerHelper->setItem($event);
-
-            $invoice = $processPurchase->getInvoice($items, $purchase, $form->get('user')->getData());
+            $invoice = $processPurchase->getInvoice($offerHelper->setItem($event), $purchase, $form->get('user')->getData());
             $mailjetAdministrator->addContact($form->get('user')->getData()->getEmail(), substr($event->getTitle(), 0, 40).' '.($event->getStartDate())->format('mY'));
 
             //SEND CLIENT MAIL

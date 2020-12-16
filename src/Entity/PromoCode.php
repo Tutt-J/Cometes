@@ -4,12 +4,14 @@ namespace App\Entity;
 
 use App\Repository\PromoCodeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=PromoCodeRepository::class)
  */
 class PromoCode
 {
+    use TimestampableEntity;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

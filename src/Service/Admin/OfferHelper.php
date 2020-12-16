@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class OfferHelper
@@ -31,6 +32,10 @@ class OfferHelper
     protected FormFactoryInterface $formFactory;
 
     const DATE_FORMAT='Y-m-d H:i';
+    /**
+     * @var SessionInterface
+     */
+    private SessionInterface $session;
 
 
     /**
@@ -38,15 +43,18 @@ class OfferHelper
      * @param EntityManagerInterface $em
      * @param FormFactoryInterface $formFactory
      * @param RequestStack $requestStack
+     * @param SessionInterface $session
      */
     public function __construct(
         EntityManagerInterface $em,
         FormFactoryInterface $formFactory,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+    SessionInterface $session
     ) {
         $this->em = $em;
         $this->requestStack = $requestStack;
         $this->formFactory=$formFactory;
+        $this->session=$session;
     }
 
     public function createForm(){
@@ -79,7 +87,7 @@ class OfferHelper
     }
 
     public function setItem($content){
-        $content->setPrice(0);
+        $this->session->set('applyPromo', $content->getPrice());
         return [
             [
                 'Entity' => $content,

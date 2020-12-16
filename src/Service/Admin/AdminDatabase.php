@@ -261,12 +261,9 @@ class AdminDatabase
     public function updatePromoCode($form, $promoCode){
 
         $rest=$promoCode->getRestAmount()-$form->get('deleteAmount')->getData();
-        if($rest<=0){
-            $this->em->remove($promoCode);
-        } else{
             $promoCode->setRestAmount($rest);
             $this->em->persist($promoCode);
-        }
+
         $this->em->flush();
     }
 }
