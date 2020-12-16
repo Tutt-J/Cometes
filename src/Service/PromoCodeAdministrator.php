@@ -67,11 +67,8 @@ class PromoCodeAdministrator
             );
         $promoCode->setRestAmount($promoCode->getRestAmount()-$this->session->get('applyPromo'));
         //Remove if 0 else persist
-        if($promoCode->getRestAmount() > 0){
-            $this->em->persist($promoCode);
-        } else{
-            $this->em->remove($promoCode);
-        }
+
+        $this->em->persist($promoCode);
     }
 
 
@@ -104,7 +101,7 @@ class PromoCodeAdministrator
                 ]
             );
 
-        if($promoCode == null){
+        if($promoCode == null || $promoCode->getRestAmount() <= 0){
             $this->session->remove('promoCode');
             $this->session->remove('applyPromo');
             $this->flashbag->add('error', 'Le code promotionnel est invalide.');
