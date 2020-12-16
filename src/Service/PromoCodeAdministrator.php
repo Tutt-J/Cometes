@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Entity\PromoCode;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -121,13 +122,14 @@ class PromoCodeAdministrator
      *
      * @param $amount
      * @return string
+     * @throws Exception
      */
     public function setPromoCode($amount){
         $chars = "123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
         $res = "";
 
         for ($i = 0; $i < 6; $i++) {
-            $res .= $chars[mt_rand(0, strlen($chars) - 1)];
+            $res .= $chars[random_int(0, strlen($chars) - 1)];
         }
 
         $promoCode=new PromoCode();
@@ -160,7 +162,7 @@ class PromoCodeAdministrator
         imagettftext($our_image, 56, $angle,650,800, $color, $font_path,  $amount.'€ avec le code '.$code);
 
         // Send Image to Browser
-        $name='../assets/gift_cards/Carte_cadeau_'.rand(0,100000).'.jpg';
+        $name='../assets/gift_cards/Carte_cadeau_'.random_int(0,100000).'.jpg';
         imagejpeg($our_image, $name);
 
         // Clear Memory
