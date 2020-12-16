@@ -181,10 +181,6 @@ class AdminDatabase
     public function program($form)
     {
         $program = $form->getData();
-//        foreach($program->getProgramButtons() as $button){
-//            $this->em->remove($button);
-//            $this->em->persist($button);
-//        }
 
         $arrayButtons = $form->get('programButtons');
 
