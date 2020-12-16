@@ -13,7 +13,6 @@ $(document).ready(function() {
         bsCustomFileInput.init()
         // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
         var $container = $('.foo + div');
-        console.log($container);
         //program_programButtons
     //add_buttons
 
@@ -119,7 +118,3 @@ $('p[data-target="#cancelModal"]').click(function(event) {
     $("#cancelModal .modal-body .titleValue").text(title);
     $('#cancelModal').modal('toggle');
 });
-// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// const $ = require('jquery');
-
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');

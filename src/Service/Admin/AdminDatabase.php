@@ -165,10 +165,16 @@ class AdminDatabase
     public function post($form)
     {
         $article = $form->getData();
-
         $this->setKeywords($article, $form->get('keywords')->getData());
         $this->setCategory($article, $form->get('categoryNew')->getData());
-        $this->setImg($form, $article);
+
+        if($form->get('img')->getData()->getUrl() !== null){
+            $this->setImg($form, $article);
+        }
+
+        if($form->get('existImage')->getData() !== null){
+            $article->setImg($form->get('existImage')->getData());
+        }
 
         $this->em->persist($article);
         $this->em->flush();

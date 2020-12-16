@@ -188,6 +188,27 @@
                 $('.dataTables_paginate .current').addClass('btn bg-primary rounded-0 text-white');
             }
         });
+
+var images = $('.img_checkbox')
+
+       images.each(function(){
+            var file=$( this ).data('flag');
+            var assetBaseDir = "{{ asset('uploads/cover_img/') }}";
+            var media=assetBaseDir + file;
+            $('#image_choice > div').addClass('d-flex flex-wrap');
+           $( this ).next('label').css('background', 'url("'+media+'")  no-repeat');
+           $( this ).next('label').css('backgroundSize', 'contain');
+           $( this ).next('label').css('backgroundPosition', 'center center');
+
+           $( this ).next('label').html('');
+           $( this ).change(function() {
+               if(this.checked) {
+                   $('label').css('border','none');
+                  $(this).next('label').css('border', '3px solid grey');
+               }
+               $('#textbox1').val(this.checked);
+           });
+        });
     });
 </script>
 {% block customScripts %}{% endblock %}
