@@ -152,15 +152,10 @@ class Program
 
     public function removeProgramButton(ProgramButtons $programButton): self
     {
-        if ($this->programButtons->removeElement($programButton)) {
-            // set the owning side to null (unless already changed)
-            if ($programButton->getProgram() === $this) {
+        if ($this->programButtons->removeElement($programButton) && $programButton->getProgram() === $this) {
                 $programButton->setProgram(null);
-            }
         }
 
         return $this;
     }
-
-
 }
