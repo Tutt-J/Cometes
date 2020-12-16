@@ -1,0 +1,54 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<h1>Codes promo</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Tableau de bord</a></li>
+    <li class="breadcrumb-item active">Codes promo</li>
+</ol>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Liste des codes
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Montant de base</th>
+                    <th>Montant restant</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Code</th>
+                    <th>Montant de base</th>
+                    <th>Montant restant</th>
+                    <th>Actions</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for code in codes %}
+                <tr>
+                    <td>{{ code.code }}</td>
+                    <td>{{ code.amount }}</td>
+                    <td>{{ code.restAmount }}</td>
+                    <td>
+                        <a href="{{ path('updatePromoCodeAdmin', {'id':code.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
+                        <p data-title="{{ code.code}}" data-id="{{ code.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {{ include('_modal.html.twig', {
+            'question': "Etes-vous sûr de vouloir supprimer le code promo",
+            "actionPath": "deletePromoCodeAdmin",
+            "btnValue": "Supprimer"
+        }) }}
+    </div>
+{% endblock %}
