@@ -8,6 +8,7 @@ use App\Service\Admin\AdminDatabase;
 use App\Service\Admin\OfferHelper;
 use App\Service\BasketAdministrator;
 use App\Service\ProcessPurchase;
+use App\Service\PromoCodeAdministrator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -119,10 +120,12 @@ class OnlineController extends AbstractController
         Content $content,
         OfferHelper $offerHelper,
         MailerInterface $mailer,
-        ProcessPurchase $processPurchase
+        ProcessPurchase $processPurchase,
+        PromoCodeAdministrator $promoCodeAdministrator
     )
     {
        $form = $offerHelper->createForm();
+        $amount=$content->getPrice();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $purchase = $offerHelper->setPurchase($form);
@@ -134,23 +137,35 @@ class OnlineController extends AbstractController
             $purchaseContent->setPrice(0);
             $purchase->addPurchaseContent($purchaseContent);
 
-            $offerHelper->persistAndFlush($purchase, $purchaseContent);
 
-            $items=$offerHelper->setItem($content);
-
-            $invoice= $processPurchase->getInvoice($items, $purchase, $form->get('user')->getData());
+            $invoice= $processPurchase->getInvoice($offerHelper->setItem($content), $purchase, $form->get('user')->getData());
 
             //SEND CLIENT MAIL
-            $message = (new TemplatedEmail())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
-                ->to($form->get('user')->getData()->getEmail())
-                ->subject('Un contenu en ligne vous a été offert')
-                ->htmlTemplate('emails/offer_content.html.twig')
-                ->context([
-                    'name' => $content->getTitle(),
-                    'reason' =>$form->get('content')->getData()
-                ])
-                ->attachFromPath($invoice);
+            if($content->getType()->getSlug() == "giftCard"){
+                $giftCard=$promoCodeAdministrator->generateGiftCard($amount,$promoCodeAdministrator->setPromoCode($amount));
+                $message = (new TemplatedEmail())
+                    ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                    ->to($form->get('user')->getData()->getEmail())
+                    ->subject('Une carte cadeau vous a été offerte')
+                    ->htmlTemplate('emails/offer_gift_card.html.twig')
+                    ->context([
+                        'amount' => $amount,
+                    ])
+                    ->attachFromPath($invoice);
+                $message->attachFromPath($giftCard);
+            } else{
+                $message = (new TemplatedEmail())
+                    ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                    ->to($form->get('user')->getData()->getEmail())
+                    ->subject('Un contenu en ligne vous a été offert')
+                    ->htmlTemplate('emails/offer_content.html.twig')
+                    ->context([
+                        'name' => $content->getTitle(),
+                    ])
+                    ->attachFromPath($invoice);
+            }
+            $offerHelper->persistAndFlush($purchase, $purchaseContent);
+
             $mailer->send($message);
 
             $this->addFlash('success', 'Le contenu a bien été offert');

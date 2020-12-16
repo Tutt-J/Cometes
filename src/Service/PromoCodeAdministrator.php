@@ -144,6 +144,7 @@ class PromoCodeAdministrator
      * @param $amount
      * @param $code
      * @return string
+     * @throws Exception
      */
     public function generateGiftCard($amount, $code){
 
