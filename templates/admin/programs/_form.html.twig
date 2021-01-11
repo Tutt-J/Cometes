@@ -1,0 +1,10 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_row(form.title) }}
+{{ form_row(form.content) }}
+{% include 'admin/_modal_img.html.twig' %}
+{{ form_row(form.price) }}
+{{ form_row(form.type) }}
+{{ form_row(form.programButtons) }}
+<a href="#" id="add_collection" class="btn btn-success">Ajouter un bouton</a>
+{{ form_row(form.isOnline) }}
+{{ form_end(form) }}

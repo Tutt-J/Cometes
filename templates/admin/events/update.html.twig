@@ -7,26 +7,5 @@
         <li class="breadcrumb-item active"><a href="{{ path('eventsAdmin') }}">Évènements</a></li>
         <li class="breadcrumb-item active">Modifier un évènement</li>
     </ol>
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_errors(form) }}
-    {{ form_row(form.title) }}
-    {{ form_row(form.subTitle) }}
-    {{ form_row(form.content) }}
-    {{ form_row(form.img) }}
-    {{ form_row(form.type) }}
-    {{ form_row(form.onlineEvent) }}
-    {{ form_row(form.address) }}
-    {{ form_row(form.startDate) }}
-    {{ form_row(form.endDate) }}
-    {{ form_row(form.landingPageUrl) }}
-    {{ form_row(form.price) }}
-    {{ form_row(form.eventPricings) }}
-    <a href="#" id="add_collection" class="btn btn-success">Ajouter un tarif</a>
-    {{ form_row(form.nbMinParticipant) }}
-    {{ form_row(form.nbMaxParticipant) }}
-    {{ form_row(form.allowFriend) }}
-    {{ form_row(form.allowAlready) }}
-    {{ form_row(form.isOnline) }}
-    {{ form_end(form) }}
-
+    {% include 'admin/events/_form.html.twig' %}
 {% endblock %}

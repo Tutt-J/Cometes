@@ -7,8 +7,6 @@
         <li class="breadcrumb-item"><a href="{{ path('authorsAdmin') }}">Auteurs</a></li>
         <li class="breadcrumb-item active">Créer un nouvel auteur</li>
     </ol>
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.content) }}
-    {{ form_end(form) }}
+    {% include 'admin/author/_form.html.twig' %}
+
 {% endblock %}

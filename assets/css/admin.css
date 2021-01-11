@@ -10227,3 +10227,11 @@ body {
 .sb-sidenav-light .sb-sidenav-footer {
   background-color: #e9ecef;
 }
+
+.img_checkbox{
+  display:none;
+}
+.img_checkbox + label{
+  height: 200px;
+  width: 200px;
+}

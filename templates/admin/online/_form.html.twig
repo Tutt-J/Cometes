@@ -1,0 +1,15 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_row(form.title) }}
+{{ form_row(form.content) }}
+{% include 'admin/_modal_img.html.twig' %}
+{{ form_row(form.type) }}
+{{ form_row(form.price) }}
+{{ form_row(form.fidelityPrice) }}
+{{ form_row(form.eventDate) }}
+{{ form_row(form.ref) }}
+{{ form_row(form.onlineLink) }}
+{{ form_row(form.isPack) }}
+{{ form_row(form.neverPassed) }}
+{{ form_row(form.pack) }}
+{{ form_row(form.isOnline) }}
+{{ form_end(form) }}

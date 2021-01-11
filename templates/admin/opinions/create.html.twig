@@ -7,9 +7,5 @@
         <li class="breadcrumb-item active"><a href="{{ path('opinionsAdmin') }}">Témoignages</a></li>
         <li class="breadcrumb-item active">Créer un nouveau témoignage</li>
     </ol>
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_row(form.client) }}
-    {{ form_row(form.content) }}
-    {{ form_row(form.isOnline) }}
-    {{ form_end(form) }}
+    {% include 'admin/opinions/_form.html.twig' %}
 {% endblock %}

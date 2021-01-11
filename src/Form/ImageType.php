@@ -38,7 +38,7 @@ class ImageType extends AbstractType
         $builder
             ->add('url', FileType::class, array(
                 'data_class' => null,
-                'label' => 'Choisissez un fichier',
+                'label' => 'Ajouter une nouvelle image',
                 'constraints' => [
                     new File([
                         'maxSize' => '10240000k',
@@ -48,11 +48,27 @@ class ImageType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'L\'image doit être au format jpg ou png',
                     ])
-                ]
+                ],
+                'label_attr' => array('class' => 'font-italic'),
+
             ))
             ->add('alt', TextType::class, array(
-                'label' => 'Décrivez l\'image',
-                'attr' => array('maxlength' => 255)
+                'label' => 'Décrivez cette image',
+                'attr' => array('maxlength' => 255),
+                'label_attr' => array('class' => 'font-italic'),
+            ))
+            ->add('existImage', EntityType::class, array(
+                'class' => Image::class,
+                'expanded' => true,
+                'mapped' => false,
+                'row_attr' => ['id' => 'image_choice'],
+                'label' => "Cliquez sur l'image puis sur \"Sélectionner\" en bas à droite",
+                'choice_attr' => function ($image) {
+                    return [
+                        'data-flag' => $image->getUrl(),
+                        'class' => "img_checkbox",
+                    ];
+                }
             ))
             ->addEventListener(
                 FormEvents::PRE_SUBMIT,

@@ -5,6 +5,7 @@ namespace App\Form\Admin;
 use App\Entity\Article;
 use App\Entity\Author;
 use App\Entity\Category;
+use App\Entity\Image;
 use App\Entity\Keyword;
 use App\Form\ImageType;
 use App\Form\KeywordType;
@@ -71,6 +72,7 @@ class ArticleType extends BaseType
                 'label_html' => true,
                 'mapped' => false
             ])
+
         ;
     }
 
