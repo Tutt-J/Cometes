@@ -138,14 +138,18 @@ class AdminDatabase
      */
     public function setImg($form, $article)
     {
-        $img = $form->get('img')->get('url')->getData();
-        if ($img) {
-            $brochureFileName = $this->fileUploader->upload($img);
-            $image=new Image();
-            $image->setUrl($brochureFileName);
-            $image->setAlt($form->get('img')->get('alt')->getData());
-            $this->em->persist($image);
-            $article->setImg($image);
+        if($form->get('img')->getData()->getUrl() !== null){
+            $img = $form->get('img')->get('url')->getData();
+            if ($img) {
+                $brochureFileName = $this->fileUploader->upload($img);
+                $image=new Image();
+                $image->setUrl($brochureFileName);
+                $image->setAlt($form->get('img')->get('alt')->getData());
+                $this->em->persist($image);
+                $article->setImg($image);
+            }
+        }elseif($form->get('img')->get('existImage')->getData() !== null){
+            $article->setImg($form->get('img')->get('existImage')->getData());
         }
     }
 
@@ -167,14 +171,7 @@ class AdminDatabase
         $article = $form->getData();
         $this->setKeywords($article, $form->get('keywords')->getData());
         $this->setCategory($article, $form->get('categoryNew')->getData());
-
-        if($form->get('img')->getData()->getUrl() !== null){
-            $this->setImg($form, $article);
-        }
-
-        if($form->get('existImage')->getData() !== null){
-            $article->setImg($form->get('existImage')->getData());
-        }
+        $this->setImg($form, $article);
 
         $this->em->persist($article);
         $this->em->flush();

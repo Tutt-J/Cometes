@@ -7,14 +7,5 @@
         <li class="breadcrumb-item"><a href="{{ path('programsAdmin') }}">Programmes et formations</a></li>
         <li class="breadcrumb-item active">Modifier un programme ou une formation</li>
     </ol>
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_row(form.title) }}
-    {{ form_row(form.content) }}
-    {{ form_row(form.img) }}
-    {{ form_row(form.programButtons) }}
-    <a href="#" id="add_collection" class="btn btn-success">Ajouter un bouton</a>
-    {{ form_row(form.price) }}
-    {{ form_row(form.type) }}
-    {{ form_row(form.isOnline) }}
-    {{ form_end(form) }}
+    {% include 'admin/programs/_form.html.twig' %}
 {% endblock %}
