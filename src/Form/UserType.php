@@ -32,7 +32,7 @@ class UserType extends AbstractType
                     'min' => 2,
                     'max' => 25,
                     'minMessage' => 'Le '.$name.' doit au moins contenir {{ limit }} caractères',
-                    'maxMessage' => 'Le '.$name.' ne doit pas dépasser {{limit}} caractères',
+                    'maxMessage' => 'Le '.$name.' ne doit pas dépasser {{ limit }} caractères',
                     'allowEmptyString' => false,
                 ]),
                 new NotBlank([

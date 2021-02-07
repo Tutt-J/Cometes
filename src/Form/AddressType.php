@@ -43,7 +43,7 @@ class AddressType extends AbstractType
                         'min' => 2,
                         'max' => 25,
                         'minMessage' => 'Le nom de l\'adresse doit au moins contenir {{ limit }} caractères',
-                        'maxMessage' => 'Le nom de l\'adresse ne doit pas dépasser {{limit}} caractères',
+                        'maxMessage' => 'Le nom de l\'adresse ne doit pas dépasser {{ limit }} caractères',
                         'allowEmptyString' => false,
                     ]),
                     new NotBlank([
