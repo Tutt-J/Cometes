@@ -119,6 +119,16 @@ class Event
      */
     private $allowAlready;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isCollaboration;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $collaborationLink;
+
 
     public function __construct()
     {
@@ -393,6 +403,30 @@ class Event
     public function setAllowAlready(bool $allowAlready): self
     {
         $this->allowAlready = $allowAlready;
+
+        return $this;
+    }
+
+    public function getIsCollaboration(): ?bool
+    {
+        return $this->isCollaboration;
+    }
+
+    public function setIsCollaboration(bool $isCollaboration): self
+    {
+        $this->isCollaboration = $isCollaboration;
+
+        return $this;
+    }
+
+    public function getCollaborationLink(): ?string
+    {
+        return $this->collaborationLink;
+    }
+
+    public function setCollaborationLink(?string $collaborationLink): self
+    {
+        $this->collaborationLink = $collaborationLink;
 
         return $this;
     }

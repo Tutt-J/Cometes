@@ -1,21 +1,38 @@
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 {{ form_errors(form) }}
+<div class="mt-5 mb-5">
 {{ form_row(form.title) }}
 {{ form_row(form.subTitle) }}
 {{ form_row(form.content) }}
+</div>
 {% include 'admin/_modal_img.html.twig' %}
+
+<div class="mt-5">
 {{ form_row(form.type) }}
 {{ form_row(form.onlineEvent) }}
 {{ form_row(form.address) }}
 {{ form_row(form.startDate) }}
 {{ form_row(form.endDate) }}
 {{ form_row(form.landingPageUrl) }}
+</div>
+<div class="mt-5">
 {{ form_row(form.price) }}
 {{ form_row(form.eventPricings) }}
 <a href="#" id="add_collection" class="btn btn-success">Ajouter un tarif</a>
+</div>
+<div class="mt-5">
+    {{ form_row(form.isCollaboration) }}
+    {{ form_row(form.collaborationLink) }}
+</div>
+<div class="mt-5">
 {{ form_row(form.nbMinParticipant) }}
 {{ form_row(form.nbMaxParticipant) }}
+</div>
+<div class="mt-5">
 {{ form_row(form.allowFriend) }}
 {{ form_row(form.allowAlready) }}
+</div>
+<div class="mt-5">
 {{ form_row(form.isOnline) }}
+</div>
 {{ form_end(form) }}
