@@ -80,6 +80,17 @@ class EventType extends BaseType
             ->add('onlineEvent', CheckboxType::class, array(
                 'label' => 'Ceci est un évènement en ligne'
             ))
+            ->add('isCollaboration', CheckboxType::class, array(
+                'label' => 'Ceci est une collaboration (le paiement ne se fait pas via note site)',
+            ))
+            ->add('collaborationLink', UrlType::class, [
+                'constraints' => array(
+                    new Regex("%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu"),
+                ),
+                'label' => 'Url du partenaire où on peut s\'inscrire',
+                'label_html' => true,
+                'required' => false
+            ])
             ->add('address', EntityType::class, [
                 'class' => Address::class,
                 'query_builder' => function (AddressRepository $er) {
