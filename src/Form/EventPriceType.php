@@ -85,7 +85,7 @@ class EventPriceType extends AbstractType
             ],
         ])
             ->add('agreeCgv', CheckboxType::class, [
-                'label' => 'J\'ai lu et j\'accepte les <a href="conditions-generales-de-ventes">conditions générales de vente</a><span class="text-danger"> *</span>' ,
+                'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-generales-de-vente">conditions générales de vente</a><span class="text-danger"> *</span>' ,
                 'label_html' => true,
                 'mapped' => false,
                 'constraints' => [
