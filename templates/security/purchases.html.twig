@@ -39,8 +39,7 @@
                                     {% endfor %}
                                 </ul>
                                 <div>
-                                    <a download href="{{ '/invoices/Facture_WEB'~ purchase.purchase.createdAt | date('Y')~'_'~purchase.purchase.id~'.pdf' }}">Télécharger ma facture</a>
-
+                                    <a  href="{{path('app_invoice', { 'path':  'Facture_WEB'~ purchase.purchase.createdAt | date('Y')~'_'~purchase.purchase.id~'.pdf', 'id': purchase.purchase.id})}}">Télécharger ma facture</a>
                                 </div>
                             </div>
                         </div>

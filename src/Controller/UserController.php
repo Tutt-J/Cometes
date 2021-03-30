@@ -22,6 +22,7 @@ use App\Form\UserUpdateType;
 use App\Service\UserContentAdministrator;
 use App\Service\UsersHelper;
 use DateTime;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -62,6 +63,19 @@ class UserController extends AbstractController
     public function ebook($path, UserContentAdministrator $userContentAdministrator)
     {
         return $userContentAdministrator->generateFileResponse('application/pdf', 'ebooks', $path, ['.pdf']);
+    }
+
+    /**
+     * @Route("/mon-compte/mes-commandes/{path}/{id}", name="app_invoice")
+     *
+     * @param $path
+     * @param UserContentAdministrator $userContentAdministrator
+     * @param Purchase $purchase
+     * @return BinaryFileResponse
+     */
+    public function invoice($path, UserContentAdministrator $userContentAdministrator, Purchase $purchase)
+    {
+        return $userContentAdministrator->generateInvoice('src/invoices', $path,  $purchase);
     }
 
 
@@ -114,6 +128,7 @@ class UserController extends AbstractController
      * @Route("/mon-compte/mes-prochains-evenements", name="app_account_events")
      *
      * @return Response
+     * @throws Exception
      */
     public function events()
     {

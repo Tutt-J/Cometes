@@ -364,11 +364,11 @@ class ProcessPurchase
 
         $invoice->setFooternote("Chamade");
 
-        if (!file_exists('invoices')) {
-            mkdir('invoices', 0775, true);
+        if (!file_exists('../src/invoices')) {
+            mkdir('../src/invoices', 0775, true);
         }
 
-        $path='invoices/Facture_WEB'.date('Y').'_'.$purchase->getId().'.pdf';
+        $path='../src/invoices/Facture_WEB'.date('Y').'_'.$purchase->getId().'.pdf';
         $invoice->render($path, 'F');
 
         return $path;

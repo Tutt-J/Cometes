@@ -190,4 +190,27 @@ class UserContentAdministrator
         }
         return $videoDownloadLink;
     }
+
+    public function generateInvoice( $dir, $path, $purchase)
+    {
+        $full_path = $this->appKernel->getProjectDir() .'/'.$dir.'/' . '/' . $path;
+        $filesystem = new Filesystem();
+        if ($filesystem->exists($full_path)) {
+            if($purchase->getUser() == $this->user){
+                $response = new BinaryFileResponse($full_path);
+                $response->setAutoEtag();
+                $response->headers->set('Content-Type', 'application/pdf');
+
+                if (!is_null($response)) {
+                    return $response;
+                }
+            } else{
+                throw new AccessDeniedException('Vous n\'avez pas accès à ce contenu');
+            }
+
+            }
+
+        throw new NotFoundHttpException('Le contenu n\'existe pas');
+    }
+
 }
