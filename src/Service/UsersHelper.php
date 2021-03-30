@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelper;
-
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 /**
  * Class ContentOnlineAdministrator
  * @package App\Service
@@ -48,25 +48,37 @@ class UsersHelper
     protected UrlGeneratorInterface $router;
 
     /**
+     * @var FlashBagInterface
+     */
+    private FlashBagInterface $flashbag;
+
+    /**
      * ContentOnlineAdministrator constructor.
+     * @param FlashBagInterface $flashbag
      * @param RequestStack $requestStack
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param EntityManagerInterface $em
      * @param UrlGeneratorInterface $router
      */
-    public function __construct(RequestStack $requestStack, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, UrlGeneratorInterface $router)
+    public function __construct(
+        FlashBagInterface $flashbag,
+        RequestStack $requestStack,
+        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $em,
+        UrlGeneratorInterface $router
+    )
     {
         $this->em = $em;
         $this->passwordEncoder=$passwordEncoder;
         $this->requestStack = $requestStack;
         $this->router= $router;
+        $this->flashbag=$flashbag;
     }
 
     /**
      * @param $form
      * @param $user
      * @param $path
-     * @param null $token
      * @return mixed
      */
     public function reset($form, $user, $path)
@@ -80,7 +92,7 @@ class UsersHelper
         $user->setPassword($encodedPassword);
         $this->em->flush();
 
-        $this->addFlash('success', 'Le mot de passe a bien été mis à jour.');
+        $this->flashbag->add('success', 'Le mot de passe a bien été mis à jour.');
 
 
         return new RedirectResponse($this->router->generate($path));
