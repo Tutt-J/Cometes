@@ -42,30 +42,25 @@
             </ul>
         </li>
         <li class="position-relative">
-            <a href="{{ path('homeEvent') }}"><span class="{% if  'Event' in app.request.attributes.get('_route') %}current-item{% endif %}" >Évènements</span></a>
+            <span class="{% if 'astro' in app.request.attributes.get('_route') %}current-item{% endif %}">Astrologie Holistique</span>
+            <ul class="p-0 m-0 position-absolute d-none w-auto">
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Thème astral</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroTraining' %}current-item{% endif %}" href="{{ path('astroTraining') }}">Formations</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Les certifiées Comètes</a></li>
+            </ul>
+        </li>
+        <li class="position-relative">
+            <a href="{{ path('homeEvent') }}"><span class="{% if  'Event' in app.request.attributes.get('_route') %}current-item{% endif %}" >Cyclicité sacrée</span></a>
             <ul class="p-0 m-0 position-absolute d-none w-auto">
                 <li class="d-block"><a class="{% if 'retreat' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('retreatsEvent') }}">Retraites</a></li>
-                <li class="d-block"><a class="{% if 'rituals' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('ritualsEvent') }}">Rituels</a></li>
-            </ul>
-        </li>
-        <li class="position-relative">
-            <a href="{{ path('homeOnline') }}"><span class="{% if 'Online' in app.request.attributes.get('_route') %}current-item{% endif %}">Magie en ligne</span></a>
-            <ul class="p-0 m-0 position-absolute d-none w-auto">
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'ritualsOnline' %}current-item{% endif %}" href="{{ path('ritualsOnline') }}">Rituels en ligne</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'videosOnline' %}current-item{% endif %}" href="{{ path('workshopsEvent') }}">Ateliers</a></li>
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'circleEvent' %}current-item{% endif %}" href="{{ path('circlesEvent') }}">Cercles de lune</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'videosOnline' %}current-item{% endif %}" href="{{ path('workshopsEvent') }}">Ateliers</a></li>
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'giftCardsOnline' %}current-item{% endif %}" href="{{ path('giftCardsOnline') }}">Cartes cadeaux</a></li>
-                {#                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'programsOnline' %}current-item{% endif %}" href="{{ path('programsOnline') }}">Programmes</a></li>#}
-{#                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'eBooksOnline' %}current-item{% endif %}" href="{{ path('eBooksOnline') }}">E-books</a></li>#}
+                {#                <li class="d-block"><a class="{% if 'rituals' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('ritualsEvent') }}">Rituels</a></li>#}
             </ul>
         </li>
-        <li class="position-relative">
-            <span class="{% if 'astro' in app.request.attributes.get('_route') %}current-item{% endif %}">Astrologie</span>
-            <ul class="p-0 m-0 position-absolute d-none w-auto">
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Lectures de cartes du ciel</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroTraining' %}current-item{% endif %}" href="{{ path('astroTraining') }}">Formations</a></li>
-            </ul>
-        </li>
+
         <li><a class="{% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a></li>
         <li><a class="{% if app.request.attributes.get('_route') == 'indexContact' %}current-item{% endif %}" href="{{ path('indexContact') }}">Contact</a></li>
     </ul>
@@ -106,46 +101,35 @@
                 </div>
             </li>
             <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
+                <a class="col-10 nav-link" href="#">
+                    Astrologie Holistique
+                </a>
+                <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </p>
+                <div class="dropdown-menu w-100 text-center">
+                    <a class="dropdown-item {% if 'astroConsult' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroConsult') }}">Thème astral</a>
+                    <a class="dropdown-item {% if 'astroTraining' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroTraining') }}">Formations</a>
+                    <a class="dropdown-item {% if 'astroTraining' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroTraining') }}">Les certifiées comètes</a>
+                </div>
+            </li>
+            <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
                 <a class="col-10 nav-link" href="{{ path('homeEvent') }}" >
-                    Évènements
+                    Cyclicité sacrée
                 </a>
                 <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
                 </p>
                 <div class="dropdown-menu w-100 text-center">
                     <a class="dropdown-item {% if 'retreat' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('retreatsEvent') }}">Retraites</a>
-                    <a class="dropdown-item {% if 'rituals' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('ritualsEvent') }}">Rituels</a>
-                </div>
-            </li>
-            <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
-                <a class="col-10 nav-link" href="{{ path('homeOnline') }}">
-                    Magie en ligne
-                </a>
-                <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="sr-only">Toggle Dropdown</span>
-                </p>
-                <div class="dropdown-menu w-100 text-center">
                     <a class="dropdown-item {% if 'ritualsOnline' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('ritualsOnline') }}">Rituels en ligne</a>
-                    <a class="dropdown-item {% if 'workshop' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('workshopsEvent') }}">Ateliers</a>
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'circleEvent' %}current-item{% endif %}" href="{{ path('circlesEvent') }}">Cercles de lune</a>
-                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'giftCardsOnline' %}current-item{% endif %}" href="{{ path('giftCardsOnline') }}">Cartes cadeaux</a>
-                    {#                    <a class="dropdown-item {% if 'programsOnline' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('programsOnline') }}">Programmes</a>#}
-{#                    <a class="dropdown-item {% if 'eBooksOnline' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('eBooksOnline') }}">E-books</a>#}
-                    {#<a class="dropdown-item" href="#">Podcast</a>#}
+                    <a class="dropdown-item {% if 'workshop' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('workshopsEvent') }}">Ateliers</a>
+                    <a class="dropdown-item {% if 'giftCardsOnline' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('giftCardsOnline') }}">Cartes cadeaux</a>
+            {#                    <a class="dropdown-item {% if 'rituals' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('ritualsEvent') }}">Rituels</a>#}
                 </div>
             </li>
-            <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
-                <a class="col-10 nav-link" href="#">
-                    Astrologie
-                </a>
-                <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="sr-only">Toggle Dropdown</span>
-                </p>
-                <div class="dropdown-menu w-100 text-center">
-                    <a class="dropdown-item {% if 'astroConsult' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroConsult') }}">Lectures de cartes du ciel</a>
-                    <a class="dropdown-item {% if 'astroTraining' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroTraining') }}">Formations</a>
-                </div>
-            </li>
+
             <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'blogIndex' %}active{% endif %}">
                 <a class="nav-link {% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a>
             </li>

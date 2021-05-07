@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AstrologyController extends AbstractController
 {
     /**
-     * @Route("/astrologie/consultations", name="astroConsult")
+     * @Route("/astrologie/theme-astral", name="astroConsult")
      *
      * @param SessionInterface $session
      * @return Response
