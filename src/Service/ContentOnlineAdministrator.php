@@ -133,6 +133,7 @@ class ContentOnlineAdministrator
             throw new NotFoundHttpException('Ce contenu n\'existe pas ou n\'est plus disponible à la vente');
         }
 
+
         $this->session->set('referer', array(
             'path' => $type.'Online' ,
             'attributes' =>$this->requestStack->getCurrentRequest()->attributes->get('_route_params')

@@ -130,6 +130,8 @@ class EventsController extends AbstractController
     }
 
 
+
+
     /**
      * @Route("/magie-en-ligne/ateliers", name="workshopsEvent")
      *

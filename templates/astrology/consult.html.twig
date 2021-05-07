@@ -1,42 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lectures de cartes du ciel | {{ parent() }}{% endblock %}
+{% block title %}Thème astral | {{ parent() }}{% endblock %}
 {% block metaDescription %}Chamade propose la lecture de votre carte du ciel, comme un outil de compréhension de votre incarnation et de votre mission de vie.{% endblock %}
 {% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_astrologie.jpeg') }}{% endblock %}
 
-{% block Titre %}Lectures de cartes du ciel{% endblock %}
+{% block Titre %}Thème astral{% endblock %}
 {% block content %}
         <div class="container ritual text-justify  mb-5">
             <section class="row mt-4 align-items-center mb-3" >
+                <figure class="mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6 col-xl-4 col-lg-5 text-center">
+                    <img class="mw-200 w-100" src="{{  asset('build/images/theme-astral-2.jpeg') }}" alt="Petites bougies dans pot en verre">
+                </figure>
+                <div class="col-xl-8 col-lg-7">
+
+                    <p>L’astrologie holistique est un outil précieux dès lors que l’on cherche à accéder à une meilleure compréhension des énergies qui nous composent, mais aussi pour retrouver le sens de notre chemin d’âme.</p>
+
+                    <p>Mon approche se trouve à la croisée des chemins entre l’astrologie humaniste, archétypale et karmique.</p>
+
+                    <p>C’est une lecture des potentiels, qui conçoit l’individu dans sa globalité et dans son processus illimité de croissance. C’est ainsi une approche non-fataliste et non prédictive de nos cheminements humains.</p>
+
+                    <p>Mue par une bienveillance profonde et sincère, chacune de mes lectures comprend les conseils holistiques destinés à vous permettre d’harmoniser au mieux les forces qui vous composent et à aimer inconditionnellement chaque facette de votre Être.</p>
+
+                </div>
                 <div class="col-12">
-                    <p>Depuis toute petite je suis fascinée par les Astres et les Planètes.</p>
-
-                    <p>Si je n’ai jamais douté de leur influence sur nos humeurs, j’ai découvert en me formant à l’astrologie qu’ils constituaient une clé de lecture précieuse sur la voie du développement personnel et spirituel.</p>
-
-                    <p>Je propose des lectures astrologiques dont l’objectif est de vous guider vers une meilleure connaissance de vous-même.</p>
-
-                    <p>Ma démarche n’est ni fataliste, ni prédictive.</p>
-
-                    <p>Mon approche est celle d'une astrologie du développement personnel, destinée à vous éveiller à vous-même, à mieux connaître les énergies qui vous composent et, in fine, à favoriser une meilleure acceptation de soi.</p>
-
                     <h3><strong>Comment ça se passe ?</strong></h3>
-{#                    <p>D'abord, il vous appartient de choisir la Lecture qui vous convient et de la réserver via les rubriques dédiées.</p>#}
-
-{#                    <p>La <strong>Lecture Lumière</strong> vise à avoir une connaissance des 3 éléments significatifs de votre Carte du ciel, avec l'étude de votre signe solaire, lunaire et de votre ascendant.</p>#}
-{#                    <p><em>1 heure - 50€</em></p><br/>#}
                     <p>La <strong>Guidance astro</strong> vise à vous apporter une lecture approfondie avec:</p>
                     <ul>
+                        <li>L’étude des énergies maitresses ou manquantes (Eau, Terre, Air et Feu).</li>
                         <li>L’étude de votre signe de Soleil, de Lune et votre ascendant.</li>
-                        <li>L’étude des énergies maitresses ou manquantes (eau, terre, air et feu).</li>
                         <li>L’étude de Saturne et des nœuds lunaires, pour mieux comprendre votre incarnation et mission d’âme.</li>
 
                     </ul>
                     <p><em>1 heure 30 - 80€</em></p><br/>
-
-{#                    <p>La <strong>Lecture Karmique</strong> reprend le contenu d'une Guidance astro, avec en plus l'examen de votre bagage karmique et les défis de votre incarnation.</p>#}
-{#                    <p><em>2 heures - 90€</em></p><br/>#}
-                    <p>Afin de permettre cette lecture, il convient d'avoir en votre possession votre date, heure et lieu de naissance. La lecture se fait en ligne via l'application zoom.
-                    </p>
+                    <p>La lecture se fait en ligne via l'application zoom et est enregistrée afin que vous puissiez y revenir.</p>
+                    <p>Pour permettre cette lecture, il convient d'avoir en votre possession votre date, heure exacte et lieu de naissance.</p>
                 </div>
                 <div class="mt-3 col-12">
 
