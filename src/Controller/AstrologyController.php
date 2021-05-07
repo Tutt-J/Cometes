@@ -42,6 +42,17 @@ class AstrologyController extends AbstractController
     }
 
     /**
+     * @Route("/astrologie/les-certifiees-cometes", name="listCertificateCometes")
+     *
+     * @return Response
+     */
+    public function listCertificateCometesAction()
+    {
+
+        return $this->render('astrology/cometes-certificate.html.twig');
+    }
+
+    /**
      * @Route("/astrologie/formations", name="astroTraining")
      *
      * @param SessionInterface $session
@@ -81,7 +92,7 @@ class AstrologyController extends AbstractController
 
     /**
      * @Route("/astrologie/evenements/initiations/{slug}",
-     * name="initiationsEvent",
+     * name="initiationEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
      * One ritual event page

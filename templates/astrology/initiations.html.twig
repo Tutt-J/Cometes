@@ -23,7 +23,7 @@
                         {% for initiation in initiations %}
                             <li>
                                 {{ initiation.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY') | capitalize}} à {{ initiation.startDate | localizeddate('none', 'none', null, null, 'HH') | capitalize}}h{{ initiation.startDate | localizeddate('none', 'none', null, null, 'mm') | capitalize}}<br/>
-                                <a href="{{ path('initiationsEvent', { 'slug': initiation.slug }) }}">En savoir plus</a>
+                                <a href="{{ path('initiationEvent', { 'slug': initiation.slug }) }}">En savoir plus</a>
                             </li>
                         {% endfor %}
                     </ul>

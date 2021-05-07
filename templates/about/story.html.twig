@@ -1,41 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title %}Notre histoire | {{ parent() }}{% endblock %}
-{% block Titre %}Notre histoire{% endblock %}
+{% block title %}Qui suis-je ? | {{ parent() }}{% endblock %}
+{% block Titre %}Qui suis-je ?{% endblock %}
 
 {% block content %}
     <div class="container my-5">
-        <div class="row align-items-center">
-            <div class="col-12 text-justify">
-                <p>Imaginée par Salomé DV, CHAMADE est devenu réalité dans le cadre d&#39;une campagne de
-                    financement participatif via la plateforme Ulule.
-                </p>
-                <p>Cette campagne a été une formidable opportunité de faire connaître le projet et de recueillir
-                    d&#39;importants soutiens.
-                </p>
-                <p>Encore un immense merci à chacun de ceux qui se sont mobilisés et qui ont cru en ce projet.
-                    Merci pour vos participations, aides et partages, et rendez-vous <a href="{{ path('blogArticle', { 'slug':'les-remerciements-de-chamade' }) }}">ICI </a>
-                    pour un hommage en bonne et due forme !
-                </p>
-                <p>CHAMADE a également remporté le concours organisé par Ulule à Annecy le 21 novembre
-                    2019 et visant à mettre en lumière l&#39;entreprenariat féminin : le PITCH PITCH TOUR WOMEN
-                    SERIES ANNECY 2019. Pour en savoir plus, je vous invite à lire l&#39;article de l&#39;époque <a href="https://fr.ulule.com/chamade-0/news/pitch-pitch-tour-women-series-le-pari-reussi-238115/">ICI</a>.
-                </p>
-                <p>Cette campagne et le gain remporté lors du concours ont permis la création officielle de la
-                    société CHAMADE en février 2020.
-                </p>
-                <p>Depuis, plusieurs évènements (Cercles, Rituels et Retraites) ont été organisés à l’hiver 2020,
-                    mais la crise sanitaire du COVID-19 a contraint le report de la suite de l’activité à la rentrée
-                    de septembre 2020.
-                </p>
-                <p>Le printemps a néanmoins été prolifique : Salomé DV a bénéficié de la bourse d’étude
-                    généreusement offerte par Gaïa Charline, Coach en entreprise holistique, pour bénéficier
-                    des enseignements de son programme Momentum. Pour plus d’informations, c’est <a href="https://www.gaiatotal.ca">ICI</a>.
-                </p>
-                <p>Une expérience qui a permis de peaufiner l’entreprise CHAMADE et son offre et de vous la
-                    présenter dans sa meilleure version !
-                </p>
-            </div>
-        </div>
         <section class="row mt-4">
             <header class="col-12">
                 <h2 class="text-center col-12 my-4">{{author.name}}</h2>

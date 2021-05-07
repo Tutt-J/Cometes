@@ -116,6 +116,11 @@ class UserController extends AbstractController
             }
         }
 
+        if(array_key_exists('initiations', $listContent)){
+            $listContent['videos']=array_merge($listContent['videos'],$listContent['initiations']);
+
+        }
+
         return $this->render(
             'security/online_contents.html.twig',
             [

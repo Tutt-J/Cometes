@@ -37,7 +37,7 @@
             <span class="{% if  'about' in app.request.attributes.get('_route') %}current-item{% endif %}">A propos</span>
             <ul class="p-0 m-0 position-absolute d-none w-auto">
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutConcept' %}current-item{% endif %}" href="{{ path('aboutConcept') }}">Concept</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Notre histoire</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Qui suis-je ?</a></li>
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutOpinion') }}">Témoignages</a></li>
             </ul>
         </li>
@@ -46,7 +46,7 @@
             <ul class="p-0 m-0 position-absolute d-none w-auto">
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Thème astral</a></li>
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroTraining' %}current-item{% endif %}" href="{{ path('astroTraining') }}">Formations</a></li>
-                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Les certifiées Comètes</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'listCertificateCometes' %}current-item{% endif %}" href="{{ path('listCertificateCometes') }}">Les certifiées Comètes</a></li>
             </ul>
         </li>
         <li class="position-relative">
@@ -96,7 +96,7 @@
                 </p>
                 <div class="dropdown-menu w-100 text-center background">
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutConcept' %}current-item{% endif %}" href="{{ path('aboutConcept') }}">Concept</a>
-                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Notre histoire</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Qui suis-je ?</a>
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutOpinion') }}">Témoignages</a>
                 </div>
             </li>
@@ -110,7 +110,7 @@
                 <div class="dropdown-menu w-100 text-center">
                     <a class="dropdown-item {% if 'astroConsult' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroConsult') }}">Thème astral</a>
                     <a class="dropdown-item {% if 'astroTraining' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroTraining') }}">Formations</a>
-                    <a class="dropdown-item {% if 'astroTraining' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('astroTraining') }}">Les certifiées comètes</a>
+                    <a class="dropdown-item {% if 'listCertificateCometes' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('listCertificateCometes') }}">Les certifiées comètes</a>
                 </div>
             </li>
             <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
