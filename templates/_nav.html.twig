@@ -39,6 +39,9 @@
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutConcept' %}current-item{% endif %}" href="{{ path('aboutConcept') }}">Concept</a></li>
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Qui suis-je ?</a></li>
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutOpinion') }}">Témoignages</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutPodcasts') }}">Podcasts</a></li>
+                <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutPress') }}">Presse</a></li>
+
             </ul>
         </li>
         <li class="position-relative">
@@ -98,6 +101,8 @@
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutConcept' %}current-item{% endif %}" href="{{ path('aboutConcept') }}">Concept</a>
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Qui suis-je ?</a>
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutOpinion') }}">Témoignages</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutPodcasts') }}">Podcasts</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutOpinion' %}current-item{% endif %}" href="{{ path('aboutPress') }}">Presse</a>
                 </div>
             </li>
             <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">

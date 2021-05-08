@@ -145,15 +145,7 @@ class OnlineController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/magie-en-ligne/podcasts", name="podcastsOnline")
-     *
-     * @return Response
-     */
-    public function podcastsAction()
-    {
-        return $this->render('online/podcasts.html.twig');
-    }
+
 
     /**
      * @Route("/magie-en-ligne/ateliers-en-ligne", name="videosOnline")
