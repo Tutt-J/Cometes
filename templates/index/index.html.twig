@@ -37,19 +37,24 @@
             </h2>
         </header>
         <div class="row text-center justify-content-around">
-            <div class="col-12 col-md-4 my-3 my-md-5">
+            <div class="col-12 col-md-3 my-3 my-md-5">
                 <a href="{{ path('astroConsult') }}">
                     <img loading="lazy" class="opacity_hover col-12 p-0 mw-200" src="{{ asset('build/images/design_astrologie.jpeg') }}" alt="">
                 </a>
             </div>
-            <div class="col-12 col-md-4 my-3 my-md-5">
+            <div class="col-12 col-md-3 my-3 my-md-5">
                 <a href="{{ path('astroTraining') }}">
                     <img loading="lazy" class="opacity_hover col-12 p-0 mw-200" src="{{ asset('build/images/design_formations.jpeg') }}" alt="">
                 </a>
             </div>
-            <div class="col-12 col-md-4 my-3 my-md-5">
+            <div class="col-12 col-md-3 my-3 my-md-5">
                 <a href="{{ path('ritualsOnline') }}">
                     <img loading="lazy" class="opacity_hover col-12 p-0 mw-200 " src="{{ asset('build/images/design_rituels_en_ligne.jpeg') }}" alt="">
+                </a>
+            </div>
+            <div class="col-12 col-md-3 my-3 my-md-5">
+                <a href="{{ path('retreatsEvent') }}">
+                    <img loading="lazy" class="opacity_hover col-12 p-0 mw-200 " src="{{ asset('build/images/design_retraites.jpeg') }}" alt="">
                 </a>
             </div>
         </div>
@@ -92,6 +97,20 @@
         </section>
     {% endif %}
     {# END THREE NEXT EVENTS #}
+
+    {# LAST PODCAST #}
+    <section class="container-fluid p-0 mb-5">
+        <header class="py-4 background-rose mb-5 mt-4 text-center col-12">
+            <h2 class="m-0">Ecouter le dernier podcast</h2>
+        </header>
+        <div class="container">
+            <div class="row list justify-content-around flex-wrap text-center">
+                <iframe src="https://anchor.fm/gaiatotal/embed/episodes/65-Astrologie-holistique-eqi75f/a-a4lv9ob" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+
+            </div>
+        </div>
+    </section>
+    {# END LAST PODCATS #}
 
     {% include 'index/_social.html.twig' %}
 
