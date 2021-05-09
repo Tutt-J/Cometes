@@ -95,4 +95,7 @@
             </section>
         {% endif %}
     </div>
+    {% if opinions.getOpinions('ritual') %}
+        {% include 'events/_opinions.html.twig' with {'type': 'ritual'} %}
+    {% endif %}
 {% endblock %}

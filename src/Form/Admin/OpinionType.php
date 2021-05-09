@@ -3,6 +3,9 @@
 namespace App\Form\Admin;
 
 use App\Entity\Opinion;
+use App\Entity\Type;
+use App\Repository\TypeRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -41,6 +44,22 @@ class OpinionType extends BaseType
                 'row_attr' => [
                     'class' => 'col-md-6'
                 ],
+            ])
+           ->add('type', EntityType::class, [
+                'constraints' => array(
+                    new NotBlank([
+                        'message' => SELF::NOTEMPTY_MESSAGE
+                    ]),
+                ),
+                'class' => Type::class,
+                'query_builder' => function (TypeRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.forOpinion = 1');
+                },
+                'choice_label' => 'slug',
+                'label' => 'Type<span class="text-danger"> *</span>',
+                'label_html' => true,
+                'choice_translation_domain' => 'messages'
             ])
         ;
     }

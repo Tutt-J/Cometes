@@ -45,4 +45,7 @@
             </section>
 
         </div>
+    {% if opinions.getOpinions('lecture') %}
+        {% include 'events/_opinions.html.twig' with {'type': 'lecture'} %}
+    {% endif %}
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Opinion;
 use App\Entity\Purchase;
+use App\Entity\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Instagram\Api;
@@ -80,12 +81,22 @@ class GlobalsGenerator
     /**
      * @return object[]
      */
-    public function getOpinions()
+    public function getOpinions($type)
     {
+        $type = $this->em
+            ->getRepository(Type::class)
+            ->findBy(
+                    [
+                       'slug' => $type
+                    ]
+            );
         return $this->em
             ->getRepository(Opinion::class)
             ->findBy(
-                ['isOnline' => 1],
+                [
+                    'isOnline' => 1,
+                    'type' => $type
+                ],
                 ['id' => 'DESC']
             );
     }

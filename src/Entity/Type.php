@@ -39,9 +39,20 @@ class Type
      */
     private $contents;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $forOpinion;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Opinion::class, mappedBy="type")
+     */
+    private $opinions;
+
     public function __construct()
     {
         $this->contents = new ArrayCollection();
+        $this->opinions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +124,48 @@ class Type
             // set the owning side to null (unless already changed)
             if ($content->getType() === $this) {
                 $content->setType(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getForOpinion(): ?bool
+    {
+        return $this->forOpinion;
+    }
+
+    public function setForOpinion(bool $forOpinion): self
+    {
+        $this->forOpinion = $forOpinion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Opinion[]
+     */
+    public function getOpinions(): Collection
+    {
+        return $this->opinions;
+    }
+
+    public function addOpinion(Opinion $opinion): self
+    {
+        if (!$this->opinions->contains($opinion)) {
+            $this->opinions[] = $opinion;
+            $opinion->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOpinion(Opinion $opinion): self
+    {
+        if ($this->opinions->removeElement($opinion)) {
+            // set the owning side to null (unless already changed)
+            if ($opinion->getType() === $this) {
+                $opinion->setType(null);
             }
         }
 
