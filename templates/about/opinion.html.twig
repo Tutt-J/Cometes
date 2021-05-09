@@ -26,9 +26,9 @@
                     </article>
             {% endfor %}
         {% endif %}
-        {% if opinions.getOpinions('circle') %}
-            <h2 class="mb-3 mt-5">Cercles de lune</h2>
-            {% for opinion in opinions.getOpinions('circle') %}
+        {% if opinions.getOpinions('lecture') %}
+            <h2 class="mb-3 mt-5">Lecture de carte du ciel</h2>
+            {% for opinion in opinions.getOpinions('lecture') %}
                     <article class="row align-items-center">
                         <div class="col-12 text-justify">
                             <h4>{{ opinion.client }} :</h4>
