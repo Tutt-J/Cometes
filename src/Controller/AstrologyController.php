@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Content;
 use App\Entity\Event;
 use App\Entity\Program;
+use App\Entity\ProgramCertified;
 use App\Service\ContentOnlineAdministrator;
 use App\Service\EventsAdministrator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,8 +49,17 @@ class AstrologyController extends AbstractController
      */
     public function listCertificateCometesAction()
     {
+        $certified= $this->getDoctrine()
+            ->getRepository(ProgramCertified::class)
+            ->findBy(
+                [
+                    'program' => 1
+                ]
+            );
 
-        return $this->render('astrology/cometes-certificate.html.twig');
+        return $this->render('astrology/cometes-certificate.html.twig', [
+            'certified' => $certified
+        ]);
     }
 
     /**

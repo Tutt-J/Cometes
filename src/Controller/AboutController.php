@@ -31,7 +31,7 @@ class AboutController extends AbstractController
     }
 
     /**
-     * @Route("/a-propos/notre-histoire", name="aboutStory")
+     * @Route("/a-propos/qui-suis-je", name="aboutStory")
      *
      * @param GlobalsGenerator $socialGenerator
      *

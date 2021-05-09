@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <h1>Créer une nouvelle certifiée {{ program.title }}</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Tableau de bord</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Programmes et formations</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('certifiedProgramAdmin', {'id':program.id}) }}">Liste des certifiées de {{ program.title }}</a></li>
+        <li class="breadcrumb-item active">Créer une nouvelle certifiée {{ program.title }}</li>
+    </ol>
+    {% include 'admin/programs/_form_certified.html.twig' %}
+{% endblock %}

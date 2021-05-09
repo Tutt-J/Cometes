@@ -51,10 +51,16 @@ class Program
      */
     private $programButtons;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProgramCertified::class, mappedBy="program")
+     */
+    private $programmCertifieds;
+
     public function __construct()
     {
         $this->type = new ArrayCollection();
         $this->programButtons = new ArrayCollection();
+        $this->programmCertifieds = new ArrayCollection();
     }
 
 
@@ -154,6 +160,36 @@ class Program
     {
         if ($this->programButtons->removeElement($programButton) && $programButton->getProgram() === $this) {
                 $programButton->setProgram(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProgramCertified[]
+     */
+    public function getProgrammCertifieds(): Collection
+    {
+        return $this->programmCertifieds;
+    }
+
+    public function addProgrammCertified(ProgramCertified $programmCertified): self
+    {
+        if (!$this->programmCertifieds->contains($programmCertified)) {
+            $this->programmCertifieds[] = $programmCertified;
+            $programmCertified->setProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgrammCertified(ProgramCertified $programmCertified): self
+    {
+        if ($this->programmCertifieds->removeElement($programmCertified)) {
+            // set the owning side to null (unless already changed)
+            if ($programmCertified->getProgram() === $this) {
+                $programmCertified->setProgram(null);
+            }
         }
 
         return $this;
