@@ -58,14 +58,23 @@ class GlobalsGenerator
      */
     public function getLastInstagramPost()
     {
-        $endpoint  = $_ENV['BEHOLD_URL'];
-        $curl = curl_init($endpoint);
-        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 3);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+        $json=$this->sendCurl("https://graph.instagram.com/me/media?fields=media_url,permalink&access_token=".$_ENV['INSTAGRAM_TOKEN']);
+        if($json){
+            return $json->data;
+        }
+    }
 
-        $data = curl_exec($curl);
-        return json_decode($data);
+    public function sendCurl($url){
+        $curl = curl_init($url);
+
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36');
+        curl_setopt($curl, CURLOPT_FAILONERROR, true);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        $html = curl_exec($curl);
+        curl_close($curl);
+        return json_decode($html);
     }
 
     /**

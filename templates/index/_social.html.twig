@@ -60,7 +60,7 @@
         <div class="container">
             <div class="row justify-content-around justify-content-lg-start mx-auto">
                 <h2 class="text-center col-12 mb-3 text-white">Suivez nous sur instagram :</h2>
-                {% for post in opinions.getLastInstagramPost(5) %}
+                {% for post in opinions.getLastInstagramPost() |slice(0, 5) %}
 
                     <!-- Grid column -->
                     <div class="mb-3 col-8 col-sm-4 col-lg-2 text-center
@@ -69,7 +69,7 @@
                 {% endif %}
                     ">
                         <a href="{{ post.permalink }}">
-                            <img class="object-fit-cover instagram" src="{{ post.mediaUrl }}" alt="Photo provenant d'instagram">
+                            <img class="object-fit-cover instagram" src="{{ post.media_url }}" alt="Photo provenant d'instagram">
                         </a>
                     </div>
                 {% endfor %}
