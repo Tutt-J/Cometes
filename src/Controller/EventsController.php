@@ -13,6 +13,7 @@ use App\Service\SendMail;
 use App\Service\StripeHelper;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -97,6 +98,8 @@ class EventsController extends AbstractController
      */
     public function ritualsAction(EventsAdministrator $eventsAdministrator)
     {
+        //For removing temporarly
+        throw new AccessDeniedException('Vous ne pouvez pas accéder à cette page');
         $rituals = $this->getDoctrine()
             ->getRepository(Event::class)
             ->findBecomeEvents($eventsAdministrator->getType('ritual'));
@@ -126,8 +129,12 @@ class EventsController extends AbstractController
      */
     public function ritualAction(Event $event, EventsAdministrator $eventsAdministrator)
     {
+        //For removing temporarly
+        throw new AccessDeniedException('Vous ne pouvez pas accéder à cette page');
         return $eventsAdministrator->renderEventPage($event);
     }
+
+
 
 
     /**

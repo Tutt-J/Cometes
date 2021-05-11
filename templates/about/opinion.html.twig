@@ -4,13 +4,49 @@
 
 {% block content %}
     <div class="container my-5">
-        {% for opinion in opinions.getOpinions() %}
-            <article class="row align-items-center">
-                <div class="col-12 text-justify">
-                    <h2>{{ opinion.client }} :</h2>
-                    {{opinion.content | raw}}
-                </div>
-            </article>
-        {% endfor %}
+        {% if opinions.getOpinions('retreat') %}
+            <h2 class="mb-3 mt-5">Retraites</h2>
+            {% for opinion in opinions.getOpinions('retreat') %}
+                    <article class="row align-items-center">
+                        <div class="col-12 text-justify">
+                            <h4>{{ opinion.client }} :</h4>
+                            {{opinion.content | raw}}
+                        </div>
+                    </article>
+            {% endfor %}
+        {% endif %}
+        {% if opinions.getOpinions('ritual') %}
+            <h2 class="mb-3 mt-5">Rituels en ligne</h2>
+            {% for opinion in opinions.getOpinions('ritual') %}
+                    <article class="row align-items-center">
+                        <div class="col-12 text-justify">
+                            <h4>{{ opinion.client }} :</h4>
+                            {{opinion.content | raw}}
+                        </div>
+                    </article>
+            {% endfor %}
+        {% endif %}
+        {% if opinions.getOpinions('lecture') %}
+            <h2 class="mb-3 mt-5">Thème astral</h2>
+            {% for opinion in opinions.getOpinions('lecture') %}
+                    <article class="row align-items-center">
+                        <div class="col-12 text-justify">
+                            <h4>{{ opinion.client }} :</h4>
+                            {{opinion.content | raw}}
+                        </div>
+                    </article>
+            {% endfor %}
+        {% endif %}
+        {% if opinions.getOpinions('cometes') %}
+            <h2 class="mb-3 mt-5">Comètes</h2>
+            {% for opinion in opinions.getOpinions('cometes') %}
+                <article class="row align-items-center">
+                    <div class="col-12 text-justify">
+                        <h4>{{ opinion.client }} :</h4>
+                        {{opinion.content | raw}}
+                    </div>
+                </article>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

@@ -32,6 +32,12 @@ class Opinion
      */
     private $isOnline;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="opinions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
+
 
     public function getId(): ?int
     {
@@ -70,6 +76,18 @@ class Opinion
     public function setIsOnline(bool $isOnline): self
     {
         $this->isOnline = $isOnline;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

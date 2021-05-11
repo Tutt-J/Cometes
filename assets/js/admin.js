@@ -13,9 +13,6 @@ $(document).ready(function() {
         bsCustomFileInput.init()
         // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
         var $container = $('.foo + div');
-        //program_programButtons
-    //add_buttons
-
 
         // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
         var index = $container.find('fieldset').length;

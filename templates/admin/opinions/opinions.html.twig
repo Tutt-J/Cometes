@@ -21,6 +21,7 @@
                 <tr>
                     <th>Cliente</th>
                     <th>Contenu</th>
+                    <th>Type</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -28,6 +29,7 @@
                 <tr>
                     <th>Cliente</th>
                     <th>Contenu</th>
+                    <th>Type</th>
                     <th>Actions</th>
                 </tr>
                 </tfoot>
@@ -36,6 +38,7 @@
                     <tr>
                         <td>{{ article.client }}</td>
                         <td>{{ article.content | raw }}</td>
+                        <td>{{ article.type.slug|trans }}</td>
                         <td>
                             <a href="{{ path('updateOpinionAdmin', {'id':article.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
                             <p data-title="{{ article.client }}" data-id="{{ article.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>

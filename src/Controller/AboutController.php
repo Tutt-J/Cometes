@@ -1,9 +1,14 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Author;
+use App\Entity\Category;
+use App\Service\BlogView;
 use App\Service\GlobalsGenerator;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,7 +31,7 @@ class AboutController extends AbstractController
     }
 
     /**
-     * @Route("/a-propos/notre-histoire", name="aboutStory")
+     * @Route("/a-propos/qui-suis-je", name="aboutStory")
      *
      * @param GlobalsGenerator $socialGenerator
      *
@@ -56,5 +61,37 @@ class AboutController extends AbstractController
     public function opinionAction()
     {
         return $this->render('about/opinion.html.twig');
+    }
+
+    /**
+     * @Route("/a-propos/podcasts/{page}", name="aboutPodcasts")
+     *
+     * @param int $page
+     * @param BlogView $blogView
+     * @return Response
+     */
+    public function podcastsAction( BlogView $blogView, int $page = 1)
+    {
+
+        $articles = $blogView->getArticlesByCategory('Podcasts', $page);
+
+        return $this->render('about/podcasts.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
+    /**
+     * @Route("/a-propos/presse/{page}", name="aboutPress")
+     *
+     * @param int $page
+     * @param BlogView $blogView
+     * @return Response
+     */
+    public function pressAction(BlogView $blogView, int $page = 1)
+    {
+        $articles = $blogView->getArticlesByCategory('Presse', $page);
+        return $this->render('about/press.html.twig', [
+            'articles' => $articles,
+        ]);
     }
 }

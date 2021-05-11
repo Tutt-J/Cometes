@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Initiations | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose des initiations à l'astrologie{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_astrologie.jpeg') }}{% endblock %}
+
+{% block Titre %}Initiations{% endblock %}
+{% block content %}
+        <div class="container ritual text-justify  mb-5">
+            <section class="row mt-4 align-items-center mb-3 col-12" >
+                <figure class="px-0 mb-3 offset-1 col-10 offset-md-3 offset-lg-0 col-md-6 col-xl-4 col-lg-5 text-center">
+                    <img class="mw-200 w-100" src="{{  asset('build/images/INITIATIONS.jpg') }}" alt="Petites bougies dans pot en verre">
+                </figure>
+                <div class="col-xl-8 col-lg-7">
+                    <p>L’astrologie holistique est une voie d’harmonisation profonde, qui permet à la fois de comprendre les énergies qui nous composent, mais aussi de lire les forces qui président à nos incarnations.</p>
+                    <p>J’ai bien conscience que tout le monde n’a pas la possibilité ni le souhait de dévouer 4 mois de sa vie à une formation complète et exigeante d’astrologie comme l’implique ma formation Comètes.</p>
+                    <p>C’est pourquoi j’ai choisi de vous proposer des formules d’initiations, dans lesquelles nous viendrons explorer des points topiques du thème astral.</p>
+                    <p>Notez qu’il est nécessaire, avant de suivre l’une de ces initiations, d’avoir suivi <a href="{{ path('initiationOnline', { 'slug': "atelier-dintroduction-generale" }) }}">l’atelier d’introduction générale</a>.</p>
+                </div>
+            </section>
+            <section class="row mt-4 mb-3 align-items-center list">
+                    <h3 class="col-12 mb-4">Les prochaines initiations :</h3>
+
+                    {% for content in contents %}
+                            <article class="item col-12 col-sm-6 col-md-3 mb-3 d-flex flex-column align-items-center text-center">
+                                <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path('initiationEvent', { 'slug': content.slug }) }}">
+                                    <figure>
+                                        <div class="effect"></div>
+                                        <img class="w-100" src="{{ asset('uploads/cover_img/'~content.img.url) }}" alt="{{ content.img.alt }}">
+                                    </figure>
+                                </a>
+                                <div class="infos mt-3 w-100 mw-200">
+                                    <h2 class="d-initial"><a href="{{ path('ritualOnline', { 'slug': content.slug }) }}">{{ content.title | raw }}</a></h2>
+                                    <p class="mt-3">{{ content.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY') | capitalize}} à {{ content.startDate | localizeddate('none', 'none', null, null, 'HH') | capitalize}}h{{ content.startDate | localizeddate('none', 'none', null, null, 'mm') | capitalize}}</p>
+                                    <p>
+                                        <strong>{{ content.Price | replace({".00" : ""}) }}€</strong>
+                                    </p>
+                                </div>
+                            </article>
+                        {% endfor %}
+
+
+            </section>
+
+        </div>
+{% endblock %}

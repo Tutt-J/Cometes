@@ -31,10 +31,7 @@
                         <p class="text-center mt-3">
                             <small>Vous affirmez avoir pris connaissance de notre
                                 <a href="{{ path('privacyPolicy') }}">politique de confidentialité</a>. Vous pouvez à tout moment vous désinscrire à l'aide des liens de désinscription ou en nous contactant à
-                                <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel
-                                    <!--triugtb65-->lo@cha
-                                    <!--t5588h^ùm^th-->made.co
-                                </a>.
+                                <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel<!--triugtb65-->lo@cha<!--t5588h^ùm^th-->made.co</a>.
                             </small>
                         </p>
                     </div>
@@ -47,8 +44,8 @@
     {# FACEBOOK LOUVES #}
     <div class="container-fluid">
         <div class="container py-5 text-center">
-            <a class="row justify-content-center" href="https://bit.ly/2BCWpoi">
-                <img class="col-12 col-md-9 mw-100 scale-down" src="{{ asset('build/images/louves.png')}}" alt="LOUVES ! La communauté de chamade Développement personnel et spirituel Sonorité Pour une vie sereine, équilibrée et harmonieuse"/>
+            <a class="row justify-content-center align-items-start" href="https://bit.ly/2BCWpoi">
+                <img class="col-12 col-md-9 mw-100" src="{{ asset('build/images/louves.png')}}" alt="LOUVES ! La communauté de chamade Développement personnel et spirituel Sonorité Pour une vie sereine, équilibrée et harmonieuse"/>
             </a>
         </div>
     </div>
@@ -60,7 +57,7 @@
         <div class="container">
             <div class="row justify-content-around justify-content-lg-start mx-auto">
                 <h2 class="text-center col-12 mb-3 text-white">Suivez nous sur instagram :</h2>
-                {% for post in opinions.getLastInstagramPost(5) %}
+                {% for post in opinions.getLastInstagramPost() |slice(0, 5) %}
 
                     <!-- Grid column -->
                     <div class="mb-3 col-8 col-sm-4 col-lg-2 text-center
@@ -69,7 +66,7 @@
                 {% endif %}
                     ">
                         <a href="{{ post.permalink }}">
-                            <img class="object-fit-cover instagram" src="{{ post.mediaUrl }}" alt="Photo provenant d'instagram">
+                            <img class="object-fit-cover instagram" src="{{ post.media_url }}" alt="Photo provenant d'instagram">
                         </a>
                     </div>
                 {% endfor %}

@@ -63,5 +63,7 @@
             </div>
         </div>
     </div>
-   {% include 'events/_opinions.html.twig' %}
+    {% if opinions.getOpinions('retreat') %}
+     {% include 'events/_opinions.html.twig' with {'type': 'retreat'} %}
+    {% endif %}
 {% endblock %}

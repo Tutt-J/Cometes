@@ -113,12 +113,11 @@ class OnlineController extends AbstractController
      * @param GlobalsGenerator $socialGenerator
      * @param int $page
      * @return Response
-     * @throws InstagramAuthException
-     * @throws InstagramException
-     * @throws InvalidArgumentException
      */
     public function eBooksAction(ContentOnlineAdministrator $contentOnlineAdministrator, GlobalsGenerator $socialGenerator, int $page = 1)
     {
+        //For removing temporarly
+        throw new AccessDeniedException('Vous ne pouvez pas accéder à cette page');
         return $this->render(
             'online/e_books.html.twig',
             [
@@ -139,21 +138,15 @@ class OnlineController extends AbstractController
      */
     public function eBookAction($slug, ContentOnlineAdministrator $contentOnlineAdministrator)
     {
+        //For removing temporarly
+        throw new AccessDeniedException('Vous ne pouvez pas accéder à cette page');
         return $this->render(
             SELF::INDEX_RENDER,
             $contentOnlineAdministrator->generateContent($slug, 'eBook')
         );
     }
 
-    /**
-     * @Route("/magie-en-ligne/podcasts", name="podcastsOnline")
-     *
-     * @return Response
-     */
-    public function podcastsAction()
-    {
-        return $this->render('online/podcasts.html.twig');
-    }
+
 
     /**
      * @Route("/magie-en-ligne/ateliers-en-ligne", name="videosOnline")

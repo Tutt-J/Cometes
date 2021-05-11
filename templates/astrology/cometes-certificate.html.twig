@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les certifiées Comètes | {{ parent() }}{% endblock %}
+{% block metaDescription %}Chamade propose la lecture de votre carte du ciel, comme un outil de compréhension de votre incarnation et de votre mission de vie.{% endblock %}
+{% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_astrologie.jpeg') }}{% endblock %}
+
+{% block Titre %}Les certifiées Comètes{% endblock %}
+{% block content %}
+    <div class="container my-5">
+        <div class="row list full-height-list justify-content-around flex-wrap">
+            {% for cert in certified %}
+                <article class="item col-12 col-sm-6 col-lg-4 mb-5 d-flex flex-column align-items-center">
+                    <div class="d-flex align-items-center text-center w-100 w-md-75 mw-200">
+                        <figure>
+                            <div class="effect"></div>
+                            <img class="w-100" src="{{ asset('uploads/cover_img/'~cert.img.url) }}" alt="{{ cert.img.alt }}">
+                        </figure>
+                    </div>
+                    <div class="infos mt-3 w-100 w-md-75 mw-200">
+                        <p class="text-orange">
+                            {{ cert.year }}
+                        </p>
+                        <h2 class="d-initial">{{cert.name}}</h2>
+                    </div>
+                    <div class="w-100 w-md-75 mw-200 row certified-icon justify-content-between">
+                        {% if cert.website %}
+                            <a href="{{ cert.website }}" ><i class="fas fa-globe"></i></a>
+                        {% endif %}
+                        {% if cert.instagram %}
+                            <a href="{{ cert.instagram }}" ><i class="fab fa-instagram"></i></a>
+
+                        {% endif %}
+                        {% if cert.facebook %}
+                            <a href="{{ cert.facebook }}"><i class="fab fa-facebook-square"></i></a>
+                        {% endif %}
+                        {% if cert.email %}
+                            <a href="{{ 'mailto:'~cert.email}}" ><i class="fas fa-envelope"></i></a>
+                        {% endif %}
+                    </div>
+                </article>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
