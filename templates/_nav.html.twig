@@ -53,7 +53,7 @@
             </ul>
         </li>
         <li class="position-relative">
-            <a href="{{ path('homeEvent') }}"><span class="{% if  'Event' in app.request.attributes.get('_route') %}current-item{% endif %}" >Cyclicité sacrée</span></a>
+            <span class="{% if  'Event' in app.request.attributes.get('_route') %}current-item{% endif %}" >Cyclicité sacrée</span>
             <ul class="p-0 m-0 position-absolute d-none w-auto">
                 <li class="d-block"><a class="{% if 'retreat' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('retreatsEvent') }}">Retraites</a></li>
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'ritualsOnline' %}current-item{% endif %}" href="{{ path('ritualsOnline') }}">Rituels en ligne</a></li>
@@ -91,9 +91,9 @@
     <div class="collapse navbar-collapse background-rose w-100" id="{{ 'navbarSupportedContent'~random }}">
         <ul class="navbar-nav mr-auto mt-4 text-dark">
             <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
-                <a class="col-10 nav-link" href="#">
+                <span class="col-10 nav-link" >
                     A propos
-                </a>
+                </span>
                 <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
                 </p>
@@ -106,9 +106,9 @@
                 </div>
             </li>
             <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
-                <a class="col-10 nav-link" href="#">
+                <span class="col-10 nav-link" >
                     Astrologie Holistique
-                </a>
+                </span>
                 <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
                 </p>
@@ -119,9 +119,9 @@
                 </div>
             </li>
             <li class="align-items-center nav-item mw-100 row flex-wrap d-flex m-0 px-2 ">
-                <a class="col-10 nav-link" href="{{ path('homeEvent') }}" >
+                <span class="col-10 nav-link" >
                     Cyclicité sacrée
-                </a>
+                </span>
                 <p class="col-2 dropdown-toggle dropdown-toggle-split"  role="menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
                 </p>

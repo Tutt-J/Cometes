@@ -94,7 +94,7 @@ class AstrologyController extends AbstractController
         return $this->render(
             'astrology/initiations.html.twig',
             [
-                'initiations' => $initiations,
+                'contents' => $initiations,
             ]
         );
 
