@@ -15,12 +15,27 @@
                     <p>L’astrologie holistique est une voie d’harmonisation profonde, qui permet à la fois de comprendre les énergies qui nous composent, mais aussi de lire les forces qui président à nos incarnations.</p>
                     <p>J’ai bien conscience que tout le monde n’a pas la possibilité ni le souhait de dévouer 4 mois de sa vie à une formation complète et exigeante d’astrologie comme l’implique ma formation Comètes.</p>
                     <p>C’est pourquoi j’ai choisi de vous proposer des formules d’initiations, dans lesquelles nous viendrons explorer des points topiques du thème astral.</p>
-                    <p>Notez qu’il est nécessaire, avant de suivre l’une de ces initiations, d’avoir suivi <a href="{{ path('initiationOnline', { 'slug': "atelier-dintroduction-generale" }) }}">l’atelier d’introduction générale</a>.</p>
+                    <p>Notez qu’il est nécessaire, avant de suivre l’une de ces initiations, d’avoir suivi <a href="{{ path('initiationOnline', { 'slug': workshop.slug }) }}">l’atelier d’introduction générale</a>.</p>
                 </div>
             </section>
-            <section class="row mt-4 mb-3 align-items-center list">
+            <section class="row mt-4 mb-3 align-items-start list">
                     <h3 class="col-12 mb-4">Les prochaines initiations :</h3>
-
+                <!--view workshop-->
+                    <article class="item col-12 col-sm-6 col-md-3 mb-3 d-flex flex-column align-items-center text-center">
+                        <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path('initiationOnline', { 'slug': workshop.slug }) }}">
+                            <figure>
+                                <div class="effect"></div>
+                                <img class="w-100" src="{{ asset('uploads/cover_img/'~workshop.img.url) }}" alt="{{ workshop.img.alt }}">
+                            </figure>
+                        </a>
+                        <div class="infos mt-3 w-100 mw-200">
+                            <h2 class="d-initial"><a href="{{ path('initiationOnline', { 'slug': workshop.slug }) }}">{{ workshop.title | raw }}</a></h2>
+                            <p>
+                                <strong>{{ workshop.Price | replace({".00" : ""}) }}€</strong>
+                            </p>
+                        </div>
+                    </article>
+                <!--end workshop -->
                     {% for content in contents %}
                             <article class="item col-12 col-sm-6 col-md-3 mb-3 d-flex flex-column align-items-center text-center">
                                 <a class="d-flex align-items-center text-center w-100 mw-200" href="{{ path('initiationEvent', { 'slug': content.slug }) }}">
