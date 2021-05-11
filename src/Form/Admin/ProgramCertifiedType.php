@@ -25,6 +25,8 @@ use Symfony\Component\Validator\Constraints\Regex;
 class ProgramCertifiedType extends AbstractType
 {
     const NOTEMPTY_MESSAGE ="Ce champ ne peut pas être vide.";
+    const URL_REGEX = "%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu";
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -81,7 +83,7 @@ class ProgramCertifiedType extends AbstractType
             ])
             ->add('website', UrlType::class, [
                 'constraints' => array(
-                    new Regex("%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu"),
+                    new Regex(self::URL_REGEX),
                 ),
                 'label' => 'Url du site web',
                 'label_html' => true,
@@ -89,7 +91,7 @@ class ProgramCertifiedType extends AbstractType
             ])
             ->add('instagram', UrlType::class, [
                 'constraints' => array(
-                    new Regex("%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu"),
+                    new Regex(self::URL_REGEX),
                 ),
                 'label' => 'Url de la page instagram',
                 'label_html' => true,
@@ -97,7 +99,7 @@ class ProgramCertifiedType extends AbstractType
             ])
             ->add('facebook', UrlType::class, [
                 'constraints' => array(
-                    new Regex("%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu"),
+                    new Regex(self::URL_REGEX),
                 ),
                 'label' => 'Url de la page instagram',
                 'label_html' => true,

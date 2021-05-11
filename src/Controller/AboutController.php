@@ -70,7 +70,7 @@ class AboutController extends AbstractController
      * @param BlogView $blogView
      * @return Response
      */
-    public function podcastsAction( int $page = 1, BlogView $blogView)
+    public function podcastsAction( BlogView $blogView, int $page = 1)
     {
 
         $articles = $blogView->getArticlesByCategory('Podcasts', $page);
@@ -87,7 +87,7 @@ class AboutController extends AbstractController
      * @param BlogView $blogView
      * @return Response
      */
-    public function pressAction(int $page = 1, BlogView $blogView)
+    public function pressAction(BlogView $blogView, int $page = 1)
     {
         $articles = $blogView->getArticlesByCategory('Presse', $page);
         return $this->render('about/press.html.twig', [
