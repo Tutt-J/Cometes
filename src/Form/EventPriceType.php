@@ -75,12 +75,12 @@ class EventPriceType extends AbstractType
         }
 
         $builder->add('agreeTerms', CheckboxType::class, [
-            'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-particulieres-pour-les-evenements-et-sejours">conditions particulières pour les évènements et séjours</a><span class="text-danger"> *</span>' ,
+            'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-particulieres-pour-les-evenements">conditions particulières pour les évènements</a><span class="text-danger"> *</span>' ,
             'label_html' => true,
             'mapped' => false,
             'constraints' => [
                 new IsTrue([
-                    'message' => 'Vous devez accepter nos conditions particulières pour les évènements et séjours.',
+                    'message' => 'Vous devez accepter nos conditions particulières pour les évènements.',
                 ]),
             ],
         ])

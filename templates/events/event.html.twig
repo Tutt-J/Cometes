@@ -99,7 +99,7 @@
                         {{ form_row(form.already) }}
                     {% endif %}
                     {{ form_row(form.agreeTerms, {'attr': {
-                        'oninvalid':"this.setCustomValidity('Vous devez accepter nos conditions particulières pour les évènements et séjours')",
+                        'oninvalid':"this.setCustomValidity('Vous devez accepter nos conditions particulières pour les évènements')",
                         'oninput':"this.setCustomValidity('')"
                     }}
                     ) }}
@@ -122,7 +122,7 @@
             <div class="row">
                 <div class="col-12 text-center text-white">
                     <p><strong>Nota Bene :&nbsp;</strong></p>
-                    <p>Le déroulé des évènements est soumis à un nombre minimum de participantes, informations complémentaires dans nos <a href="{{ path('TOEvent') }}">conditions particulières pour les évènements et séjours</a></p>
+                    <p>Le déroulé des évènements est soumis à un nombre minimum de participantes, informations complémentaires dans nos <a href="{{ path('TOEvent') }}">conditions particulières pour les évènements</a></p>
                 </div>
             </div>
         </div>

@@ -177,7 +177,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("conditions-particulieres-pour-les-evenements-et-sejours", name="TOEvent")
+     * @Route("conditions-particulieres-pour-les-evenements", name="TOEvent")
      *
      * @return Response
      */

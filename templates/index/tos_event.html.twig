@@ -1,98 +1,365 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Conditions particulières pour les évènements et séjours | {{ parent() }}{% endblock %}
-{% block Titre %}Conditions particulières pour les évènements et séjours{% endblock %}
+{% block title %}Conditions particulières pour les évènements | {{ parent() }}{% endblock %}
+{% block Titre %}Conditions particulières pour les évènements{% endblock %}
 
 {% block content %}
 <div class="container py-5">
         <section class="row text-justify">
             <div class="col-12">
-                <h2 class="text-left">Art. 1 - Objet et champ d&rsquo;application des conditions particuli&egrave;res</h2>
-                <p>Les pr&eacute;sentes conditions r&eacute;gissent la vente des prestations &eacute;v&eacute;nementielles et touristiques commercialis&eacute;es par la soci&eacute;t&eacute; CHAMADE. Toute inscription &agrave; l&rsquo;un des &eacute;v&egrave;nements et s&eacute;jours propos&eacute;s ou tout achat de prestation y figurant implique l&rsquo;acceptation sans r&eacute;serve par l&rsquo;acheteur des pr&eacute;sentes conditions g&eacute;n&eacute;rales ci-dessus et des conditions particuli&egrave;res suivantes, qui pr&eacute;valent sur tout autre document.</p>
-                <h2 class="text-left">Art. 2 &ndash; R&eacute;servation d&rsquo;un &eacute;v&egrave;nement ou d&rsquo;un s&eacute;jour</h2>
-                <h3 class="text-left">2.1 L&rsquo;offre</h3>
-                <p>L&rsquo;information donn&eacute;e relativement aux diff&eacute;rentes prestations propos&eacute;es, aux transports, aux s&eacute;jours, aux conditions de paiement et conditions d&rsquo;annulation, constitue l&rsquo;offre pr&eacute;alable au sens de l&rsquo;article L.211-8 du code du Tourisme. La soci&eacute;t&eacute; CHAMADE se r&eacute;serve la possibilit&eacute; de modifier certains &eacute;l&eacute;ments constituant l&rsquo;information pr&eacute;alable.</p>
-                <p>Toute modification des prestations propos&eacute;es qui pourrait survenir avant l&rsquo;inscription du client sera port&eacute;e &agrave; sa connaissance par &eacute;crit, avant la conclusion du contrat, qui seul, en cons&eacute;quence, fera foi des prestations effectivement convenues entre les parties.</p>
-                <p>Activit&eacute;s sportives et cures : CHAMADE attire l&rsquo;attention du b&eacute;n&eacute;ficiaire sur la n&eacute;cessit&eacute; de s&rsquo;enqu&eacute;rir, avant la commande de la Prestation, de son aptitude &agrave; en b&eacute;n&eacute;ficier en prenant toutes les pr&eacute;cautions que son &eacute;tat de sant&eacute; impose, de sorte que la responsabilit&eacute; de la soci&eacute;t&eacute; CHAMADE ne saurait &ecirc;tre engag&eacute;e en cas d'incident ou d'accident.</p>
-                <h3 class="text-left">2.2 R&eacute;servation</h3>
-                <p>Les ventes de prestations &eacute;v&eacute;nementielles et touristiques ne sont pas soumises &agrave; l&rsquo;application du droit de r&eacute;tractation pr&eacute;vu aux articles L 121-21 et suivants du code de la consommation en mati&egrave;re de vente &agrave; distance</p>
-                <p>Par cons&eacute;quence, toute r&eacute;servation d&rsquo;un &eacute;v&egrave;nement, s&eacute;jour ou d&rsquo;une autre prestation touristique r&eacute;alis&eacute;e aupr&egrave;s de CHAMADE est d&eacute;finitive pour le client. L&rsquo;annulation ne sera possible que dans les conditions d&rsquo;annulation mentionn&eacute;es dans l&rsquo;article 5 ci-apr&egrave;s.</p>
-                <p>La remise des documents de voyage et toute information relative &agrave; l&rsquo;&eacute;v&egrave;nement ou au s&eacute;jour r&eacute;serv&eacute; s&rsquo;effectuant par courrier &eacute;lectronique, le client devra communiquer, lors de son inscription, une adresse &eacute;lectronique valable et consulter r&eacute;guli&egrave;rement sa bo&icirc;te mail.</p>
-                <p>Le client doit informer CHAMADE, par &eacute;crit et pr&eacute;alablement &agrave; toute r&eacute;servation, de toute particularit&eacute; le concernant et susceptible d&rsquo;affecter le bon d&eacute;roulement de l&rsquo;&eacute;v&egrave;nement ou du s&eacute;jour.</p>
-                <p>L&rsquo;inscription du client &agrave; l&rsquo;&eacute;v&egrave;nement ou au s&eacute;jour ne sera effective et n&rsquo;engagera la soci&eacute;t&eacute; CHAMADE qu&rsquo;apr&egrave;s la confirmation par celle-ci de la disponibilit&eacute; des produits r&eacute;serv&eacute;s. Cette confirmation sera adress&eacute;e au client par courrier &eacute;lectronique.</p>
-                <p><strong>Attention :&nbsp;</strong></p>
-                <p>Les prestations propos&eacute;es sont soumises &agrave; un nombre minimum de participants.</p>
-                <p>Si le nombre minimum de participants est atteint au moment o&ugrave; l&rsquo;Utilisateur valide sa commande, l&rsquo;inscription est d&eacute;finitive. Le client recevra au pr&eacute;alable un mail de confirmation de commande, et &agrave; la suite un mail confirmant l&rsquo;&eacute;v&egrave;nement ou le d&eacute;part du s&eacute;jour, et recevra toutes les informations n&eacute;cessaires &agrave; l&rsquo;organisation de ce dernier. </p>
-                <p>Si le nombre minimum de participants n&rsquo;est pas atteint au moment de la r&eacute;servation par l&rsquo;Utilisateur, la demande de l&rsquo;utilisateur restera en option jusqu&rsquo;au moment o&ugrave; le nombre minimal requis sera atteint.</p>
-                <p>En cas de non atteinte du nombre minimum de participants, comme en cas d&rsquo;indisponibilit&eacute; de tout ou partie des prestations r&eacute;serv&eacute;es, le client en sera imm&eacute;diatement inform&eacute; et sa demande de r&eacute;servation sera consid&eacute;r&eacute;e comme caduque. La somme pay&eacute;e par le client lui sera alors int&eacute;gralement rembours&eacute;e sans qu&rsquo;il puisse pr&eacute;tendre &agrave; une quelconque indemnit&eacute;. </p>
-                <h2 class="text-left">Art. 3 &ndash; Le prix</h2>
-                <p>Les prix mentionn&eacute;s sont indicatifs et s&rsquo;entendent toutes taxes comprises, lesquelles sont incluses dans le prix affich&eacute; pour leur montant connu au jour de la consultation, qui pourra &ecirc;tre diff&eacute;rent de celui pris en compte lors de la r&eacute;servation. Toute modification des taxes (TVA, taxes a&eacute;riennes, etc.) sera &eacute;galement r&eacute;percut&eacute;e sur le prix des prestations au jour de la r&eacute;servation ou r&eacute;troactivement selon les dispositions l&eacute;gales.</p>
-                <p>Sauf mention contraire du descriptif, le prix affich&eacute; pour un voyage est forfaitaire et ne comprend jamais :</p>
-                <ul>
-                    <li>le transport</li>
-                    <li>les taxes de s&eacute;jour, taxe touristique, frais de visa,</li>
-                    <li>les extras, les taxis, les pourboires et frais de porteur,</li>
-                    <li>les assurances.</li>
+                <h2 class="text-left">
+                    Art. 1 - Objet et champ d’application des conditions particulières
+                </h2>
+                <p>
+                    Les présentes conditions régissent la vente des prestations événementielles
+                    commercialisées par la société CHAMADE (Retraites, Ateliers, Cercles,
+                    Rituels et Formations).
+                </p>
+                <p>
+                    Toute inscription à l’un des évènements proposés ou tout achat de
+                    prestation y figurant implique l’acceptation sans réserve par l’acheteur
+                    des présentes conditions générales de Chamade SAS et des conditions
+                    particulières suivantes, qui prévalent sur tout autre document.
+                </p>
+                <h2 class="text-left">
+                    Art. 2 – Réservation d’un évènement
+                </h2>
+                <h3>
+                    2.1 L’offre
+                </h3>
+                <p>
+                    L’information donnée relativement aux différentes prestations proposées est
+                    susceptible d’être modifiée.
+                </p>
+                <p>
+                    Toute modification des prestations proposées qui pourrait survenir avant
+                    l’inscription du client sera portée à sa connaissance par écrit, avant la
+                    conclusion du contrat, qui seul, en conséquence, fera foi des prestations
+                    effectivement convenues entre les parties.
+                </p>
+                <p>
+                    Activités sportives et soins : CHAMADE attire l’attention du bénéficiaire
+                    sur la nécessité de s’enquérir, avant la commande de la Prestation, de son
+                    aptitude à en bénéficier en prenant toutes les précautions que son état de
+                    santé impose, de sorte que la responsabilité de la société CHAMADE ne
+                    saurait être engagée en cas d'incident ou d'accident.
+                </p>
+                <h3>
+                    2.2 Réservation
+                </h3>
+                <p>
+                    Les ventes de prestations événementielles ne sont pas soumises à
+                    l’application du droit de rétractation prévu aux articles L 121-21 et
+                    suivants du code de la consommation en matière de vente à distance.
+                </p>
+                <p>
+                    Par conséquent, toute réservation d’un évènement réalisée auprès de CHAMADE
+                    est définitive pour le client. L’annulation ne sera possible que dans les
+                    conditions d’annulation mentionnées dans l’article 5 ci-après.
+                </p>
+                <p>
+                    La remise des documents et informations relatives à l’évènement réservé
+                    s’effectuant par courrier électronique, le client devra communiquer, lors
+                    de son inscription, une adresse électronique valable et consulter
+                    régulièrement sa boîte mail.
+                </p>
+                <p>
+                    Le client doit informer CHAMADE, par écrit et préalablement à toute
+                    réservation, de toute particularité le concernant et susceptible d’affecter
+                    le bon déroulement de l’évènement.
+                </p>
+                <p>
+                    L’inscription du client à l’évènement ne sera effective et n’engagera la
+                    société CHAMADE qu’après la confirmation par celle-ci de la disponibilité
+                    des produits réservés. Cette confirmation sera adressée au client par
+                    courrier électronique.
+                </p>
+                <p>
+                    <strong>Attention : </strong>
+                </p>
+                <p>
+                    Les prestations proposées sont soumises à un nombre minimum de
+                    participants.
+                </p>
+                <p>
+                    Si le nombre minimum de participants est atteint au moment où l’Utilisateur
+                    valide sa commande, l’inscription est définitive. Le client recevra au
+                    préalable un mail de confirmation de commande, et à la suite un mail
+                    confirmant l’évènement, et recevra toutes les informations nécessaires à
+                    l’organisation de ce dernier.
+                </p>
+                <p>
+                    Si le nombre minimum de participants n’est pas atteint au moment de la
+                    réservation par l’Utilisateur, la demande de l’utilisateur restera en
+                    option jusqu’au moment où le nombre minimal requis sera atteint.
+                </p>
+                <p>
+                    En cas de non atteinte du nombre minimum de participants, comme en cas
+                    d’indisponibilité de tout ou partie des prestations réservées, le client en
+                    sera immédiatement informé et sa demande de réservation sera considérée
+                    comme caduque. La somme payée par le client lui sera alors intégralement
+                    remboursée sans qu’il puisse prétendre à une quelconque indemnité.
+                </p>
+                <h2 class="text-left">
+                    Art. 3 – Le prix
+                </h2>
+                <p>
+                    Les prix mentionnés sont indicatifs et s’entendent toutes taxes comprises,
+                    lesquelles sont incluses dans le prix affiché pour leur montant connu au
+                    jour de la consultation, qui pourra être différent de celui pris en compte
+                    lors de la réservation. Toute modification des taxes (TVA, taxes aériennes,
+                    etc.) sera également répercutée sur le prix des prestations au jour de la
+                    réservation ou rétroactivement selon les dispositions légales.
+                </p>
+                <p>
+                    Sauf mention contraire du descriptif, le prix affiché pour un évènement est
+                    forfaitaire et ne comprend jamais :
+                </p>
+                <ul type="disc">
+                    <li>
+                        Le transport
+                    </li>
+                    <li>
+                        L’hébergement,
+                    </li>
+                    <li>
+                        La restauration,
+                    </li>
+                    <li>
+                        Les taxes de séjour, taxe touristique, frais de visa,
+                    </li>
+                    <li>
+                        Les extras, les taxis, les pourboires et frais de porteur,
+                    </li>
+                    <li>
+                        Les assurances.
+                    </li>
                 </ul>
-                <p>Le prix &agrave; payer par le client sera confirm&eacute; au moment de son inscription et mentionn&eacute; sur le contrat.</p>
-                <h3 class="text-left">Art. 4 &ndash; Modalit&eacute;s de paiement</h3>
-                <h3 class="text-left">4.1 Paiement</h3>
-                <p>Le r&egrave;glement de la prestation touristique achet&eacute;e se fait dans les conditions vues aux CGV ci-dessus, mais aussi par virement bancaire sur le compte de CHAMADE IBAN&nbsp;: FR76 1810 6000 3396 7640 2480 702</p>
-                <p>BIC&nbsp;: AGRIFRPP881</p>
-                <p>La totalit&eacute; du montant du s&eacute;jour est exig&eacute;e lors de votre inscription.</p>
-                <h3 class="text-left">4.2 D&eacute;faut de paiement</h3>
-                <p>Le non-paiement du prix de l&rsquo;&eacute;v&egrave;nement ou du voyage &agrave; l'&eacute;ch&eacute;ance autorisera CHAMADE &agrave; consid&eacute;rer l&rsquo;&eacute;v&egrave;nement ou le voyage comme annul&eacute; du fait du client au jour du d&eacute;part et en cons&eacute;quence &agrave; facturer &agrave; ce dernier l&rsquo;int&eacute;gralit&eacute; des frais d&rsquo;annulation normalement dus &agrave; cette date, soit 100% des frais.</p>
-                <h2 class="text-left">Art. 5 &ndash; Modification ou annulation par le client&nbsp;</h2>
-                <p>Toute demande du client visant &agrave; la modification ou l&rsquo;annulation de sa r&eacute;servation devra &ecirc;tre adress&eacute;e par mail &agrave; la soci&eacute;t&eacute; CHAMADE &agrave; l&rsquo;adresse suivante : hello@chamade.co.</p>
-                <p>Toute modification est soumise &agrave; l&rsquo;accord de la soci&eacute;t&eacute; CHAMADE et aux disponibilit&eacute;s existantes. En cas d&rsquo;impossibilit&eacute; d&rsquo;apporter la modification souhait&eacute;e, le contrat initial restera alors applicable.</p>
-                <h3 class="text-left">5.1 Frais en cas d&rsquo;annulation</h3>
-                <p>Le client peut &agrave; tout moment r&eacute;silier le contrat avant le voyage. La raison de l&rsquo;annulation doit &ecirc;tre imp&eacute;rativement donn&eacute;e &agrave; CHAMADE. Il est recommand&eacute; au client de notifier cette annulation par &eacute;crit. Si le client r&eacute;silie le contrat de voyage/d&rsquo;h&eacute;bergement ou s&rsquo;il ne participe pas au voyage, CHAMADE pourra exiger un d&eacute;dommagement pour les d&eacute;marches entreprises et pour les frais engag&eacute;s.</p>
-                <p><strong>Frais d'annulation pour les &eacute;v&egrave;nements et prestations touristiques sans transports a&eacute;riens en % du montant total du voyage :</strong>&nbsp;</p>
-                <ul>
-                    <li>&agrave; plus de 60 jours du d&eacute;part : 10% + frais de dossier</li>
-                    <li>entre 60 jours et 46 jours avant la date de d&eacute;part : 30% + frais de dossier</li>
-                    <li>entre 45 jours et 30 jours avant la date de d&eacute;part : 50% + frais de dossier</li>
-                    <li>moins de 30 jours avant la date de d&eacute;part ou non-pr&eacute;sentation : 100% + frais de dossier</li>
+                <p>
+                    Le prix à payer par le client sera confirmé au moment de son inscription et
+                    mentionné sur le contrat.
+                </p>
+                <h2 class="text-left">
+                    Art. 4 – Modalités de paiement
+                </h2>
+                <h3>
+                    4.1 Paiement
+                </h3>
+                <p>
+                    Le règlement de la prestation achetée se fait dans les conditions vues aux
+                    CGV ci-dessus, mais aussi par virement bancaire sur le compte de CHAMADE
+                    IBAN : FR76 1810 6000 3396 7640 2480 702
+                </p>
+                <p>
+                    BIC : AGRIFRPP881
+                </p>
+                <p>
+                    La totalité du montant de l’évènement est exigée lors de votre inscription.
+                </p>
+                <h3>
+                    4.2 Défaut de paiement
+                </h3>
+                <p>
+                    Le non-paiement du prix de l’évènement à l'échéance autorisera CHAMADE à
+                    considérer l’évènement comme annulé du fait du client au jour du départ et
+                    en conséquence à facturer à ce dernier l’intégralité des frais d’annulation
+                    normalement dus à cette date, soit 100% des frais.
+                </p>
+                <h2 class="text-left">
+                    Art. 5 – Modification ou annulation par le client
+                </h2>
+                <p>
+                    Toute demande du client visant à la modification ou l’annulation de sa
+                    réservation devra être adressée par mail à la société CHAMADE à l’adresse
+                    suivante : hello@chamade.co.
+                </p>
+                <p>
+                    Toute modification est soumise à l’accord de la société CHAMADE et aux
+                    disponibilités existantes. En cas d’impossibilité d’apporter la
+                    modification souhaitée, le contrat initial restera alors applicable.
+                </p>
+                <h3>
+                    5.1 Frais en cas d’annulation
+                </h3>
+                <p>
+                    Le client peut à tout moment résilier le contrat avant l’évènement. La
+                    raison de l’annulation doit être impérativement donnée à CHAMADE. Il est
+                    recommandé au client de notifier cette annulation par écrit. Si le client
+                    résilie le contrat ou s’il ne participe pas à l’évènement, CHAMADE pourra
+                    exiger un dédommagement pour les démarches entreprises et pour les frais
+                    engagés.
+                </p>
+                <p>
+                    <strong>
+                        Frais d'annulation pour les évènements en % du montant total de
+                        l’évènement :
+                    </strong>
+                </p>
+                <ul type="disc">
+                    <li>
+                        à plus de 60 jours de l’évènement : 10% + frais de dossier
+                    </li>
+                    <li>
+                        entre 60 jours et 46 jours avant la date de l’évènement: 30% + frais de
+                        dossier
+                    </li>
+                    <li>
+                        entre 45 jours et 30 jours avant la date de l’évènement: 50% + frais de
+                        dossier
+                    </li>
+                    <li>
+                        moins de 30 jours avant la de l’évènement ou non-présentation : 100% +
+                        frais de dossier
+                    </li>
                 </ul>
-                <h3 class="text-left">5.2 Cession de contrat&nbsp;</h3>
-                <p>Toute cession d'un contrat de voyage r&eacute;alis&eacute;e dans les conditions pr&eacute;vues &agrave; l'article R 211-7 du Code du Tourisme entra&icirc;nera des frais dont le montant pourra aller jusqu&rsquo;&agrave; la totalit&eacute; du prix du voyage selon la date de d&eacute;part et le transport utilis&eacute;. Le c&eacute;dant est tenu d'informer la soci&eacute;t&eacute; CHAMADE de sa d&eacute;cision par mail adress&eacute; &agrave; hello@chamade.co au plus tard sept jours avant le d&eacute;but du voyage.</p>
-                <h3 class="text-left">5.3 Interruption du voyage ou du s&eacute;jour par le client</h3>
-                <p>Tout voyage ou s&eacute;jour, &eacute;v&egrave;nement, interrompu ou abr&eacute;g&eacute; ou toute prestation non-consomm&eacute;e quelle que soit la cause, hors le cas de la force majeure tel que d&eacute;fini &agrave; l&rsquo;article 8 ci-apr&egrave;s ou le fait de CHAMADE ou d&rsquo;un de ses prestataires, ne donnera lieu &agrave; aucun remboursement, m&ecirc;me en cas de rapatriement.</p>
-                <p>Si CHAMADE doit annuler un d&eacute;part ou &eacute;v&egrave;nement pour quelque motif que ce soit, les personnes d&eacute;j&agrave; inscrites seront int&eacute;gralement rembours&eacute;es, sans pouvoir pr&eacute;tendre &agrave; aucune indemnit&eacute;. Si un nombre insuffisant de participants est inscrit sur un d&eacute;part, CHAMADE peut annuler le voyage au plus tard 15 jours avant le d&eacute;part.</p>
-                <p>En cas d&rsquo;annulation, CHAMADE remboursera au client toutes les sommes vers&eacute;es par celui-ci lors de sa r&eacute;servation &agrave; l&rsquo;exclusion de toutes autres. Tous les frais engag&eacute;s pr&eacute;alablement par le client, tels que frais de visas, frais de transport, de pr&eacute; et post acheminement (achats de titres de transport a&eacute;rien ferroviaire, maritime ou autres), frais de vaccination, etc., ne pourront donner lieu &agrave; un quelconque remboursement ou &agrave; indemnisation.</p>
-                <h2 class="text-left">Art.6 &ndash; Formalit&eacute;s</h2>
-                <p>Il est de la seule responsabilit&eacute; du client de v&eacute;rifier que les diff&eacute;rents documents n&eacute;cessaires &agrave; son voyage, &agrave; la consommation d&rsquo;une prestation ou &agrave; un embarquement (carte nationale d&rsquo;identit&eacute; ou passeport, permis de conduire, etc.,) sont en cours de validit&eacute;. La pi&egrave;ce d&rsquo;identit&eacute; utilis&eacute;e doit &ecirc;tre au m&ecirc;me nom que le billet de transport. Le non-respect par le voyageur des obligations administratives et/ou sanitaires de franchissement des fronti&egrave;res qui aurait pour cons&eacute;quence notamment un refus d&rsquo;embarquement ou une interruption du s&eacute;jour ou du voyage, ne pourra justifier un quelconque remboursement ou d&eacute;dommagement.</p>
-                <h2 class="text-left">Art.7 &ndash; Cas de force majeure</h2>
-                <p>En cas de force majeure rendant impossible l&rsquo;ex&eacute;cution de la prestation, CHAMADE pr&eacute;viendra le client par tous moyens, notamment par t&eacute;l&eacute;phone et courrier &eacute;lectronique. Le contrat de voyage sera alors suspendu de plein droit sans indemnit&eacute;, &agrave; compter de la date de survenance de l'&eacute;v&eacute;nement.</p>
-                <p><br /> Si l&rsquo;&eacute;v&egrave;nement ou le voyage ne pouvait pas &ecirc;tre effectu&eacute; ou continu&eacute;, le contrat de voyage serait r&eacute;solu et le voyageur ne pourrait alors pr&eacute;tendre &agrave; un quelconque d&eacute;dommagement. CHAMADE reversera cependant toute somme non-d&eacute;pens&eacute;e et qu&rsquo;elle d&eacute;tiendrait encore, ou dont elle aurait obtenu le remboursement au nom et pour le compte du client.</p>
-                <h2 class="text-left">Art.8 &ndash; Assurances</h2>
-                <p>Aucune assurance ou assistance rapatriement n&rsquo;est incluse dans les forfaits voyage vendus. En cas d&rsquo;annulation du voyage ou du s&eacute;jour par le client, la prime d&rsquo;assurance n&rsquo;est jamais remboursable.</p>
-                <h2 class="text-left">Art.9 - R&eacute;clamations</h2>
-                <p>Toute r&eacute;clamation concernant les conditions de s&eacute;jour doit &ecirc;tre faite sans d&eacute;lai, sur place et par &eacute;crit, aupr&egrave;s des r&eacute;ceptifs responsables du s&eacute;jour et aupr&egrave;s de CHAMADE &agrave; l&rsquo;adresse hello@chamade.co pour traitement imm&eacute;diat.&nbsp;</p>
-                <p>Apr&egrave;s avoir interrog&eacute; la soci&eacute;t&eacute; CHAMADE et &agrave; d&eacute;faut de r&eacute;ponse satisfaisante dans un d&eacute;lai de 60 jours, le client pourra saisir le m&eacute;diateur du Tourisme et du Voyage &agrave; l&rsquo;adresse suivante : M&eacute;diation Tourisme et Voyage (MTV) BP 80303 75823 Paris Cedex 17 (www.mtv.travel)</p>
-                <h2 class="text-left">Article 10 : Dispositions compl&eacute;mentaires</h2>
-                <p><strong>10.1 Responsabilit&eacute;s&nbsp;:</strong></p>
-                <p>La SAS Chamade et ses intervenantes d&eacute;clinent toute responsabilit&eacute; pour les &eacute;ventuels vols ou dommages caus&eacute;s aux biens des participantes.</p>
-                <p>La SAS Chamade et ses intervenantes d&eacute;clinent toute responsabilit&eacute; pour les &eacute;ventuels dommages corporels et mat&eacute;riels caus&eacute;s par les participantes.</p>
-                <ul>
-                    <li><strong>D&eacute;clarations sur l&rsquo;honneur&nbsp;:</strong></li>
+                <h3>
+                    5.2 Cession de contrat
+                </h3>
+                <p>
+                    Le contrat étant conclu intuitu personae, il ne peut être cédé.
+                </p>
+                <h3>
+                    5.3 Interruption de l’évènement par le client
+                </h3>
+                <p>
+                    Tout évènement, interrompu ou abrégé ou toute prestation non-consommée
+                    quelle que soit la cause, hors le cas de la force majeure tel que défini à
+                    l’article 8 ci-après ou le fait de CHAMADE ou d’un de ses prestataires, ne
+                    donnera lieu à aucun remboursement.
+                </p>
+                <p>
+                    Si CHAMADE doit annuler un évènement pour quelque motif que ce soit, les
+                    personnes déjà inscrites seront intégralement remboursées, sans pouvoir
+                    prétendre à aucune indemnité. Si un nombre insuffisant de participants est
+                    inscrit sur un départ, CHAMADE peut annuler l’évènement au plus tard 15
+                    jours avant le départ.
+                </p>
+                <p>
+                    En cas d’annulation, CHAMADE remboursera au client toutes les sommes
+                    versées par celui-ci lors de sa réservation à l’exclusion de toutes autres.
+                    Tous les frais engagés préalablement par le client, tels que frais de
+                    logement, visas, frais de transport, de pré et post acheminement (achats de
+                    titres de transport aérien ferroviaire, maritime ou autres), frais de
+                    vaccination, etc., ne pourront donner lieu à un quelconque remboursement ou
+                    à indemnisation.
+                </p>
+                <h2 class="text-left">
+                    Art.6 – Formalités
+                </h2>
+                <p>
+                    Il est de la seule responsabilité du client de vérifier que les différents
+                    documents nécessaires à sa participation à l’évènement sont en cours de
+                    validité.
+                </p>
+                <h2 class="text-left">
+                    Art.7 – Cas de force majeure
+                </h2>
+                <p>
+                    En cas de force majeure rendant impossible l’exécution de la prestation,
+                    CHAMADE préviendra le client par tous moyens, notamment par téléphone et
+                    courrier électronique. Le contrat sera alors suspendu de plein droit sans
+                    indemnité, à compter de la date de survenance de l'événement.
+                </p>
+                <p>
+                    <br/>
+                    Si l’évènement ne pouvait pas être effectué ou continué, le contrat serait
+                    résolu et le participant ne pourrait alors prétendre à un quelconque
+                    dédommagement. CHAMADE reversera cependant toute somme non-dépensée et
+                    qu’elle détiendrait encore, ou dont elle aurait obtenu le remboursement au
+                    nom et pour le compte du client.
+                </p>
+                <h2 class="text-left">
+                    Art.8 – Assurances
+                </h2>
+                <p>
+                    Aucune assurance ou assistance n’est incluse avec les évènements vendus.
+                </p>
+                <h2 class="text-left">
+                    Art.9 - Réclamations
+                </h2>
+                <p>
+                    Toute réclamation concernant les conditions d’évènements doit être faite
+                    sans délai, sur place et par écrit, auprès des réceptifs responsables de
+                    l’évènement et auprès de CHAMADE à l’adresse hello@chamade.co pour
+                    traitement immédiat.
+                </p>
+                <p>
+                    Après avoir interrogé la société CHAMADE et à défaut de réponse
+                    satisfaisante dans un délai de 60 jours, le client pourra entrer en contact
+                    avec la plateforme de résolution des litiges mise en ligne par la
+                    Commission Européenne à l'adresse suivante :
+                    <a href="http://ec.europa.eu/consumers/odr/">
+                        http://ec.europa.eu/consumers/odr/
+                    </a>
+                    .
+                </p>
+                <p>
+                    Article 10 : Dispositions complémentaires
+                </p>
+                <h3>
+                    10.1 Responsabilités :
+                </h3>
+                <p>
+                    La SAS Chamade et ses intervenants déclinent toute responsabilité pour les
+                    éventuels vols ou dommages causés aux biens des participantes.
+                </p>
+                <p>
+                    La SAS Chamade et ses intervenantes déclinent toute responsabilité pour les
+                    éventuels dommages corporels et matériels causés par les participantes.
+                </p>
+                <ul type="disc">
+                    <li>
+                        <strong>Déclarations sur l’honneur :</strong>
+                    </li>
                 </ul>
-                <p><strong>En r&eacute;servant un &eacute;v&egrave;nement ou un s&eacute;jour, je d&eacute;clare&nbsp;:</strong></p>
-                <ul>
-                    <li>&Ecirc;tre apte &agrave; participer &agrave; l&rsquo;&eacute;v&egrave;nement ou au s&eacute;jour, tant sur le plan de ma sant&eacute; mentale que physique.</li>
-                    <li>Ne pas &ecirc;tre au b&eacute;n&eacute;fice de traitements m&eacute;dicaux incompatibles avec ma participation &agrave; l&rsquo;&eacute;v&egrave;nement ou au s&eacute;jour.</li>
-                    <li>Participer volontairement et sous ma propre responsabilit&eacute; &agrave; l&rsquo;&eacute;v&egrave;nement ou au s&eacute;jour.</li>
-                    <li>Je reconnais que les &eacute;v&egrave;nement et s&eacute;jours de Chamade ne sont pas organis&eacute;s &agrave; des fins m&eacute;dicales et que les animateurs ne sont ni des m&eacute;decins ni des praticiens de la sant&eacute; physique et mentale.</li>
-                    <li>&Ecirc;tre au b&eacute;n&eacute;fice d&rsquo;une assurance responsabilit&eacute; civile en cours de validit&eacute;.</li>
+                <p>
+                    <strong>En réservant un évènement, je déclare :</strong>
+                </p>
+                <ul type="disc">
+                    <li>
+                        Être apte à participer à l’évènement, tant sur le plan de ma santé
+                        mentale que physique.
+                    </li>
+                    <li>
+                        Ne pas être au bénéfice de traitements médicaux incompatibles avec ma
+                        participation à l’évènement.
+                    </li>
+                    <li>
+                        Participer volontairement et sous ma propre responsabilité à
+                        l’évènement.
+                    </li>
+                    <li>
+                        Je reconnais que les évènement de Chamade ne sont pas organisés à des
+                        fins médicales et que les animateurs ne sont ni des médecins ni des
+                        praticiens de la santé physique et mentale.
+                    </li>
+                    <li>
+                        Être au bénéfice d’une assurance responsabilité civile en cours de
+                        validité.
+                    </li>
                 </ul>
-                <p><strong>En r&eacute;servant un &eacute;v&egrave;nement ou un s&eacute;jour, je m&rsquo;engage &agrave;&nbsp;:</strong></p>
-                <ul>
-                    <li>Participer &agrave; l&rsquo;&eacute;v&egrave;nement ou au s&eacute;jour dans un &eacute;tat d&rsquo;esprit de bienveillance, d&rsquo;ouverture et de tol&eacute;rance.</li>
-                    <li>Suivre les directives et instructions qui me seront communiqu&eacute;es lors de l&rsquo;&eacute;v&egrave;nement ou du s&eacute;jour.</li>
-                    <li>Participer au programme propos&eacute; dans le respect de mes propres limites.</li>
-                    <li>Indiquer aux organisateurs et animateurs, toute difficult&eacute; susceptible de compromettre ma sant&eacute;, celle des autres ou le bon d&eacute;roulement de l&rsquo;&eacute;v&egrave;nement ou du s&eacute;jour en cours de route.</li>
-                    <li>Respecter la confidentialit&eacute; de l&rsquo;&eacute;v&egrave;nement et j&rsquo;accepte que toute information concernant l'identit&eacute;, la vie priv&eacute;e et le comportement de toutes les personnes pr&eacute;sentes &agrave; l&rsquo;&eacute;v&egrave;nement ou au s&eacute;jour est strictement confidentielle et je m'engage &agrave; ne divulguer aucune information de cette nature &agrave; quelque fin que ce soit, que ce soit pendant ou apr&egrave;s ma participation &agrave; cet &eacute;v&egrave;nement ou s&eacute;jour.</li>
-                    <li>J&rsquo;accepte que la SAS CHAMADE et ses intervenantes se r&eacute;servent le droit de me demander de quitter l&rsquo;&eacute;v&egrave;nement ou le s&eacute;jour si mon comportement est inappropri&eacute; ou contraire &agrave; l'&eacute;thique du s&eacute;jour. Dans ce cas, le tarif de l&rsquo;&eacute;v&egrave;nement ou du s&eacute;jour ne me sera pas rembours&eacute;.</li>
+                <p>
+                    <strong>En réservant un évènement, je m’engage à :</strong>
+                </p>
+                <ul type="disc">
+                    <li>
+                        Participer à l’évènement dans un état d’esprit de bienveillance, d’ouverture et de tolérance.
+                    </li>
+                    <li>
+                        Suivre les directives et instructions qui me seront communiquées lors de l’évènement.
+                    </li>
+                    <li>
+                        Participer au programme proposé dans le respect de mes propres limites.
+                    </li>
+                    <li>
+                        Indiquer aux organisateurs et animateurs, toute difficulté susceptible de compromettre ma santé, celle des autres ou le bon déroulement de l’évènement.
+                    </li>
+                    <li>
+                        Respecter la confidentialité de l’évènement et reconnaître que toute information concernant l'identité, la vie privée et le comportement de toutes les personnes présentes à l’évènement est strictement confidentielle et je m'engage à ne divulguer aucune information de cette nature à quelque fin que ce soit, que ce soit pendant ou après ma participation à cet évènement.
+                    </li>
+                    <li>
+                        J’accepte que la SAS CHAMADE et ses intervenantes se réservent le droit de me demander de quitter l’évènement si mon comportement est inapproprié ou contraire à l'éthique de l’évènement. Dans ce cas, le tarif de l’évènement ne me sera pas remboursé.
+                    </li>
                 </ul>
 
             </div>
