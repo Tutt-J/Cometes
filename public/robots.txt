@@ -14,7 +14,7 @@ Disallow: /mentions-legales
 Disallow: /politique-des-cookies-ue
 Disallow: /politique-de-confidentialite
 Disallow: /conditions-generales-de-vente
-Disallow: /conditions-particulieres-pour-les-evenements-et-sejours
+Disallow: /conditions-particulieres-pour-les-evenements
 Disallow: /envoyer-un-mail
 Disallow: /cookies
 Disallow: /mot-de-passe-oublie

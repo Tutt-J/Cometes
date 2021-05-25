@@ -91,10 +91,17 @@ class AstrologyController extends AbstractController
             ->getRepository(Event::class)
             ->findBecomeEvents($eventsAdministrator->getType('initiation'));
 
+        $workshop = $this->getDoctrine()
+            ->getRepository(Content::class)
+            ->findOneBy(
+                ['id' => 34]
+            );
+
         return $this->render(
             'astrology/initiations.html.twig',
             [
                 'contents' => $initiations,
+                'workshop' => $workshop
             ]
         );
 

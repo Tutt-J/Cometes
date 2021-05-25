@@ -1,14 +1,10 @@
 <?php
 namespace App\Controller\Admin;
 
-use App\Entity\Article;
-use App\Entity\Content;
 use App\Entity\Program;
 use App\Entity\ProgramCertified;
-use App\Form\Admin\ArticleType;
-use App\Form\Admin\ContentType;
+use App\Form\Admin\ProgramCertifiedType;
 use App\Form\Admin\ProgramType;
-use App\Form\ProgramCertifiedType;
 use App\Service\Admin\AdminDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
