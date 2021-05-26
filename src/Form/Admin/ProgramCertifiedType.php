@@ -97,7 +97,7 @@ class ProgramCertifiedType extends AbstractType
                 'constraints' => array(
                     new Regex(self::URL_REGEX),
                 ),
-                'label' => 'Url de la page instagram',
+                'label' => 'Url de la page facebook',
                 'label_html' => true,
                 'required' => false
             ])

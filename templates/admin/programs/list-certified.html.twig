@@ -42,7 +42,7 @@
                         <td data-sort="{{cert.createdAt |date("Y/m/d")}}">{{cert.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td data-sort="{{cert.updatedAt |date("Y/m/d")}}">{{cert.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td>
-                            <a href="{{ path('updateCertifiedProgramAdmin', {'id':program.id, 'cert':program.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
+                            <a href="{{ path('updateCertifiedProgramAdmin', {'program':program.id, 'programCertified':cert.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
                             <p data-title="{{ cert.name }}" data-id="{{ cert.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>
                         </td>
                     </tr>

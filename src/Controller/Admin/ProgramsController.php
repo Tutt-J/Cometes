@@ -18,7 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  * @package App\Controller
  *
  * @IsGranted("ROLE_ADMIN")
-*/
+ */
 class ProgramsController extends AbstractController
 {
 
@@ -178,7 +178,7 @@ class ProgramsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/programmes/{id}/certifiées/{cert}/modifier", name="updateCertifiedProgramAdmin")
+     * @Route("/admin/programmes/{program}/certifiées/{programCertified}/modifier", name="updateCertifiedProgramAdmin")
      *
      * @param Program $program
      * @param ProgramCertified $programCertified
