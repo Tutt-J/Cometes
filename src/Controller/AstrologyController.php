@@ -125,22 +125,4 @@ class AstrologyController extends AbstractController
     {
         return $eventsAdministrator->renderEventPage($event);
     }
-
-
-    /**
-     * @Route("/astrologie/initiations/{slug}",
-     * name="initiationOnline",
-     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
-     *
-     * @param $slug
-     * @param ContentOnlineAdministrator $contentOnlineAdministrator
-     * @return Response
-     */
-    public function introWorkshopAction($slug, ContentOnlineAdministrator $contentOnlineAdministrator)
-    {
-        return $this->render(
-            'online/content.html.twig',
-            $contentOnlineAdministrator->generateContent($slug, 'initiation')
-        );
-    }
 }
