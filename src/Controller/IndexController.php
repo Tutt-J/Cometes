@@ -2,6 +2,7 @@
 // src/Controller/IndexController.php
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Form\ContactType;
 use App\Service\EventsAdministrator;
 use App\Service\MailchimpAdministrator;
@@ -36,11 +37,22 @@ class IndexController extends AbstractController
     public function indexAction(EventsAdministrator $eventAdministrator)
     {
         $events=$eventAdministrator->getThreeNextEvents();
+        $press=$this->getDoctrine()
+            ->getRepository(Article::class)
+            ->findBy(
+                [
+                    'category' => 15,
+                    'isOnline' => 1
+                    ],
+                ['id' => "DESC"],
+                3
+            );
 
         return $this->render(
             'index/index.html.twig',
             [
-            'events' => $events,
+                'events' => $events,
+                'press' => $press
             ]
         );
     }

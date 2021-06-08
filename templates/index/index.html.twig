@@ -112,6 +112,35 @@
     </section>
     {# END LAST PODCATS #}
 
+    {# LAST PRESS #}
+    <section class="container-fluid p-0 mb-5">
+        <header class="py-4 background-green mb-5 mt-4 text-center col-12">
+            <h2 class="m-0">Chamade dans la presse</h2>
+        </header>
+        <div class="container my-5">
+            <div class="row list full-height-list justify-content-around flex-wrap">
+                {% for article in press %}
+                    <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">
+                        <a class="d-flex align-items-center text-center w-100 w-md-75 mw-200" href="{{ path('blogArticle', { 'slug': article.slug }) }}">
+                            <figure>
+                                <div class="effect"></div>
+                                <img class="w-100" src="{{ asset('uploads/cover_img/'~article.img.url) }}" alt="{{ article.img.alt }}">
+                            </figure>
+                        </a>
+                        <div class="infos mt-3 w-100 w-md-75 mw-200">
+                            <p>
+                                <a href="{{ path('blogCategory', { 'slug': article.category.slug }) }}">{{ article.category.wording }}</a>
+                            </p>
+                            <h2 class="d-initial"><a href="{{ path('blogArticle', { 'slug': article.slug }) }}">{{article.title}}</a></h2>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+    {# END LAST PRESS #}
+
     {% include 'index/_social.html.twig' %}
 
 {% endblock %}
