@@ -96,7 +96,7 @@ class ProgramCertified
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -108,7 +108,7 @@ class ProgramCertified
         return $this->website;
     }
 
-    public function setWebsite(string $website): self
+    public function setWebsite(?string $website): self
     {
         $this->website = $website;
 
@@ -120,7 +120,7 @@ class ProgramCertified
         return $this->instagram;
     }
 
-    public function setInstagram(string $instagram): self
+    public function setInstagram(?string $instagram): self
     {
         $this->instagram = $instagram;
 
@@ -132,7 +132,7 @@ class ProgramCertified
         return $this->facebook;
     }
 
-    public function setFacebook(string $facebook): self
+    public function setFacebook(?string $facebook): self
     {
         $this->facebook = $facebook;
 
@@ -162,4 +162,5 @@ class ProgramCertified
 
         return $this;
     }
+
 }

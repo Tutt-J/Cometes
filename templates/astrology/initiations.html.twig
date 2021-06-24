@@ -28,7 +28,7 @@
                                     </figure>
                                 </a>
                                 <div class="infos mt-3 w-100 mw-200">
-                                    <h2 class="d-initial"><a href="{{ path('ritualOnline', { 'slug': content.slug }) }}">{{ content.title | raw }}</a></h2>
+                                    <h2 class="d-initial"><a href="{{ path('initiationEvent', { 'slug': content.slug }) }}">{{ content.title | raw }}</a></h2>
                                     <p class="mt-3">{{ content.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY') | capitalize}} à {{ content.startDate | localizeddate('none', 'none', null, null, 'HH') | capitalize}}h{{ content.startDate | localizeddate('none', 'none', null, null, 'mm') | capitalize}}</p>
                                     <p>
                                         <strong>{{ content.Price | replace({".00" : ""}) }}€</strong>
