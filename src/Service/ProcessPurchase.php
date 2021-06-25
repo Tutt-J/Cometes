@@ -10,6 +10,8 @@ use App\Entity\PurchaseContent;
 use App\Entity\UserEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Konekt\PdfInvoice\InvoicePrinter;
+use phpDocumentor\Parser\Exception;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -160,6 +162,7 @@ class ProcessPurchase
      * Set purchase
      *
      * @return Purchase
+     * @throws Exception
      */
     public function setPurchase()
     {
@@ -170,6 +173,10 @@ class ProcessPurchase
         if($this->session->get('stripe')) {
             //Retrieve the charge Stripe
             $charge= $this->stripeHelper->retrievePurchase('Basket');
+            if($charge['payment_status'] != "paid"){
+               throw new AccessDeniedException("Access denied because there is no payment");
+            }
+
             //Set Stripe Id
             $purchase->setStripeId($charge['payment_intent']);
 
