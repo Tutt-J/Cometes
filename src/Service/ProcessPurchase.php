@@ -300,6 +300,7 @@ class ProcessPurchase
         $html='<p>Nom : '.$this->security->getUser()->getFirstName().' '.$this->security->getUser()->getLastName().'</p>
                     <p>Email : <a href="mailto:'.$this->security->getUser()->getEmail().'">'.$this->security->getUser()->getEmail().'</a></p>
                     <p>Évènement : '.$this->event->getTitle().'</p>
+                    <p>Infos : '.$this->session->get('description').'</p>
                 ';
         $this->sendMail->sendBasicEmail($html, 'Nouvel inscription à un évènement');
     }

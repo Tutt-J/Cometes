@@ -313,9 +313,11 @@ class EventsAdministrator
     /**
      * @param $friend
      * @param $already
+     * @param $choice
      */
-    public function generateDescription($friend, $already)
+    public function generateDescription($friend, $already, $choice)
     {
+        $description = '';
         if (!empty($friend) && $already == 1) {
             $description=" Réduction de 5% car vient avec " . $friend . " et a déjà participé à une retraite chamade.";
         } elseif (!empty($friend)) {
@@ -324,9 +326,14 @@ class EventsAdministrator
             $description=" Réduction de 5% car a déjà participé à une retraite chamade.";
         }
 
+        if(!empty($choice)){
+            $description.=" ".$choice;
+        }
+
         if(isset($description)){
             $this->session->set("description", $this->session->get('description').$description);
         }
+
     }
 
     public function canRegister($event)
@@ -390,8 +397,11 @@ class EventsAdministrator
             $already=$form->get('already')->getData();
             $newPrice=$price - ($price * (5 / 100));
         }
-
-        $this->generateDescription($friend, $already);
+        $choice = '';
+        if($form->has('choice')){
+            $choice=$form->get('choice')->getData();
+        }
+        $this->generateDescription($friend, $already, $choice);
 
         if(isset($newPrice)){
             $price = $newPrice;
