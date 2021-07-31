@@ -46,7 +46,7 @@
                     <strong>Réduction : {{ app.session.get('applyPromo') }}€</strong><br/>
                 {% endif %}
                 <strong>Total : {{ app.session.get('purchaseSuccessInfos')['totalAmount']}}€</strong> <br>
-                <small>TVA non applicable - article 293 B du CGI </small>
+                <small>Dont TVA (20%) : {{ getTVA(app.session.get('purchaseSuccessInfos')['totalAmount']) }}€</small>
             </p>
         </div>
         <p class="text-center"><strong>Vous pouvez retrouver vos contenus achetés <a href="{{ path('app_account_online_content') }}">ici</a></strong></p>

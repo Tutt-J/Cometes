@@ -23,7 +23,7 @@
                 <p>Référence : <em>{{content.ref}}</em></p>
                 <div class="mb-3 text-justify">{{content.content | raw}}</div>
                 <p><strong>Prix :</strong>
-                    {{content.price}}€
+                    {{content.price}}€ TTC
                 </p>
                 <form action="{{ path('addBasket') }}" method="post" class="form-inline">
                     <input type="hidden" id="id" name="id" value="{{content.id}}">

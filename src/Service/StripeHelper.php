@@ -152,6 +152,7 @@ class StripeHelper
             //Set a variable with stripe session
             $this->session->set('stripe', $stripeCreate);
         } catch (ApiErrorException $e) {
+            dd($e);
                 $this->flashbag->add('error', 'Impossible de procéder au paiement. Veuillez nous contacter. ('.$e.')');
             return new RedirectResponse($this->router->generate('error'.$return, [], UrlGeneratorInterface::ABSOLUTE_URL));
         }

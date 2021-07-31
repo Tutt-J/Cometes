@@ -268,6 +268,7 @@ class EventsController extends AbstractController
                 'amount' => $session->get('price')*100,
                 'currency' => 'eur',
                 'quantity' => 1,
+                'tax_rates' => [$_ENV['STRIPE_TAX']],
             ]
         ];
 

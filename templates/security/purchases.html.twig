@@ -14,8 +14,12 @@
                 {% for purchase in purchases %}
                     <div class="card">
                         <div class="card-header" style="cursor: pointer;" id="headingOne" data-toggle="collapse" data-target="{{ '#collapse'~loop.index }}" aria-expanded="true" aria-controls="{{ 'collapse'~loop.index }}">
-                            <p>
-                                Commande du {{ purchase.purchase.createdAt | date ('d/m/Y') }} - {{ purchase.purchase.amount | replace({".00" : ""}) }}€
+                            <p class="mb-0">
+                                Commande du {{ purchase.purchase.createdAt | date ('d/m/Y') }} - {{ purchase.purchase.amount | replace({".00" : ""}) }} €
+
+                                {% if  purchase.purchase.createdAt | date('Y/m/d') >= date('2021/07/31') | date('Y/m/d') %}
+                                    <br><small>Dont TVA (20%) : {{ getTVA(purchase.purchase.amount) }}€</small>
+                                {% endif %}
                             </p>
                         </div>
 

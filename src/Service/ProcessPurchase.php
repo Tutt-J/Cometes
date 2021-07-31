@@ -361,6 +361,7 @@ class ProcessPurchase
             $total=$total-$this->session->get('applyPromo');
         }
         $invoice->addTotal("Total", $total);
+        $invoice->addTotal("Dont TVA (20%)",$this->getTVA($total));
         $invoice->flipflop();
         if($refund){
             $invoice->addBadge("Remboursé");
@@ -405,5 +406,9 @@ class ProcessPurchase
      */
     public function stripAccents($str) {
         return strtoupper(strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY'));
+    }
+
+    public function getTVA($price){
+        return ($price*20)/100;
     }
 }
