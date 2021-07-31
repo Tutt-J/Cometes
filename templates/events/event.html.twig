@@ -62,14 +62,14 @@
                     {% if event.isCollaboration %}
                         <ul>
                             {% for price in event.eventPricings %}
-                                <li>{{ price }}</li>
+                                <li>{{ event.price | replace({".00" : ""}) }} euros TTC.</li>
                             {% endfor %}
                         </ul>
                     {% else %}
                         <p>Variable, voir ci-dessous.</p>
                     {% endif %}
                 {% else %}
-                    <p>{{ event.price | replace({".00" : ""}) }} euros.</p>
+                    <p>{{ event.price | replace({".00" : ""}) }} euros TTC.</p>
                 {% endif %}
             </div>
             {% if event.startDate | date('Ymd') == event.endDate | date('Ymd')%}
