@@ -49,7 +49,10 @@ class AboutController extends AbstractController
     public function teamAction(){
         $members = $this->getDoctrine()
             ->getRepository(Team::class)
-            ->findAll();
+            ->findBy(
+                [],
+                ['createdAt' => 'ASC']
+            );
 
         return $this->render('about/team.html.twig', [
             'members' => $members,
