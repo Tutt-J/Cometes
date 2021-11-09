@@ -29,57 +29,66 @@
     {# END PHOTOS CAROUSEL #}
 
     {# VOUS ACCOMPAGNER... #}
-    <section class="container mt-100 mb-5">
-        <header class="col-12 text-center">
-            <h2>Expériences d’éveil à soi.
+    <section class="container mt-100">
+        <div class="col-12 text-center">
+            <h2>- Expériences d’éveil à soi -
                 <br/>
-                Astrologie holistique et cyclicité sacrée.
             </h2>
-        </header>
+            <p>Tu ressens le besoin de te laisser de l’espace et d’honorer tes besoins. <br>
+
+                De prendre une pause et une profonde inspiration.<br><br>
+
+                Tu ressens le besoin de retrouver le chemin de ta vérité, de ta magie et de tes dons.<br>
+
+                De ramener du sens et de la conscience dans ton incarnation.<br><br>
+                Tu ressens le besoin de ramener de la joie et de stimuler ta créativité.<br>
+                De te réinventer et de retrouver ton cœur d’enfant.<br><br>
+                Tu es exactement au bon endroit et je te souhaite la bienvenue.<br><br>
+
+                <em>Il est temps de prendre soin de toi.</em></p>
+        </div>
+    </section>
+    <section class="container pt-3 pb-5">
         <div class="row text-center justify-content-around">
-            <div class="col-12 col-md-3 my-3 my-md-5">
+            <div class="col-12 col-md-3 my-3">
+                <a href="{{ path('programOnline', { 'slug': 'cometes' }) }}">
+                    <img loading="lazy" class="opacity_hover col-12 p-0" src="{{ asset('build/images/logo_cometes.jpeg') }}" alt="">
+                </a>
+            </div>
+            <div class="col-12 col-md-3 my-3 ">
                 <a href="{{ path('astroConsult') }}">
-                    <img loading="lazy" class="opacity_hover col-12 p-0 mw-200" src="{{ asset('build/images/design_astrologie.jpeg') }}" alt="">
+                    <img loading="lazy" class="opacity_hover col-12 p-0" src="{{ asset('build/images/design_astrologie.jpeg') }}" alt="">
                 </a>
             </div>
-            <div class="col-12 col-md-3 my-3 my-md-5">
-                <a href="{{ path('astroTraining') }}">
-                    <img loading="lazy" class="opacity_hover col-12 p-0 mw-200" src="{{ asset('build/images/design_formations.jpeg') }}" alt="">
-                </a>
-            </div>
-            <div class="col-12 col-md-3 my-3 my-md-5">
-                <a href="{{ path('ritualsOnline') }}">
-                    <img loading="lazy" class="opacity_hover col-12 p-0 mw-200 " src="{{ asset('build/images/design_rituels_en_ligne.jpeg') }}" alt="">
-                </a>
-            </div>
-            <div class="col-12 col-md-3 my-3 my-md-5">
-                <a href="{{ path('retreatsEvent') }}">
-                    <img loading="lazy" class="opacity_hover col-12 p-0 mw-200 " src="{{ asset('build/images/design_retraites.jpeg') }}" alt="">
+            <div class="col-12 col-md-3 my-3 ">
+                <a href="{{ path('homeEvent') }}">
+                    <img loading="lazy" class="opacity_hover col-12 p-0" src="{{ asset('build/images/design_evenements.jpeg') }}" alt="">
                 </a>
             </div>
         </div>
     </section>
+
     {# END VOUS ACCOMPAGNER... #}
 
     {# THREE NEXT EVENTS #}
     {% if events is not empty %}
-        <section class="container-fluid p-0 mb-3">
-            <header class="py-4 background-green mb-5 mt-4 text-center col-12">
-                <h2 class="m-0">Découvrez nos évènements</h2>
+        <section class="container-fluid p-0">
+            <header class="py-4 background-green text-center col-12">
+                <h2 class="m-0">Évènements à venir</h2>
             </header>
-            <div class="container">
-                <div class="row list justify-content-around flex-wrap text-center">
+            <div class="container py-5">
+                <div class="row list justify-content-around flex-wrap text-center align-items-start ">
                     {% for event in events %}
-                        <article class="item col-12 col-md-4 mb-3 d-flex flex-column align-items-center">
-                            <a class="d-flex align-items-center text-center w-100 w-md-75 mw-200" href="{{ path(event.path, { 'slug': event.slug })}}">
+                        <article class="item col-12 col-md-4 d-flex flex-column align-items-center">
+                            <a class="d-flex align-items-center text-center" href="{{ path("singleEvent", { 'slug': event.slug })}}">
                                 <figure>
                                     <div class="effect"></div>
-                                    <img loading="lazy" class="w-100" src="{{ asset('uploads/cover_img/'~event.img.url) }}" alt="{{ event.img.alt }}">
+                                    <img loading="lazy" src="{{ asset('uploads/cover_img/'~event.img.url) }}" alt="{{ event.img.alt }}">
                                 </figure>
                             </a>
-                            <div class="infos mt-3 w-100 w-md-75 mw-200">
+                            <div class="infos mt-3">
                                 <h2 class="d-initial">
-                                    <a href="{{ path(event.path, { 'slug': event.slug })}}">{{ event.title | raw }}</a>
+                                    <a href="{{ path("singleEvent", { 'slug': event.slug })}}">{{ event.title | raw }}</a>
                                 </h2>
                                 <p>{% if event.startDate | date('Ymd') != event.endDate | date('Ymd')%}
                                     <strong>Du {{event.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM')}} au {{event.endDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY')}}</strong>
@@ -98,37 +107,22 @@
     {% endif %}
     {# END THREE NEXT EVENTS #}
 
-    {# LAST PODCAST #}
-    <section class="container-fluid p-0 mb-5">
-        <header class="py-4 background-rose mb-5 mt-4 text-center col-12">
-            <h2 class="m-0">Les actualités de Chamade</h2>
-        </header>
-        <div class="container">
-            <div class="row list justify-content-around flex-wrap text-center">
-                <iframe class="col-12" src="https://anchor.fm/gaiatotal/embed/episodes/65-Astrologie-holistique-eqi75f/a-a4lv9ob" frameborder="0" scrolling="no"></iframe>
-                <iframe class="mt-5 col-12" src="https://embed.acast.com/604b84c2e76de4190678a034/femininsacreetmaternite" frameBorder="0"></iframe>
-
-            </div>
-        </div>
-    </section>
-    {# END LAST PODCATS #}
-
     {# LAST PRESS #}
-    <section class="container-fluid p-0 mb-5">
-        <header class="py-4 background-green mb-5 mt-4 text-center col-12">
+    <section class="container-fluid p-0 ">
+        <header class="py-4 background-green text-center col-12">
             <h2 class="m-0">Chamade dans la presse</h2>
         </header>
-        <div class="container my-5">
-            <div class="row list full-height-list justify-content-around flex-wrap">
+        <div class="container py-5">
+            <div class="row list full-height-list justify-content-around flex-wrap align-items-start">
                 {% for article in press %}
                     <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">
-                        <a class="d-flex align-items-center text-center w-100 w-md-75 mw-200" href="{{ path('blogArticle', { 'slug': article.slug }) }}">
+                        <a class="d-flex align-items-center text-center " href="{{ path('blogArticle', { 'slug': article.slug }) }}">
                             <figure>
                                 <div class="effect"></div>
-                                <img class="w-100" src="{{ asset('uploads/cover_img/'~article.img.url) }}" alt="{{ article.img.alt }}">
+                                <img  src="{{ asset('uploads/cover_img/'~article.img.url) }}" alt="{{ article.img.alt }}">
                             </figure>
                         </a>
-                        <div class="infos mt-3 w-100 w-md-75 mw-200">
+                        <div class="infos mt-3">
                             <p>
                                 <a href="{{ path('blogCategory', { 'slug': article.category.slug }) }}">{{ article.category.wording }}</a>
                             </p>

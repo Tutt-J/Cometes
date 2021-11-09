@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Équipe | {{ parent() }}{% endblock %}
+{% block metaDescription %}Comètes vous présente son équipe.{% endblock %}
+
+{% block Titre %}Équipe{% endblock %}
+{% block content %}
+    <div class="container my-5">
+        <div class="row  full-height-list justify-content-around flex-wrap align-items-start">
+            <p class="pb-5">Chamade c’est aussi une magnifique équipe de professionnelles qui mettent leurs talents au service d’une vision commune : bâtir une communauté de personnes éveillées qui choisissent de vivre en conscience afin de contribuer à une nouvelle vision du monde.</p>
+            {% for member in members %}
+                <article class="col-12  mb-5 d-flex flex-column
+                {% if loop.index is not odd %}
+                 align-items-end
+                 {% endif %}
+                ">
+                    <div class="d-flex
+                    {% if loop.index is not odd %}
+                 align-items-end text-right
+                 {% endif %}
+                    ">
+                        <figure>
+                            <div class="effect"></div>
+                            <img class="img-member" src="{{ asset('uploads/cover_img/'~member.img.url) }}" alt="{{ member.img.alt }}">
+                        </figure>
+                    </div>
+                    <div class="infos mt-3
+                     {% if loop.index is not odd %}
+                 text-right
+                 {% endif %}
+                    ">
+                        <h2 class="d-initial">{{member.name}}</h2>
+                        <h3>{{ member.lead }}</h3>
+                        <p>{{ member.description | raw }}</p>
+                        <p><a href="{{ member.link }}">{{ member.link }}</a></p>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

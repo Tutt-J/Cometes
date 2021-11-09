@@ -31,26 +31,6 @@ class ProgramCertified
     private $year;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $website;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $instagram;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $facebook;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Image::class)
      * @ORM\JoinColumn(nullable=false)
      */
@@ -61,6 +41,11 @@ class ProgramCertified
      * @ORM\JoinColumn(nullable=false)
      */
     private $program;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $opinion;
 
     public function getId(): ?int
     {
@@ -91,54 +76,6 @@ class ProgramCertified
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(?string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getWebsite(): ?string
-    {
-        return $this->website;
-    }
-
-    public function setWebsite(?string $website): self
-    {
-        $this->website = $website;
-
-        return $this;
-    }
-
-    public function getInstagram(): ?string
-    {
-        return $this->instagram;
-    }
-
-    public function setInstagram(?string $instagram): self
-    {
-        $this->instagram = $instagram;
-
-        return $this;
-    }
-
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    public function setFacebook(?string $facebook): self
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
     public function getImg(): ?Image
     {
         return $this->img;
@@ -159,6 +96,18 @@ class ProgramCertified
     public function setProgram(?Program $program): self
     {
         $this->program = $program;
+
+        return $this;
+    }
+
+    public function getOpinion(): ?string
+    {
+        return $this->opinion;
+    }
+
+    public function setOpinion(string $opinion): self
+    {
+        $this->opinion = $opinion;
 
         return $this;
     }

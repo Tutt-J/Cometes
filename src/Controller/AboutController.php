@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Author;
 use App\Entity\Category;
+use App\Entity\Team;
 use App\Service\BlogView;
 use App\Service\GlobalsGenerator;
 use Knp\Component\Pager\PaginatorInterface;
@@ -18,26 +19,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AboutController extends AbstractController
 {
-    /**
-     * @Route("/a-propos/concept", name="aboutConcept")
-     *
-     * @param GlobalsGenerator $socialGenerator
-     *
-     * @return Response
-     */
-    public function aboutAction(GlobalsGenerator $socialGenerator)
-    {
-        return $this->render('about/concept.html.twig');
-    }
 
     /**
      * @Route("/a-propos/qui-suis-je", name="aboutStory")
      *
-     * @param GlobalsGenerator $socialGenerator
-     *
      * @return Response
      */
-    public function storyAction(GlobalsGenerator $socialGenerator)
+    public function storyAction()
     {
         $author = $this->getDoctrine()
             ->getRepository(Author::class)
@@ -54,13 +42,18 @@ class AboutController extends AbstractController
     }
 
     /**
-     * @Route("/a-propos/avis-clientes", name="aboutOpinion")
+     * @Route("/a-propos/equipe", name="aboutTeam")
      *
      * @return Response
      */
-    public function opinionAction()
-    {
-        return $this->render('about/opinion.html.twig');
+    public function teamAction(){
+        $members = $this->getDoctrine()
+            ->getRepository(Team::class)
+            ->findAll();
+
+        return $this->render('about/team.html.twig', [
+            'members' => $members,
+        ]);
     }
 
     /**

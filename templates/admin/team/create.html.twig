@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <h1>Créer un nouveau membre</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('homeAdmin') }}">Tableau de bord</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('teamAdmin') }}">Equipe</a></li>
+        <li class="breadcrumb-item active">Créer un nouveau membre</li>
+    </ol>
+    {% include 'admin/team/_form.html.twig' %}
+
+{% endblock %}

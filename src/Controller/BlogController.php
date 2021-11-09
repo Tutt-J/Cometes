@@ -43,7 +43,7 @@ class BlogController extends AbstractController
         $articles = $paginator->paginate(
             $articles,
             $request->query->getInt('page', $page),
-            6
+            9
         );
 
         return $this->render(

@@ -1,14 +1,14 @@
 <div class="container my-5">
-    <div class="row list full-height-list justify-content-around flex-wrap">
+    <div class="row list full-height-list justify-content-around flex-wrap align-items-start">
         {% for article in articles %}
             <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">
-                <a class="d-flex align-items-center text-center w-100 w-md-75 mw-200" href="{{ path('blogArticle', { 'slug': article.slug }) }}">
+                <a class="d-flex align-items-center text-center" href="{{ path('blogArticle', { 'slug': article.slug }) }}">
                     <figure>
                         <div class="effect"></div>
-                        <img class="w-100" src="{{ asset('uploads/cover_img/'~article.img.url) }}" alt="{{ article.img.alt }}">
+                        <img src="{{ asset('uploads/cover_img/'~article.img.url) }}" alt="{{ article.img.alt }}">
                     </figure>
                 </a>
-                <div class="infos mt-3 w-100 w-md-75 mw-200">
+                <div class="infos mt-3">
                     <p>
                         <a href="{{ path('blogCategory', { 'slug': article.category.slug }) }}">{{ article.category.wording }}</a>
                     </p>

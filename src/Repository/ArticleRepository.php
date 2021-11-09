@@ -82,4 +82,16 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findNews(){
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            ->where('a.category = :press or a.category= :podcast')
+            ->andWhere("a.isOnline = :status")
+            ->setParameters(array( 'press' => 15, 'podcast' => 14, "status" => 1))
+            ->orderBy('a.updatedAt', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
 }

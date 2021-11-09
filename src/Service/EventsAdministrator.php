@@ -135,28 +135,6 @@ class EventsAdministrator
     }
 
     /**
-     * @return array
-     */
-    public function getThreeNextEvents()
-    {
-        $eventsList=$this->getEvents();
-        foreach ($eventsList as $event) {
-            array_push(
-                $this->events,
-                array(
-                    'path' =>$event->getType()->getSlug().'Event',
-                    'slug' =>$event->getSlug(),
-                    'img' =>$event->getImg(),
-                    'title' =>$event->getTitle(),
-                    'startDate' =>$event->getStartDate(),
-                    'endDate' => $event->getEndDate()
-                )
-            );
-        }
-        return $this->events;
-    }
-
-    /**
      *
      * Check if already regsiter to event
      *
