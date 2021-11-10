@@ -25,13 +25,19 @@
                 </a>
                 <div class="infos mt-3">
                     <p>
-                        {{ event.type.slug}}
+                        {% for type in event.type %}
+                            {{ type.wording }}{% if loop.index < event.type|length %} | {% endif %}
+                        {% endfor %}
                     </p>
                     <h2 class="d-initial"><a href="{{ path('singleEvent', { 'slug': event.slug }) }}">{{event.title}}</a></h2>
                 </div>
             </article>
         {% endfor %}
     </div>
+
 </div>
+    {% if opinions.getOpinions('event') %}
+        {% include 'events/_opinions.html.twig' with {'type': 'event'} %}
+    {% endif %}
 
 {% endblock %}

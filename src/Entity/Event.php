@@ -62,11 +62,6 @@ class Event
      */
     private $landingPageUrl;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Type", inversedBy="contents", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $type;
 
     /**
      * @ORM\OneToMany(targetEntity="UserEvent", mappedBy="event", fetch="EXTRA_LAZY")
@@ -129,11 +124,18 @@ class Event
      */
     private $collaborationLink;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Type::class, inversedBy="events")
+     */
+    private $Type;
+
+
 
     public function __construct()
     {
         $this->userEvents = new ArrayCollection();
         $this->eventPricings = new ArrayCollection();
+        $this->Type = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -256,17 +258,6 @@ class Event
         return $this;
     }
 
-    public function getType(): ?Type
-    {
-        return $this->type;
-    }
-
-    public function setType(?Type $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getNbMinParticipant(): ?int
     {
@@ -427,6 +418,30 @@ class Event
     public function setCollaborationLink(?string $collaborationLink): self
     {
         $this->collaborationLink = $collaborationLink;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Type[]
+     */
+    public function getType(): Collection
+    {
+        return $this->Type;
+    }
+
+    public function addType(Type $type): self
+    {
+        if (!$this->Type->contains($type)) {
+            $this->Type[] = $type;
+        }
+
+        return $this;
+    }
+
+    public function removeType(Type $type): self
+    {
+        $this->Type->removeElement($type);
 
         return $this;
     }

@@ -254,7 +254,7 @@ class UserController extends AbstractController
                 $event=[
                     'entity' => $userEvents->getEvent(),
                     'price' => $userEvents->getPurchase()->getAmount(),
-                    'path' => $userEvents->getEvent()->getType()->getSlug().'Event'
+                    'path' => 'singleEvent'
                 ];
 
                 array_push($arrayContent, $event);

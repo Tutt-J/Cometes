@@ -179,7 +179,7 @@ class EventsAdministrator
 
         //Set reference page
         $this->session->set('referent', [
-            'path'=> $event->getType()->getSlug().'Event',
+            'path'=> 'singleEvent',
             'slug'=> $event->getSlug()
         ]);
 

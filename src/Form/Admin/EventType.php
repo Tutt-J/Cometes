@@ -72,8 +72,11 @@ class EventType extends BaseType
                     return $er->createQueryBuilder('u')
                         ->where('u.forEvent = 1');
                 },
-                'choice_label' => 'slug',
-                'label' => 'Type<span class="text-danger"> *</span>',
+                'choice_label' => 'wording',
+                'required' => true,
+                'multiple'=>true,
+                'expanded'=>true,
+                'label' => 'Type(s)<span class="text-danger"> *</span>',
                 'label_html' => true,
                 'choice_translation_domain' => 'messages'
             ])

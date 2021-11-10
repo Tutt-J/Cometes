@@ -191,33 +191,11 @@ class EventsController extends AbstractController
      */
     public function errorRegisterEventAction(SessionInterface $session)
     {
+        $session->remove('event');
+        $session->remove('stripe');
+        $session->remove('promoCode');
+        $session->remove('applyPromo');
         $this->addFlash('error', 'Une erreur est survenue au moment du paiement... Veuillez réessayer ou nous contacter');
         return $this->redirectToRoute($session->get('referent')['path'], ['slug'=>$session->get('referent')['slug']]);
-    }
-
-
-    /**
-     *
-     * Blessing way Events
-     *
-     * @Route("/evenements/blessing-way", name="blessingEvent")
-     * @return mixed
-     */
-    public function blessingAction()
-    {
-        return $this->render('events/blessing.html.twig');
-    }
-
-
-    /**
-     *
-     * SlowBuilding Events
-     *
-     * @Route("/evenements/slowbuilding", name="slowBuildingEvent")
-     * @return mixed
-     */
-    public function slowBuildingAction()
-    {
-        return $this->render('events/slowbuilding.html.twig');
     }
 }

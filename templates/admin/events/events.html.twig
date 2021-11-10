@@ -40,7 +40,11 @@
                 <tbody>
                 {% for article in articles %}
                 <tr>
-                    <td>{{  article.type.slug|trans }}</td>
+                    <td>
+                        {% for type in article.type %}
+                        {{  type.wording }}<br>
+                        {% endfor %}
+                    </td>
                     <td>{{ article.title }}</td>
                     <td>
                         {% if article.img %}
@@ -50,7 +54,7 @@
                     <td data-sort="{{article.createdAt |date("Y/m/d")}}">{{article.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                     <td data-sort="{{article.updatedAt |date("Y/m/d")}}">{{article.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                     <td>
-                        <a  onclick="window.open(this.href);return false" href="{{ path(article.type.slug~'Event', { 'slug': article.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
+                        <a  onclick="window.open(this.href);return false" href="{{ path('singleEvent', { 'slug': article.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
                         <a href="{{ path('updateEventAdmin', {'id':article.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
                         {% if article.userEvents is empty  %}
                             <p data-title="{{ article.title }}" data-id="{{ article.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>
