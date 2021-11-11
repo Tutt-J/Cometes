@@ -28,15 +28,24 @@
                             <img class="img-member object-fit-cover" src="{{ asset('uploads/cover_img/'~member.img.url) }}" alt="{{ member.img.alt }}">
                         </figure>
                     </div>
-                    <div class="infos mt-3 text-justify
+                    <div class="infos mt-3
                      {% if loop.index is not odd %}
-                 text-md-right
-                 {% endif %}
+                        text-md-right
+                    {% endif %}
                     ">
-                        <h2 class="d-initial">{{member.name}}</h2>
+                        <h2 class="d-initial text-center
+                        {% if loop.index is not odd %}
+                            text-md-right
+                        {% else %}
+                         text-md-left
+                        {% endif %}
+                        ">{{member.name}}</h2>
                         <h3>{{ member.lead }}</h3>
-                        <p>{{ member.description | raw }}</p>
-                        <p><a href="{{ member.link }}">{{ member.link }}</a></p>
+                        <div class="text-justify
+                         {% if loop.index is not odd %}
+                            text-md-right
+                        {% endif %}">{{ member.description | raw }}</div>
+                        <p ><a href="{{ member.link }}">{{ member.link }}</a></p>
                     </div>
                 </article>
             {% endfor %}
