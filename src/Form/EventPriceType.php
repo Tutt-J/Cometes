@@ -96,8 +96,11 @@ class EventPriceType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'M\'inscrire',
+                'row_attr' => [
+                    'class' => 'text-center'
+                ],
                 'attr' => [
-                    'class' => 'btn btn-success'
+                    'class' => 'btn btn-primary'
                 ]
             ]);
 

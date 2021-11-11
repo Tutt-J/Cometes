@@ -7,26 +7,30 @@
 {% block content %}
     <div class="container my-5">
         <div class="row  full-height-list justify-content-around flex-wrap align-items-start">
-            <p class="pb-5">Chamade c’est aussi une magnifique équipe de professionnelles qui mettent leurs talents au service d’une vision commune : bâtir une communauté de personnes éveillées qui choisissent de vivre en conscience afin de contribuer à une nouvelle vision du monde.</p>
+            <p class="pb-5 col-12">Chamade c’est aussi une magnifique équipe de professionnelles qui mettent leurs talents au service d’une vision commune : bâtir une communauté de personnes éveillées qui choisissent de vivre en conscience afin de contribuer à une nouvelle vision du monde.</p>
             {% for member in members %}
-                <article class="col-12  mb-5 d-flex flex-column
-                {% if loop.index is not odd %}
-                 align-items-end
+                <article class="col-12  mb-5 d-flex flex-column align-items-center
+                 {% if loop.index is not odd %}
+                    align-items-md-end
+                 {% else %}
+                    align-items-md-start
                  {% endif %}
                 ">
-                    <div class="d-flex
+                    <div class="d-flex align-items-center
                     {% if loop.index is not odd %}
-                 align-items-end text-right
-                 {% endif %}
+                         align-items-md-end
+                     {% else %}
+                        align-items-md-start
+                      {% endif %}
                     ">
                         <figure>
                             <div class="effect"></div>
-                            <img class="img-member" src="{{ asset('uploads/cover_img/'~member.img.url) }}" alt="{{ member.img.alt }}">
+                            <img class="img-member object-fit-cover" src="{{ asset('uploads/cover_img/'~member.img.url) }}" alt="{{ member.img.alt }}">
                         </figure>
                     </div>
-                    <div class="infos mt-3
+                    <div class="infos mt-3 text-justify
                      {% if loop.index is not odd %}
-                 text-right
+                 text-md-right
                  {% endif %}
                     ">
                         <h2 class="d-initial">{{member.name}}</h2>

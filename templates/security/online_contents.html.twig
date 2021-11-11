@@ -13,19 +13,15 @@
     <div class="container py-5">
         <p><a href="{{ path('app_account') }}"><< Revenir à mon compte</a></p>
         <div class="row list justify-content-around">
-            <div class="col-12 my-3">
-                <h2 class="text-center"><strong>Mes rituels</strong></h2>
-            </div>
-            {% if 'rituals' not in contents|keys %}
-                <div class="col-12">
-                    <p class="text-center">Vous n'avez pas encore commandé de rituels. Vous êtes interessé ? Cliquez <a href="{{ path('ritualsOnline') }}">ici</a> !</p>
+            {% if 'rituals' in contents|keys %}
+                <div class="col-12 my-3">
+                    <h2 class="text-center"><strong>Mes rituels</strong></h2>
                 </div>
-            {% else %}
                 {% for content in contents.rituals %}
                     {{ include('security/_video_render.html.twig', {'content': content}) }}
                 {% endfor %}
             {% endif %}
-             {% if 'yogas' in contents|keys %}
+           {% if 'yogas' in contents|keys %}
             <div class="col-12 my-3">
                 <h2 class="text-center"><strong>Mes séances de yoga</strong></h2>
             </div>
@@ -33,14 +29,10 @@
                     {{ include('security/_video_render.html.twig', {'content': content}) }}
                 {% endfor %}
             {% endif %}
-            <div class="col-12 my-3">
-                <h2 class="text-center"><strong>Mes vidéos</strong></h2>
-            </div>
-            {% if 'videos' not in contents|keys %}
-                <div class="col-12">
-                    <p class="text-center">Vous n'avez pas encore commandé de vidéos. Vous êtes interessé ? Cliquez <a href="{{ path('videosOnline') }}">ici</a> !</p>
+            {% if 'videos'  in contents|keys %}
+                <div class="col-12 my-3">
+                    <h2 class="text-center"><strong>Mes vidéos</strong></h2>
                 </div>
-            {% else %}
                 {% for content in contents.videos %}
                      {{ include('security/_video_render.html.twig', {'content': content}) }}
                 {% endfor %}

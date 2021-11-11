@@ -1,32 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les certifiées Comètes | {{ parent() }}{% endblock %}
+{% block title %}Les Comètes | {{ parent() }}{% endblock %}
 {% block metaDescription %}Chamade propose la lecture de votre carte du ciel, comme un outil de compréhension de votre incarnation et de votre mission de vie.{% endblock %}
 {% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_astrologie.jpeg') }}{% endblock %}
 
-{% block Titre %}Les certifiées Comètes{% endblock %}
+{% block Titre %}Les Comètes{% endblock %}
 {% block content %}
     <div class="container my-5">
         <div class="row list full-height-list justify-content-around flex-wrap align-items-start">
-            <p class="pb-5">Les belles âmes présentées ci-dessous ont suivi la formation Comètes dans son parcours
+            <p class="pb-5 text-justify col-12">Les belles âmes présentées ci-dessous ont suivi la formation Comètes dans son parcours
                 complet et ont réussi avec succès l’ensemble des tests et exercices associés. <br><br>
                 Elles proposent désormais des lectures de cartes du ciel d’astrologie holistique, dans le
                 respect de la charte éthique de Chamade.<br><br>
                 Merci à chacune pour sa confiance et son parcours dans l’aventure Comètes.</p>
             {% for cert in certified %}
-                <article class="item col-12 col-sm-6 col-lg-4 mb-5 d-flex flex-column align-items-center">
+                <article class="item col-12 col-sm-6 mb-5 d-flex flex-column align-items-center">
                     <div class="d-flex align-items-center text-center">
                         <figure>
                             <div class="effect"></div>
                             <img class="w-100" src="{{ asset('uploads/cover_img/'~cert.img.url) }}" alt="{{ cert.img.alt }}">
                         </figure>
                     </div>
-                    <div class="infos mt-3">
+                    <div class="infos mt-3 w-100 text-center">
                         <p class="text-orange">
                             {{ cert.year }}
                         </p>
                         <h2 class="d-initial">{{cert.name}}</h2>
-                        <p>{{ cert.opinion | raw }}</p>
+                        <div class="reset text-justify">{{ cert.opinion | raw }}</div>
                     </div>
                 </article>
 

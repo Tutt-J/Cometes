@@ -11,7 +11,7 @@
 <div class="container mt-5">
     <section class="row align-items-center text-justify">
         <div class="col-12">
-            <p class="text-center">J’ai à coeur de vous proposer régulièrement des évènements transformateurs conçus comme des espaces de soin, de connaissance et d’éveil à soi. </p>
+            <h2 class="text-center mb-5">J’ai à coeur de vous proposer régulièrement des évènements transformateurs conçus comme des espaces de soin, de connaissance et d’éveil à soi. </h2>
         </div>
     </section>
     <div class="row list full-height-list justify-content-around flex-wrap align-items-start">
@@ -23,8 +23,8 @@
                         <img src="{{ asset('uploads/cover_img/'~event.img.url) }}" alt="{{ event.img.alt }}">
                     </figure>
                 </a>
-                <div class="infos mt-3">
-                    <p>
+                <div class="infos mt-3 text-center">
+                    <p class="text-orange">
                         {% for type in event.type %}
                             {{ type.wording }}{% if loop.index < event.type|length %} | {% endif %}
                         {% endfor %}

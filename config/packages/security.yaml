@@ -37,4 +37,6 @@ security:
         - { path: '^/efconnect', role: ROLE_ADMIN }
         - { path: '^/elfinder', role: ROLE_ADMIN }
         - { path: '^/evenements/s-inscrire', roles: ROLE_USER, requires_channel: https}
+        - { path: '^/', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+
 

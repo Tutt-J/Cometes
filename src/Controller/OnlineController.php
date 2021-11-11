@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Content;
 use App\Entity\Program;
 use App\Entity\PromoCode;
 use App\Entity\TypeProgram;
@@ -35,10 +36,21 @@ class OnlineController extends AbstractController
         if(isset($_GET['affiliate'])){
             $session->set('affiliateGift', $_GET['affiliate']);
         }
+
+        $giftCards = $this->getDoctrine()
+            ->getRepository(Content::class)
+            ->findBy(
+                [
+                    'isOnline' => 1,
+                    'type' => $contentOnlineAdministrator->getType('giftCard')
+                ],
+                ['price' => 'ASC']
+            );
+
         return $this->render(
             'online/gift_card.html.twig',
             [
-                'contents' => $contentOnlineAdministrator->getContentsToBecome('giftCard', $page),
+                'contents' => $giftCards,
             ]
         );
     }

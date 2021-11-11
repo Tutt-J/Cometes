@@ -92,6 +92,7 @@ class ContentOnlineAdministrator
             ->findToBecome($type, 0);
     }
 
+
     /**
      * @param $slug
      * @return mixed
