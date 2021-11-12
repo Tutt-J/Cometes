@@ -43,8 +43,6 @@
 
             </ul>
         </li>
-        <li class="{% if app.request.attributes.get('_route') == 'homeEvent' %}current-item{% endif %}"><a  href="{{ path('homeEvent') }}">Évènements</a></li>
-
         <li class="{% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}"><a  href="{{ path('astroConsult') }}">Lecture de carte du ciel</a></li>
         <li class="position-relative {% if 'programOnline' in app.request.attributes.get('_route') or 'listCertificateCometes' in app.request.attributes.get('_route') %}current-item{% endif %}">
             <span>Comètes</span>
@@ -53,6 +51,7 @@
                 <li class="d-block"><a class="{% if app.request.attributes.get('_route') == 'listCertificateCometes' %}current-item{% endif %}" href="{{ path('listCertificateCometes') }}">Les Comètes</a></li>
             </ul>
         </li>
+        <li class="{% if app.request.attributes.get('_route') == 'homeEvent' %}current-item{% endif %}"><a  href="{{ path('homeEvent') }}">Évènements</a></li>
         <li class="{% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}"><a  href="{{ path('blogIndex') }}">Journal</a></li>
         <li  class="{% if app.request.attributes.get('_route') == 'indexContact' %}current-item{% endif %}"><a href="{{ path('indexContact') }}">Contact</a></li>
     </ul>
@@ -93,9 +92,6 @@
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutPress' %}current-item{% endif %}" href="{{ path('aboutPress') }}">Presse</a>
                 </div>
             </li>
-            <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'homeEvent' %}active{% endif %}">
-                <a class="nav-link {% if app.request.attributes.get('_route') == 'homeEvent' %}current-item{% endif %}" href="{{ path('homeEvent') }}">Évènements</a>
-            </li>
             <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'astroConsult' %}active{% endif %}">
                 <a class="nav-link {% if app.request.attributes.get('_route') == 'astroConsult' %}current-item{% endif %}" href="{{ path('astroConsult') }}">Lecture de carte du ciel</a>
             </li>
@@ -111,9 +107,9 @@
                     <a class="dropdown-item {% if 'listCertificateCometes' in app.request.attributes.get('_route') %}current-item{% endif %}" href="{{ path('listCertificateCometes') }}">Les Comètes</a>
                 </div>
             </li>
-
-
-
+            <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'homeEvent' %}active{% endif %}">
+                <a class="nav-link {% if app.request.attributes.get('_route') == 'homeEvent' %}current-item{% endif %}" href="{{ path('homeEvent') }}">Évènements</a>
+            </li>
             <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'blogIndex' %}active{% endif %}">
                 <a class="nav-link {% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a>
             </li>
