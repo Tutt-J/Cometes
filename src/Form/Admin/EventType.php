@@ -79,7 +79,6 @@ class EventType extends BaseType
                 'label' => 'Type(s)<span class="text-danger"> *</span>',
                 'label_html' => true,
                 'choice_translation_domain' => 'messages',
-                'allow_add' => true
             ])
             ->add('onlineEvent', CheckboxType::class, array(
                 'label' => 'Ceci est un évènement en ligne'
