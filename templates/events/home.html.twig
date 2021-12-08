@@ -9,39 +9,35 @@
 
 {% block content %}
 <div class="container mt-5">
-        <section class="row align-items-center text-justify">
-                <h2 class="col-12 text-center mb-3">Créer des espaces de retour à soi. S’ouvrir. Se rencontrer. Partager.</h2>
-                <div class="col-12">
-                    <p>CHAMADE offre plusieurs formats d&#39;évènements à vivre comme des expériences uniques et
-                        qui sont autant de portes vers votre croissance personnelle.</p>
-                    <p>Il peut s&#39;agir aussi bien d&#39;un atelier destiné à vous donner les outils d&#39;un développement
-                        personnel doux, avec des savoirs à ramener à la maison, que d&#39;un Cercle de lune pour
-                        expérimenter la puissance de la sororité ou encore d&#39;une expérience pleinement
-                        transformatrice telle une retraite de plusieurs jours.</p>
-                    <p>Toutes ces expériences ont un même but : vous offrir une bulle hors du temps, créer de
-                        l&#39;espace en vous, pour vous laisser émerger. Connaître, reconnaître et faire grandir la version
-                        la plus authentique de vous-même.</p>
-                </div>
-        </section>
-</div>
-<div class="container-fluid pt-3 pb-5">
-    <div class="container">
-        <div class="row justify-content-around flex-wrap">
-                <div class="mb-4 mb-sm-0 col-12 col-sm-4">
-                    <a class="text-center" href="{{ path('retreatsEvent') }}">
-                        <figure class="object-fit-cover m-0">
-                            <img class="mw-200 w-100 h-100" src="{{ asset('build/images/design_retraites.jpeg') }}" alt="">
-                        </figure>
-                    </a>
-                </div>
-                <div class="mb-4 mb-sm-0 col-12 col-sm-4">
-                    <a class="text-center" href="{{ path('ritualsEvent') }}">
-                        <figure class="object-fit-cover m-0">
-                            <img class="mw-200 w-100 h-100" src="{{ asset('build/images/design_rituels.jpeg') }}" alt="">
-                        </figure>
-                    </a>
-                </div>
+    <section class="row align-items-center text-justify">
+        <div class="col-12">
+            <h2 class="text-center mb-5">J’ai à coeur de vous proposer régulièrement des évènements transformateurs conçus comme des espaces de soin, de connaissance et d’éveil à soi. </h2>
         </div>
+    </section>
+    <div class="row list full-height-list justify-content-around flex-wrap align-items-start">
+        {% for event in events %}
+            <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">
+                <a class="d-flex align-items-center text-center" href="{{ path('singleEvent', { 'slug': event.slug }) }}">
+                    <figure>
+                        <div class="effect"></div>
+                        <img src="{{ asset('uploads/cover_img/'~event.img.url) }}" alt="{{ event.img.alt }}">
+                    </figure>
+                </a>
+                <div class="infos mt-3 text-center">
+                    <p class="text-orange">
+                        {% for type in event.type %}
+                            {{ type.wording }}{% if loop.index < event.type|length %} | {% endif %}
+                        {% endfor %}
+                    </p>
+                    <h2 class="d-initial"><a href="{{ path('singleEvent', { 'slug': event.slug }) }}">{{event.title}}</a></h2>
+                </div>
+            </article>
+        {% endfor %}
     </div>
+
 </div>
+    {% if opinions.getOpinions('event') %}
+        {% include 'events/_opinions.html.twig' with {'type': 'event'} %}
+    {% endif %}
+
 {% endblock %}

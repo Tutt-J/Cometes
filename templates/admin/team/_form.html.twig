@@ -1,0 +1,8 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_row(form.name) }}
+{{ form_row(form.lead) }}
+{{ form_row(form.description) }}
+{{ form_row(form.link) }}
+
+{% include 'admin/_modal_img.html.twig' %}
+{{ form_end(form) }}

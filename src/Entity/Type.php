@@ -6,12 +6,14 @@ use App\Repository\TypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TypeRepository::class)
  */
 class Type
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -49,10 +51,21 @@ class Type
      */
     private $opinions;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Wording;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="Type")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->contents = new ArrayCollection();
         $this->opinions = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,6 +180,45 @@ class Type
             if ($opinion->getType() === $this) {
                 $opinion->setType(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getWording(): ?string
+    {
+        return $this->Wording;
+    }
+
+    public function setWording(string $Wording): self
+    {
+        $this->Wording = $Wording;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->addType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            $event->removeType($this);
         }
 
         return $this;

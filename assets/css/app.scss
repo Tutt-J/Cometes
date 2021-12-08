@@ -7,9 +7,18 @@
 @import "_fonts.scss";
 
 body {
-  .certified-icon a svg{
-    font-size:1.5em;
+  .certified-icon {
+    width:250px;
+    a svg{
+      font-size:1.5em;
+    }
   }
+
+  .img-member{
+    width:250px;
+    height:250px;
+  }
+
 
   /****************************************/
   /*****************HEADER*****************/
@@ -187,6 +196,8 @@ body {
         }
         .item {
           figure{
+            height:250px;
+            width:250px;
             &:hover{
               .effect{
                 transform: translate3d(15px,-15px,0);
@@ -205,10 +216,14 @@ body {
             img{
               z-index:1;
               position:relative;
+              height:100%;
+              width:100%;
+              object-fit:cover;
             }
             position:relative;
           }
           .infos{
+            width:250px;
             h2{
               a:hover{
                 text-decoration:none;
@@ -224,14 +239,16 @@ body {
                 }
               }
             }
-            p{
+            >p{
               letter-spacing: 0.3em;
               a:hover{
                 text-decoration:none;
               }
               font-size:0.8rem;
             }
-            text-transform:uppercase;
+            h2, >p{
+              text-transform:uppercase;
+            }
           }
         }
       }
@@ -397,7 +414,7 @@ body {
 
   >footer{
     background-color: $vert_clair;
-    svg{
+    a svg{
       font-size:2em !important;
     }
   }
@@ -513,7 +530,7 @@ body {
                 margin:auto;
                 border-bottom:3px solid $orange;
               }
-              >.current-item{
+              &.current-item{
                 &::after{
                   content: "";
                   padding-top:10px;
@@ -536,7 +553,7 @@ body {
               a{
                 color:white;
               }
-              &:not(.current-item):hover{
+              &:hover{
                 &::after{
                   width:100%;
                 }

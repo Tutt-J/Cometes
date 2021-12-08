@@ -31,7 +31,7 @@ class AstrologyController extends AbstractController
      */
     public function astroConsultAction(SessionInterface $session)
     {
-        
+
       if(isset($_GET['affiliate'])){
           $session->set('affiliate', $_GET['affiliate']);
       }
@@ -43,7 +43,7 @@ class AstrologyController extends AbstractController
     }
 
     /**
-     * @Route("/astrologie/les-certifiees-cometes", name="listCertificateCometes")
+     * @Route("/astrologie/les-cometes", name="listCertificateCometes")
      *
      * @return Response
      */
@@ -62,67 +62,5 @@ class AstrologyController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/astrologie/formations", name="astroTraining")
-     *
-     * @param SessionInterface $session
-     * @return Response
-     */
-    public function astroTrainingAction(SessionInterface $session)
-    {
-        $programs= $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findByType("Astrology");
 
-        return $this->render('astrology/training.html.twig', [
-            'programs' => $programs
-        ]);
-    }
-
-    /**
-     * @Route("/astrologie/initiations", name="initiationsOnline")
-     *
-     * @param EventsAdministrator $eventsAdministrator
-     * @return Response
-     */
-    public function astroInitiationAction(EventsAdministrator $eventsAdministrator)
-    {
-        $initiations = $this->getDoctrine()
-            ->getRepository(Event::class)
-            ->findBecomeEvents($eventsAdministrator->getType('initiation'));
-
-        $workshop = $this->getDoctrine()
-            ->getRepository(Content::class)
-            ->findOneBy(
-                ['id' => 34]
-            );
-
-        return $this->render(
-            'astrology/initiations.html.twig',
-            [
-                'contents' => $initiations,
-                'workshop' => $workshop
-            ]
-        );
-
-    }
-
-    /**
-     * @Route("/astrologie/evenements/initiations/{slug}",
-     * name="initiationEvent",
-     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
-     *
-     * One ritual event page
-     *
-     * @param Event $event
-     * @param EventsAdministrator $eventsAdministrator
-     * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function initiationsAction(Event $event, EventsAdministrator $eventsAdministrator)
-    {
-        return $eventsAdministrator->renderEventPage($event);
-    }
 }

@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -62,44 +63,14 @@ class ProgramCertifiedType extends AbstractType
                 'label' => 'Année<span class="text-danger"> *</span>',
                 'label_html' => true
             ])
-            ->add('email', emailType::class, [
+            ->add('opinion', TextareaType::class, [
                 'constraints' => [
-                    new Email([
-                        'message'=>'L\'adresse e-mail "{{ value }}" est invalide.'
-                    ]),
                     new NotBlank([
                         'message' => SELF::NOTEMPTY_MESSAGE
                     ])
                 ],
-                'label' => 'Adresse E-mail<span class="text-danger"> *</span>',
+                'label' => 'Avis<span class="text-danger"> *</span>',
                 'label_html' => true,
-                'row_attr' => [
-                    'class' => 'col-md-6'
-                ],
-            ])
-            ->add('website', UrlType::class, [
-                'constraints' => array(
-                    new Regex(self::URL_REGEX),
-                ),
-                'label' => 'Url du site web',
-                'label_html' => true,
-                'required' => false
-            ])
-            ->add('instagram', UrlType::class, [
-                'constraints' => array(
-                    new Regex(self::URL_REGEX),
-                ),
-                'label' => 'Url de la page instagram',
-                'label_html' => true,
-                'required' => false
-            ])
-            ->add('facebook', UrlType::class, [
-                'constraints' => array(
-                    new Regex(self::URL_REGEX),
-                ),
-                'label' => 'Url de la page facebook',
-                'label_html' => true,
-                'required' => false
             ])
             ->add('img', ImageType::class, array(
                 'mapped' => false,

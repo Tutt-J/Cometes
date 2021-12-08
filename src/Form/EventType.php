@@ -56,7 +56,7 @@ class EventType extends AbstractType
                     'class' => 'text-center'
                 ],
                 'attr' => [
-                    'class' => 'btn btn-success'
+                    'class' => 'btn btn-primary'
                 ]
             ])
         ;

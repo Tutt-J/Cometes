@@ -5,6 +5,7 @@ use App\Entity\Event;
 use App\Entity\Purchase;
 use App\Entity\UserEvent;
 use App\Form\EventPriceType;
+use App\Repository\EventRepository;
 use App\Service\BasketAdministrator;
 use App\Service\EventsAdministrator;
 use App\Service\MailjetAdministrator;
@@ -42,37 +43,22 @@ class EventsController extends AbstractController
      */
     public function homeAction()
     {
-        return $this->render('events/home.html.twig');
-    }
-
-    /**
-     *
-     * Circles Events page
-     *
-     * @Route("/magie-en-ligne/cercles-de-lune", name="circlesEvent")
-     * @param EventsAdministrator $eventsAdministrator
-     * @return mixed
-     */
-    public function circlesAction(EventsAdministrator $eventsAdministrator)
-    {
-        $circles = $this->getDoctrine()
+        $events = $this->getDoctrine()
             ->getRepository(Event::class)
-            ->findBecomeEvents($eventsAdministrator->getType('circle'));
-
-        return $this->render(
-            'events/circles.html.twig',
-            [
-                'circles' => $circles,
-            ]
-        );
+            ->findBecomeEvents();
+        return $this->render('events/home.html.twig', [
+            "events" => $events
+        ]);
     }
+
+
 
     /**
      *
      * One event circle page
      *
-     * @Route("/magie-en-ligne/cercles-de-lune/{slug}",
-     * name="circleEvent",
+     * @Route("/evenements/{slug}",
+     * name="singleEvent",
      * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
      *
      * @param Event $event
@@ -82,140 +68,7 @@ class EventsController extends AbstractController
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function circleAction(Event $event, EventsAdministrator $eventsAdministrator)
-    {
-        return $eventsAdministrator->renderEventPage($event);
-    }
-
-    /**
-     *
-     * All Rituals Event Page
-     *
-     * @Route("/evenements/rituels", name="ritualsEvent")
-     *
-     * @param EventsAdministrator $eventsAdministrator
-     * @return Response
-     */
-    public function ritualsAction(EventsAdministrator $eventsAdministrator)
-    {
-        //For removing temporarly
-        throw new AccessDeniedException('Vous ne pouvez pas accéder à cette page');
-        $rituals = $this->getDoctrine()
-            ->getRepository(Event::class)
-            ->findBecomeEvents($eventsAdministrator->getType('ritual'));
-
-        return $this->render(
-            'events/rituals.html.twig',
-            [
-                'rituals' => $rituals,
-            ]
-        );
-    }
-
-
-    /**
-     * @Route("/evenements/rituels/{slug}",
-     * name="ritualEvent",
-     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
-     *
-     * One ritual event page
-     *
-     * @param Event $event
-     * @param EventsAdministrator $eventsAdministrator
-     * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function ritualAction(Event $event, EventsAdministrator $eventsAdministrator)
-    {
-        //For removing temporarly
-        throw new AccessDeniedException('Vous ne pouvez pas accéder à cette page');
-        return $eventsAdministrator->renderEventPage($event);
-    }
-
-
-
-
-    /**
-     * @Route("/magie-en-ligne/ateliers", name="workshopsEvent")
-     *
-     * All Workshop Event Page
-     *
-     * @param EventsAdministrator $eventsAdministrator
-     * @return Response
-     */
-    public function workshopsAction(EventsAdministrator $eventsAdministrator)
-    {
-        $workshops = $this->getDoctrine()
-            ->getRepository(Event::class)
-            ->findBecomeEvents($eventsAdministrator->getType('workshop'));
-
-        return $this->render(
-            'events/workshop.html.twig',
-            [
-                'workshops' =>$workshops,
-            ]
-        );
-    }
-
-    /**
-     * @Route("/magie-en-ligne/ateliers/{slug}",
-     * name="workshopEvent",
-     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
-     *
-     * One workshop event page
-     *
-     * @param Event $event
-     * @param EventsAdministrator $eventsAdministrator
-     * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function workshopAction(Event $event, EventsAdministrator $eventsAdministrator)
-    {
-        return $eventsAdministrator->renderEventPage($event);
-    }
-
-    /**
-     * @Route("/evenements/retraites", name="retreatsEvent")
-     *
-     * All retreats Event Page
-     *
-     * @param EventsAdministrator $eventsAdministrator
-     * @return Response
-     */
-    public function retreatsAction(EventsAdministrator $eventsAdministrator)
-    {
-        $retreats = $this->getDoctrine()
-            ->getRepository(Event::class)
-            ->findBecomeEvents($eventsAdministrator->getType('retreat'));
-
-        return $this->render(
-            'events/retreats.html.twig',
-            [
-                'retreats' => $retreats,
-            ]
-        );
-    }
-
-
-    /**
-     * @Route("/evenements/retraites/{slug}",
-     * name="retreatEvent",
-     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
-     *
-     * One retreat Event Page
-     *
-     * @param Event $event
-     * @param EventsAdministrator $eventsAdministrator
-     * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function retreatAction(Event $event, EventsAdministrator $eventsAdministrator)
+    public function eventAction(Event $event, EventsAdministrator $eventsAdministrator)
     {
         return $eventsAdministrator->renderEventPage($event);
     }
@@ -338,33 +191,11 @@ class EventsController extends AbstractController
      */
     public function errorRegisterEventAction(SessionInterface $session)
     {
+        $session->remove('event');
+        $session->remove('stripe');
+        $session->remove('promoCode');
+        $session->remove('applyPromo');
         $this->addFlash('error', 'Une erreur est survenue au moment du paiement... Veuillez réessayer ou nous contacter');
         return $this->redirectToRoute($session->get('referent')['path'], ['slug'=>$session->get('referent')['slug']]);
-    }
-
-
-    /**
-     *
-     * Blessing way Events
-     *
-     * @Route("/evenements/blessing-way", name="blessingEvent")
-     * @return mixed
-     */
-    public function blessingAction()
-    {
-        return $this->render('events/blessing.html.twig');
-    }
-
-
-    /**
-     *
-     * SlowBuilding Events
-     *
-     * @Route("/evenements/slowbuilding", name="slowBuildingEvent")
-     * @return mixed
-     */
-    public function slowBuildingAction()
-    {
-        return $this->render('events/slowbuilding.html.twig');
     }
 }

@@ -210,9 +210,13 @@ class BasketController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function errorBasketAction()
+    public function errorBasketAction(SessionInterface $session)
     {
+        $session->remove('event');
+        $session->remove('stripe');
+        $session->remove('promoCode');
+        $session->remove('applyPromo');
         $this->addFlash('error', 'Une erreur est survenue au moment du paiement... Veuillez réessayer ou nous contacter');
-        return $this->redirectToRoute('processBasket');
+        return $this->redirectToRoute('shopBasket');
     }
 }

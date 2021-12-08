@@ -29,7 +29,7 @@
                                     {%  for content in purchase.contents %}
                                         <li class="mb-3">
                                             {% if content.path != 'yogaOnline' %}
-                                                <a href="{{ path(content.path, {'slug':content.entity.slug}) }}">{{ content.entity.title }}</a>
+                                               {{ content.entity.title }}
                                             {% else %}
                                                 {{ content.entity.title }}
                                             {% endif %}
