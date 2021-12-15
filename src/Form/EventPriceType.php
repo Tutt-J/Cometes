@@ -76,7 +76,8 @@ class EventPriceType extends AbstractType
         if($options['event']->getAllowPaiennes()) {
             $builder->add('paiennes', CheckboxType::class, [
                 'mapped' => false,
-                'label' => 'Je fais partie de la communauté des paiennes',
+                'label' => 'Je fais partie de la <a href="https://www.lespaiennes.com">communauté payante des Païennes</a>',
+                'label_html' => true,
                 'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de l\'évènement.',
                 'required' => false
             ])

@@ -44,7 +44,8 @@ class EventType extends AbstractType
         if($options['event']->getAllowPaiennes()) {
             $builder->add('paiennes', CheckboxType::class, [
                 'mapped' => false,
-                'label' => 'Je fais partie de la communauté des paiennes',
+                'label' => 'Je fais partie de la <a href="https://www.lespaiennes.com">communauté payante des Païennes</a>',
+                'label_html' => true,
                 'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de l\'évènement.',
                 'required' => false
             ])
@@ -58,10 +59,7 @@ class EventType extends AbstractType
                     new IsTrue([
                         'message' => 'Vous devez accepter nos conditions particulières pour les évènements.',
                     ]),
-                ],
-                'row_attr' => [
-                    'class' => 'text-center'
-                ],
+                ]
             ])
             ->add('agreeCgv', CheckboxType::class, [
                 'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-generales-de-vente">conditions générales de vente</a><span class="text-danger"> *</span>' ,
@@ -71,10 +69,7 @@ class EventType extends AbstractType
                     new IsTrue([
                         'message' => 'Vous devez accepter nos conditions générales de ventes.',
                     ]),
-                ],
-                'row_attr' => [
-                    'class' => 'text-center'
-                ],
+                ]
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'M\'inscrire',
