@@ -117,6 +117,11 @@ class Event
     /**
      * @ORM\Column(type="boolean")
      */
+    private $allowPaiennes;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $isCollaboration;
 
     /**
@@ -442,6 +447,18 @@ class Event
     public function removeType(Type $type): self
     {
         $this->Type->removeElement($type);
+
+        return $this;
+    }
+
+    public function getAllowPaiennes(): ?bool
+    {
+        return $this->allowPaiennes;
+    }
+
+    public function setAllowPaiennes(bool $allowPaiennes): self
+    {
+        $this->allowPaiennes = $allowPaiennes;
 
         return $this;
     }

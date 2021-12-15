@@ -23,8 +23,34 @@ class EventType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'help' => "Le bon sera appliqué à l'étape suivante s'il est valide"
+            ]);
+            if($options['event']->getAllowFriend()) {
+                $builder->add('friend', TextType::class, [
+                    'mapped' => false,
+                    'label' => 'Si vous venez avec une amie, son nom et prénom',
+                    'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de l\'évènement.',
+                    'required' => false
+                ]);
+            }
+        if($options['event']->getAllowAlready()) {
+            $builder->add('already', CheckboxType::class, [
+                'mapped' => false,
+                'label' => 'J\'ai déjà participé à une retraite Chamade',
+                'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de l\'évènement.',
+                'required' => false
             ])
-            ->add('agreeTerms', CheckboxType::class, [
+            ;
+        }
+        if($options['event']->getAllowPaiennes()) {
+            $builder->add('paiennes', CheckboxType::class, [
+                'mapped' => false,
+                'label' => 'Je fais partie de la communauté des paiennes',
+                'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de l\'évènement.',
+                'required' => false
+            ])
+            ;
+        }
+            $builder->add('agreeTerms', CheckboxType::class, [
                 'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-particulieres-pour-les-evenements">conditions particulières pour les évènements</a><span class="text-danger"> *</span>' ,
                 'label_html' => true,
                 'mapped' => false,
@@ -60,5 +86,11 @@ class EventType extends AbstractType
                 ]
             ])
         ;
+    }
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'event' => null
+        ]);
     }
 }
