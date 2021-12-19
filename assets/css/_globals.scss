@@ -1,5 +1,5 @@
 body{
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Arima Madurai', sans-serif;
   background-color: white;
   display:flex;
   flex-direction:column;
@@ -66,7 +66,8 @@ body{
   a{
     color:$rouge;
     &:hover{
-      color:$orange;
+      color:$rose;
+      text-decoration: none;
     }
   }
 

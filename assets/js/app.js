@@ -38,7 +38,7 @@ $(document).ready(function() {
 
     $(window).scroll(function () {
         if ($(this).scrollTop() > 50) {
-            $('body > header').css('backgroundColor', '#f2b6a0');
+            $('body > header').css('backgroundColor', '#e88846');
             $('.big_logo').addClass('d-none');
             $('.little_logo').removeClass('d-none');
 

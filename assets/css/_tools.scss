@@ -19,20 +19,68 @@ body{
     max-width:200px;
   }
 
+  .background-green{
+    background-color:$vert_clair !important;
+  }
+
+  .background-dark-green{
+    background-color:$vert  !important;
+  }
+
+
   .background-white{
     background-color:$blanc  !important;
   }
 
-  .background-green{
-    background-color:$vert_clair !important;
+  .background-orange{
+    background-color: $orange;
+  }
+
+  .background-red{
+    background-color: $rouge;
+  }
+
+  .background-black{
+    background-color: $noir;
+  }
+
+  .background-beige{
+    background-color: $beige;
   }
 
   .background-rose{
     background-color: $rose  !important;
   }
 
-  .background-dark-green{
-    background-color:$vert  !important;
+
+  //.background-bg-white{
+  //  background-image:url('./public/build/images/bg/white.png');
+  //}
+  //
+  //.background-orange{
+  //  background-image:url('./public/build/images/bg/orange.png');
+  //}
+  //
+  //.background-red{
+  //  background-image:url('./public/build/images/bg/red.png');
+  //}
+  //
+  //.background-black{
+  //  background-image:url('./public/build/images/bg/black.png');
+  //}
+  //
+  //.background-beige{
+  //  background-image:url('./public/build/images/bg/beige.png');
+  //}
+  //
+  //.background-rose{
+  //  background-image:url('./public/build/images/bg/pink.png');
+  //}
+
+  .background-demi-circle-orange{
+    background-image: url('../images/motifs/demisphere_orange.png');
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .rm-content-margin{

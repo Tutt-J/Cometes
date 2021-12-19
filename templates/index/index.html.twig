@@ -7,100 +7,163 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="overlay"></div>
-                    <img class="d-block w-100 h-100" src="{{ asset('build/images/photo-main.jpeg') }}" alt="Photo d'une main avec des dessins en peinture">
+                    <img class="d-block w-100 h-100" src="{{ asset('build/images/35.jpg') }}"
+                         alt="Photo d'une main avec des dessins en peinture">
                     <div class="carousel-caption m-auto d-flex flex-column align-items-center justify-content-center w-80 text-center"></div>
                 </div>
-                <div class="carousel-item">
-                    <div class="overlay"></div>
-                    <img class="d-block w-100 h-100" src="{{ asset('build/images/fleur-main.jpeg') }}" alt="Photo d'une main tenant un tournesol">
-                    <div class="carousel-caption m-auto d-flex flex-column align-items-center justify-content-center w-80 text-center"></div>
-                </div>
+                {#                <div class="carousel-item">#}
+                {#                    <div class="overlay"></div>#}
+                {#                    <img class="d-block w-100 h-100" src="{{ asset('build/images/fleur-main.jpeg') }}" alt="Photo d'une main tenant un tournesol">#}
+                {#                    <div class="carousel-caption m-auto d-flex flex-column align-items-center justify-content-center w-80 text-center"></div>#}
+                {#                </div>#}
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            {#            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">#}
+            {#                <span class="carousel-control-prev-icon" aria-hidden="true"></span>#}
+            {#                <span class="sr-only">Previous</span>#}
+            {#            </a>#}
+            {#            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">#}
+            {#                <span class="carousel-control-next-icon" aria-hidden="true"></span>#}
+            {#                <span class="sr-only">Next</span>#}
+            {#            </a>#}
         </div>
     </header>
     {# END PHOTOS CAROUSEL #}
 
-    {# VOUS ACCOMPAGNER... #}
-    <section class="container mt-100">
-        <div class="col-12 text-center">
-            <h2>- Expériences d’éveil à soi -
-                <br/>
-            </h2>
-            <p>Tu ressens le besoin de te laisser de l’espace et d’honorer tes besoins. <br>
-
-                De prendre une pause et une profonde inspiration.<br><br>
-
-                Tu ressens le besoin de retrouver le chemin de ta vérité, de ta magie et de tes dons.<br>
-
-                De ramener du sens et de la conscience dans ton incarnation.<br><br>
-                Tu ressens le besoin de ramener de la joie et de stimuler ta créativité.<br>
-                De te réinventer et de retrouver ton cœur d’enfant.<br><br>
-                Tu es exactement au bon endroit et je te souhaite la bienvenue.<br><br>
-
-                <em>Il est temps de prendre soin de toi.</em></p>
+    {# PRESENTATION #}
+    <section class="container mt-100" id="home_title">
+        <div class="row justify-content-center align-items-center position-relative">
+            <img class="col-12 col-md-10  col-lg-8" src="{{ asset('build/images/Motifs/demisphere_orange.png') }}" alt="">
+            <img id="rain" class="col-12" src="{{ asset('build/images/motifs/motif_pluie_noir.png') }}" alt="">
+            <h2 class="text-center col-8 ">Hello! <br> Moi, c'est Salomé.</h2>
         </div>
+        <div class="row pt-5">
+            <p class="col-12 text-center">J’ accompagne les femmes en créant et en
+                facilitant des évènements transformateurs
+                (Cercles de femmes, Rituels et Retraites) ainsi
+                que des accompagnements personnalisés
+                (Lectures de cartes du ciel, guidances et soins).</p>
+
+            <p class="col-12 text-center">C'est notamment par l'Astrologie que je t'invite à
+                renouer avec ton chemin d’âme.</p>
+
+            <p class="col-12 text-center">Passionnée par les astres et leur influence,
+                j' aime transmettre une astrologie de l'Éveil, par
+                le biais de lectures individuelles et de ma
+                formation en Astrologie holistique, Comètes.</p>
+        </div>
+
     </section>
+    {# END PRESENTATION #}
+
+    {# Type of offer #}
     <section class="container pt-3 pb-5">
         <div class="row text-center justify-content-around">
-            <div class="col-12 col-md-3 my-3 ">
-                <a href="{{ path('astroConsult') }}">
-                    <img loading="lazy" class="opacity_hover col-12 p-0" src="{{ asset('build/images/design_astrologie.jpeg') }}" alt="">
-                </a>
-            </div>
-            <div class="col-12 col-md-3 my-3">
-                <a href="{{ path('programOnline', { 'slug': 'cometes' }) }}">
-                    <img loading="lazy" class="opacity_hover col-12 p-0" src="{{ asset('build/images/logo_cometes.jpeg') }}" alt="">
-                </a>
-            </div>
-            <div class="col-12 col-md-3 my-3 ">
+            <div class="col-12 col-sm-8  col-md-3 my-3 ">
                 <a href="{{ path('homeEvent') }}">
-                    <img loading="lazy" class="opacity_hover col-12 p-0" src="{{ asset('build/images/design_evenements.jpeg') }}" alt="">
+                    <img loading="lazy" class="opacity_hover col-12 p-0"
+                         src="{{ asset('build/images/vignettes/2.jpg') }}" alt="">
                 </a>
             </div>
+            <div class="col-12 col-sm-8  col-md-3 my-3 ">
+                <a href="{{ path('astroConsult') }}">
+                    <img loading="lazy" class="opacity_hover col-12 p-0"
+                         src="{{ asset('build/images/vignettes/1.jpg') }}" alt="">
+                </a>
+            </div>
+            <div class="col-12 col-sm-8  col-md-3 my-3">
+                <a href="{{ path('programOnline', { 'slug': 'cometes' }) }}">
+                    <img loading="lazy" class="opacity_hover col-12 p-0"
+                         src="{{ asset('build/images/vignettes/cometes.jpg') }}" alt="">
+                </a>
+            </div>
+
         </div>
     </section>
+    {# End type of offer #}
 
-    {# END VOUS ACCOMPAGNER... #}
+    {# EXPERIENCE #}
+    <section class="container" id="home_title">
+        <div class="row justify-content-center align-items-center position-relative">
+            <img class="col-12 col-md-10  col-lg-8" src="{{ asset('build/images/Motifs/demisphere_orange.png') }}" alt="">
+            <img id="wave" class="col-12" src="{{ asset('build/images/motifs/trace_intuitif_noir.png') }}" alt="">
+            <h2 class="text-center col-8 ">EXPÉRIENCES<br>
+                D'ÉVEIL À SOI</h2>
+        </div>
+        <div class="row pt-5">
+            <p class="col-12 text-center">Tu ressens le besoin de te laisser de
+                l’ espace et d’honorer tes besoins.<br>
+                De prendre une pause et une profonde inspiration.</p>
+
+            <p class="col-12 text-center">Tu ressens le besoin de retrouver le chemin de ta vérité, de ta magie et de
+                tes dons.<br>
+                De ramener du sens et de la conscience
+                dans ton incarnation.</p>
+
+            <p class="col-12 text-center">Tu ressens le besoin de ramener de la joie et de stimuler ta créativité.<br>
+
+                De te réinventer et de retrouver ton cœur d’enfant.</p>
+
+            <p class="col-12 text-center">Tu es exactement au bon endroit et je te souhaite la bienvenue.<br>
+
+                Il est temps de prendre soin de toi.</p>
+        </div>
+        <div class="row">
+            <img id="griffe" class="col-4" src="{{ asset('build/images/motifs/trace_intuitif_2.png') }}" alt="">
+
+        </div>
+
+    </section>
+    {# END EXEPERIENCE #}
+
+
 
     {# THREE NEXT EVENTS #}
     {% if events is not empty %}
         <section class="container-fluid p-0">
-            <header class="py-4 background-green text-center col-12">
-                <h2 class="m-0">Évènements à venir</h2>
+            <header class="py-4 background-orange text-center col-12">
+                <h2 class="m-0 text-uppercase">Évènements à venir</h2>
             </header>
             <div class="container py-5">
                 <div class="row list justify-content-around flex-wrap text-center align-items-start ">
                     {% for event in events %}
                         <article class="item col-12 col-md-4 d-flex flex-column align-items-center">
-                            <a class="d-flex align-items-center text-center" href="{{ path("singleEvent", { 'slug': event.slug })}}">
+                            <a class="d-flex align-items-center text-center"
+                               href="{{ path("singleEvent", { 'slug': event.slug }) }}">
                                 <figure>
                                     <div class="effect"></div>
-                                    <img loading="lazy" src="{{ asset('uploads/cover_img/'~event.img.url) }}" alt="{{ event.img.alt }}">
+                                    <img loading="lazy" src="{{ asset('uploads/cover_img/'~event.img.url) }}"
+                                         alt="{{ event.img.alt }}">
                                 </figure>
                             </a>
                             <div class="infos mt-3">
                                 <h2 class="d-initial">
-                                    <a href="{{ path("singleEvent", { 'slug': event.slug })}}">{{ event.title | raw }}</a>
+                                    <a href="{{ path("singleEvent", { 'slug': event.slug }) }}">{{ event.title | raw }}</a>
                                 </h2>
-                                <p>{% if event.startDate | date('Ymd') != event.endDate | date('Ymd')%}
-                                    <strong>Du {{event.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM')}} au {{event.endDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY')}}</strong>
+                                <p>{% if event.startDate | date('Ymd') != event.endDate | date('Ymd') %}
+                                        <strong>Du {{ event.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM') }}
+                                            au {{ event.endDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY') }}</strong>
                                     {% else %}
-                                        <strong>{{event.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY')}}</strong>
-                                {% endif %}
+                                        <strong>{{ event.startDate | localizeddate('none', 'none', null, null, 'EEEE d MMMM YYYY') }}</strong>
+                                    {% endif %}
 
                                 </p>
                             </div>
                         </article>
                     {% endfor %}
 
+                </div>
+                <div class="row">
+                    <p class="col-12 text-center">"Si vous êtes une femme et que vous osez regarder à l’intérieur de
+
+                        vous-même, alors vous êtes une sorcière."</p>
+
+                    <p  class="col-12 text-center">Mona Chollet</p>
+
+                    <p class="col-12 text-center"><em>Sorcières : La puissance invaincue des femmes</em></p>
+                </div>
+                <div class="row position-relative justify-content-center pt-5">
+                    <img id="orange-circle" class="col-4" src="{{ asset('build/images/motifs/rond_orange.png') }}" alt="">
+                    <img id="flower" class="col-4 position-absolute" src="{{ asset('build/images/motifs/Petiteplante_noir.png') }}" alt="">
                 </div>
             </div>
         </section>
@@ -109,24 +172,28 @@
 
     {# LAST PRESS #}
     <section class="container-fluid p-0 ">
-        <header class="py-4 background-green text-center col-12">
+        <header class="py-4 background-orange text-center col-12">
             <h2 class="m-0">Chamade dans la presse</h2>
         </header>
         <div class="container py-5">
             <div class="row list full-height-list justify-content-around flex-wrap align-items-start">
                 {% for article in press %}
                     <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">
-                        <a class="d-flex align-items-center text-center " href="{{ path('blogArticle', { 'slug': article.slug }) }}">
+                        <a class="d-flex align-items-center text-center "
+                           href="{{ path('blogArticle', { 'slug': article.slug }) }}">
                             <figure>
                                 <div class="effect"></div>
-                                <img  src="{{ asset('uploads/cover_img/'~article.img.url) }}" alt="{{ article.img.alt }}">
+                                <img src="{{ asset('uploads/cover_img/'~article.img.url) }}"
+                                     alt="{{ article.img.alt }}">
                             </figure>
                         </a>
                         <div class="infos mt-3">
                             <p>
                                 <a href="{{ path('blogCategory', { 'slug': article.category.slug }) }}">{{ article.category.wording }}</a>
                             </p>
-                            <h2 class="d-initial"><a href="{{ path('blogArticle', { 'slug': article.slug }) }}">{{article.title}}</a></h2>
+                            <h2 class="d-initial"><a
+                                        href="{{ path('blogArticle', { 'slug': article.slug }) }}">{{ article.title }}</a>
+                            </h2>
                         </div>
                     </article>
                 {% endfor %}
