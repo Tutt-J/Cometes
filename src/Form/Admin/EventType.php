@@ -170,6 +170,13 @@ class EventType extends BaseType
                 ],
                 'label' => 'Autoriser la promotion si on a déjà participé'
             ))
+            ->add('allowPaiennes', ChoiceType::class, array(
+                'choices'  => [
+                    'Non' => 0,
+                    'Oui' => 1,
+                ],
+                'label' => 'Autoriser la promotion si on fait partie de la communauté des paiennes'
+            ))
             ->addEventListener(
                 FormEvents::PRE_SUBMIT,
                 function (FormEvent $event) {

@@ -5,6 +5,54 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="eSD97.n" resname="ritual">
+        <source>ritual</source>
+        <target>Rituel</target>
+      </trans-unit>
+      <trans-unit id="7lENGge" resname="workshop">
+        <source>workshop</source>
+        <target>Atelier</target>
+      </trans-unit>
+      <trans-unit id="yjFC1V4" resname="yoga">
+        <source>yoga</source>
+        <target>Yoga</target>
+      </trans-unit>
+      <trans-unit id="ijkXjTJ" resname="circle">
+        <source>circle</source>
+        <target>Cercle de lune</target>
+      </trans-unit>
+      <trans-unit id="GgdjMqo" resname="retreat">
+        <source>retreat</source>
+        <target>Retraite</target>
+      </trans-unit>
+      <trans-unit id="DKsclhd" resname="video">
+        <source>video</source>
+        <target>Atelier</target>
+      </trans-unit>
+      <trans-unit id="kJINk_L" resname="Program">
+        <source>Program</source>
+        <target>Page "Programme"</target>
+      </trans-unit>
+      <trans-unit id="rsB9I1N" resname="Astrology">
+        <source>Astrology</source>
+        <target>Page "Astrologie"</target>
+      </trans-unit>
+      <trans-unit id="Yo330ZH" resname="giftCard">
+        <source>giftCard</source>
+        <target>Carte Cadeau</target>
+      </trans-unit>
+      <trans-unit id="lsV_Xf7" resname="initiation">
+        <source>initiation</source>
+        <target>Initiation</target>
+      </trans-unit>
+      <trans-unit id="a8Y2.wE" resname="lecture">
+        <source>lecture</source>
+        <target>Lectures de carte du ciel</target>
+      </trans-unit>
+      <trans-unit id="29aetA5" resname="cometes">
+        <source>cometes</source>
+        <target>Comètes</target>
+      </trans-unit>
       <trans-unit id="0jg4sef" resname="Symfony is great">
         <source>Symfony is great</source>
         <target>J'aime Symfony</target>

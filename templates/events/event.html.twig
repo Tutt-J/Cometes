@@ -98,6 +98,9 @@
                     {% if form.already is defined %}
                         {{ form_row(form.already) }}
                     {% endif %}
+                {% if form.paiennes is defined %}
+                    {{ form_row(form.paiennes) }}
+                {% endif %}
                     {{ form_row(form.agreeTerms, {'attr': {
                         'oninvalid':"this.setCustomValidity('Vous devez accepter nos conditions particulières pour les évènements')",
                         'oninput':"this.setCustomValidity('')"

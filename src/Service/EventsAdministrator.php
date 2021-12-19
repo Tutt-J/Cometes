@@ -196,7 +196,8 @@ class EventsAdministrator
             } else {
                 $form = $this->formFactory->create(
                     EventType::class,
-                    $event
+                    $event,
+                    array('event' => $event)
                 );
                 $multiplePrice=false;
             }
@@ -291,17 +292,20 @@ class EventsAdministrator
     /**
      * @param $friend
      * @param $already
+     * @param $paiennes
      * @param $choice
      */
-    public function generateDescription($friend, $already, $choice)
+    public function generateDescription($friend, $already, $paiennes, $choice)
     {
         $description = '';
-        if (!empty($friend) && $already == 1) {
-            $description=" Réduction de 5% car vient avec " . $friend . " et a déjà participé à une retraite chamade.";
-        } elseif (!empty($friend)) {
-            $description=" Réduction de 5% car vient avec " . $friend.'.';
-        } elseif($already == 1) {
-            $description=" Réduction de 5% car a déjà participé à une retraite chamade.";
+        if ($already == 1) {
+            $description.="Réduction de 5% car a déjà participé à une retraite chamade. ";
+        }
+        if (!empty($friend)) {
+            $description.="Réduction de 5% car vient avec " . $friend.'. ';
+        }
+        if($paiennes == 1) {
+            $description.="Réduction de 5% car fait partie de la communauté des paiennes.";
         }
 
         if(!empty($choice)){
@@ -375,11 +379,17 @@ class EventsAdministrator
             $already=$form->get('already')->getData();
             $newPrice=$price - ($price * (5 / 100));
         }
+
+        $paiennes=0;
+        if($form->has('paiennes') && $form->get('paiennes')->getData() == 1){
+            $paiennes=$form->get('paiennes')->getData();
+            $newPrice=$price - ($price * (5 / 100));
+        }
         $choice = '';
         if($form->has('choice')){
             $choice=$form->get('choice')->getData();
         }
-        $this->generateDescription($friend, $already, $choice);
+        $this->generateDescription($friend, $already, $paiennes, $choice);
 
         if(isset($newPrice)){
             $price = $newPrice;
