@@ -30,23 +30,23 @@
     {# END PHOTOS CAROUSEL #}
 
     {# PRESENTATION #}
-    <section class="container mt-100" id="home_title">
+    <section class="container mt-100 pt-md-3 pt-lg-5" id="home_title">
         <div class="row justify-content-center align-items-center position-relative">
             <img class="col-12 col-md-10  col-lg-8" src="{{ asset('build/images/Motifs/demisphere_orange.png') }}" alt="">
             <img id="rain" class="col-12" src="{{ asset('build/images/motifs/motif_pluie_noir.png') }}" alt="">
             <h2 class="text-center col-8 ">Hello! <br> Moi, c'est Salomé.</h2>
         </div>
         <div class="row pt-5">
-            <p class="col-12 text-center">J’ accompagne les femmes en créant et en
+            <p class="col-12 text-center big-text">J’ accompagne les femmes en créant et en
                 facilitant des évènements transformateurs
                 (Cercles de femmes, Rituels et Retraites) ainsi
                 que des accompagnements personnalisés
                 (Lectures de cartes du ciel, guidances et soins).</p>
 
-            <p class="col-12 text-center">C'est notamment par l'Astrologie que je t'invite à
+            <p class="col-12 text-center big-text">C'est notamment par l'Astrologie que je t'invite à
                 renouer avec ton chemin d’âme.</p>
 
-            <p class="col-12 text-center">Passionnée par les astres et leur influence,
+            <p class="col-12 text-center big-text">Passionnée par les astres et leur influence,
                 j' aime transmettre une astrologie de l'Éveil, par
                 le biais de lectures individuelles et de ma
                 formation en Astrologie holistique, Comètes.</p>
@@ -56,7 +56,7 @@
     {# END PRESENTATION #}
 
     {# Type of offer #}
-    <section class="container pt-3 pb-5">
+    <section class="container py-5">
         <div class="row text-center justify-content-around">
             <div class="col-12 col-sm-8  col-md-3 my-3 ">
                 <a href="{{ path('homeEvent') }}">
@@ -82,7 +82,7 @@
     {# End type of offer #}
 
     {# EXPERIENCE #}
-    <section class="container" id="home_title">
+    <section class="container py-5" id="home_title">
         <div class="row justify-content-center align-items-center position-relative">
             <img class="col-12 col-md-10  col-lg-8" src="{{ asset('build/images/Motifs/demisphere_orange.png') }}" alt="">
             <img id="wave" class="col-12" src="{{ asset('build/images/motifs/trace_intuitif_noir.png') }}" alt="">
@@ -90,20 +90,20 @@
                 D'ÉVEIL À SOI</h2>
         </div>
         <div class="row pt-5">
-            <p class="col-12 text-center">Tu ressens le besoin de te laisser de
+            <p class="col-12 text-center big-text">Tu ressens le besoin de te laisser de
                 l’ espace et d’honorer tes besoins.<br>
                 De prendre une pause et une profonde inspiration.</p>
 
-            <p class="col-12 text-center">Tu ressens le besoin de retrouver le chemin de ta vérité, de ta magie et de
+            <p class="col-12 text-center big-text">Tu ressens le besoin de retrouver le chemin de ta vérité, de ta magie et de
                 tes dons.<br>
                 De ramener du sens et de la conscience
                 dans ton incarnation.</p>
 
-            <p class="col-12 text-center">Tu ressens le besoin de ramener de la joie et de stimuler ta créativité.<br>
+            <p class="col-12 text-center big-text">Tu ressens le besoin de ramener de la joie et de stimuler ta créativité.<br>
 
                 De te réinventer et de retrouver ton cœur d’enfant.</p>
 
-            <p class="col-12 text-center">Tu es exactement au bon endroit et je te souhaite la bienvenue.<br>
+            <p class="col-12 text-center big-text">Tu es exactement au bon endroit et je te souhaite la bienvenue.<br>
 
                 Il est temps de prendre soin de toi.</p>
         </div>
@@ -119,6 +119,7 @@
 
     {# THREE NEXT EVENTS #}
     {% if events is not empty %}
+        <section class="container-fluid p-0">
         <section class="container-fluid p-0">
             <header class="py-4 background-orange text-center col-12">
                 <h2 class="m-0 text-uppercase">Évènements à venir</h2>
@@ -153,13 +154,13 @@
 
                 </div>
                 <div class="row">
-                    <p class="col-12 text-center">"Si vous êtes une femme et que vous osez regarder à l’intérieur de
+                    <p class="col-12 text-center big-text">"Si vous êtes une femme et que vous osez regarder à l’intérieur de
 
                         vous-même, alors vous êtes une sorcière."</p>
 
-                    <p  class="col-12 text-center">Mona Chollet</p>
+                    <p  class="col-12 text-center big-text">Mona Chollet</p>
 
-                    <p class="col-12 text-center"><em>Sorcières : La puissance invaincue des femmes</em></p>
+                    <p class="col-12 text-center big-text"><em>Sorcières : La puissance invaincue des femmes</em></p>
                 </div>
                 <div class="row position-relative justify-content-center pt-5">
                     <img id="orange-circle" class="col-4" src="{{ asset('build/images/motifs/rond_orange.png') }}" alt="">
@@ -171,11 +172,11 @@
     {# END THREE NEXT EVENTS #}
 
     {# LAST PRESS #}
-    <section class="container-fluid p-0 ">
+    <section class="container-fluid p-0 py-5">
         <header class="py-4 background-orange text-center col-12">
             <h2 class="m-0">Chamade dans la presse</h2>
         </header>
-        <div class="container py-5">
+        <div class="container pt-5">
             <div class="row list full-height-list justify-content-around flex-wrap align-items-start">
                 {% for article in press %}
                     <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">

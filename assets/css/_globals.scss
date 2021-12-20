@@ -75,6 +75,10 @@ body{
     overflow-wrap: break-word;
   }
 
+  .big-text{
+      font-size:1.1em;
+  }
+
   //BUTTON STYLE
   .btn-primary, .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:focus {
     color: #fff;
