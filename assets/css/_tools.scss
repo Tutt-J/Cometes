@@ -1,4 +1,19 @@
 body{
+  .big-text{
+    font-size:1.1em;
+  }
+
+  @media screen and (min-width: $break-sm) {
+    .big-text{
+      font-size:1.2em;
+    }
+  }
+  @media screen and (min-width: $break-l) {
+    .big-text{
+      font-size:1.3em;
+    }
+  }
+
   .letter-spacing-initial{
     letter-spacing:initial !important;
   }

@@ -217,9 +217,10 @@ body {
 
         h2 {
           position: absolute;
-          top: 50%;
-          transform: translateY(-40%);
+          top: 55%;
+          transform: translateY(-50%);
           font-size: 1.6em;
+          font-weight: 300;
         }
 
         #rain {
@@ -450,7 +451,7 @@ body {
       #home_title {
 
         h2 {
-          font-size: 1em;
+          font-size: 5vw;
         }
       }
     }
@@ -562,9 +563,25 @@ body {
         }
       }
     }
-    #home_title {
-      h2 {
-        font-size: 2em !important;
+    main .container {
+
+      &#home_title {
+        #rain {
+          top: -40px;
+          right: 20px;
+          width: 30%
+        }
+
+        #wave {
+          top: -15px;
+          width: 45%
+        }
+        h2 {
+          font-size: 2em !important;
+        }
+        #black_wave {
+          top: -45px;
+        }
       }
     }
   }
@@ -606,9 +623,9 @@ body {
       }
 
       #black_wave {
-        top: -70px;
-        right: 25px;
-        width: 55%
+        top: -45px;
+        right: 45px;
+        width: 45%
       }
     }
   }
@@ -734,14 +751,14 @@ body {
 
       #wave {
         top: -30px;
-        right: 35px;
-        width: 45%
+        right: 155px;
+        width: 35%
       }
 
       #black_wave {
-        top: -70px;
-        right: 25px;
-        width: 55%
+        top: -45px;
+        right: 150px;
+        width: 35%
       }
     }
 
@@ -778,6 +795,26 @@ body {
         }
       }
     }
+    main .container#home_title {
+      #rain {
+        top: -50px;
+        right: 295px;
+        width: 16%
+      }
+
+      #wave {
+        top: -35px;
+        right: 230px;
+        width: 30%
+      }
+
+      #black_wave {
+        top: -60px;
+        right: 270px;
+        width: 30%
+      }
+    }
+
   }
 
 

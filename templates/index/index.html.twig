@@ -32,11 +32,11 @@
     {# PRESENTATION #}
     <section class="container mt-100 pt-md-3 pt-lg-5" id="home_title">
         <div class="row justify-content-center align-items-center position-relative">
-            <img class="col-12 col-md-10  col-lg-8" src="{{ asset('build/images/Motifs/demisphere_orange.png') }}" alt="">
+            <img class="col-12 col-md-10  col-lg-8 col-xl-6" src="{{ asset('build/images/Motifs/demisphere_orange.png') }}" alt="">
             <img id="rain" class="col-12" src="{{ asset('build/images/motifs/motif_pluie_noir.png') }}" alt="">
             <h2 class="text-center col-8 ">Hello! <br> Moi, c'est Salomé.</h2>
         </div>
-        <div class="row pt-5">
+        <div class="row pt-5 px-md-5 px-xl-0">
             <p class="col-12 text-center big-text">J’ accompagne les femmes en créant et en
                 facilitant des évènements transformateurs
                 (Cercles de femmes, Rituels et Retraites) ainsi
@@ -84,7 +84,7 @@
     {# EXPERIENCE #}
     <section class="container py-5" id="home_title">
         <div class="row justify-content-center align-items-center position-relative">
-            <img class="col-12 col-md-10  col-lg-8" src="{{ asset('build/images/Motifs/demisphere_orange.png') }}" alt="">
+            <img class="col-12 col-md-10  col-lg-8 col-xl-6" src="{{ asset('build/images/Motifs/demisphere_orange.png') }}" alt="">
             <img id="wave" class="col-12" src="{{ asset('build/images/motifs/trace_intuitif_noir.png') }}" alt="">
             <h2 class="text-center col-8 ">EXPÉRIENCES<br>
                 D'ÉVEIL À SOI</h2>
@@ -103,12 +103,12 @@
 
                 De te réinventer et de retrouver ton cœur d’enfant.</p>
 
-            <p class="col-12 text-center big-text">Tu es exactement au bon endroit et je te souhaite la bienvenue.<br>
+            <p class="col-12 text-center big-text">Tu es exactement au bon endroit et je te souhaite la bienvenue.
 
-                Il est temps de prendre soin de toi.</p>
+            <p class="col-12 text-center big-text"><em>Il est temps de prendre soin de toi.</em></p>
         </div>
         <div class="row">
-            <img id="griffe" class="col-4" src="{{ asset('build/images/motifs/trace_intuitif_2.png') }}" alt="">
+            <img id="griffe" class="col-4 col-md-3 offset-xl-1 col-xl-2" src="{{ asset('build/images/motifs/trace_intuitif_2.png') }}" alt="">
 
         </div>
 
@@ -127,7 +127,7 @@
             <div class="container py-5">
                 <div class="row list justify-content-around flex-wrap text-center align-items-start ">
                     {% for event in events %}
-                        <article class="item col-12 col-md-4 d-flex flex-column align-items-center">
+                        <article class="item col-12 col-md-6 col-lg-4 d-flex flex-column align-items-center">
                             <a class="d-flex align-items-center text-center"
                                href="{{ path("singleEvent", { 'slug': event.slug }) }}">
                                 <figure>
@@ -153,7 +153,7 @@
                     {% endfor %}
 
                 </div>
-                <div class="row">
+                <div class="row px-md-5 px-xl-0">
                     <p class="col-12 text-center big-text">"Si vous êtes une femme et que vous osez regarder à l’intérieur de
 
                         vous-même, alors vous êtes une sorcière."</p>
@@ -163,8 +163,8 @@
                     <p class="col-12 text-center big-text"><em>Sorcières : La puissance invaincue des femmes</em></p>
                 </div>
                 <div class="row position-relative justify-content-center pt-5">
-                    <img id="orange-circle" class="col-4" src="{{ asset('build/images/motifs/rond_orange.png') }}" alt="">
-                    <img id="flower" class="col-4 position-absolute" src="{{ asset('build/images/motifs/Petiteplante_noir.png') }}" alt="">
+                    <img id="orange-circle" class="col-4 col-md-3 col-xl-2" src="{{ asset('build/images/motifs/rond_orange.png') }}" alt="">
+                    <img id="flower" class="col-4 col-md-3 col-xl-2 position-absolute" src="{{ asset('build/images/motifs/Petiteplante_noir.png') }}" alt="">
                 </div>
             </div>
         </section>
