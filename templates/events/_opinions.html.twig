@@ -1,7 +1,7 @@
-<section class="container-fluid py-5 background-dark-green">
+<section class="container-fluid py-5 background-orange">
     <div class="container">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="false">
-            <div class="carousel-inner text-white text-center">
+            <div class="carousel-inner text-center">
                 {% for opinion in opinions.getOpinions(type) %}
                     <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
                         <div class="w-75 mx-auto">

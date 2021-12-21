@@ -25,15 +25,16 @@ body{
     height : 100%;
     width : 100%;
     cursor : wait;
-    background-color:#f2b6a0;
+    background-color:$beige;
   }
 
   h1, h2,h3,h4,h5,h6{
-    font-family: 'eugusto';
+    font-family: 'Arima Madurai', cursive;
     overflow-wrap: break-word;
   }
 
   h1{
+    font-family: 'eugusto';
     font-size:2rem;
     hyphens: auto;
     z-index:-1;

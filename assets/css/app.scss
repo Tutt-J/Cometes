@@ -221,6 +221,7 @@ body {
           transform: translateY(-50%);
           font-size: 1.6em;
           font-weight: 300;
+          font-family:"eugusto";
         }
 
         #rain {
@@ -276,7 +277,7 @@ body {
 
             .effect {
               transition: 1s cubic-bezier(.04, .75, .05, .96);
-              background: $blanc;
+              background: $rouge;
               width: 100%;
               height: 100%;
               position: absolute;
@@ -525,7 +526,7 @@ body {
 
   > footer {
     a {
-      color: $blanc;
+      color: $noir;
 
       &:hover {
         color: $rouge;
