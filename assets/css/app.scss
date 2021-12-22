@@ -104,7 +104,7 @@ body {
               }
 
               .dropdown-toggle {
-                color: $vert !important;
+                color: $beige !important;
                 margin: 0;
               }
 
@@ -426,7 +426,7 @@ body {
               list-style: none;
 
               &.column-heading {
-                background-color: $vert_clair;
+                background-color: $beige;
                 color: black;
                 padding: 1em;
               }
@@ -485,7 +485,7 @@ body {
         div {
           &:nth-child(2), &:nth-child(3) {
             padding: 10px;
-            border-left: 2px solid $vert_clair;
+            border-left: 2px solid $rouge;
           }
         }
 
@@ -649,7 +649,7 @@ body {
           transform: translateY(-50%);
 
           .menu-bg {
-            background-color: $orange;
+            background-color: $rouge;
             background-repeat: repeat-x;
             position: absolute;
             width: 100%;

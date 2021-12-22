@@ -26,7 +26,7 @@ $(document).ready(function() {
     function setHeight(){
         const height = $('body > .page-header').outerHeight();
         $('body > main').css('marginTop', height);
-        $('.mt-100').css('margin-top', window.innerHeight+55);
+        $('.mt-100').css('margin-top', window.innerHeight+100);
     }
 
     setHeight();

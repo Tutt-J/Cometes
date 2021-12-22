@@ -21,7 +21,7 @@
     <meta property="og:type" content=" {% block ogType %}website{% endblock %}" />
     <meta property="og:title" content="{{  block('title') }}" />
     <meta property="og:description" content=" {{ block('metaDescription') }}" />
-    <meta property="og:image" content="{% block ogImage %}{{  app.request.getSchemeAndHttpHost ~ asset('build/images/logo_basique.png') }}{% endblock %}" />
+    <meta property="og:image" content="{% block ogImage %}{{  app.request.getSchemeAndHttpHost ~ asset('build/images/logo_blanc_mobile.png') }}{% endblock %}" />
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
