@@ -50,8 +50,7 @@
                                     tout moment vous désinscrire à l'aide des liens de désinscription ou en nous
                                     contactant
                                     à
-                                    <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel
-                                        <!--triugtb65--> lo@cha<!--t5588h^ùm^th--> made.co</a>.
+                                    <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel<!--triugtb65-->lo@cha<!--t5588h^ùm^th-->made.co</a>.
                                 </small>
                             </p>
                         </div>
@@ -60,18 +59,6 @@
             </div>
         </section>
         {# END NEWSLETTER #}
-
-        {# FACEBOOK LOUVES #}
-        <div class="container-fluid">
-            <div class="container py-5 text-center">
-                <a class="row justify-content-center align-items-start" href="https://bit.ly/2BCWpoi">
-                    <img class="col-9 col-sm-8 col-md-5  mw-100"
-                         src="{{ asset('build/images/vignettes/louves.jpg') }}"
-                         alt="LOUVES ! La communauté de chamade Développement personnel et spirituel Sonorité Pour une vie sereine, équilibrée et harmonieuse"/>
-                </a>
-            </div>
-        </div>
-        {# END FACEBOOK LOUVES #}
 
         {# INSTAGRAM FEED #}
         {% if opinions.getLastInstagramPost(5) %}

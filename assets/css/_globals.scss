@@ -1,5 +1,5 @@
 body{
-  font-family: 'Arima Madurai', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   background-color: white;
   display:flex;
   flex-direction:column;
@@ -25,7 +25,7 @@ body{
     height : 100%;
     width : 100%;
     cursor : wait;
-    background-color:$beige;
+    background-color:#f2b6a0;
   }
 
   h1, h2,h3,h4,h5,h6{
@@ -34,7 +34,6 @@ body{
   }
 
   h1{
-    font-family: 'eugusto';
     font-size:2rem;
     hyphens: auto;
     z-index:-1;
@@ -67,15 +66,13 @@ body{
   a{
     color:$rouge;
     &:hover{
-      color:$rose;
-      text-decoration: none;
+      color:$orange;
     }
   }
 
   * {
     overflow-wrap: break-word;
   }
-
 
   //BUTTON STYLE
   .btn-primary, .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:focus {

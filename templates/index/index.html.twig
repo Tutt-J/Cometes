@@ -7,7 +7,7 @@
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="overlay"></div>
-                <img class="d-block w-100 h-100" src="{{ asset('build/images/82.jpg') }}"
+                <img class="d-block w-100 h-100" src="{{ asset('build/images/home_bg.jpeg') }}"
                      alt="Photo d'une main tenant un tournesol">
                 <div class="carousel-caption m-auto d-flex flex-column align-items-center justify-content-center w-80 text-center"></div>
             </div>
@@ -37,61 +37,8 @@
 </header>
 {# END PHOTOS CAROUSEL #}
 
-    {# PRESENTATION #}
-<section class="container mt-100 pt-md-3 pt-lg-5" id="home_title">
-    <div class="row justify-content-center align-items-center position-relative">
-        <img class="col-12 col-md-10  col-lg-8 col-xl-6" src="{{ asset('build/images/motifs/demisphere_orange.png') }}"
-             alt="">
-        <img id="rain" class="col-12" src="{{ asset('build/images/motifs/motif_pluie_noir.png') }}" alt="">
-        <h2 class="text-center col-8 ">Hello! <br> Moi, c'est Salomé.</h2>
-    </div>
-    <div class="row pt-5 px-md-5 px-xl-0">
-        <p class="col-12 text-center big-text">J’ accompagne les femmes en créant et en
-            facilitant des évènements transformateurs
-            (Cercles de femmes, Rituels et Retraites) ainsi
-            que des accompagnements personnalisés
-            (Lectures de cartes du ciel, guidances et soins).</p>
-
-        <p class="col-12 text-center big-text">C'est notamment par l'Astrologie que je t'invite à
-            renouer avec ton chemin d’âme.</p>
-
-        <p class="col-12 text-center big-text">Passionnée par les astres et leur influence,
-            j' aime transmettre une astrologie de l'Éveil, par
-            le biais de lectures individuelles et de ma
-            formation en Astrologie holistique, Comètes.</p>
-    </div>
-
-</section>
-{# END PRESENTATION #}
-
-    {# Type of offer #}
-<section class="container py-5">
-    <div class="row text-center justify-content-around">
-        <div class="col-12 col-sm-8  col-md-3 my-3 ">
-            <a href="{{ path('homeEvent') }}">
-                <img loading="lazy" class="opacity_hover col-12 p-0"
-                     src="{{ asset('build/images/vignettes/2.jpg') }}" alt="">
-            </a>
-        </div>
-        <div class="col-12 col-sm-8  col-md-3 my-3 ">
-            <a href="{{ path('astroConsult') }}">
-                <img loading="lazy" class="opacity_hover col-12 p-0"
-                     src="{{ asset('build/images/vignettes/1.jpg') }}" alt="">
-            </a>
-        </div>
-        <div class="col-12 col-sm-8  col-md-3 my-3">
-            <a href="{{ path('programOnline', { 'slug': 'cometes' }) }}">
-                <img loading="lazy" class="opacity_hover col-12 p-0"
-                     src="{{ asset('build/images/vignettes/cometes.jpg') }}" alt="">
-            </a>
-        </div>
-
-    </div>
-</section>
-{# End type of offer #}
-
-    {# EXPERIENCE #}
-<section class="container py-5" id="home_title">
+  {# EXPERIENCE #}
+<section class="container py-5  mt-100   pt-md-3 pt-lg-5" id="home_title">
     <div class="row justify-content-center align-items-center position-relative">
         <img class="col-12 col-md-10  col-lg-8 col-xl-6" src="{{ asset('build/images/motifs/demisphere_orange.png') }}"
              alt="">
@@ -127,6 +74,28 @@
 
 </section>
 {# END EXEPERIENCE #}
+
+    {# Type of offer #}
+<section class="container  py-5 ">
+    <div class="row text-center justify-content-around">
+        <div class="col-12 col-sm-8  col-md-3 my-3 ">
+            <a href="{{ path('astroConsult') }}">
+                <img loading="lazy" class="opacity_hover col-12 p-0"
+                     src="{{ asset('build/images/vignettes/1.jpg') }}" alt="">
+            </a>
+        </div>
+        <div class="col-12 col-sm-8  col-md-3 my-3">
+            <a href="{{ path('programOnline', { 'slug': 'cometes' }) }}">
+                <img loading="lazy" class="opacity_hover col-12 p-0"
+                     src="{{ asset('build/images/vignettes/cometes.jpg') }}" alt="">
+            </a>
+        </div>
+
+    </div>
+</section>
+{# End type of offer #}
+
+
 
 
 
