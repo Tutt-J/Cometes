@@ -6,7 +6,7 @@ use App\Entity\Event;
 use App\Entity\Type;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;;
 use Exception;
 
 /**
