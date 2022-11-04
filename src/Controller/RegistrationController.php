@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
             if ($form->get('subscribeNews')->getData()) {
                 $addContact=$mailjetAdministrator->addContact($form->get('email')->getData());
                 if ($addContact['status'] == 'subscribed') {
-                    $this->addFlash('success', 'Votre inscription à la newsletter chamade est effective !');
+                    $this->addFlash('success', 'Votre inscription à la newsletter Comètes est effective !');
                 } elseif ($addContact['title'] == 'Member Exists') {
                     $this->addFlash('info', 'Vous êtes déjà inscrit à notre newsletter');
                 } else {
@@ -72,15 +72,15 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             $message = (new TemplatedEmail())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                ->from(new Address('postmaster@cometes.co', 'Comètes'))
                 ->to($user->getEmail())
-                ->subject('Bienvenue chez Chamade !')
+                ->subject('Bienvenue chez Comètes !')
                 ->htmlTemplate('emails/registration.html.twig')
             ;
 
             $mailer->send($message);
 
-            $this->addFlash('success', 'Bienvenue chez Chamade '.$user->getFirstName().'! Votre compte a bien été créé');
+            $this->addFlash('success', 'Bienvenue chez Comètes '.$user->getFirstName().'! Votre compte a bien été créé');
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,

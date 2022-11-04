@@ -15,8 +15,8 @@
     <meta charset="UTF-8">
     <link rel="icon" href="{{ asset('build/images/favicon.png') }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}Chamade{% endblock %}</title>
-    <meta name="description" content="{% block metaDescription %}Chamade vous accompagne sur le chemin de votre développement personnel et spirituel.{% endblock %}" />
+    <title>{% block title %}Comètes{% endblock %}</title>
+    <meta name="description" content="{% block metaDescription %}Comètes vous propose d’embarquer dans un voyage initiatique autour de votre carte du ciel et des fondamentaux de l’astrologie holistique.{% endblock %}" />
     <meta property="og:url" content=" {% block ogUrl %}{{ app.request.uri }}{% endblock %}" />
     <meta property="og:type" content=" {% block ogType %}website{% endblock %}" />
     <meta property="og:title" content="{{  block('title') }}" />
@@ -64,7 +64,7 @@
             <div class="container d-flex flex-wrap  justify-content-around">
                 <div class="row col-12 align-items-center">
                     <a class="text-center mx-auto" href="{{ path('home') }}">
-                        <img class="w-50" src="{{ asset('build/images/Logo_cometes.png') }}" alt="Logo de chamade"/>
+                        <img class="w-50" src="{{ asset('build/images/Logo_cometes_blanc.png') }}" alt="Logo de Comètes"/>
                     </a>
                     {% include '_nav.html.twig' %}
                 </div>
@@ -75,7 +75,7 @@
             <div class="container-fluid position-fixed d-none" style="background:#e88846">
                 <div class="container  d-flex flex-wrap align-items-center justify-content-around">
                     <a class="text-center" href="{{ path('home') }}">
-                        <img class="w-50" src="{{ asset('build/images/Logo_cometes.png') }}" alt="Logo de chamade"/>
+                        <img class="w-50" src="{{ asset('build/images/Logo_cometes_rouge.png') }}" alt="Logo de Comètes"/>
                     </a>
                     {% include '_nav.html.twig' %}
                 </div>
@@ -86,12 +86,12 @@
         <header class="position-fixed w-100">
             <div class="row justify-content-center mt-3 big_logo">
                 <a class="text-center " href="{{ path('home') }}">
-                    <img class="w-50" src="{{ asset('build/images/Logo_cometes.png') }}" alt="Logo de chamade"/>
+                    <img class="w-50" src="{{ asset('build/images/Logo_cometes_blanc.png') }}" alt="Logo de Comètes"/>
                 </a>
             </div>
             <div class="container d-flex flex-wrap align-items-center justify-content-around">
                 <a class="text-center d-none little_logo" href="{{ path('home') }}">
-                    <img class="w-50" src="{{ asset('build/images/Logo_cometes.png') }}" alt="Logo de chamade"/>
+                    <img class="w-50" src="{{ asset('build/images/Logo_cometes_rouge.png') }}" alt="Logo de Comètes"/>
                 </a>
                 {% include '_nav.html.twig' %}
             </div>
@@ -111,7 +111,7 @@
             <div class="row">
                 <h3 class="mt-3 col-12">Retrouvez moi sur</h3>
                 <div class="m-auto">
-                    <a href="https://www.facebook.com/chamadepage"><i class="fab fa-facebook-square"></i></a>
+                    <a href="https://www.facebook.com/cometesastrologie"><i class="fab fa-facebook-square"></i></a>
                     <a href="https://www.instagram.com/_chamade_/"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
@@ -128,7 +128,7 @@
             </ul>
             <div class="row mt-3 ">
                 <div class="col-12">
-                    <p class="mb-1">Chamade © 2022</p>
+                    <p class="mb-1">Comètes © 2022</p>
                     <p>Made by <a href="https://www.digistos.com">Digistos</a></p>
                 </div>
             </div>

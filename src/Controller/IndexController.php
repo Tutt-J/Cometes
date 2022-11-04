@@ -71,7 +71,7 @@ class IndexController extends AbstractController
         ) {
             $addContact=$mailchimpAdministrator->addContact($_POST['email']);
             if ($addContact['status'] == 'subscribed') {
-                $this->addFlash('success', 'Votre inscription à la newsletter chamade est effective !');
+                $this->addFlash('success', 'Votre inscription à la newsletter Comètes est effective !');
             } elseif (isset($addContact['title']) && $addContact['title'] == 'Member Exists') {
                 $this->addFlash('info', 'Vous êtes déjà inscrit à notre newsletter');
             } else {
@@ -108,8 +108,8 @@ class IndexController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = (new Email())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
-                ->to('hello@chamade.co')
+                ->from(new Address('postmaster@cometes.co', 'Comètes'))
+                ->to('hello@cometes.co')
                 ->subject('[Site web] '. $form->get('object')->getData())
                 ->replyTo($form->get('afield')->getData())
                 ->html('

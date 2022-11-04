@@ -2,18 +2,22 @@
 
 
 {% block title %}Évènements | {{ parent() }}{% endblock %}
-{% block metaDescription %}CHAMADE offre plusieurs formats d'évènements à vivre comme des expériences uniques et qui sont autant de portes vers votre développement personnel et spirituel.{% endblock %}
+{% block metaDescription %}Comètes offre plusieurs formats d'évènements à vivre comme des expériences uniques et qui sont autant de portes vers votre développement personnel et spirituel.{% endblock %}
 {% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_evenements.jpeg') }}{% endblock %}
 
 {% block Titre %}Évènements{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
+    {% if not events %}
     <section class="row align-items-center text-justify">
         <div class="col-12">
-            <h2 class="text-center mb-5">J’ai à coeur de vous proposer régulièrement des évènements transformateurs conçus comme des espaces de soin, de connaissance et d’éveil à soi. </h2>
+            <h2 class="text-center mb-5">On vous prépare plein d’évènements magiques autour de l’astrologie, en ligne et en présentiel.
+            </h2>
+            <p class="text-center h3 mb-5">N’hésite pas à t’inscrire à notre infolettre pour être informé.e en avant-première !</p>
         </div>
     </section>
+    {% endif %}
     <div class="row list full-height-list justify-content-around flex-wrap align-items-start">
         {% for event in events %}
             <article class="item col-12 col-sm-6 col-lg-4 mb-3 d-flex flex-column align-items-center">
@@ -36,8 +40,12 @@
     </div>
 
 </div>
-    {% if opinions.getOpinions('event') %}
+
+    {% if opinions.getOpinions('event') and events %}
         {% include 'events/_opinions.html.twig' with {'type': 'event'} %}
+        {% else %}
+            {% include 'index/_social.html.twig' %}
+
     {% endif %}
 
 {% endblock %}

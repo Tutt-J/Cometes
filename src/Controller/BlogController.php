@@ -21,39 +21,39 @@ class BlogController extends AbstractController
 {
     const INDEX_RENDER='blog/index.html.twig';
 
-    /**
-     * @Route("/journal/{page}", name="blogIndex")
-     *
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @param int $page
-     *
-     * @return Response
-     */
-    public function indexAction(Request $request, PaginatorInterface $paginator, int $page = 1)
-    {
-        $articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findBy(
-                array('isOnline' => 1),
-                array('createdAt' => 'DESC')
-            );
-
-
-        $articles = $paginator->paginate(
-            $articles,
-            $request->query->getInt('page', $page),
-            9
-        );
-
-        return $this->render(
-            SELF::INDEX_RENDER,
-            [
-            'articles' => $articles,
-            'type' => 'all'
-            ]
-        );
-    }
+//    /**
+//     * @Route("/journal/{page}", name="blogIndex")
+//     *
+//     * @param Request $request
+//     * @param PaginatorInterface $paginator
+//     * @param int $page
+//     *
+//     * @return Response
+//     */
+//    public function indexAction(Request $request, PaginatorInterface $paginator, int $page = 1)
+//    {
+//        $articles = $this->getDoctrine()
+//            ->getRepository(Article::class)
+//            ->findBy(
+//                array('isOnline' => 1),
+//                array('createdAt' => 'DESC')
+//            );
+//
+//
+//        $articles = $paginator->paginate(
+//            $articles,
+//            $request->query->getInt('page', $page),
+//            9
+//        );
+//
+//        return $this->render(
+//            SELF::INDEX_RENDER,
+//            [
+//            'articles' => $articles,
+//            'type' => 'all'
+//            ]
+//        );
+//    }
 
 
     /**
@@ -94,37 +94,37 @@ class BlogController extends AbstractController
     }
 
 
-    /**
-     * @Route("/journal/auteur/{slug}",
-     * name="blogAuthor",
-     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
-     *
-     * @param Author $author
-     * @return Response
-     */
-    public function authorAction(Author $author)
-    {
-        $articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findBy(
-                [
-                    'isOnline' => 1,
-                    'author' => $author
-                ],
-                [
-                    'createdAt' => "DESC"
-                ],
-                3
-            );
-
-        return $this->render(
-            'blog/author.html.twig',
-            [
-            'author' => $author,
-            'articles' => $articles
-            ]
-        );
-    }
+//    /**
+//     * @Route("/journal/auteur/{slug}",
+//     * name="blogAuthor",
+//     * requirements={"slug"="^[a-z0-9]+(?:-[a-z0-9]+)*$"})
+//     *
+//     * @param Author $author
+//     * @return Response
+//     */
+//    public function authorAction(Author $author)
+//    {
+//        $articles = $this->getDoctrine()
+//            ->getRepository(Article::class)
+//            ->findBy(
+//                [
+//                    'isOnline' => 1,
+//                    'author' => $author
+//                ],
+//                [
+//                    'createdAt' => "DESC"
+//                ],
+//                3
+//            );
+//
+//        return $this->render(
+//            'blog/author.html.twig',
+//            [
+//            'author' => $author,
+//            'articles' => $articles
+//            ]
+//        );
+//    }
 
 
     /**

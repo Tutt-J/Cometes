@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Les Comètes | {{ parent() }}{% endblock %}
-{% block metaDescription %}Chamade propose la lecture de votre carte du ciel, comme un outil de compréhension de votre incarnation et de votre mission de vie.{% endblock %}
+{% block metaDescription %}Comètes propose la lecture de votre carte du ciel, comme un outil de compréhension de votre incarnation et de votre mission de vie.{% endblock %}
 {% block ogImage %}{{ app.request.getSchemeAndHttpHost ~ asset('build/images/design_astrologie.jpeg') }}{% endblock %}
 
 {% block Titre %}Les Comètes{% endblock %}
@@ -11,7 +11,7 @@
             <p class="pb-5 text-justify col-12">Les belles âmes présentées ci-dessous ont suivi la formation Comètes dans son parcours
                 complet et ont réussi avec succès l’ensemble des tests et exercices associés. <br><br>
                 Elles proposent désormais des lectures de cartes du ciel d’astrologie holistique, dans le
-                respect de la charte éthique de Chamade.<br><br>
+                respect de la charte éthique de Comètes.<br><br>
                 Merci à chacune pour sa confiance et son parcours dans l’aventure Comètes.</p>
             {% for cert in certified %}
                 <article class="item col-12 col-sm-6 mb-5 d-flex flex-column align-items-center">

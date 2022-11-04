@@ -165,7 +165,7 @@ class OnlineController extends AbstractController
             array_push($attach, $processPurchase->getInvoice($offerHelper->setItem($content), $purchase, $form->get('user')->getData()));
 
             $message = (new TemplatedEmail())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                ->from(new Address('postmaster@cometes.co', 'Comètes'))
                 ->to($form->get('user')->getData()->getEmail())
                 ->subject($object)
                 ->htmlTemplate($template)
