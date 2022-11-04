@@ -26,7 +26,7 @@ $(document).ready(function() {
     function setHeight(){
         const height = $('body > .page-header').outerHeight();
         $('body > main').css('marginTop', height);
-        $('.mt-100').css('margin-top', window.innerHeight+55);
+        $('.mt-100').css('margin-top', window.innerHeight+100);
     }
 
     setHeight();
@@ -38,7 +38,7 @@ $(document).ready(function() {
 
     $(window).scroll(function () {
         if ($(this).scrollTop() > 50) {
-            $('body > header').css('backgroundColor', '#f2b6a0');
+            $('body > header').css('backgroundColor', '#e88846');
             $('.big_logo').addClass('d-none');
             $('.little_logo').removeClass('d-none');
 
