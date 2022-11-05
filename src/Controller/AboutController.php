@@ -21,7 +21,7 @@ class AboutController extends AbstractController
 {
 
     /**
-     * @Route("/a-propos/qui-suis-je", name="aboutStory")
+     * @Route("/a-propos/qui-sommes-nous", name="aboutStory")
      *
      * @return Response
      */

@@ -67,7 +67,6 @@ class IndexController extends AbstractController
     {
         if (isset($_POST['subscribe'])
             && isset($_POST['check1'])
-            && isset($_POST['check2'])
             && isset($_POST['email'])
         ) {
             $addContact=$mailchimpAdministrator->addContact($_POST['email']);
@@ -78,6 +77,8 @@ class IndexController extends AbstractController
             } else {
                 $this->addFlash('error', 'Un problème est survenu lors de votre inscription à la newsletter... ');
             }
+        } else{
+            $this->addFlash('error', 'Vous devez fournir une adresse e-mail et accepter de recevoir notre actualités et nos prochaines évènements pour valider votre inscription.');
         }
 
         $url = $request->headers->get('referer');
