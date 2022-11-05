@@ -221,7 +221,7 @@ body {
           transform: translateY(-50%);
           font-size: 1.6em;
           font-weight: 300;
-          font-family:"eugusto";
+          font-family: "eugusto";
         }
 
         #rain {
@@ -245,7 +245,6 @@ body {
           width: 55%
         }
       }
-
 
 
       .orange-circle {
@@ -448,6 +447,7 @@ body {
         }
       }
     }
+
     .social {
       #home_title {
 
@@ -577,9 +577,11 @@ body {
           top: -15px;
           width: 45%
         }
+
         h2 {
           font-size: 2em !important;
         }
+
         #black_wave {
           top: -45px;
         }
@@ -869,6 +871,20 @@ body {
   .form-inline {
     .form-group {
       width: 100%;
+    }
+  }
+}
+
+#links > div {
+  gap: 30px;
+  a {
+    background-color: $rouge;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+    transition-duration:300ms;
+    &:hover{
+      scale:1.05;
     }
   }
 }

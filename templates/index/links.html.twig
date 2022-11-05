@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liens | {{ parent() }}{% endblock %}
+{% block Titre %}Liens{% endblock %}
+
+{% block content %}
+<div class="container py-5" id="links">
+    <div class="d-flex flex-column align-items-center">
+        {% for link in links %}
+                <a href="{{ link.url }}" class="w-100 w-md-75 p-3">{{ link.name }}</a>
+        {% endfor %}
+    </div>
+
+</div>
+
+
+{% endblock %}

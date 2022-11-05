@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Event;
+use App\Entity\Link;
 use App\Form\ContactType;
 use App\Service\EventsAdministrator;
 use App\Service\MailchimpAdministrator;
@@ -141,6 +142,20 @@ class IndexController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/liens", name="links")
+     *
+     * @return Response
+     */
+    public function linksAction()
+    {
+        $links=$this->getDoctrine()
+            ->getRepository(Link::class)
+            ->findAll();
+        return $this->render('index/links.html.twig', [
+            "links" => $links
+        ]);
+    }
 
     /**
      * @Route("/mentions-legales", name="legalNotice")

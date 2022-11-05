@@ -60,6 +60,7 @@ class GlobalsGenerator
     public function getLastInstagramPost()
     {
         $json=$this->sendCurl("https://graph.instagram.com/me/media?fields=media_url,permalink&access_token=".$_ENV['INSTAGRAM_TOKEN']);
+
         if($json){
             return $json->data;
         }
