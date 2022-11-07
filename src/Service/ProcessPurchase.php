@@ -330,7 +330,7 @@ class ProcessPurchase
         $invoice->setReference('WEB'.date('Y').'_'.$purchase->getId());   // Reference
         $invoice->setDate(date('d/m/Y', time()));   //Billing Date
         $invoice->setTime(date('H:i:s', time()));   //Billing Time
-        $invoice->setFrom(array("CHAMADE","419 RUE DE BORINGES","74930 REIGNIER-ESERY"));
+        $invoice->setFrom(array("Comètes","100 chemin du creux du loup","74930 PERS-JUSSY"));
         $invoice->setTo(array(
             $this->stripAccents($user->getFirstName()).' '.$this->stripAccents($user->getLastName()),
             $this->stripAccents($user->getAddress()->getStreet()),

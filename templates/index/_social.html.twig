@@ -8,15 +8,16 @@
                     <img class="col-12 col-md-10 col-lg-8 col-xl-6"
                          src="{{ asset('build/images/motifs/demisphere_orange.png') }}" alt="">
                     <img id="black_wave" class="col-12" src="{{ asset('build/images/motifs/vague_noire.png') }}" alt="">
-                    <h2 class="text-center col-8 col-md-7 col-lg-5 col-xl-4">Rejoins l'infolettre Chamade et reçois ta
-                        méditation gratuite!</h2>
+                    <h2 class="text-center col-8 col-md-7 col-lg-5 col-xl-4">Rejoins l’infolettre Comètes !</h2>
                 </div>
                 <div class="row pt-5 px-md-5 px-xl-0">
-                    <p class="cursive text-center col-12">Chaque mois je vous prépare un courriel plein d'amour et de
-                        bienveillance avec les actualités de Chamade (en avant-première!).</p>
+                    <p class="cursive text-center col-12">Reçois chaque mois des nouvelles des étoiles, pour tout savoir
+                        de ce que te réserve le ciel.<br/>
+                        Tu auras en bonus les actualités de Comètes en avant-première !
+                    </p>
                     <form action="{{ path('registerNewsletter') }}" method="post"
                           class="form-inline col-md-12 justify-content-center">
-                        <div class="row">
+                        <div class="row col-12 col-md-10 col-xl-6">
                             <div class="form-group col-md-8">
                                 <label class="d-none" for="email">Adresse e-mail</label>
                                 <input required="required" class="form-control w-100" type="email" name="email"
@@ -24,7 +25,7 @@
                             </div>
                             <div class="form-group col-12 col-md-4 text-center mt-sm-2 mt-lg-0 ">
                                 <button type="submit" name="subscribe" id="subscribe"
-                                        class="mw-100 btn btn-primary m-auto m-lg-0">M'abonner
+                                        class="mw-100 w-100 btn btn-primary m-auto m-lg-0">M'abonner
                                 </button>
                             </div>
                         </div>
@@ -32,14 +33,7 @@
                             <input class="form-check-input" required="required" name="check1" type="checkbox" value=""
                                    id="check1">
                             <label class="form-check-label" for="check1">
-                                Vous acceptez de recevoir nos derniers articles de blog par e-mail.
-                            </label>
-                        </div>
-                        <div class="form-check col-md-12">
-                            <input class="form-check-input" required="required" type="checkbox" name="check2" value=""
-                                   id="check2">
-                            <label class="form-check-label" for="check2">
-                                Vous acceptez de recevoir nos prochains évènements par e-mail.
+                                Vous acceptez de recevoir les actualités et prochains évènements de Comètes par e-mail.
                             </label>
                         </div>
                         <div class="col-md-12">
@@ -50,7 +44,7 @@
                                     tout moment vous désinscrire à l'aide des liens de désinscription ou en nous
                                     contactant
                                     à
-                                    <a href="{{ path('mailTo', {'name': 'hello', 'domain':'chamade.co'}) }}">hel<!--triugtb65-->lo@cha<!--t5588h^ùm^th-->made.co</a>.
+                                    <a href="{{ path('mailTo', {'name': 'support', 'domain':'cometes.co'}) }}">sup<!--triugtb65-->port@co<!--t5588h^ùm^th-->metes.co</a>.
                                 </small>
                             </p>
                         </div>
@@ -67,13 +61,12 @@
                     <div class="row justify-content-around justify-content-lg-start mx-auto">
                         <h2 class="text-center col-12 mb-3 text-white">Suivez nous sur instagram :</h2>
                         {% for post in opinions.getLastInstagramPost() |slice(0, 5) %}
-
                             <!-- Grid column -->
                             <div class="mb-3 col-8 col-sm-4 col-lg-2 text-center
-                {% if loop.index == 1 %}
-                    offset-lg-1
-                {% endif %}
-                    ">
+                                {% if loop.index == 1 %}
+                                    offset-lg-1
+                                {% endif %}
+                               ">
                                 <a href="{{ post.permalink }}">
                                     <img class="object-fit-cover instagram" src="{{ post.media_url }}"
                                          alt="Photo provenant d'instagram">

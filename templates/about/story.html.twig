@@ -1,22 +1,40 @@
 {% extends 'base.html.twig' %}
-{% block title %}Qui suis-je ? | {{ parent() }}{% endblock %}
-{% block Titre %}Qui suis-je ?{% endblock %}
+{% block title %}Qui sommes-nous ? | {{ parent() }}{% endblock %}
+{% block Titre %}Qui sommes-nous ?{% endblock %}
 
 {% block content %}
     <div class="container my-5">
         <section class="row mt-4">
-            <header class="col-12">
-                <h2 class="text-center col-12 my-4">{{author.name}}</h2>
-            </header>
             <div class="row col-12 mx-auto">
-                <div class="mb-3 mx-auto offset-1 col-10 col-md-6 col-xl-4 col-lg-6 text-center">
-                    <img class="mw-200 w-100" src="{{ asset('uploads/cover_img/'~author.img.url) }}" alt="Salomé assise se tenant les mains">
-                </div>
-                <div class="col-12 col-xl-8 col-lg-6 text-justify">
-                    {{ author.content | raw }}
-                    <p><a href="{{ path('blogArticle', { 'slug': 'sans-fard' }) }}">Lire mon article "SANS FARD"</a></p>
-                </div>
+                <h2 class="text-center col-12 my-4 adaptative-title">Comètes, c’est la rencontre de deux belles âmes passionnées d’astrologie, Stéphanie et Salomé, qui ont choisi d’unir leur envie et leur créativité pour vous faire découvrir avec douceur et bienveillance ce magnifique outil de croissance personnelle et collective.
+                C’est avec nous que vous ferez le voyage transformateur de la formation Comètes.</h2>
 
+                <article class="col-12  mb-5 d-flex flex-column align-items-center align-items-md-start">
+                    <div class="d-flex align-items-center align-items-md-start ">
+                        <figure>
+                            <div class="effect"></div>
+                            <img class="img-member object-fit-cover" src="{{ asset('uploads/cover_img/'~stephanie.img.url) }}" alt="{{ stephanie.img.alt }}">
+                        </figure>
+                    </div>
+                    <div class="infos mt-3
+                    ">
+                        <h2 class="d-initial text-center text-md-left">{{stephanie.name}}</h2>
+                        <div class="text-justify-mobile">{{ stephanie.content | raw }}</div>
+                    </div>
+                </article>
+
+                <article class="col-12  mb-5 d-flex flex-column align-items-center align-items-md-end">
+                    <div class="d-flex align-items-center align-items-md-end">
+                        <figure>
+                            <div class="effect"></div>
+                            <img class="img-member object-fit-cover" src="{{ asset('uploads/cover_img/'~salome.img.url) }}" alt="{{ salome.img.alt }}">
+                        </figure>
+                    </div>
+                    <div class="infos mt-3 text-md-right">
+                        <h2 class="d-initial text-center text-md-right">{{salome.name}}</h2>
+                        <div class="text-justify-mobile text-md-right">{{ salome.content | raw }}</div>
+                    </div>
+                </article>
             </div>
         </section>
     </div>

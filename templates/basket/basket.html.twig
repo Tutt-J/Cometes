@@ -7,7 +7,7 @@
 {% block content %}
     <div class="container py-5">
         {% if app.session.get('basket') is empty %}
-            <em>Votre panier est vide. Vous pouvez visiter notre rubrique <a href="{{ path('homeOnline') }}">"Magie en ligne"</a></em>
+            <em>Votre panier est vide.</em>
         {% else %}
             <div class="wrapper table">
                 <div class="Rtable Rtable--5cols Rtable--collapse">

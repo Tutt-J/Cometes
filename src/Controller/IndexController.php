@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Event;
+use App\Entity\Link;
 use App\Form\ContactType;
 use App\Service\EventsAdministrator;
 use App\Service\MailchimpAdministrator;
@@ -66,17 +67,18 @@ class IndexController extends AbstractController
     {
         if (isset($_POST['subscribe'])
             && isset($_POST['check1'])
-            && isset($_POST['check2'])
             && isset($_POST['email'])
         ) {
             $addContact=$mailchimpAdministrator->addContact($_POST['email']);
             if ($addContact['status'] == 'subscribed') {
-                $this->addFlash('success', 'Votre inscription à la newsletter chamade est effective !');
+                $this->addFlash('success', 'Votre inscription à la newsletter Comètes est effective !');
             } elseif (isset($addContact['title']) && $addContact['title'] == 'Member Exists') {
                 $this->addFlash('info', 'Vous êtes déjà inscrit à notre newsletter');
             } else {
                 $this->addFlash('error', 'Un problème est survenu lors de votre inscription à la newsletter... ');
             }
+        } else{
+            $this->addFlash('error', 'Vous devez fournir une adresse e-mail et accepter de recevoir notre actualités et nos prochaines évènements pour valider votre inscription.');
         }
 
         $url = $request->headers->get('referer');
@@ -108,8 +110,8 @@ class IndexController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = (new Email())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
-                ->to('hello@chamade.co')
+                ->from(new Address('hello@cometes.co', 'Comètes'))
+                ->to('hello@cometes.co')
                 ->subject('[Site web] '. $form->get('object')->getData())
                 ->replyTo($form->get('afield')->getData())
                 ->html('
@@ -141,6 +143,20 @@ class IndexController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/liens", name="links")
+     *
+     * @return Response
+     */
+    public function linksAction()
+    {
+        $links=$this->getDoctrine()
+            ->getRepository(Link::class)
+            ->findAll();
+        return $this->render('index/links.html.twig', [
+            "links" => $links
+        ]);
+    }
 
     /**
      * @Route("/mentions-legales", name="legalNotice")

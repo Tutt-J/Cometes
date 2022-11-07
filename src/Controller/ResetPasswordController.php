@@ -175,7 +175,7 @@ class ResetPasswordController extends AbstractController
         $url = $this->generateUrl('app_reset_password', array('token' => $resetToken->getToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 
         $message = (new TemplatedEmail())
-            ->from(new Address('hello@chamade.co', 'Chamade'))
+            ->from(new Address('hello@cometes.co', 'Comètes'))
             ->to($user->getEmail())
             ->subject('Mot de passe oublié')
             ->htmlTemplate('emails/forgot_password.html.twig')

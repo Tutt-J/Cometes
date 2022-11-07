@@ -24,7 +24,7 @@ use Twig\Error\SyntaxError;
 class AstrologyController extends AbstractController
 {
     /**
-     * @Route("/astrologie/theme-astral", name="astroConsult")
+     * @Route("/astrologie/lecture-de-carte-du-ciel", name="astroConsult")
      *
      * @param SessionInterface $session
      * @return Response

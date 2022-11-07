@@ -200,7 +200,7 @@ class EventsController extends AbstractController
 
             //SEND CLIENT MAIL
             $message = (new TemplatedEmail())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                ->from(new Address('hello@cometes.co', 'Comètes'))
                 ->to($form->get('user')->getData()->getEmail())
                 ->subject('Un évènement vous a été offert')
                 ->htmlTemplate('emails/offer_event.html.twig')
@@ -255,7 +255,7 @@ class EventsController extends AbstractController
 
              //SEND CLIENT MAIL
              $message = (new TemplatedEmail())
-                 ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                 ->from(new Address('hello@cometes.co', 'Comètes'))
                  ->to($purchase->getUser()->getEmail())
                  ->subject('Annulation de l\'évènement "'.$event->getTitle().'"')
                  ->htmlTemplate('emails/cancel_event.html.twig')

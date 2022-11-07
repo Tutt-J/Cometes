@@ -31,7 +31,7 @@ class MailchimpAdministrator
     public function __construct()
     {
         $this->mc=new MailChimp($_ENV['MAILCHIMP']);
-        $this->list_id="f5ca9c6a69";
+        $this->list_id="bd2c583d03";
     }
 
 

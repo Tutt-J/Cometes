@@ -108,12 +108,12 @@ class AdminController extends AbstractController
         }
 
         $refund = $stripeHelper->refund($purchase->getStripeId());
-        
+
         if($refund){
             $invoice = $processPurchase->getInvoice($items, $purchase, $purchase->getUser(), true);
             //SEND CLIENT MAIL
             $message = (new TemplatedEmail())
-                ->from(new Address('postmaster@chamade.co', 'Chamade'))
+                ->from(new Address('hello@cometes.co', 'Comètes'))
                 ->to($purchase->getUser()->getEmail())
                 ->subject('Remboursement d\'une commande')
                 ->htmlTemplate('emails/refunding_order.html.twig')
@@ -134,7 +134,7 @@ class AdminController extends AbstractController
         }
 
 
-        
+
         return $this->redirectToRoute('purchasesAdmin');
     }
 }

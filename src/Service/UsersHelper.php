@@ -118,7 +118,7 @@ class UsersHelper
             $this->em->remove($token);
         }
 
-        $user->setEmail('anonymous'.$user->getId().'@chamade.co');
+        $user->setEmail('anonymous'.$user->getId().'@cometes.co');
         $user->setRoles(array('ROLE_DISABLE'));
         $user->setUsername('Anonyme'.$user->getId());
         $user->setFirstName('Anonyme'.$user->getId());

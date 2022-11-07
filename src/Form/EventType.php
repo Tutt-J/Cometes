@@ -35,7 +35,7 @@ class EventType extends AbstractType
         if($options['event']->getAllowAlready()) {
             $builder->add('already', CheckboxType::class, [
                 'mapped' => false,
-                'label' => 'J\'ai déjà participé à une retraite Chamade',
+                'label' => 'J\'ai déjà participé à une retraite Comètes',
                 'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de l\'évènement.',
                 'required' => false
             ])

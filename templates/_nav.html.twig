@@ -36,7 +36,7 @@
         <li class="position-relative {% if  'about' in app.request.attributes.get('_route') %}current-item{% endif %}">
             <span >A propos</span>
             <ul class="p-0 m-0 position-absolute d-none w-auto">
-                <li class="d-block"><a  href="{{ path('aboutStory') }}">Qui suis-je ?</a></li>
+                <li class="d-block"><a  href="{{ path('aboutStory') }}">Qui sommes-nous ?</a></li>
                 <li class="d-block"><a href="{{ path('aboutTeam') }}">Equipe</a></li>
                 <li class="d-block"><a  href="{{ path('aboutPodcasts') }}">Podcasts</a></li>
                 <li class="d-block"><a  href="{{ path('aboutPress') }}">Presse</a></li>
@@ -52,7 +52,6 @@
             </ul>
         </li>
         <li class="{% if app.request.attributes.get('_route') == 'homeEvent' %}current-item{% endif %}"><a  href="{{ path('homeEvent') }}">Évènements</a></li>
-        <li class="{% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}"><a  href="{{ path('blogIndex') }}">Journal</a></li>
         <li  class="{% if app.request.attributes.get('_route') == 'indexContact' %}current-item{% endif %}"><a href="{{ path('indexContact') }}">Contact</a></li>
     </ul>
 </nav>
@@ -86,7 +85,7 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </p>
                 <div class="dropdown-menu w-100 text-center background">
-                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Qui suis-je ?</a>
+                    <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutStory' %}current-item{% endif %}" href="{{ path('aboutStory') }}">Qui sommes-nous ?</a>
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutTeam' %}current-item{% endif %}" href="{{ path('aboutTeam') }}">Equipe</a>
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutPodcasts' %}current-item{% endif %}" href="{{ path('aboutPodcasts') }}">Podcasts</a>
                     <a class="dropdown-item {% if app.request.attributes.get('_route') == 'aboutPress' %}current-item{% endif %}" href="{{ path('aboutPress') }}">Presse</a>
@@ -109,9 +108,6 @@
             </li>
             <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'homeEvent' %}active{% endif %}">
                 <a class="nav-link {% if app.request.attributes.get('_route') == 'homeEvent' %}current-item{% endif %}" href="{{ path('homeEvent') }}">Évènements</a>
-            </li>
-            <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'blogIndex' %}active{% endif %}">
-                <a class="nav-link {% if app.request.attributes.get('_route') == 'blogIndex' %}current-item{% endif %}" href="{{ path('blogIndex') }}">Journal</a>
             </li>
             <li class="col-12 px-2 align-items-center nav-item {% if app.request.attributes.get('_route') == 'indexContact' %}active{% endif %}">
                 <a class="nav-link {% if app.request.attributes.get('_route') == 'indexContact' %}current-item{% endif %}" href="{{ path('indexContact') }}">Contact</a>

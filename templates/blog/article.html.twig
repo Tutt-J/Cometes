@@ -17,7 +17,6 @@
 
 {% block content %}
     <div class="container article-page py-5">
-        <p class="mb-4"><a href="{{ path('blogIndex') }}">&lt;&lt; Retour à la liste</a></p>
 
         <nav class="mb-3 d-flex justify-content-between">
             <span>
@@ -41,7 +40,7 @@
                     </div>
                     <div>
                         <h4>Auteur</h4>
-                        <p><a href="{{ path('blogAuthor', { 'slug': article.author.slug }) }}">{{article.author.name}}</a></p>
+                        <p>{{article.author.name}}</p>
                     </div>
                 </div>
                 <div class="mt-3">

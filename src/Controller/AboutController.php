@@ -21,22 +21,28 @@ class AboutController extends AbstractController
 {
 
     /**
-     * @Route("/a-propos/qui-suis-je", name="aboutStory")
+     * @Route("/a-propos/qui-sommes-nous", name="aboutStory")
      *
      * @return Response
      */
     public function storyAction()
     {
-        $author = $this->getDoctrine()
+        $stephanie = $this->getDoctrine()
+            ->getRepository(Author::class)
+            ->findOneBy(
+                ['id' => 5]
+            );
+
+        $salome = $this->getDoctrine()
             ->getRepository(Author::class)
             ->findOneBy(
                 ['id' => 1]
             );
-
         return $this->render(
             'about/story.html.twig',
             [
-                'author' => $author,
+                'stephanie' => $stephanie,
+                'salome' => $salome,
             ]
         );
     }
