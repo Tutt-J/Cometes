@@ -113,7 +113,7 @@ class AdminController extends AbstractController
             $invoice = $processPurchase->getInvoice($items, $purchase, $purchase->getUser(), true);
             //SEND CLIENT MAIL
             $message = (new TemplatedEmail())
-                ->from(new Address('postmaster@cometes.co', 'Comètes'))
+                ->from(new Address('hello@cometes.co', 'Comètes'))
                 ->to($purchase->getUser()->getEmail())
                 ->subject('Remboursement d\'une commande')
                 ->htmlTemplate('emails/refunding_order.html.twig')

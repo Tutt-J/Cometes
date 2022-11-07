@@ -49,7 +49,7 @@ class SendMail
 
     public function sendTemplated(array $documents, $subject, $template, $context = []){
         $message = (new TemplatedEmail())
-            ->from(new Address('postmaster@cometes.co', 'Comètes'))
+            ->from(new Address('hello@cometes.co', 'Comètes'))
             ->to($this->security->getUser()->getEmail())
             ->subject( $subject)
             ->htmlTemplate('emails/'.$template.'.html.twig')
@@ -63,7 +63,7 @@ class SendMail
 
     public function sendBasicEmail($html,$subject){
         $emailAdmin = (new Email())
-            ->from(new Address('postmaster@cometes.co', 'SITE WEB Comètes'))
+            ->from(new Address('hello@cometes.co', 'SITE WEB Comètes'))
             ->to('hello@cometes.co')
             ->subject($subject)
             ->html($html);

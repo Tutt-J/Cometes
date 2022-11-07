@@ -110,7 +110,7 @@ class IndexController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = (new Email())
-                ->from(new Address('postmaster@cometes.co', 'Comètes'))
+                ->from(new Address('hello@cometes.co', 'Comètes'))
                 ->to('hello@cometes.co')
                 ->subject('[Site web] '. $form->get('object')->getData())
                 ->replyTo($form->get('afield')->getData())
