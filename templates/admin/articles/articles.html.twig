@@ -44,7 +44,7 @@
                 <tr>
                     <td>{{ article.title }}</td>
                     <td><a onclick="window.open(this.href);return false" href="{{ path('blogCategory', { 'slug': article.category.slug }) }}">{{ article.category.wording }}</a></td>
-                    <td><a onclick="window.open(this.href);return false" href="{{ path('blogAuthor', { 'slug': article.author.slug }) }}">{{ article.author.name }}</a></td>
+                    <td>{{ article.author.name }}</td>
                     <td>
                         {% if article.img %}
                             <img style="max-width:150px" src="{{ asset('uploads/cover_img/'~article.img.url) }}"/>

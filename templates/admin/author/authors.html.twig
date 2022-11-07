@@ -50,7 +50,6 @@
                         <td data-sort="{{author.createdAt |date("Y/m/d")}}">{{author.createdAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td data-sort="{{author.updatedAt |date("Y/m/d")}}">{{author.updatedAt | localizeddate('none', 'none', null, null, 'd MMMM Y')}}</td>
                         <td>
-                            <a  onclick="window.open(this.href);return false" href="{{ path('blogAuthor', { 'slug': author.slug }) }}" class="text-info mr-2" title="Voir"><i class="far fa-eye"></i></a>
                             <a href="{{ path('updateAuthorAdmin', {'id':author.id}) }}" class="text-primary mr-2" title="Editer"><i class="far fa-edit"></i></a>
                             {% if author.id != 4 %}
                             <p data-title="{{ author.name }}" data-id="{{ author.id }}" data-toggle="modal" data-target="#deleteModal" class="text-danger" title="Supprimer"><i class="far fa-trash-alt"></i></p>

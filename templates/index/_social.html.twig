@@ -17,7 +17,7 @@
                     </p>
                     <form action="{{ path('registerNewsletter') }}" method="post"
                           class="form-inline col-md-12 justify-content-center">
-                        <div class="row">
+                        <div class="row col-12 col-md-10 col-xl-6">
                             <div class="form-group col-md-8">
                                 <label class="d-none" for="email">Adresse e-mail</label>
                                 <input required="required" class="form-control w-100" type="email" name="email"
@@ -25,7 +25,7 @@
                             </div>
                             <div class="form-group col-12 col-md-4 text-center mt-sm-2 mt-lg-0 ">
                                 <button type="submit" name="subscribe" id="subscribe"
-                                        class="mw-100 btn btn-primary m-auto m-lg-0">M'abonner
+                                        class="mw-100 w-100 btn btn-primary m-auto m-lg-0">M'abonner
                                 </button>
                             </div>
                         </div>
@@ -44,8 +44,7 @@
                                     tout moment vous désinscrire à l'aide des liens de désinscription ou en nous
                                     contactant
                                     à
-                                    <a href="{{ path('mailTo', {'name': 'support', 'domain':'cometes.co'}) }}">sup
-                                        <!--triugtb65--> port@co<!--t5588h^ùm^th--> metes.co.</a>.
+                                    <a href="{{ path('mailTo', {'name': 'support', 'domain':'cometes.co'}) }}">sup<!--triugtb65-->port@co<!--t5588h^ùm^th-->metes.co</a>.
                                 </small>
                             </p>
                         </div>
@@ -64,10 +63,10 @@
                         {% for post in opinions.getLastInstagramPost() |slice(0, 5) %}
                             <!-- Grid column -->
                             <div class="mb-3 col-8 col-sm-4 col-lg-2 text-center
-                {% if loop.index == 1 %}
-                    offset-lg-1
-                {% endif %}
-                    ">
+                                {% if loop.index == 1 %}
+                                    offset-lg-1
+                                {% endif %}
+                               ">
                                 <a href="{{ post.permalink }}">
                                     <img class="object-fit-cover instagram" src="{{ post.media_url }}"
                                          alt="Photo provenant d'instagram">

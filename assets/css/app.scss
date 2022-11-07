@@ -888,3 +888,21 @@ body {
     }
   }
 }
+
+@media screen and (max-width: 1200px) {
+  .adaptative-title{
+    font-size:1.25rem;
+  }
+  .little_logo img{
+    max-width:350px !important;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .text-justify-mobile p{
+    text-align:justify !important;
+  }
+}
+
+
