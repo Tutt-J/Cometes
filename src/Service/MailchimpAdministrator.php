@@ -30,8 +30,8 @@ class MailchimpAdministrator
      */
     public function __construct()
     {
-        $this->mc=new MailChimp($_ENV['MAILCHIMP']);
-        $this->list_id="bd2c583d03";
+        $this->mc = new MailChimp($_ENV['MAILCHIMP']);
+        $this->list_id = "bd2c583d03";
     }
 
 
@@ -43,7 +43,10 @@ class MailchimpAdministrator
     {
         return [
             'email_address' => $mail,
-            'status' => "subscribed"
+            'status' => "subscribed",
+            "merge_fields" => [
+                'GPDR' => "Vous acceptez de recevoir les actualités de Comètes par e-mail."
+            ]
         ];
     }
 
@@ -54,9 +57,9 @@ class MailchimpAdministrator
      */
     public function addContact(String $mail)
     {
-        $body=$this->setBody($mail);
+        $body = $this->setBody($mail);
 
-        return $this->mc->post("lists/".$this->list_id."/members", $body);
+        return $this->mc->post("lists/" . $this->list_id . "/members", $body);
     }
 
     public function getTemplate()
