@@ -45,9 +45,7 @@ class EventPriceType extends AbstractType
                         ->where('u.event = :event')
                         ->andWhere('u.startValidityDate <= :now or u.endValidityDate >= :now')
                         ->setParameter('now', (new DateTime())->format('Y-m-d'))
-                        ->setParameter('event', $options['event'])
-
-                        ;
+                        ->setParameter('event', $options['event']);
                 }
             ])
             ->add('promoCode', TextType::class, [
@@ -56,7 +54,7 @@ class EventPriceType extends AbstractType
                 'required' => false,
                 'help' => "Le bon sera appliqué à l'étape suivante s'il est valide"
             ]);
-        if($options['event']->getAllowFriend()) {
+        if ($options['event']->getAllowFriend()) {
             $builder->add('friend', TextType::class, [
                 'mapped' => false,
                 'label' => 'Si vous venez avec une amie, son nom et prénom',
@@ -64,28 +62,26 @@ class EventPriceType extends AbstractType
                 'required' => false
             ]);
         }
-        if($options['event']->getAllowAlready()) {
+        if ($options['event']->getAllowAlready()) {
             $builder->add('already', CheckboxType::class, [
-                    'mapped' => false,
-                    'label' => 'J\'ai déjà participé à une retraite Chamade',
-                    'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de l\'évènement.',
-                    'required' => false
-                ])
-            ;
+                'mapped' => false,
+                'label' => 'J\'ai déjà participé à une retraite Chamade',
+                'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de l\'évènement.',
+                'required' => false
+            ]);
         }
-        if($options['event']->getAllowPaiennes()) {
+        if ($options['event']->getAllowPaiennes()) {
             $builder->add('paiennes', CheckboxType::class, [
                 'mapped' => false,
                 'label' => 'Je fais partie de la <a href="https://www.lespaiennes.com">communauté payante des Païennes</a>',
                 'label_html' => true,
                 'help' => 'Ceci vous fera bénéficier de 5% de réduction. Soumis à vérification ou redevable le jour de l\'évènement.',
                 'required' => false
-            ])
-            ;
+            ]);
         }
 
         $builder->add('agreeTerms', CheckboxType::class, [
-            'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-particulieres-pour-les-evenements">conditions particulières pour les évènements</a><span class="text-danger"> *</span>' ,
+            'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-particulieres-pour-les-evenements">conditions particulières pour les évènements</a><span class="text-danger"> *</span>',
             'label_html' => true,
             'mapped' => false,
             'constraints' => [
@@ -95,7 +91,7 @@ class EventPriceType extends AbstractType
             ],
         ])
             ->add('agreeCgv', CheckboxType::class, [
-                'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-generales-de-vente">conditions générales de vente</a><span class="text-danger"> *</span>' ,
+                'label' => 'J\'ai lu et j\'accepte les <a href="/conditions-generales-de-vente">conditions générales de vente</a><span class="text-danger"> *</span>',
                 'label_html' => true,
                 'mapped' => false,
                 'constraints' => [
@@ -103,6 +99,11 @@ class EventPriceType extends AbstractType
                         'message' => 'Vous devez accepter nos conditions générales de ventes.',
                     ]),
                 ],
+            ])
+            ->add('agreeNewsletter', CheckboxType::class, [
+                'label' => 'J\'accepte de recevoir les actualités et prochains évènements de Comètes par e-mail.',
+                'label_html' => true,
+                'mapped' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'M\'inscrire',
