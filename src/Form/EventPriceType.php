@@ -104,6 +104,7 @@ class EventPriceType extends AbstractType
                 'label' => 'J\'accepte de recevoir les actualités et prochains évènements de Comètes par e-mail.',
                 'label_html' => true,
                 'mapped' => false,
+                'required' => false
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'M\'inscrire',

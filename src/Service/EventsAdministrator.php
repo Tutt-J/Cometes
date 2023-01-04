@@ -359,7 +359,7 @@ class EventsAdministrator
      */
     public function submitForm(bool $mutiplePrice, FormInterface $form, ?object $event, $subscribeNewsletter): RedirectResponse
     {
-        dd($subscribeNewsletter);
+        $this->session->set('subscribeNewsletter', $subscribeNewsletter);
         //If there is multiple price, choose form price, else choose event price
         if ($mutiplePrice === true) {
             $price = $form->get('choice')->getData()->getPrice();
