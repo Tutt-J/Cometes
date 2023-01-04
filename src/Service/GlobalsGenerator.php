@@ -48,9 +48,10 @@ class GlobalsGenerator
     public function __construct(
         EntityManagerInterface $em,
         LoggerInterface $logger
-    ) {
+    )
+    {
         $this->em = $em;
-        $this->logger=$logger;
+        $this->logger = $logger;
     }
 
     /**
@@ -59,13 +60,14 @@ class GlobalsGenerator
      */
     public function getLastInstagramPost()
     {
-        $json=$this->sendCurl("https://graph.instagram.com/me/media?fields=media_url,permalink&access_token=".$_ENV['INSTAGRAM_TOKEN']);
-        if($json){
+        $json = $this->sendCurl("https://graph.instagram.com/me/media?fields=media_url,thumbnail_url,permalink&access_token=" . $_ENV['INSTAGRAM_TOKEN']);
+        if ($json) {
             return $json->data;
         }
     }
 
-    public function sendCurl($url){
+    public function sendCurl($url)
+    {
         $curl = curl_init($url);
 
         curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36');
@@ -86,9 +88,9 @@ class GlobalsGenerator
         $type = $this->em
             ->getRepository(Type::class)
             ->findBy(
-                    [
-                       'slug' => $type
-                    ]
+                [
+                    'slug' => $type
+                ]
             );
         return $this->em
             ->getRepository(Opinion::class)
@@ -101,8 +103,9 @@ class GlobalsGenerator
             );
     }
 
-    public function getAmountMonth($month){
-        $result=$this->em
+    public function getAmountMonth($month)
+    {
+        $result = $this->em
             ->getRepository(Purchase::class)
             ->findByMonth($month);
         return $result[0]['amount'];

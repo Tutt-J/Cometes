@@ -8,6 +8,7 @@ use App\Form\EventPriceType;
 use App\Repository\EventRepository;
 use App\Service\BasketAdministrator;
 use App\Service\EventsAdministrator;
+use App\Service\MailchimpAdministrator;
 use App\Service\MailjetAdministrator;
 use App\Service\ProcessPurchase;
 use App\Service\SendMail;
@@ -83,6 +84,7 @@ class EventsController extends AbstractController
      * @param EventsAdministrator $eventsAdministrator
      * @param StripeHelper $stripeHelper
      * @param SessionInterface $session
+     * @param MailchimpAdministrator $mailchimpAdministrator
      * @return mixed
      */
     public function eventRegister(
@@ -90,8 +92,12 @@ class EventsController extends AbstractController
         MailjetAdministrator $mailjetAdministrator,
         EventsAdministrator $eventsAdministrator,
         StripeHelper $stripeHelper,
-        SessionInterface $session
+        SessionInterface $session,
+        MailchimpAdministrator $mailchimpAdministrator
     ) {
+        if($session->get('subscribeNewsletter')){
+           $mailchimpAdministrator->addContact($this->getUser()->getEmail());
+        }
         //If event is offline
         if(!$event->getIsOnline()){
             throw new NotFoundHttpException('L\'évènement "'.$event->getTitle().'" n\'est pas ou plus disponible.');

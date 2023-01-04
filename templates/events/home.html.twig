@@ -41,7 +41,7 @@
 
 </div>
 
-    {% if opinions.getOpinions('event') and events %}
+    {% if opinions.getOpinions('event')  %}
         {% include 'events/_opinions.html.twig' with {'type': 'event'} %}
         {% else %}
             {% include 'index/_social.html.twig' %}

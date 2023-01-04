@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    {% if app.session.get('acceptCookies') %}
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107700688-5"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+    {% if app.session.get('acceptCookies') %}  
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHK1GSV67R"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-            gtag('config', 'UA-107700688-5');
-        </script>
+      gtag('config', 'G-RHK1GSV67R');
+    </script>
+
     {% endif %}
     <meta charset="UTF-8">
     <link rel="icon" href="{{ asset('build/images/favicon.png') }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}Comètes{% endblock %}</title>
-    <meta name="description" content="{% block metaDescription %}Comètes vous propose d’embarquer dans un voyage initiatique autour de votre carte du ciel et des fondamentaux de l’astrologie holistique.{% endblock %}" />
+    <meta name="description" content="{% block metaDescription %}Notre formation d'astrologie vous propose d’embarquer dans un voyage initiatique autour de votre carte du ciel et des fondamentaux de l’astrologie holistique.{% endblock %}" />
     <meta property="og:url" content=" {% block ogUrl %}{{ app.request.uri }}{% endblock %}" />
     <meta property="og:type" content=" {% block ogType %}website{% endblock %}" />
     <meta property="og:title" content="{{  block('title') }}" />

@@ -14,11 +14,18 @@
                     <p>C’est une lecture des potentiels, qui conçoit l’individu dans sa globalité et dans son processus illimité de croissance. C’est ainsi une approche non-fataliste et non prédictive de nos cheminements humains.</p>
                     <p>Mue par une bienveillance profonde et sincère, chacune de nos lectures comprend les conseils holistiques destinés à vous permettre d’harmoniser au mieux les forces qui vous composent et à aimer inconditionnellement chaque facette de votre Être.</p>
 
-                    <p>Les lectures seront prochainement disponibles, n’hésite pas à t’inscrire à notre infolettre pour être informé.e en avant-première !</p>
+                    <!-- Début de widget en ligne Calendly -->
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/lesateliersdelalune/lecture-de-carte-du-stephanie" style="min-width:320px;height:700px;"></div>
+                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                    <!-- Fin de widget en ligne Calendly -->
+                    <!-- Début de widget en ligne Calendly -->
+                    <div class="calendly-inline-widget" data-url={{ "https://calendly.com/cometesastrologie/lecture-de-carte-du-salome?a2="~app.session.get('affiliate')}} style="min-width:320px;height:700px;"></div>
+                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                    <!-- Fin de widget en ligne Calendly -->
                 </div>
             </section>
         </div>
-    {% include 'index/_social.html.twig' %}
-
-
+    {% if opinions.getOpinions('lecture') %}
+        {% include 'events/_opinions.html.twig' with {'type': 'lecture'} %}
+    {% endif %}
 {% endblock %}
