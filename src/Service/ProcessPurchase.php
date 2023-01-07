@@ -324,7 +324,7 @@ class ProcessPurchase
         $invoice = new InvoicePrinter("A4", "€", "fr");
 
         /* Header settings */
-        $invoice->setLogo("build/images/Logo_noir.png");   //logo image path
+        $invoice->setLogo("build/images/Logo_cometes.png");   //logo image path
         $invoice->setColor("#a3491f");      // pdf color scheme
         $invoice->setType("Facture");    // Invoice Type
         $invoice->setReference('WEB'.date('Y').'_'.$purchase->getId());   // Reference
